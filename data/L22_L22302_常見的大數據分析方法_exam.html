@@ -1,0 +1,3183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22302 常見的大數據分析方法</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Changed default text color to black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-items: flex-start;
+            /* Align items to the start */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .option-text {
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.7;
+            /* Increased further */
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* Message for no results */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            display: none;
+            /* Hidden by default */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22302 常見的大數據分析方法</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一：大數據分析基本概念與流程</option>
+                    <option value="2">方向二：描述性分析方法</option>
+                    <option value="3">方向三：診斷性分析方法</option>
+                    <option value="4">方向四：預測性分析方法 (監督式)</option>
+                    <option value="5">方向五：預測性分析方法 (非監督式與關聯)</option>
+                    <option value="6">方向六：處方性分析與其他方法</option>
+                    <!-- Add more options if needed, up to 8 -->
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">大數據分析基本概念與流程</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">描述性分析方法</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">診斷性分析方法</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">預測性分析方法 (監督式)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">預測性分析方法 (非監督式與關聯)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">處方性分析與其他方法</div>
+                </div>
+                <!-- Add more items if needed, up to 8 -->
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大數據分析</strong>的<strong
+                        style="background-color: #ffff0030;">四個主要類型</strong>依序回答「發生了什麼？」、「為什麼發生？」、「未來可能發生什麼？」以及「應該怎麼做？」請問「<strong
+                        style="background-color: #ffff0030;">未來可能發生什麼？</strong>」對應的是哪種類型分析？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">描述性分析</strong> (<strong
+                                style="color: red;">Descriptive Analytics</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">診斷性分析</strong> (<strong
+                                style="color: red;">Diagnostic Analytics</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">預測性分析</strong> (<strong
+                                style="color: red;">Predictive Analytics</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">處方性分析</strong> (<strong
+                                style="color: red;">Prescriptive Analytics</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">大數據分析</strong>的四種類型各有側重：<br>
+                        1. <strong style="color: blue;">描述性分析</strong>：回答「<strong
+                            style="background-color: #ffff0030;">發生了什麼？</strong>」，總結過去數據，例如銷售報表。<br>
+                        2. <strong style="color: blue;">診斷性分析</strong>：回答「<strong
+                            style="background-color: #ffff0030;">為什麼發生？</strong>」，探究事件發生的原因，例如分析銷售下降的原因。<br>
+                        3. <strong style="color: blue;">預測性分析</strong>：回答「<strong
+                            style="background-color: #ffff0030;">未來可能發生什麼？</strong>」，利用歷史數據預測未來趨勢，例如預測下季度的銷售額。<br>
+                        4. <strong style="color: blue;">處方性分析</strong>：回答「<strong
+                            style="background-color: #ffff0030;">應該怎麼做？</strong>」，基於預測結果提出最佳行動建議，例如建議調整行銷策略以提升銷售。<br>
+                        因此，回答「未來可能發生什麼？」的是<strong style="color: blue;">預測性分析</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">某零售商想要了解<strong
+                        style="background-color: #ffff0030;">過去一年中最暢銷的產品類別</strong>，應該使用哪種分析方法？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">描述性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">預測性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">處方性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">診斷性分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">描述性分析</strong>旨在<strong
+                            style="background-color: #ffff0030;">總結和呈現過去的數據</strong>，以了解發生了什麼。分析「過去一年中最暢銷的產品類別」是典型的<strong
+                            style="color: blue;">描述性分析</strong>應用，透過彙總銷售數據來找出銷售量最高的類別。<strong
+                            style="color: blue;">預測性分析</strong>是預測未來，<strong
+                            style="color: blue;">處方性分析</strong>是提供建議，<strong style="color: blue;">診斷性分析</strong>是探究原因。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="4" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">欲建立一個模型來<strong
+                        style="background-color: #ffff0030;">預測客戶是否會流失（是/否）</strong>，這屬於哪一種<strong
+                        style="color: blue;">機器學習</strong>任務？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">迴歸</strong> (<strong
+                                style="color: red;">Regression</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">分類</strong> (<strong
+                                style="color: red;">Classification</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">分群</strong> (<strong
+                                style="color: red;">Clustering</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">關聯規則探勘</strong> (<strong
+                                style="color: red;">Association Rule Mining</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">分類</strong>任務是預測一個樣本屬於哪個<strong
+                            style="background-color: #ffff0030;">預先定義好的類別</strong>。在這個案例中，目標是預測客戶屬於「會流失」或「不會流失」這<strong
+                            style="background-color: #ffff0030;">兩個類別</strong>之一，因此是典型的<strong
+                            style="color: blue;">分類</strong>問題。<strong style="color: blue;">迴歸</strong>是預測<strong
+                            style="background-color: #ffff0030;">連續數值</strong>（如房價、溫度）。<strong
+                            style="color: blue;">分群</strong>是在沒有預先定義類別的情況下將相似的樣本分組。<strong
+                            style="color: blue;">關聯規則探勘</strong>是找出數據項之間的關聯性（如購買A的人也常購買B）。
+                    </div>
+                    <img src="../image/regression-vs-classification.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">K-means</strong> (<strong
+                        style="color: blue;">K-平均演算法</strong>) 是一種常見的哪種分析技術？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">分類</strong> (<strong
+                                style="color: red;">Classification</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">迴歸</strong> (<strong
+                                style="color: red;">Regression</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">分群</strong> (<strong
+                                style="color: red;">Clustering</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">降維</strong> (<strong
+                                style="color: red;">Dimensionality Reduction</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">K-means</strong>是一種非常流行的<strong
+                            style="color: blue;">分群</strong>演算法，屬於<strong
+                            style="background-color: #ffff0030;">非監督式學習</strong>。它的目標是將數據集劃分為 <strong
+                            style="color: purple;">K</strong> 個互斥的群組（<strong
+                            style="color: red;">clusters</strong>），使得同一群組內的數據點彼此相似度高，而不同群組間的數據點相似度低。它並非用於預測類別（<strong
+                            style="color: blue;">分類</strong>）、預測數值（<strong style="color: blue;">迴歸</strong>）或減少<strong
+                            style="color: blue;">特徵</strong>數量（<strong style="color: blue;">降維</strong>）。
+                    </div>
+                    <img src="../image/K-Means.avif" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">下列哪個指標最適合用來衡量一組<strong style="color: blue;">數值數據</strong>的<strong
+                        style="background-color: #ffff0030;">分散程度</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong> (<strong
+                                style="color: red;">Mean</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong> (<strong
+                                style="color: red;">Median</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">眾數</strong> (<strong
+                                style="color: red;">Mode</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">標準差</strong> (<strong
+                                style="color: red;">Standard Deviation</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">平均數</strong>、<strong style="color: blue;">中位數</strong>和<strong
+                            style="color: blue;">眾數</strong>都是衡量<strong style="color: blue;">數據集中趨勢</strong>（<strong
+                            style="color: red;">central tendency</strong>）的指標，代表數據的中心位置。<strong
+                            style="color: blue;">標準差</strong>（以及<strong style="color: blue;">變異數</strong> <strong
+                            style="color: red;">Variance</strong>）則是衡量<strong
+                            style="background-color: #ffff0030;">數據分散程度</strong>（<strong style="color: red;">dispersion
+                            or variability</strong>）的指標，表示數據點偏離<strong style="color: blue;">平均數</strong>的平均距離。<strong
+                            style="color: blue;">標準差</strong>越大，表示數據越分散；<strong
+                            style="color: blue;">標準差</strong>越小，表示數據越集中。
+                    </div>
+                    <img src="../image/Standard-Deviation-Formula.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">分析師發現某產品的銷售額突然下降，試圖找出<strong
+                        style="background-color: #ffff0030;">可能的原因</strong>，例如是否因為競爭對手降價、或是季節性因素。這個過程屬於哪種分析？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">描述性分析</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">診斷性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">預測性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">處方性分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">診斷性分析</strong>旨在深入探究「<strong
+                            style="background-color: #ffff0030;">為什麼</strong>」某個現象會發生。當分析師看到銷售額下降（<strong
+                            style="color: blue;">描述性分析</strong>的結果）後，開始尋找背後的原因（競爭、季節性等），這就是在進行<strong
+                            style="color: blue;">診斷性分析</strong>。其目的是找出問題的<strong
+                            style="background-color: #ffff0030;">根本原因</strong>，以便後續採取行動。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="5" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">購物籃分析</strong> (<strong
+                        style="color: red;">Market Basket Analysis</strong>) 中，用來衡量「<strong
+                        style="background-color: #ffff0030;">購買了商品 A 的顧客中，有多大比例也購買了商品 B</strong>」的指標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">支持度</strong> (<strong
+                                style="color: red;">Support</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">信賴度</strong> (<strong
+                                style="color: red;">Confidence</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">提升度</strong> (<strong
+                                style="color: red;">Lift</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">覆蓋率</strong> (<strong
+                                style="color: red;">Coverage</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">關聯規則</strong> (<strong style="color: red;">Association
+                            Rule</strong>) 分析中的常用指標：<br>
+                        <strong style="color: blue;">支持度</strong> (<strong style="color: red;">Support</strong>): 指項目集
+                        {A, B} 在所有交易中出現的頻率。<strong style="color: red;">Support</strong>({A, B}) = P(A ∩ B)。<br>
+                        <strong style="color: blue;">信賴度</strong> (<strong style="color: red;">Confidence</strong>): 指規則
+                        A → B 的<strong style="color: blue;">信賴度</strong>，表示購買了 A 的交易中，同時也包含 B 的比例。<strong
+                            style="color: red;">Confidence</strong>(A → B) = P(B | A) = <strong
+                            style="color: red;">Support</strong>({A, B}) / <strong
+                            style="color: red;">Support</strong>({A})。<strong
+                            style="background-color: #ffff0030;">這正是題目所描述的指標</strong>。<br>
+                        <strong style="color: blue;">提升度</strong> (<strong style="color: red;">Lift</strong>): 指規則 A → B
+                        的<strong style="color: blue;">提升度</strong>，衡量購買 A 對於購買 B 的概率提升了多少。<strong
+                            style="color: red;">Lift</strong>(A → B) = <strong style="color: red;">Confidence</strong>(A
+                        → B) / <strong style="color: red;">Support</strong>({B}) = P(B | A) / P(B)。<strong
+                            style="color: red;">Lift</strong> > 1 表示正相關，<strong style="color: red;">Lift</strong>
+                        < 1 表示負相關，<strong style="color: red;">Lift</strong> = 1 表示獨立。<br>
+                            <strong style="color: blue;">覆蓋率</strong> (<strong style="color: red;">Coverage</strong>)
+                            通常指規則前項 (A) 的<strong style="color: blue;">支持度</strong> <strong
+                                style="color: red;">Support</strong>({A})。
+                    </div>
+                    <img src="../image/association rule support confidence lift.jpg" class="responsive-img">>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列哪種演算法常用於解決<strong style="color: blue;">迴歸</strong> (<strong
+                        style="color: red;">Regression</strong>) 問題？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">線性迴歸</strong> (<strong
+                                style="color: red;">Linear Regression</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">K-平均演算法</strong> (<strong
+                                style="color: red;">K-means</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">Apriori</strong> 演算法</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">決策樹分類器</strong> (<strong
+                                style="color: red;">Decision Tree Classifier</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">迴歸</strong>問題的目標是預測一個<strong
+                            style="background-color: #ffff0030;">連續的數值輸出</strong>。<strong
+                            style="color: blue;">線性迴歸</strong>是最基本也是最常用的<strong
+                            style="color: blue;">迴歸</strong>演算法之一，它試圖找到一個線性關係來擬合輸入<strong
+                            style="color: blue;">特徵</strong>和輸出<strong style="color: blue;">變數</strong>。<strong
+                            style="color: red;">K-means</strong>是用於<strong style="color: blue;">分群</strong>。<strong
+                            style="color: red;">Apriori</strong>是用於<strong style="color: blue;">關聯規則探勘</strong>。<strong
+                            style="color: blue;">決策樹</strong>雖然可以用於<strong style="color: blue;">迴歸</strong>（稱為<strong
+                            style="color: blue;">迴歸樹</strong>），但選項 D 明確指出是<strong style="color: blue;">分類器</strong>
+                        (<strong style="color: red;">Classifier</strong>)，因此是用於<strong
+                            style="color: blue;">分類</strong>問題。
+                    </div>
+                    <img src="../image/Linear Regression.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">A/B 測試</strong> (<strong
+                        style="color: red;">A/B Testing</strong>) 最主要的目的為何？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">找出數據中的<strong style="color: blue;">異常值</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">比較兩種或多種版本</strong>（例如網頁設計、行銷方案）的<strong
+                                style="background-color: #ffff0030;">效果差異</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將客戶分成不同的群體</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">預測未來的銷售趨勢</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">A/B 測試</strong>是一種<strong
+                            style="color: blue;">實驗方法</strong>，常用於比較兩個版本（版本 A 和版本
+                        B）的效果優劣。例如，網站設計師想知道新的按鈕顏色是否比舊的更能吸引點擊，就可以將使用者<strong style="color: blue;">隨機分配</strong>到看到版本
+                        A（舊顏色）或版本 B（新顏色）的組別，然後<strong
+                            style="background-color: #ffff0030;">比較兩組的點擊率是否有顯著差異</strong>。這有助於基於數據做出決策，屬於廣義的<strong
+                            style="color: blue;">處方性分析</strong>或優化過程。
+                    </div>
+                    <img src="../image/AB testing.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大數據</strong>的 <strong
+                        style="background-color: #ffff0030;">3V</strong> 特性通常指的是 <strong
+                        style="color: red;">Volume</strong> (量)、<strong style="color: red;">Velocity</strong> (速) 和哪個 V？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">Variety</strong> (多樣性)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">Veracity</strong> (真實性)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">Value</strong> (價值)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Validity</strong> (有效性)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">大數據</strong>最初由 <strong style="color: red;">Gartner</strong> 公司定義的
+                        <strong style="background-color: #ffff0030;">3V</strong> 特性是：<br>
+                        <strong style="color: red;">Volume</strong> (<strong style="color: blue;">資料量</strong>):
+                        指<strong style="color: blue;">數據規模</strong>巨大。<br>
+                        <strong style="color: red;">Velocity</strong> (<strong style="color: blue;">資料速度</strong>):
+                        指<strong style="color: blue;">數據</strong>產生和處理的<strong style="color: blue;">速度</strong>快。<br>
+                        <strong style="color: red;">Variety</strong> (<strong style="color: blue;">資料多樣性</strong>):
+                        指<strong style="color: blue;">數據類型</strong>多樣，包括<strong
+                            style="color: blue;">結構化</strong>、<strong style="color: blue;">半結構化</strong>和<strong
+                            style="color: blue;">非結構化數據</strong>。<br>
+                        後來又有人擴展了更多 V，如 <strong style="color: red;">Veracity</strong> (<strong
+                            style="color: blue;">真實性</strong>，指<strong style="color: blue;">數據</strong>的準確度和可信度) 和
+                        <strong style="color: red;">Value</strong> (<strong style="color: blue;">價值</strong>，指從<strong
+                            style="color: blue;">數據</strong>中提取有<strong style="color: blue;">價值</strong>的資訊)。但<strong
+                            style="color: blue;">最核心</strong>、<strong style="color: blue;">最常被提及</strong>的 <strong
+                            style="background-color: #ffff0030;">3V</strong> 是 <strong
+                            style="color: red;">Volume</strong>, <strong style="color: red;">Velocity</strong>, <strong
+                            style="color: red;">Variety</strong>。
+                    </div>
+                    <img src="../image/big_data.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">分類模型</strong>性能時，<strong
+                        style="color: purple;">ROC</strong> <strong style="color: blue;">曲線</strong> (<strong
+                        style="color: red;">Receiver Operating Characteristic Curve</strong>) 的<strong
+                        style="background-color: #ffff0030;">橫軸</strong>和<strong
+                        style="background-color: #ffff0030;">縱軸</strong>分別代表什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">精確率</strong> (<strong
+                                style="color: red;">Precision</strong>) 和 <strong style="color: blue;">召回率</strong>
+                            (<strong style="color: red;">Recall</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">偽陽性率</strong> (<strong
+                                style="color: red;">False Positive Rate</strong>, <strong
+                                style="color: purple;">FPR</strong>) 和 <strong style="color: blue;">真陽性率</strong>
+                            (<strong style="color: red;">True Positive Rate</strong>, <strong
+                                style="color: purple;">TPR</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">真陽性率</strong> (<strong
+                                style="color: purple;">TPR</strong>) 和 <strong style="color: blue;">偽陽性率</strong>
+                            (<strong style="color: purple;">FPR</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">準確率</strong> (<strong
+                                style="color: red;">Accuracy</strong>) 和 <strong style="color: purple;">F1</strong> 分數
+                            (<strong style="color: red;">F1 Score</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">ROC</strong> <strong
+                            style="color: blue;">曲線</strong>是用來視覺化<strong style="color: blue;">二元分類模型</strong>在不同<strong
+                            style="color: blue;">閾值</strong>下性能的圖形。其<strong
+                            style="background-color: #ffff0030;">橫軸是偽陽性率</strong> (<strong style="color: red;">False
+                            Positive Rate</strong>, <strong style="color: purple;">FPR</strong>)，計算方式為 <strong
+                            style="color: purple;">FP</strong> / (<strong style="color: purple;">FP</strong> + <strong
+                            style="color: purple;">TN</strong>)，代表實際為負樣本但被誤判為正樣本的比例。其<strong
+                            style="background-color: #ffff0030;">縱軸是真陽性率</strong> (<strong style="color: red;">True
+                            Positive Rate</strong>, <strong style="color: purple;">TPR</strong>)，也稱為<strong
+                            style="color: blue;">召回率</strong> (<strong style="color: red;">Recall</strong>) 或<strong
+                            style="color: blue;">敏感度</strong> (<strong style="color: red;">Sensitivity</strong>)，計算方式為
+                        <strong style="color: purple;">TP</strong> / (<strong style="color: purple;">TP</strong> +
+                        <strong style="color: purple;">FN</strong>)，代表實際為正樣本且被正確判斷為正樣本的比例。一個好的分類器其 <strong
+                            style="color: purple;">ROC</strong> <strong style="color: blue;">曲線</strong>會盡量靠近左上角。
+                    </div>
+                    <img src="../image/ROC.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">下列哪種方法屬於<strong style="color: blue;">非監督式學習</strong> (<strong
+                        style="color: red;">Unsupervised Learning</strong>)？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">支持向量機</strong> (<strong
+                                style="color: red;">Support Vector Machine</strong>, <strong
+                                style="color: purple;">SVM</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">邏輯迴歸</strong> (<strong
+                                style="color: red;">Logistic Regression</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">主成分分析</strong> (<strong
+                                style="color: red;">Principal Component Analysis</strong>, <strong
+                                style="color: purple;">PCA</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">隨機森林</strong> (<strong
+                                style="color: red;">Random Forest</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">非監督式學習</strong>是指在<strong
+                            style="background-color: #ffff0030;">沒有標籤</strong>（<strong
+                            style="color: red;">label</strong>）的數據上進行學習，模型需要自行找出數據中的結構或模式。<strong
+                            style="color: blue;">主成分分析</strong> (<strong style="color: purple;">PCA</strong>)
+                        是一種常見的<strong style="color: blue;">降維</strong>技術，它尋找數據中方差最大的方向（<strong
+                            style="color: blue;">主成分</strong>），將高維數據投影到低維空間，這個過程不需要標籤，屬於<strong
+                            style="color: blue;">非監督式學習</strong>。<strong style="color: blue;">支持向量機</strong>、<strong
+                            style="color: blue;">邏輯迴歸</strong>和<strong style="color: blue;">隨機森林</strong>通常用於<strong
+                            style="color: blue;">分類</strong>或<strong
+                            style="color: blue;">迴歸</strong>任務，需要有標籤的數據進行訓練，屬於<strong
+                            style="color: blue;">監督式學習</strong>。
+                    </div>
+                    <img src="../image/PCA.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">分析大量客戶評論以了解他們對產品的整體看法是<strong
+                        style="background-color: #ffff0030;">正面、負面還是中性</strong>，這屬於哪種分析技術的應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">主題模型</strong> (<strong
+                                style="color: red;">Topic Modeling</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">情感分析</strong> (<strong
+                                style="color: red;">Sentiment Analysis</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">命名實體識別</strong> (<strong
+                                style="color: red;">Named Entity Recognition</strong>, <strong
+                                style="color: purple;">NER</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">關鍵詞提取</strong> (<strong
+                                style="color: red;">Keyword Extraction</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">情感分析</strong>（或稱<strong style="color: blue;">意見探勘</strong> <strong
+                            style="color: red;">Opinion Mining</strong>）是<strong style="color: blue;">自然語言處理</strong>
+                        (<strong style="color: red;">Natural Language Processing</strong>, <strong
+                            style="color: purple;">NLP</strong>) 中的一項技術，旨在<strong
+                            style="background-color: #ffff0030;">識別和提取文本中所表達的主觀情感色彩</strong>（如正面、負面、中性）或情緒。分析客戶評論以判斷其褒貶態度是<strong
+                            style="color: blue;">情感分析</strong>的典型應用。<strong
+                            style="color: blue;">主題模型</strong>用於發現文本集中的潛在主題；<strong
+                            style="color: blue;">命名實體識別</strong>用於找出文本中的特定實體（如人名、地名）；<strong
+                            style="color: blue;">關鍵詞提取</strong>用於找出代表文本核心內容的詞語。
+                    </div>
+                    <img src="../image/Sentiment Analysis.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">比較<strong
+                        style="background-color: #ffff0030;">兩組獨立樣本的平均數</strong>是否有顯著差異，且假設數據大致符合<strong
+                        style="color: blue;">常態分佈</strong>，通常使用哪種<strong style="color: blue;">統計檢定</strong>方法？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">獨立樣本 t 檢定</strong> (<strong
+                                style="color: red;">Independent Samples t-test</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">配對樣本 t 檢定</strong> (<strong
+                                style="color: red;">Paired Samples t-test</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">變異數分析</strong> (<strong
+                                style="color: red;">Analysis of Variance</strong>, <strong
+                                style="color: purple;">ANOVA</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">卡方檢定</strong> (<strong
+                                style="color: red;">Chi-squared test</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">t</strong> <strong
+                            style="color: blue;">檢定</strong>用於比較兩組數據<strong
+                            style="color: blue;">平均數</strong>的差異是否具有<strong style="color: blue;">統計顯著性</strong>。<br>
+                        <strong style="color: blue;">獨立樣本 t 檢定</strong>：用於比較<strong
+                            style="background-color: #ffff0030;">兩個獨立組別</strong>（例如，實驗組 vs. 對照組）的<strong
+                            style="color: blue;">平均數</strong>。<br>
+                        <strong style="color: blue;">配對樣本 t 檢定</strong>：用於比較<strong
+                            style="background-color: #ffff0030;">同一組對象</strong>在兩種不同條件下（例如，前測 vs. 後測）的<strong
+                            style="color: blue;">平均數</strong>差異。<br>
+                        <strong style="color: blue;">變異數分析</strong> (<strong style="color: purple;">ANOVA</strong>)
+                        用於比較三個或更多組別的<strong style="color: blue;">平均數</strong>差異。<strong
+                            style="color: blue;">卡方檢定</strong>主要用於分析<strong
+                            style="color: blue;">類別變數</strong>之間的關聯性。因此，比較<strong
+                            style="background-color: #ffff0030;">兩組獨立樣本的平均數</strong>差異，應使用<strong
+                            style="color: blue;">獨立樣本 t 檢定</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">哪種圖表最適合用來展示<strong
+                        style="background-color: #ffff0030;">單一類別變數</strong>中各個類別的<strong
+                        style="background-color: #ffff0030;">頻率或百分比</strong>分佈？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">折線圖</strong> (<strong
+                                style="color: red;">Line Chart</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">長條圖</strong> (<strong
+                                style="color: red;">Bar Chart</strong>) 或 <strong style="color: blue;">圓餅圖</strong>
+                            (<strong style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">盒鬚圖</strong> (<strong
+                                style="color: red;">Box Plot</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">長條圖</strong>和<strong
+                            style="color: blue;">圓餅圖</strong>都常用於視覺化<strong
+                            style="color: blue;">類別數據</strong>的分佈。<strong
+                            style="color: blue;">長條圖</strong>使用長條的高度或長度來表示各個類別的<strong
+                            style="background-color: #ffff0030;">頻率或數值</strong>，易於比較不同類別的大小。<strong
+                            style="color: blue;">圓餅圖</strong>則將一個圓形劃分為扇形，每個扇形的面積代表該類別佔總體的<strong
+                            style="background-color: #ffff0030;">百分比</strong>，適合展示各部分佔整體的比例。<strong
+                            style="color: blue;">散佈圖</strong>用於展示兩個連續<strong style="color: blue;">變數</strong>的關係。<strong
+                            style="color: blue;">折線圖</strong>常用於展示數據隨時間變化的趨勢。<strong
+                            style="color: blue;">盒鬚圖</strong>用於展示<strong
+                            style="color: blue;">數值數據</strong>的分佈特徵（如<strong style="color: blue;">中位數</strong>、<strong
+                            style="color: blue;">四分位距</strong>、<strong style="color: blue;">異常值</strong>）。
+                    </div>
+                    <img src="../image/Bar-chart-versus-histogram-chart.png" class="responsive-img">
+                    <img src="../image/pie-chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">監督式學習</strong>中，用來<strong
+                        style="background-color: #ffff0030;">訓練模型</strong>的數據集通常包含輸入<strong
+                        style="color: blue;">特徵</strong>和對應的什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">群集中心</strong> (<strong
+                                style="color: red;">Cluster Centroids</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">正確輸出標籤或數值</strong>
+                            (<strong style="color: red;">Correct Output Labels or Values</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">異常分數</strong> (<strong
+                                style="color: red;">Anomaly Scores</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">關聯規則</strong> (<strong
+                                style="color: red;">Association Rules</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">監督式學習</strong> (<strong style="color: red;">Supervised
+                            Learning</strong>) 的核心在於從<strong
+                            style="background-color: #ffff0030;">帶有標籤</strong>的訓練數據中學習一個映射函數，能夠根據輸入<strong
+                            style="color: blue;">特徵</strong>預測輸出。訓練數據集必須包含成對的輸入<strong
+                            style="color: blue;">特徵</strong>和<strong
+                            style="background-color: #ffff0030;">已知的、正確的輸出</strong>。如果輸出是離散的類別（如「是/否」、「貓/狗」），稱為<strong
+                            style="color: blue;">分類</strong>問題，輸出就是<strong style="color: blue;">標籤</strong> (<strong
+                            style="color: red;">Labels</strong>)。如果輸出是連續的數值（如房價、溫度），稱為<strong
+                            style="color: blue;">迴歸</strong>問題，輸出就是<strong style="color: blue;">數值</strong> (<strong
+                            style="color: red;">Values</strong>)。<strong style="color: blue;">非監督式學習</strong>（如<strong
+                            style="color: blue;">分群</strong>、<strong style="color: blue;">降維</strong>）則使用沒有標籤的數據。
+                    </div>
+                    <img src="../image/Supervised_and_unsupervised_learning.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大數據分析流程</strong>通常包含<strong
+                        style="color: blue;">數據收集</strong>、<strong style="color: blue;">數據清理</strong>、<strong
+                        style="color: blue;">數據處理/轉換</strong>、<strong style="color: blue;">數據分析/建模</strong>以及哪個最終步驟？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據儲存</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">結果解釋與視覺化/溝通</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">模型部署</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">特徵工程</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        典型的大數據分析流程是一個迭代過程，大致包含：<br>
+                        1. 定義問題/目標<br>
+                        2. <strong style="color: blue;">數據收集</strong> (<strong style="color: red;">Data
+                            Collection</strong>)<br>
+                        3. <strong style="color: blue;">數據清理/預處理</strong> (<strong style="color: red;">Data
+                            Cleaning/Preprocessing</strong>)：處理<strong style="color: blue;">缺失值</strong>、<strong
+                            style="color: blue;">異常值</strong>、格式轉換等。<br>
+                        4. <strong style="color: blue;">數據探索與轉換</strong> (<strong style="color: red;">Data Exploration &
+                            Transformation</strong>)：包含<strong style="color: blue;">特徵工程</strong> (<strong
+                            style="color: red;">Feature Engineering</strong>)。<br>
+                        5. <strong style="color: blue;">數據分析/建模</strong> (<strong style="color: red;">Data
+                            Analysis/Modeling</strong>)：應用<strong style="color: blue;">統計</strong>或<strong
+                            style="color: blue;">機器學習</strong>方法。<br>
+                        6. <strong style="color: blue;">模型評估</strong> (<strong style="color: red;">Model
+                            Evaluation</strong>)<br>
+                        7. <strong style="background-color: #ffff0030;">結果解釋與視覺化/溝通</strong> (<strong
+                            style="color: red;">Interpretation &
+                            Visualization/Communication</strong>)：將分析洞察轉化為可行動資訊。<br>
+                        8. <strong style="color: blue;">模型部署</strong> (<strong style="color: red;">Model
+                            Deployment</strong>) (若需應用模型於實際場景)<br>
+                        雖然<strong style="color: blue;">模型部署</strong>也是重要一步，但「<strong
+                            style="background-color: #ffff0030;">結果解釋與視覺化/溝通</strong>」是將分析洞察轉化為可行動資訊的關鍵最終環節。<strong
+                            style="color: blue;">數據儲存</strong>和<strong style="color: blue;">特徵工程</strong>是流程中的中間步驟。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">哪種<strong style="color: blue;">分群</strong>方法會產生一個<strong
+                        style="background-color: #ffff0030;">樹狀結構</strong>（<strong
+                        style="color: blue;">樹狀圖</strong>，<strong
+                        style="color: red;">Dendrogram</strong>），展示數據點如何逐步合併或分裂成<strong
+                        style="color: blue;">群集</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">K-平均演算法</strong> (<strong
+                                style="color: red;">K-means</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">階層式分群</strong> (<strong
+                                style="color: red;">Hierarchical Clustering</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">DBSCAN</strong> (<strong
+                                style="color: red;">Density-Based Spatial Clustering of Applications with
+                                Noise</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">高斯混合模型</strong> (<strong
+                                style="color: red;">Gaussian Mixture Model</strong>, <strong
+                                style="color: purple;">GMM</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">階層式分群</strong>（又稱<strong
+                            style="color: blue;">層次聚類</strong>）建立一個<strong
+                            style="color: blue;">群集</strong>的層次結構。它有兩種主要方式：<strong
+                            style="background-color: #ffff0030;">凝聚式</strong>（<strong
+                            style="color: red;">agglomerative</strong>，由下往上，從單個點開始逐步合併最相似的<strong
+                            style="color: blue;">群集</strong>）和<strong
+                            style="background-color: #ffff0030;">分裂式</strong>（<strong
+                            style="color: red;">divisive</strong>，由上往下，從包含所有點的單一<strong
+                            style="color: blue;">群集</strong>開始逐步分裂）。其結果可以用<strong style="color: blue;">樹狀圖</strong>
+                        (<strong style="color: red;">Dendrogram</strong>) 來視覺化，顯示<strong
+                            style="color: blue;">群集</strong>的合併或分裂過程以及它們之間的層次關係。<strong
+                            style="color: red;">K-means</strong> 需要預先指定 <strong style="color: purple;">K</strong> 值，產生
+                        <strong style="color: purple;">K</strong> 個扁平的<strong style="color: blue;">群集</strong>。<strong
+                            style="color: purple;">DBSCAN</strong> 是基於<strong style="color: blue;">密度</strong>的<strong
+                            style="color: blue;">分群</strong>方法。<strong style="color: purple;">GMM</strong> 是基於<strong
+                            style="color: blue;">機率模型</strong>的<strong style="color: blue;">分群</strong>方法。
+                    </div>
+                    <img src="../image/Hierarchical Clustering.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">決策樹</strong> (<strong
+                        style="color: red;">Decision Tree</strong>) 演算法在建立模型時，通常會選擇哪個準則來進行節點的<strong
+                        style="background-color: #ffff0030;">分裂</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">選擇能最大程度<strong style="background-color: #ffff0030;">降低不純度</strong>
+                            (<strong style="color: red;">Impurity</strong>) 的<strong
+                                style="color: blue;">特徵</strong>與分割點</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">選擇與<strong style="color: blue;">目標變數</strong><strong
+                                style="color: blue;">相關性</strong>最高的<strong style="color: blue;">特徵</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">選擇數值範圍最大的<strong style="color: blue;">特徵</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">隨機選擇一個<strong style="color: blue;">特徵</strong>進行<strong
+                                style="color: blue;">分裂</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">決策樹</strong>是一種<strong style="color: blue;">貪婪演算法</strong> (<strong
+                            style="color: red;">greedy algorithm</strong>)，在每個節點<strong
+                            style="color: blue;">分裂</strong>時，它會遍歷所有可能的<strong
+                            style="color: blue;">特徵</strong>和分割點，選擇那個能夠使得<strong
+                            style="color: blue;">分裂</strong>後子節點的「<strong
+                            style="background-color: #ffff0030;">不純度</strong>」總和<strong
+                            style="background-color: #ffff0030;">最小化</strong>的分裂方式。<strong
+                            style="color: blue;">不純度</strong>的衡量指標常用的有：<br>
+                        <strong style="color: blue;">吉尼不純度</strong> (<strong style="color: red;">Gini
+                            Impurity</strong>)：常用於 <strong style="color: purple;">CART</strong> (<strong
+                            style="color: red;">Classification and Regression Tree</strong>) 演算法。<br>
+                        <strong style="color: blue;">資訊增益</strong> (<strong style="color: red;">Information
+                            Gain</strong>)：基於<strong style="color: blue;">熵</strong> (<strong
+                            style="color: red;">Entropy</strong>) 計算，常用於 <strong style="color: purple;">ID3</strong>,
+                        <strong style="color: purple;">C4.5</strong> 演算法。<br>
+                        目標是讓每次<strong style="color: blue;">分裂</strong>後，子節點內的樣本盡可能屬於同一類別，即純度最高（<strong
+                            style="color: blue;">不純度</strong>最低）。
+                    </div>
+                    <img src="../image/Decision Tree Impurity gini.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">社交網路分析</strong> (<strong
+                        style="color: red;">Social Network Analysis</strong>, <strong
+                        style="color: purple;">SNA</strong>) 中，用來衡量一個節點在網路中<strong
+                        style="background-color: #ffff0030;">重要性</strong>或影響力的指標，通常稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">群集係數</strong> (<strong
+                                style="color: red;">Clustering Coefficient</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">中心性</strong> (<strong
+                                style="color: red;">Centrality</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">路徑長度</strong> (<strong
+                                style="color: red;">Path Length</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">網路密度</strong> (<strong
+                                style="color: red;">Network Density</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">中心性</strong> (<strong style="color: red;">Centrality</strong>)
+                        是<strong style="color: blue;">社交網路分析</strong>中的核心概念，用來量化節點（例如，人、組織）在網路中的相對<strong
+                            style="background-color: #ffff0030;">重要性</strong>。常見的<strong
+                            style="color: blue;">中心性</strong>指標包括：<br>
+                        <strong style="color: blue;">度中心性</strong> (<strong style="color: red;">Degree
+                            Centrality</strong>): 節點的連接數。<br>
+                        <strong style="color: blue;">介數中心性</strong> (<strong style="color: red;">Betweenness
+                            Centrality</strong>): 節點出現在其他節點對之間最短路徑上的次數。<br>
+                        <strong style="color: blue;">接近中心性</strong> (<strong style="color: red;">Closeness
+                            Centrality</strong>): 節點到網路中所有其他節點的平均距離的倒數。<br>
+                        <strong style="color: blue;">特徵向量中心性</strong> (<strong style="color: red;">Eigenvector
+                            Centrality</strong>): 節點的重要性取決於其鄰居節點的重要性（例如 <strong style="color: red;">Google</strong> 的
+                        <strong style="color: red;">PageRank</strong>）。<br>
+                        <strong style="color: blue;">群集係數</strong>衡量節點鄰居之間的連接緊密程度。<strong
+                            style="color: blue;">路徑長度</strong>指節點間的距離。<strong
+                            style="color: blue;">網路密度</strong>指實際存在的連接數佔所有可能連接數的比例。
+                    </div>
+                    <img src="../image/Social Network Analysis Centrality Degree Betweenness Closeness Eigenvector.png"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">使用<strong style="color: blue;">彙總表</strong> (<strong
+                        style="color: red;">Pivot Table</strong>) 的主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">快速地對大量數據進行<strong
+                                style="background-color: #ffff0030;">匯總、分析、探索和呈現摘要</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">建立複雜的<strong style="color: blue;">預測模型</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">清理和轉換原始數據格式</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">執行 <strong style="color: purple;">A/B 測試</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">彙總表</strong>（常見於試算表軟體如 <strong style="color: red;">Excel</strong>
+                        或數據分析工具）是一種強大的<strong
+                            style="background-color: #ffff0030;">數據摘要工具</strong>。它允許使用者以互動的方式，拖放不同的欄位到行、列、值和篩選器區域，從而快速地對數據進行<strong
+                            style="background-color: #ffff0030;">分組、計數、求和、平均</strong>等<strong
+                            style="color: blue;">聚合</strong>運算，並以表格形式呈現結果。這是<strong
+                            style="color: blue;">描述性分析</strong>和<strong style="color: blue;">數據探索</strong>中非常常用的技術。
+                    </div>
+                    <img src="../image/Pivot Table.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">分析師觀察到兩個<strong style="color: blue;">變數</strong>之間存在強烈的正<strong
+                        style="color: blue;">相關關係</strong>。這是否意味著其中一個<strong
+                        style="color: blue;">變數</strong>導致了另一個<strong style="color: blue;">變數</strong>的變化？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">是，強<strong style="color: blue;">相關</strong>必然代表<strong
+                                style="color: blue;">因果關係</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">否，<strong
+                                style="background-color: #ffff0030;">相關性不等於因果關係</strong>，可能存在<strong
+                                style="color: blue;">潛在變數</strong>或巧合</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只有在負<strong style="color: blue;">相關</strong>時才不代表<strong
+                                style="color: blue;">因果關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只有在<strong style="color: blue;">統計顯著</strong>時才代表<strong
+                                style="color: blue;">因果關係</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">統計學</strong>中的一個基本原則是「<strong
+                            style="background-color: #ffff0030;">相關性不等於因果關係</strong>」(<strong
+                            style="color: red;">Correlation does not imply causation</strong>)。兩個<strong
+                            style="color: blue;">變數</strong>之間存在<strong
+                            style="color: blue;">相關性</strong>，僅表示它們傾向於一起變化，但不能直接推斷其中一個<strong
+                            style="color: blue;">變數</strong>的變化是「導致」另一個<strong
+                            style="color: blue;">變數</strong>變化的原因。這種<strong
+                            style="color: blue;">相關性</strong>可能是由第三個<strong style="color: blue;">潛在變數</strong>（<strong
+                            style="color: blue;">混淆變數</strong> <strong style="color: red;">Confounding
+                            Variable</strong>）引起的，或者僅僅是巧合。要確定<strong
+                            style="color: blue;">因果關係</strong>，通常需要進行更嚴謹的<strong
+                            style="color: blue;">實驗設計</strong>（如<strong style="color: blue;">隨機對照試驗</strong> <strong
+                            style="color: red;">Randomized Controlled Trial</strong>, <strong
+                            style="color: purple;">RCT</strong>）或使用更高級的<strong style="color: blue;">因果推斷</strong>
+                        (<strong style="color: red;">Causal Inference</strong>) 方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列哪個指標衡量的是<strong style="color: blue;">分類模型</strong>預測為「正類」的樣本中，<strong
+                        style="background-color: #ffff0030;">實際上也確實是「正類」</strong>的比例？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">精確率</strong> (<strong
+                                style="color: red;">Precision</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">召回率</strong> (<strong
+                                style="color: red;">Recall</strong>) / <strong style="color: blue;">真陽性率</strong>
+                            (<strong style="color: purple;">TPR</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">準確率</strong> (<strong
+                                style="color: red;">Accuracy</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">F1</strong> 分數 (<strong
+                                style="color: red;">F1 Score</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">分類模型</strong>評估指標：<br>
+                        <strong style="color: blue;">精確率 (Precision):</strong> <strong
+                            style="color: purple;">TP</strong> / (<strong style="color: purple;">TP</strong> + <strong
+                            style="color: purple;">FP</strong>)。<strong
+                            style="background-color: #ffff0030;">在所有被模型預測為正類的樣本中，有多少是真正為正類</strong>的。衡量模型預測正類的可信度，避免誤報
+                        (<strong style="color: red;">False Positives</strong>)。<br>
+                        <strong style="color: blue;">召回率 (Recall) / 真陽性率 (TPR):</strong> <strong
+                            style="color: purple;">TP</strong> / (<strong style="color: purple;">TP</strong> + <strong
+                            style="color: purple;">FN</strong>)。在所有實際為正類的樣本中，有多少被模型成功找出來了。衡量模型找出所有正類的能力，避免漏報 (<strong
+                            style="color: red;">False Negatives</strong>)。<br>
+                        <strong style="color: blue;">準確率 (Accuracy):</strong> (<strong
+                            style="color: purple;">TP</strong> + <strong style="color: purple;">TN</strong>) / (<strong
+                            style="color: purple;">TP</strong> + <strong style="color: purple;">TN</strong> + <strong
+                            style="color: purple;">FP</strong> + <strong
+                            style="color: purple;">FN</strong>)。模型預測正確的樣本數佔總樣本數的比例。在類別不平衡時可能具有誤導性。<br>
+                        <strong style="color: purple;">F1</strong> 分數 (<strong style="color: red;">F1 Score</strong>): 2
+                        * (<strong style="color: blue;">Precision</strong> * <strong
+                            style="color: blue;">Recall</strong>) / (<strong style="color: blue;">Precision</strong> +
+                        <strong style="color: blue;">Recall</strong>)。<strong style="color: blue;">精確率</strong>和<strong
+                            style="color: blue;">召回率</strong>的<strong style="color: blue;">調和平均數</strong>，用於綜合考量兩者。<br>
+                        題目描述的是<strong style="color: blue;">精確率</strong>。
+                    </div>
+                    <img src="../image/Confusion-matrix-Precision-Recall-Accuracy-and-F1-score.png"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Apriori</strong> 演算法主要用於解決哪一類<strong
+                        style="color: blue;">數據分析</strong>問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列預測</strong> (<strong
+                                style="color: red;">Time Series Forecasting</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">圖像識別</strong> (<strong
+                                style="color: red;">Image Recognition</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">關聯規則探勘</strong> (<strong
+                                style="color: red;">Association Rule Mining</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">異常檢測</strong> (<strong
+                                style="color: red;">Anomaly Detection</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Apriori</strong> 演算法是<strong style="color: blue;">關聯規則學習</strong>
+                        (<strong style="color: red;">Association Rule Learning</strong>) 中的經典演算法，用於從交易數據庫中找出<strong
+                            style="background-color: #ffff0030;">頻繁項目集</strong> (<strong style="color: red;">Frequent
+                            Itemsets</strong>) 和<strong style="color: blue;">關聯規則</strong>。它最著名的應用是<strong
+                            style="color: blue;">購物籃分析</strong>，找出哪些商品經常被顧客一起購買，例如「購買尿布的人也常購買啤酒」這類規則。
+                    </div>
+                    <img src="../image/Apriori-Algorithm.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">哪種分析方法不僅預測未來可能發生的情況，還能提供<strong
+                        style="background-color: #ffff0030;">達成特定目標的最佳行動方案或決策建議</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">描述性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">診斷性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">預測性分析</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">處方性分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">處方性分析</strong> (<strong style="color: red;">Prescriptive
+                            Analytics</strong>) 是四種分析類型中最高級、最具行動導向性的一種。它建立在<strong
+                            style="color: blue;">預測性分析</strong>的基礎上，利用<strong style="color: blue;">優化</strong> (<strong
+                            style="color: red;">Optimization</strong>)、<strong style="color: blue;">模擬</strong> (<strong
+                            style="color: red;">Simulation</strong>) 等技術，不僅告訴你未來可能發生什麼，還會建議你「<strong
+                            style="background-color: #ffff0030;">應該怎麼做</strong>」才能達到最佳結果或避免不好的結果。例如，基於銷售預測，建議最佳的庫存水平或定價策略。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">處理<strong style="color: blue;">大數據</strong>時，常見的<strong
+                        style="color: blue;">數據預處理</strong>步驟不包含下列哪一項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">處理<strong style="color: blue;">缺失值</strong> (<strong
+                                style="color: red;">Handling Missing Values</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據標準化/歸一化</strong> (<strong
+                                style="color: red;">Data Standardization/Normalization</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">處理<strong style="color: blue;">異常值</strong> (<strong
+                                style="color: red;">Handling Outliers</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">模型訓練與評估</strong> (<strong
+                                style="color: red;">Model Training and Evaluation</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據預處理</strong>是在進行<strong
+                            style="color: blue;">數據分析</strong>或<strong style="color: blue;">建模</strong>之前，對原始數據進行<strong
+                            style="background-color: #ffff0030;">清理和轉換</strong>的過程，目的是提高<strong
+                            style="color: blue;">數據品質</strong>和模型性能。常見的<strong
+                            style="color: blue;">預處理</strong>步驟包括處理<strong
+                            style="color: blue;">缺失值</strong>（填充或刪除）、<strong
+                            style="color: blue;">數據標準化/歸一化</strong>（調整數據尺度）、處理<strong
+                            style="color: blue;">異常值</strong>、<strong style="color: blue;">特徵編碼</strong>（將<strong
+                            style="color: blue;">類別特徵</strong>轉換為數值）等。<strong
+                            style="background-color: #ffff0030;">模型訓練與評估</strong>是<strong
+                            style="color: blue;">數據預處理</strong><strong
+                            style="background-color: #ffff0030;">之後</strong>的<strong
+                            style="color: blue;">建模</strong>階段步驟，而非<strong style="color: blue;">預處理</strong>本身。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">描述性統計</strong>中，<strong
+                        style="color: blue;">四分位距</strong> (<strong style="color: red;">Interquartile Range</strong>,
+                    <strong style="color: purple;">IQR</strong>) 是如何計算的？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">最大值</strong>減去<strong
+                                style="color: blue;">最小值</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">第三四分位數</strong> (<strong
+                                style="color: red;">Q3</strong>) 減去<strong style="color: blue;">第一四分位數</strong> (<strong
+                                style="color: red;">Q1</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>加減一個<strong
+                                style="color: blue;">標準差</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong> (<strong
+                                style="color: red;">Q2</strong>) 的兩倍</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">四分位數</strong>是將排序後的數據集分成四個相等部分的數值。<strong
+                            style="color: blue;">第一四分位數</strong> (<strong style="color: red;">Q1</strong>) 是第 25 <strong
+                            style="color: blue;">百分位數</strong>，<strong style="color: blue;">第三四分位數</strong> (<strong
+                            style="color: red;">Q3</strong>) 是第 75 <strong style="color: blue;">百分位數</strong>。<strong
+                            style="color: blue;">四分位距</strong> (<strong style="color: purple;">IQR</strong>)
+                        是衡量數據<strong style="background-color: #ffff0030;">中間 50% 範圍</strong>的指標，計算方式為 <strong
+                            style="background-color: #ffff0030;">IQR = Q3 - Q1</strong>。它對<strong
+                            style="color: blue;">異常值</strong>不敏感，常用於描述數據的<strong
+                            style="color: blue;">分散程度</strong>和檢測<strong style="color: blue;">異常值</strong>（例如，在<strong
+                            style="color: blue;">盒鬚圖</strong>中）。<strong style="color: blue;">最大值</strong>減去<strong
+                            style="color: blue;">最小值</strong>是<strong style="color: blue;">全距</strong> (<strong
+                            style="color: red;">Range</strong>)。
+                    </div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="4" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">機器學習</strong>中，將數據集劃分為<strong
+                        style="color: blue;">訓練集</strong> (<strong style="color: red;">Training Set</strong>) 和<strong
+                        style="color: blue;">測試集</strong> (<strong style="color: red;">Test Set</strong>) 的主要目的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">加快模型訓練速度</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">減少模型所需的記憶體</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">評估模型在<strong
+                                style="background-color: #ffff0030;">未見過的新數據上的泛化能力</strong> (<strong
+                                style="color: red;">Generalization Ability</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加<strong style="color: blue;">訓練數據</strong>的多樣性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        模型在<strong style="color: blue;">訓練集</strong>上表現好，不代表它在實際應用中也能表現好，因為模型可能<strong
+                            style="color: blue;">過度擬合</strong> (<strong style="color: red;">Overfitting</strong>)
+                        了<strong style="color: blue;">訓練數據</strong>的<strong
+                            style="color: blue;">雜訊</strong>或特定模式。為了客觀評估模型的<strong
+                            style="background-color: #ffff0030;">泛化能力</strong>，即模型對<strong
+                            style="background-color: #ffff0030;">從未見過的新數據</strong>的預測能力，通常會將一部分數據保留下來作為<strong
+                            style="color: blue;">測試集</strong>。模型只在<strong
+                            style="color: blue;">訓練集</strong>上進行訓練，然後在<strong
+                            style="color: blue;">測試集</strong>上進行評估。<strong
+                            style="color: blue;">測試集</strong>的表現更能反映模型在真實世界中的性能。有時還會劃分出<strong
+                            style="color: blue;">驗證集</strong> (<strong style="color: red;">Validation Set</strong>)
+                        用於調整模型<strong style="color: blue;">超參數</strong>。
+                    </div>
+                    <img src="../image/train validation and test set.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">降維</strong> (<strong
+                        style="color: red;">Dimensionality Reduction</strong>) 技術的主要好處不包含下列哪一項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">減少計算複雜度和模型訓練時間</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">緩解<strong style="color: blue;">維度災難</strong> (<strong
+                                style="color: red;">Curse of Dimensionality</strong>) 問題</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">有助於<strong style="color: blue;">數據視覺化</strong> (例如將高維數據降至 <strong
+                                style="color: purple;">2D</strong> 或 <strong style="color: purple;">3D</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">保證能提升所有預測模型的準確性</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">降維</strong>技術（如 <strong style="color: purple;">PCA</strong>、<strong
+                            style="color: purple;">t-SNE</strong>）旨在保留數據主要<strong
+                            style="color: blue;">變異性</strong>的同時，減少<strong
+                            style="color: blue;">特徵</strong>的數量。其好處包括：<br>
+                        <strong style="background-color: #ffff0030;">減少計算量</strong>：<strong
+                            style="color: blue;">特徵</strong>減少，模型訓練和預測更快。<br>
+                        <strong
+                            style="background-color: #ffff0030;">緩解維度災難</strong>：在高維空間中，數據點變得稀疏，距離計算失去意義，模型性能可能下降。<strong
+                            style="color: blue;">降維</strong>有助於緩解此問題。<br>
+                        <strong style="background-color: #ffff0030;">數據視覺化</strong>：將高維數據降到 2 或 3 維，方便觀察數據結構。<br>
+                        <strong style="background-color: #ffff0030;">去除雜訊/冗餘特徵</strong>：可能提升某些模型性能。<br>
+                        然而，<strong style="color: blue;">降維</strong>是一個<strong
+                            style="background-color: #ffff0030;">有損壓縮</strong>的過程，會丟失部分資訊。雖然有時能因去除<strong
+                            style="color: blue;">雜訊</strong>而提升模型性能，但並非總是如此，對於某些模型或任務，<strong
+                            style="color: blue;">降維</strong>反而可能降低準確性。因此，<strong
+                            style="background-color: #ffff0030;">不能保證提升所有模型的準確性</strong>。
+                    </div>
+                    <img src="../image/dimensionality_reduction.jpeg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">哪種技術常用於<strong
+                        style="background-color: #ffff0030;">模擬複雜系統</strong>（如生產線、交通流）在不同條件下的行為，以評估不同策略的效果？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">線性規劃</strong> (<strong
+                                style="color: red;">Linear Programming</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">模擬</strong> (<strong
+                                style="color: red;">Simulation</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">因素分析</strong> (<strong
+                                style="color: red;">Factor Analysis</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列分解</strong> (<strong
+                                style="color: red;">Time Series Decomposition</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong
+                            style="color: blue;">模擬</strong>是一種模仿真實世界系統運作過程的技術。通過建立系統的數學或邏輯模型，並在模型中引入隨機性或不同的輸入參數，可以觀察系統在不同情境下的行為和輸出。這有助於理解系統動態、<strong
+                            style="background-color: #ffff0030;">評估不同決策或策略的潛在影響</strong>，常用於<strong
+                            style="color: blue;">處方性分析</strong>中，以找出較優的方案。<strong
+                            style="color: blue;">線性規劃</strong>用於求解約束條件下的<strong
+                            style="color: blue;">最優化</strong>問題。<strong style="color: blue;">因素分析</strong>用於找出觀測<strong
+                            style="color: blue;">變數</strong>背後的潛在結構。<strong
+                            style="color: blue;">時間序列分解</strong>用於將<strong
+                            style="color: blue;">時間序列</strong>拆解為趨勢、季節性、週期和隨機波動等成分。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">變異數分析</strong> (<strong
+                        style="color: purple;">ANOVA</strong>) 主要用於檢定什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個<strong style="color: blue;">類別變數</strong>之間是否存在關聯</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">兩個連續<strong style="color: blue;">變數</strong>之間是否存在線性關係</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">三個或更多組別的平均數之間是否存在顯著差異</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據分佈是否符合<strong style="color: blue;">常態分佈</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">變異數分析</strong> (<strong style="color: red;">Analysis of
+                            Variance</strong>, <strong style="color: purple;">ANOVA</strong>) 是一種<strong
+                            style="color: blue;">統計檢定</strong>方法，用於比較<strong
+                            style="background-color: #ffff0030;">三個或更多獨立組別的平均數</strong>是否存在顯著差異。它通過分析<strong
+                            style="color: blue;">組間變異</strong> (<strong style="color: red;">between-group
+                            variance</strong>) 和<strong style="color: blue;">組內變異</strong> (<strong
+                            style="color: red;">within-group variance</strong>) 的比率（<strong
+                            style="color: purple;">F</strong> <strong style="color: blue;">統計量</strong>）來判斷這些組別的<strong
+                            style="color: blue;">平均數</strong>是否可能來自同一個總體。如果 <strong style="color: purple;">F</strong>
+                        <strong style="color: blue;">檢定</strong>結果顯著，則表示至少有兩組的<strong
+                            style="color: blue;">平均數</strong>存在顯著差異，後續通常需要進行<strong style="color: blue;">事後比較</strong>
+                        (<strong style="color: red;">post-hoc tests</strong>) 來確定具體是哪些組別之間存在差異。
+                    </div>
+                    <img src="../image/anova.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">過度擬合</strong> (<strong
+                        style="color: red;">Overfitting</strong>) 指的是模型發生了什麼情況？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型在<strong style="color: blue;">訓練數據</strong>上表現極好，但在未見過的<strong
+                                style="color: blue;">測試數據</strong>上<strong
+                                style="background-color: #ffff0030;">表現很差</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型在<strong style="color: blue;">訓練數據</strong>和<strong
+                                style="color: blue;">測試數據</strong>上表現都很差</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型訓練時間過長</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型無法收斂</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">過度擬合</strong>是<strong
+                            style="color: blue;">機器學習</strong>中常見的問題，指的是模型<strong
+                            style="background-color: #ffff0030;">過於複雜</strong>，不僅學習了<strong
+                            style="color: blue;">訓練數據</strong>中的一般模式，還學習了其中的<strong
+                            style="color: blue;">雜訊</strong>和隨機波動。這導致模型在<strong
+                            style="color: blue;">訓練集</strong>上表現非常好（例如，準確率很高），但由於它沒有學到數據的真實潛在規律，因此在應用到新的、未見過的數據（<strong
+                            style="color: blue;">測試集</strong>）時，<strong
+                            style="background-color: #ffff0030;">表現會很差</strong>，<strong
+                            style="color: blue;">泛化能力</strong>低。相對地，模型在<strong style="color: blue;">訓練集</strong>和<strong
+                            style="color: blue;">測試集</strong>上表現都很差稱為<strong style="color: blue;">擬合不足</strong> (<strong
+                            style="color: red;">Underfitting</strong>)。
+                    </div>
+                    <img src="../image/overfitting underfitting.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">K-means</strong> <strong
+                        style="color: blue;">分群</strong>中，如何選擇最佳的<strong style="color: blue;">群集數量 K</strong>
+                    值是一個常見問題，下列哪種方法常用於輔助選擇 K 值？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">肘部法則</strong> (<strong
+                                style="color: red;">Elbow Method</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">梯度下降法</strong> (<strong
+                                style="color: red;">Gradient Descent</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">交叉驗證</strong> (<strong
+                                style="color: red;">Cross-Validation</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">網格搜索</strong> (<strong
+                                style="color: red;">Grid Search</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">肘部法則</strong>是選擇 <strong style="color: purple;">K-means</strong> 最佳
+                        K 值的一種<strong style="background-color: #ffff0030;">啟發式方法</strong>。它通過計算不同 K 值對應的<strong
+                            style="color: blue;">群內平方和</strong> (<strong style="color: red;">Within-Cluster Sum of
+                            Squares</strong>, <strong style="color: purple;">WCSS</strong>)，並繪製 K 值與 <strong
+                            style="color: purple;">WCSS</strong> 的關係圖。<strong style="color: purple;">WCSS</strong>
+                        衡量群內數據點的緊密程度，K 越大 <strong style="color: purple;">WCSS</strong> 通常越小。理想的 K
+                        值通常位於圖形曲線斜率變化趨於平緩的「<strong style="background-color: #ffff0030;">肘部</strong>」位置，表示再增加 K 對於降低
+                        <strong style="color: purple;">WCSS</strong> 的效益不大。<strong
+                            style="color: blue;">梯度下降法</strong>是優化演算法。<strong style="color: blue;">交叉驗證</strong>和<strong
+                            style="color: blue;">網格搜索</strong>常用於<strong
+                            style="color: blue;">監督式學習</strong>的模型評估和<strong style="color: blue;">超參數</strong>調整。
+                    </div>
+                    <img src="../image/elbow method k means.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">下列哪一項最能描述<strong style="color: blue;">非結構化數據</strong> (<strong
+                        style="color: red;">Unstructured Data</strong>)？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">存儲在<strong style="color: blue;">關聯式數據庫</strong>表格中的數據</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">具有固定欄位和格式的數據，如 <strong style="color: purple;">CSV</strong> 檔案</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">沒有預定義數據模型或組織方式</strong>的數據，如<strong
+                                style="background-color: #ffff0030;">電子郵件、社交媒體貼文、圖像、影片</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">XML</strong> 或 <strong
+                                style="color: purple;">JSON</strong> 格式的數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        數據類型通常分為：<br>
+                        <strong style="color: blue;">結構化數據</strong> (<strong style="color: red;">Structured
+                            Data</strong>): 具有固定的<strong style="color: blue;">綱要</strong> (<strong
+                            style="color: red;">schema</strong>)，通常以表格形式存儲在<strong
+                            style="color: blue;">關聯式數據庫</strong>中，欄位和格式定義明確 (如選項 A、B)。<br>
+                        <strong style="color: blue;">非結構化數據</strong> (<strong style="color: red;">Unstructured
+                            Data</strong>): <strong
+                            style="background-color: #ffff0030;">沒有預先定義的結構或模型</strong>，格式多樣，難以直接用傳統數據庫管理，佔<strong
+                            style="color: blue;">大數據</strong>的大部分 (如選項 C)。<br>
+                        <strong style="color: blue;">半結構化數據</strong> (<strong style="color: red;">Semi-structured
+                            Data</strong>): 介於兩者之間，不符合嚴格的表格結構，但包含標籤或標記來分隔語意元素，具有一定的組織性 (如選項 D 的 <strong
+                            style="color: red;">XML</strong>/<strong style="color: red;">JSON</strong>)。<br>
+                        因此，電子郵件、社交媒體貼文、圖像、影片等是典型的<strong style="color: blue;">非結構化數據</strong>。
+                    </div>
+                    <img src="../image/Unstructured-semi-structured-and-structured-data.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">潛在狄利克雷分佈</strong> (<strong
+                        style="color: red;">Latent Dirichlet Allocation</strong>, <strong
+                        style="color: purple;">LDA</strong>) 是一種常用於什麼任務的<strong style="color: blue;">機率模型</strong>？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">情感分析</strong> (<strong
+                                style="color: red;">Sentiment Analysis</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">主題模型</strong> (<strong
+                                style="color: red;">Topic Modeling</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">序列標註</strong> (<strong
+                                style="color: red;">Sequence Labeling</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong> (<strong
+                                style="color: red;">Machine Translation</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">LDA</strong> 是一種<strong
+                            style="color: blue;">生成式機率模型</strong>，常用於<strong
+                            style="background-color: #ffff0030;">主題模型</strong>任務。<strong
+                            style="color: blue;">主題模型</strong>旨在從大量文本文件中自動發現隱藏的「<strong
+                            style="background-color: #ffff0030;">主題</strong>」結構。<strong
+                            style="color: purple;">LDA</strong> 假設每份文件是多個<strong
+                            style="color: blue;">主題</strong>的混合體，而每個<strong
+                            style="color: blue;">主題</strong>又是多個詞語的<strong
+                            style="color: blue;">機率分佈</strong>。通過分析文本集，<strong style="color: purple;">LDA</strong>
+                        可以推斷出文件的<strong style="color: blue;">主題</strong>分佈和<strong
+                            style="color: blue;">主題</strong>的詞語分佈，幫助理解文本集合的主要內容。
+                    </div>
+                    <img src="../image/Latent Dirichlet Allocation.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">哪種圖表適合用來視覺化<strong
+                        style="background-color: #ffff0030;">兩個連續變數之間的關係</strong>與分佈模式？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">長條圖</strong> (<strong
+                                style="color: red;">Bar Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong
+                                style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong> (<strong
+                                style="color: red;">Histogram</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">散佈圖</strong>將每個數據點表示為二維座標系中的一個點，其中橫軸和縱軸分別代表<strong
+                            style="background-color: #ffff0030;">兩個連續變數</strong>的值。通過觀察點的分佈模式，可以判斷兩個<strong
+                            style="color: blue;">變數</strong>之間是否存在<strong
+                            style="color: blue;">線性關係</strong>、非線性關係、聚集模式或<strong
+                            style="color: blue;">異常值</strong>等。<strong style="color: blue;">長條圖</strong>和<strong
+                            style="color: blue;">圓餅圖</strong>用於<strong style="color: blue;">類別變數</strong>。<strong
+                            style="color: blue;">直方圖</strong>用於視覺化<strong
+                            style="background-color: #ffff0030;">單一連續變數</strong>的頻率分佈。
+                    </div>
+                    <img src="../image/Scatter Plot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列哪一種方法屬於<strong style="color: blue;">集成學習</strong> (<strong
+                        style="color: red;">Ensemble Learning</strong>) 的範疇，透過<strong
+                        style="background-color: #ffff0030;">結合多個決策樹</strong>來提高預測性能？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">K-近鄰演算法</strong> (<strong
+                                style="color: red;">K-Nearest Neighbors</strong>, <strong
+                                style="color: purple;">KNN</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">支持向量機</strong> (<strong
+                                style="color: red;">Support Vector Machine</strong>, <strong
+                                style="color: purple;">SVM</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">隨機森林</strong> (<strong
+                                style="color: red;">Random Forest</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">線性迴歸</strong> (<strong
+                                style="color: red;">Linear Regression</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">集成學習</strong>是一種結合多個學習器（通常稱為<strong
+                            style="color: blue;">基學習器</strong> <strong style="color: red;">Base
+                            Learner</strong>）的預測結果來獲得比單一學習器更好性能的技術。<strong
+                            style="color: blue;">隨機森林</strong>就是一種基於<strong style="color: blue;">決策樹</strong>的<strong
+                            style="color: blue;">集成學習</strong>方法，它通過<strong
+                            style="background-color: #ffff0030;">構建多棵決策樹</strong>（每棵樹在隨機選擇的數據子集和<strong
+                            style="color: blue;">特徵</strong>子集上訓練），並將它們的預測結果進行<strong
+                            style="background-color: #ffff0030;">投票</strong>（<strong
+                            style="color: blue;">分類</strong>）或<strong
+                            style="background-color: #ffff0030;">平均</strong>（<strong
+                            style="color: blue;">迴歸</strong>）來得到最終預測。這通常能有效降低模型的<strong
+                            style="color: blue;">變異數</strong>，提高穩定性和準確性。常見的集成方法還包括 <strong
+                            style="color: red;">Bagging</strong>、<strong style="color: red;">Boosting</strong> (如
+                        <strong style="color: red;">AdaBoost</strong>, <strong style="color: red;">Gradient
+                            Boosting</strong>)。
+                    </div>
+                    <img src="../image/Random Forest.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">關聯規則</strong> "牛奶 → 麵包 [<strong
+                        style="color: blue;">支持度</strong>=20%, <strong style="color: blue;">信賴度</strong>=70%]" 中，70%
+                    的<strong style="color: blue;">信賴度</strong>代表什麼意義？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">所有交易中有 70% 同時包含牛奶和麵包</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">購買了牛奶的交易中，有 70%
+                                也購買了麵包</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">購買了麵包的交易中，有 70% 也購買了牛奶</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">購買牛奶的可能性比購買麵包的可能性高 70%</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">信賴度</strong> (<strong
+                            style="color: red;">Confidence</strong>)衡量的是規則的可靠性。對於規則 X → Y，<strong
+                            style="color: blue;">信賴度</strong>表示包含了 X 的交易中，同時也包含 Y 的比例。因此，Confidence(牛奶 → 麵包) = 70%
+                        意味著<strong style="background-color: #ffff0030;">在所有購買了牛奶的交易記錄裡，有 70% 的交易也包含了麵包</strong>。<strong
+                            style="color: blue;">支持度</strong> 20% 則表示所有交易中有 20% 同時包含了牛奶和麵包。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">"<strong style="color: blue;">向下鑽探</strong>" (<strong
+                        style="color: red;">Drill-down</strong>) 是<strong
+                        style="color: blue;">數據分析</strong>中的一種常用操作，其主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">從<strong
+                                style="background-color: #ffff0030;">匯總層級</strong>的數據深入到<strong
+                                style="background-color: #ffff0030;">更詳細層級</strong>的數據，以探究細節或原因</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將數據從詳細層級<strong style="background-color: #ffff0030;">匯總</strong>到更高層級
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">篩選出符合特定條件的數據子集</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">對數據進行排序</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">向下鑽探</strong>是<strong style="color: blue;">診斷性分析</strong>和<strong
+                            style="color: blue;">數據探索</strong>中常用的互動技術。當使用者在儀表板或報表中看到一個<strong
+                            style="color: blue;">匯總</strong>的<strong
+                            style="color: blue;">指標</strong>（例如，某地區的總銷售額）時，可以通過<strong
+                            style="color: blue;">向下鑽探</strong>操作，查看構成該<strong style="color: blue;">匯總</strong>值的<strong
+                            style="background-color: #ffff0030;">更細粒度的數據</strong>（例如，該地區各個城市的銷售額，或某個城市的各產品類別銷售額），以便更深入地了解情況或找出異常的原因。相對的操作是「<strong
+                            style="color: blue;">向上彙總</strong>」(<strong style="color: red;">Roll-up</strong>)。
+                    </div>
+                    <img src="../image/OLAPcube_drill down roll up.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">下列哪一項不是<strong style="color: blue;">大數據</strong>處理中常用的技術或框架？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">Apache Hadoop</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">Apache Spark</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">NoSQL</strong> <strong
+                                style="color: blue;">數據庫</strong> (例如 <strong style="color: red;">MongoDB</strong>,
+                            <strong style="color: red;">Cassandra</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Microsoft Word</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Apache Hadoop</strong> (包含 <strong
+                            style="color: purple;">HDFS</strong> 和 <strong style="color: red;">MapReduce</strong>) 和
+                        <strong style="color: red;">Apache Spark</strong> 是處理大規模數據集的<strong
+                            style="color: blue;">分散式運算框架</strong>。<strong style="color: purple;">NoSQL</strong> (<strong
+                            style="color: red;">Not Only SQL</strong>) <strong
+                            style="color: blue;">數據庫</strong>是設計用來處理大量、多樣化數據的<strong
+                            style="color: blue;">非關聯式數據庫</strong>。這些都是<strong
+                            style="color: blue;">大數據</strong>生態系統中的常用工具。<strong style="color: red;">Microsoft
+                            Word</strong> 是文書處理軟體，與<strong style="color: blue;">大數據</strong>處理技術無關。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">邏輯迴歸</strong> (<strong
+                        style="color: red;">Logistic Regression</strong>) 主要用於解決哪種類型的問題？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">二元分類</strong> (<strong
+                                style="color: red;">Binary Classification</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">多元迴歸</strong> (<strong
+                                style="color: red;">Multiple Linear Regression</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">分群</strong> (<strong
+                                style="color: red;">Clustering</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">降維</strong> (<strong
+                                style="color: red;">Dimensionality Reduction</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        儘管名稱中有「<strong style="color: blue;">迴歸</strong>」，但<strong
+                            style="color: blue;">邏輯迴歸</strong>實際上是一種廣泛用於<strong
+                            style="background-color: #ffff0030;">二元分類</strong>問題的<strong
+                            style="color: blue;">監督式學習</strong>演算法。它通過 <strong style="color: red;">Sigmoid</strong>
+                        函數將<strong style="color: blue;">線性迴歸</strong>的輸出映射到 (0, 1) 區間，表示樣本屬於正類的機率。根據這個機率和一個<strong
+                            style="color: blue;">閾值</strong>（通常是 0.5），可以將樣本分類為正類或負類。它也可以擴展到多元分類問題（<strong
+                            style="color: red;">Multinomial Logistic Regression</strong>）。
+                    </div>
+                    <img src="../image/Logistic Regression.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">計算網站<strong style="background-color: #ffff0030;">每日獨立訪客數</strong> (<strong
+                        style="color: red;">Daily Unique Visitors</strong>) 屬於哪種分析活動？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">描述性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">診斷性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">預測性分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">處方性分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        計算和報告網站的<strong style="color: blue;">關鍵績效指標</strong> (<strong style="color: red;">Key
+                            Performance Indicators</strong>, <strong style="color: purple;">KPIs</strong>)，如<strong
+                            style="background-color: #ffff0030;">每日獨立訪客數</strong>、頁面瀏覽量、跳出率等，是<strong
+                            style="color: blue;">描述性分析</strong>的核心工作。這些指標<strong
+                            style="background-color: #ffff0030;">總結了過去的網站活動情況</strong>，回答了「發生了什麼？」的問題。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">DBSCAN</strong> 演算法在哪種情況下相較於 <strong
+                        style="color: purple;">K-means</strong> 可能表現更好？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">當<strong style="color: blue;">群集數量 K</strong> 事先已知且<strong
+                                style="color: blue;">群集</strong>大致呈球狀時</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">當<strong style="color: blue;">群集形狀不規則</strong>且數據中可能存在<strong
+                                style="background-color: #ffff0030;">雜訊點</strong> (<strong
+                                style="color: red;">Noise</strong>) 時</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">當數據維度非常高時</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">當需要產生<strong style="color: blue;">群集</strong>的<strong
+                                style="color: blue;">階層結構</strong>時</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">DBSCAN</strong> (<strong style="color: red;">Density-Based
+                            Spatial Clustering of Applications with Noise</strong>) 是一種基於<strong
+                            style="color: blue;">密度</strong>的<strong style="color: blue;">分群</strong>演算法。它的優點在於：<br>
+                        1. 不需要預先指定<strong style="color: blue;">群集數量 K</strong>。<br>
+                        2. 能夠發現<strong style="background-color: #ffff0030;">任意形狀的群集</strong>（<strong
+                            style="color: purple;">K-means</strong> 假設<strong
+                            style="color: blue;">群集</strong>是凸形的，通常是球狀）。<br>
+                        3. 能夠識別並標記出<strong style="background-color: #ffff0030;">雜訊點</strong>（離群值），這些點不屬於任何<strong
+                            style="color: blue;">群集</strong>。<br>
+                        因此，當<strong style="background-color: #ffff0030;">群集形狀不規則</strong>或數據中存在<strong
+                            style="background-color: #ffff0030;">雜訊</strong>時，<strong
+                            style="color: purple;">DBSCAN</strong> 通常比 <strong style="color: purple;">K-means</strong>
+                        更適用。<strong style="color: purple;">K-means</strong> 在<strong
+                            style="color: blue;">群集</strong>呈球狀且 K 已知時效果較好。高維數據可能對兩者都帶來挑戰（<strong
+                            style="color: blue;">維度災難</strong>）。<strong style="color: blue;">階層式分群</strong>用於產生<strong
+                            style="color: blue;">階層結構</strong>。
+                    </div>
+                    <img src="../image/DBSCAN.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">預測模型</strong>中，<strong
+                        style="color: blue;">特徵工程</strong> (<strong style="color: red;">Feature Engineering</strong>)
+                    的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">選擇最終使用的預測演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從原始數據中<strong
+                                style="background-color: #ffff0030;">創建、轉換或選擇</strong>能更好地表達潛在問題的<strong
+                                style="color: blue;">特徵</strong>，以<strong
+                                style="background-color: #ffff0030;">提高模型性能</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">調整模型的<strong style="color: blue;">超參數</strong> (<strong
+                                style="color: red;">Hyperparameters</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">評估模型的<strong style="color: blue;">準確率</strong>和<strong
+                                style="color: blue;">泛化能力</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">特徵工程</strong>是利用領域知識和<strong
+                            style="color: blue;">數據分析</strong>技術，從原始數據中<strong
+                            style="background-color: #ffff0030;">提取、構建或轉換</strong>出對預測目標更有用的<strong
+                            style="color: blue;">特徵</strong>（輸入<strong style="color: blue;">變數</strong>）的過程。好的<strong
+                            style="color: blue;">特徵</strong>能夠更有效地捕捉數據中的模式，從而顯著<strong
+                            style="background-color: #ffff0030;">提升機器學習模型的性能</strong>。這可能包括創建交互項、多項式<strong
+                            style="color: blue;">特徵</strong>、<strong style="color: blue;">對數轉換</strong>、處理日期時間<strong
+                            style="color: blue;">特徵</strong>、<strong
+                            style="color: blue;">文本特徵</strong>提取等。選擇演算法、調整<strong
+                            style="color: blue;">超參數</strong>和評估模型是<strong style="color: blue;">建模</strong>過程中的其他重要步驟。
+                    </div>
+                    <img src="../image/Feature Engineering1.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">哪種圖形常用來視覺化<strong
+                        style="background-color: #ffff0030;">專案任務的排程與依賴關係</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">熱力圖</strong> (<strong
+                                style="color: red;">Heatmap</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">甘特圖</strong> (<strong
+                                style="color: red;">Gantt Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">雷達圖</strong> (<strong
+                                style="color: red;">Radar Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">樹狀圖</strong> (<strong
+                                style="color: red;">Treemap</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">甘特圖</strong>是專案管理中常用的一種圖表，它以<strong
+                            style="color: blue;">水平長條圖</strong>的形式展示專案的<strong
+                            style="color: blue;">時程計畫</strong>。圖表的橫軸代表時間，縱軸列出專案的各項任務。每個長條代表一項任務，其起點和終點對應任務的開始和結束時間，長度表示任務的持續時間。<strong
+                            style="color: blue;">甘特圖</strong>可以清晰地顯示任務的<strong
+                            style="background-color: #ffff0030;">排程、進度</strong>以及任務之間的<strong
+                            style="background-color: #ffff0030;">依賴關係</strong>。
+                    </div>
+                    <img src="../image/Gantt-chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">資料倉儲</strong> (<strong
+                        style="color: red;">Data Warehouse</strong>) 與<strong style="color: blue;">資料湖</strong> (<strong
+                        style="color: red;">Data Lake</strong>) 的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">資料倉儲</strong>只能儲存<strong
+                                style="color: blue;">結構化數據</strong>，<strong style="color: blue;">資料湖</strong>只能儲存<strong
+                                style="color: blue;">非結構化數據</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">資料倉儲</strong>通常儲存<strong
+                                style="background-color: #ffff0030;">經過處理、結構化的數據</strong>用於報表和分析 (<strong
+                                style="background-color: #ffff0030;">Schema-on-Write</strong>)；<strong
+                                style="color: blue;">資料湖</strong>可以儲存<strong
+                                style="background-color: #ffff0030;">各種原始數據</strong> (<strong
+                                style="color: blue;">結構化</strong>、<strong style="color: blue;">半結構化</strong>、<strong
+                                style="color: blue;">非結構化</strong>)，在需要時再進行處理 (<strong
+                                style="background-color: #ffff0030;">Schema-on-Read</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">資料倉儲</strong>處理速度快，<strong
+                                style="color: blue;">資料湖</strong>處理速度慢</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">資料倉儲</strong>主要用於<strong
+                                style="color: blue;">機器學習</strong>，<strong style="color: blue;">資料湖</strong>主要用於<strong
+                                style="color: blue;">商業智慧</strong> (<strong style="color: purple;">BI</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">資料倉儲</strong>和<strong
+                            style="color: blue;">資料湖</strong>都是用於儲存大量數據的架構，但設計理念和用途不同：<br>
+                        <strong style="color: blue;">資料倉儲 (<strong style="color: red;">Data
+                                Warehouse</strong>):</strong> 主要儲存來自不同營運系統、<strong
+                            style="background-color: #ffff0030;">經過處理、結構化的數據</strong>用於報表和分析 (<strong
+                            style="background-color: #ffff0030; color: red;">Schema-on-Write</strong>)；主要目的是支持<strong
+                            style="color: blue;">商業智慧</strong> (<strong style="color: red;">Business
+                            Intelligence</strong>, <strong style="color: red;">BI</strong>) 報表和分析。<br>
+                        <strong style="color: blue;">資料湖 (<strong style="color: red;">Data Lake</strong>):</strong>
+                        可以儲存各種來源的<strong style="background-color: #ffff0030;">原始數據</strong>，包括<strong
+                            style="color: blue;">結構化</strong>、<strong style="color: blue;">半結構化</strong>和<strong
+                            style="color: blue;">非結構化數據</strong>，<strong
+                            style="background-color: #ffff0030;">無需預先定義綱要</strong>。數據的結構和意義在讀取時才被賦予 (<strong
+                            style="background-color: #ffff0030; color: red;">Schema-on-Read</strong>)。它提供了更大的<strong
+                            style="background-color: #ffff0030;">靈活性</strong>，適合<strong
+                            style="color: blue;">數據探索</strong>、<strong style="color: blue;">機器學習</strong>等需要處理<strong
+                            style="color: blue;">原始數據</strong>的場景。<br>
+                        選項 B 準確描述了這個核心差異。
+                    </div>
+                    <img src="../image/data lake data warehouse lakehouse.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當分析師想要比較<strong
+                        style="background-color: #ffff0030;">同一個班級學生在期中考和期末考成績</strong>是否有顯著進步時，應使用哪種<strong
+                        style="color: blue;">統計檢定</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">獨立樣本 t 檢定</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">配對樣本 t 檢定</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">單一樣本 t 檢定</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">變異數分析</strong> (<strong
+                                style="color: purple;">ANOVA</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        這個情況下，比較的是「<strong
+                            style="background-color: #ffff0030;">同一個</strong>」班級的學生在兩個不同時間點（期中考和期末考）的成績。由於比較的對象是同一群人，兩次測量的結果是<strong
+                            style="background-color: #ffff0030;">相關的、非獨立的</strong>，因此應該使用<strong
+                            style="color: blue;">配對樣本 t 檢定</strong> (<strong style="color: red;">Paired Samples
+                            t-test</strong>) 來分析平均分數是否有顯著差異。<strong style="color: blue;">獨立樣本 t
+                            檢定</strong>用於比較兩個不同組別。<strong style="color: blue;">單一樣本 t 檢定</strong>用於比較一組樣本的<strong
+                            style="color: blue;">平均數</strong>與一個已知的<strong style="color: blue;">總體平均數</strong>。<strong
+                            style="color: purple;">ANOVA</strong> 用於比較三組或更多組。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為了避免<strong style="color: blue;">決策樹</strong>模型<strong
+                        style="color: blue;">過度擬合</strong>，可以採取的常用方法不包含下列哪一項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">限制樹的<strong style="color: blue;">最大深度</strong> (<strong
+                                style="color: red;">Max Depth</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">設定節點<strong style="color: blue;">分裂</strong>所需的<strong
+                                style="color: blue;">最小樣本數</strong> (<strong style="color: red;">Min Samples
+                                Split</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">進行<strong style="color: blue;">剪枝</strong> (<strong
+                                style="color: red;">Pruning</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">增加</strong>樹的<strong
+                                style="color: blue;">最大特徵數</strong> (<strong style="color: red;">Max Features</strong>)
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        防止<strong style="color: blue;">決策樹</strong><strong
+                            style="color: blue;">過度擬合</strong>的常用方法（也稱為<strong style="color: blue;">正則化</strong> <strong
+                            style="color: red;">Regularization</strong> 技術）包括：<br>
+                        <strong style="background-color: #ffff0030;">限制樹的最大深度</strong>：控制樹的生長複雜度。<br>
+                        <strong style="background-color: #ffff0030;">設定節點分裂所需的最小樣本數</strong>：避免對少量樣本進行分裂。<br>
+                        設定葉節點所需的最小樣本數 (<strong style="color: red;">Min Samples Leaf</strong>)： 確保每個葉節點包含足夠多的樣本。<br>
+                        <strong style="background-color: #ffff0030;">剪枝 (Pruning)</strong>：在樹完全生長後，移除一些對<strong
+                            style="color: blue;">泛化能力</strong>貢獻不大的分支（後剪枝），或在生長過程中提前停止（預剪枝）。<br>
+                        <strong style="background-color: #ffff0030;">增加</strong>每次分裂時考慮的<strong
+                            style="color: blue;">最大特徵數</strong> (<strong style="color: red;">Max Features</strong>)
+                        反而可能<strong style="background-color: #ffff0030;">增加</strong>模型的複雜度和<strong
+                            style="color: blue;">過擬合</strong>風險（特別是如果設為全部<strong
+                            style="color: blue;">特徵</strong>），<strong
+                            style="background-color: #ffff0030;">限制特徵數</strong>（例如，設為總<strong
+                            style="color: blue;">特徵</strong>數的平方根）是<strong
+                            style="color: blue;">隨機森林</strong>中用於增加樹之間差異性、降低<strong
+                            style="color: blue;">過擬合</strong>的方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">主成分分析</strong> (<strong
+                        style="color: purple;">PCA</strong>) 尋找的是數據中具有<strong
+                        style="background-color: #ffff0030;">最大</strong>什麼特性的方向？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均值</strong> (<strong
+                                style="color: red;">Mean</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">變異數</strong> (<strong
+                                style="color: red;">Variance</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">相關性</strong> (<strong
+                                style="color: red;">Correlation</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">偏度</strong> (<strong
+                                style="color: red;">Skewness</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">主成分分析</strong> (<strong style="color: red;">Principal Component
+                            Analysis</strong>, <strong style="color: purple;">PCA</strong>) 是一種線性<strong
+                            style="color: blue;">降維</strong>技術。它的核心思想是找到一組新的正交基（稱為<strong
+                            style="color: blue;">主成分</strong>），使得數據在這些基上的投影具有<strong
+                            style="background-color: #ffff0030;">最大的變異數</strong>。第一個<strong
+                            style="color: blue;">主成分</strong>是數據<strong style="color: blue;">變異</strong>最大的方向，第二個<strong
+                            style="color: blue;">主成分</strong>是與第一個<strong style="color: blue;">主成分</strong>正交且<strong
+                            style="color: blue;">變異</strong>次大的方向，依此類推。通過保留前幾個<strong
+                            style="color: blue;">變異數</strong>最大的<strong
+                            style="color: blue;">主成分</strong>，可以在損失少量資訊的情況下顯著降低數據<strong
+                            style="color: blue;">維度</strong>。
+                    </div>
+                    <img src="../image/PCA.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">下列哪項是對「<strong style="color: blue;">共線性</strong>」(<strong
+                        style="color: red;">Collinearity</strong>) 或「<strong
+                        style="color: blue;">多重共線性</strong>」(<strong style="color: red;">Multicollinearity</strong>)
+                    問題的正確描述？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的輸入<strong style="color: blue;">特徵</strong>與輸出<strong
+                                style="color: blue;">目標變數</strong>之間存在高度<strong style="color: blue;">相關</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型中的<strong
+                                style="background-color: #ffff0030;">兩個或多個輸入特徵之間存在高度相關性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的<strong style="color: blue;">殘差</strong> (<strong
+                                style="color: red;">Residuals</strong>) 之間存在<strong style="color: blue;">相關性</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據中存在大量的<strong style="color: blue;">異常值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">共線性</strong>（通常指兩個<strong
+                            style="color: blue;">特徵</strong>間）或<strong style="color: blue;">多重共線性</strong>（指多個<strong
+                            style="color: blue;">特徵</strong>間）是指在<strong style="color: blue;">迴歸模型</strong>（尤其是<strong
+                            style="color: blue;">線性迴歸</strong>）的輸入<strong style="color: blue;">特徵</strong>（<strong
+                            style="color: blue;">自變數</strong>）之間存在<strong
+                            style="background-color: #ffff0030;">高度線性相關</strong>的現象。這會導致問題，例如：<br>
+                        難以區分個別<strong style="color: blue;">特徵</strong>對<strong
+                            style="color: blue;">目標變數</strong>的獨立影響。<br>
+                        <strong style="color: blue;">迴歸係數</strong>的估計變得<strong
+                            style="background-color: #ffff0030;">不穩定</strong>，<strong
+                            style="color: blue;">標準誤增大</strong>。<br>
+                        模型的解釋性下降。<br>
+                        雖然我們希望輸入<strong style="color: blue;">特徵</strong>與輸出目標<strong style="color: blue;">相關</strong>（選項
+                        A），但輸入<strong style="color: blue;">特徵</strong>之間的高度<strong style="color: blue;">相關</strong>（選項
+                        B）則是有問題的。<strong style="color: blue;">殘差</strong><strong style="color: blue;">相關</strong>（選項
+                        C）是另一個問題，稱為<strong style="color: blue;">自相關</strong> (<strong
+                            style="color: red;">Autocorrelation</strong>)，常見於<strong
+                            style="color: blue;">時間序列數據</strong>。
+                    </div>
+                    <img src="../image/Multicollinearity.png" class="responsive-img">
+                </div>
+            </div>
+
+
+        </div>
+        <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions();
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", searchQuestions);
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                searchQuestions();
+            } else {
+                // Optional: Trigger search as user types after a small delay
+                // clearTimeout(searchTimeout);
+                // searchTimeout = setTimeout(searchQuestions, 300);
+                // Or search on empty input to reset filters
+                if (document.getElementById("searchInput").value.trim() === '') {
+                    searchQuestions(); // Will call filterQuestions inside if empty
+                }
+            }
+        });
+        // let searchTimeout; // For delayed search on keyup
+
+
+        // Combined filter and visibility function
+        function applyFiltersAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false;
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) {
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    if (searchText !== '') {
+                        noResultsMessage.textContent = '沒有找到符合搜尋條件的題目。';
+                    } else if (direction !== 'all' || stars !== 'all') {
+                        noResultsMessage.textContent = '沒有找到符合篩選條件的題目。';
+                    } else {
+                        // Should not happen if there are questions, maybe hide it
+                        noResultsMessage.style.display = 'none';
+                    }
+                }
+            }
+        }
+
+
+        // Trigger combined function for filters and search
+        function filterQuestions() {
+            applyFiltersAndSearch();
+        }
+
+        function searchQuestions() {
+            applyFiltersAndSearch();
+        }
+
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (no change needed from example, just for interaction feedback)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Optional: Add visual feedback on click
+                // Example: temporarily change background
+                // option.style.backgroundColor = '#d1e7ff';
+                // setTimeout(() => {
+                //    option.style.backgroundColor = ''; // Reset after a short time
+                // }, 200);
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply filters (and potentially empty search) on load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        // Ensure explanations start visible as per initial state
+        let initialExplanations = document.querySelectorAll(".explanation-container");
+        initialExplanations.forEach(exp => exp.style.display = "block");
+
+    </script>
+</body>
+
+</html>

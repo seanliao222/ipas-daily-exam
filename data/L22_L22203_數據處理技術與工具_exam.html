@@ -1,0 +1,3130 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22203 數據處理技術與工具</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Changed default text color to black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-items: flex-start;
+            /* Align items to the start */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .option-text {
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.7;
+            /* Increased further */
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* Optional: Style for no results message */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            display: none;
+            /* Hidden by default */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22203 數據處理技術與工具</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">數據清理基礎與缺失值處理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">異常值與重複數據處理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">數據轉換：標準化與歸一化</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">數據轉換：離散化與聚合</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">數據整合與合併</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">數據歸約與抽樣</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">常用數據處理工具</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">ETL/ELT流程概念</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">數據清理</strong>過程中，面對數據集中的<strong
+                        style="color: blue;">缺失值</strong>（<strong style="color: red;">Missing
+                        Values</strong>），以下哪種處理方式最為簡單直接，但可能<strong style="background-color: #ffff0030;">損失最多資訊</strong>？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">直接刪除</strong>包含<strong
+                                style="color: blue;">缺失值</strong>的整筆紀錄（<strong style="color: red;">Listwise
+                                Deletion</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用該欄位（變數）的<strong style="color: blue;">平均值</strong>或<strong
+                                style="color: blue;">中位數</strong><strong
+                                style="background-color: #ffff0030;">填補</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用該欄位的<strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）<strong
+                                style="background-color: #ffff0030;">填補</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用<strong style="color: blue;">迴歸模型</strong>（<strong
+                                style="color: red;">Regression Model</strong>）預測並<strong
+                                style="background-color: #ffff0030;">填補</strong><strong
+                                style="color: blue;">缺失值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="background-color: #ffff0030;">直接刪除包含任何缺失值的紀錄</strong>（或稱為 <strong
+                            style="color: red;">Listwise Deletion</strong> / <strong style="color: red;">Complete Case
+                            Analysis</strong>）是最簡單的處理方法，不需要進行估計或假設。然而，如果<strong
+                            style="color: blue;">缺失值</strong>比例較高，或者缺失模式並非完全隨機，這種方法會導致<strong
+                            style="background-color: #ffff0030;">大量數據被丟棄</strong>，可能嚴重<strong
+                            style="background-color: #ffff0030;">減少樣本數</strong>，並可能引入<strong
+                            style="background-color: #ffff0030;">偏差</strong>（<strong
+                            style="color: red;">Bias</strong>），因為被刪除的紀錄可能具有某些未觀察到的共同特性。其他選項（B, C, D）是<strong
+                            style="background-color: #ffff0030;">填補</strong>（<strong
+                            style="color: red;">Imputation</strong>）方法，旨在保留數據紀錄，但需要基於一定的假設來估計<strong
+                            style="color: blue;">缺失值</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在偵測<strong style="color: blue;">數值型數據</strong>中的<strong
+                        style="color: blue;">異常值</strong>（<strong
+                        style="color: red;">Outliers</strong>）時，以下哪種方法是基於數據分佈的<strong
+                        style="background-color: #ffff0030;">統計特性</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算欄位值的<strong style="color: blue;">雜湊值</strong>（<strong
+                                style="color: red;">Hash Value</strong>）進行比較</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用<strong style="color: blue;">四分位距</strong>（<strong
+                                style="color: red;">Interquartile Range</strong>, <strong
+                                style="color: purple;">IQR</strong>）定義上下限</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">直接比較相鄰兩筆紀錄的差異</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將數據轉換為<strong style="color: blue;">獨熱編碼</strong>（<strong
+                                style="color: red;">One-Hot Encoding</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        使用 <strong style="color: purple;">IQR</strong> 來偵測<strong
+                            style="color: blue;">異常值</strong>是一種常見的<strong
+                            style="background-color: #ffff0030;">統計方法</strong>，特別適用於非嚴格常態分佈的數據。計算方式為：找出<strong
+                            style="color: blue;">第一四分位數</strong>（<strong style="color: red;">Q1</strong>）和<strong
+                            style="color: blue;">第三四分位數</strong>（<strong style="color: red;">Q3</strong>），計算 <strong
+                            style="color: purple;">IQR</strong> = <strong style="color: red;">Q3</strong> - <strong
+                            style="color: red;">Q1</strong>。通常將低於 <strong style="background-color: #ffff0030;">Q1 - 1.5
+                            * IQR</strong> 或高於 <strong style="background-color: #ffff0030;">Q3 + 1.5 * IQR</strong>
+                        的值視為<strong style="color: blue;">異常值</strong>。選項A用於偵測重複。選項C可能用於<strong
+                            style="color: blue;">時間序列</strong>分析但非標準<strong
+                            style="color: blue;">異常值</strong>偵測。選項D是<strong style="color: blue;">類別變數</strong>的處理方式。
+                    </div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">將數據<strong style="color: blue;">特徵</strong>（<strong
+                        style="color: red;">Feature</strong>）的值<strong style="background-color: #ffff0030;">縮放到 [0, 1] 或
+                        [-1, 1] 區間</strong>內的過程，通常稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">標準化</strong>（<strong
+                                style="color: red;">Standardization</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">歸一化</strong>（<strong
+                                style="color: red;">Normalization</strong> 或 <strong style="color: red;">Min-Max
+                                Scaling</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">離散化</strong>（<strong
+                                style="color: red;">Discretization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">聚合</strong>（<strong
+                                style="color: red;">Aggregation</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">歸一化</strong>（<strong
+                            style="color: red;">Normalization</strong>），特別是<strong
+                            style="color: blue;">最小-最大縮放</strong>（<strong style="color: red;">Min-Max
+                            Scaling</strong>），是將原始數據線性地轉換到指定的範圍內，通常是 <strong style="background-color: #ffff0030;">[0, 1]
+                            或 [-1, 1]</strong>。計算公式為：X_scaled = (X - X_min) / (X_max - X_min)。<strong
+                            style="color: blue;">標準化</strong>（<strong
+                            style="color: red;">Standardization</strong>）則是將數據轉換為<strong
+                            style="background-color: #ffff0030;">平均值為0、標準差為1</strong>的分佈，公式為：X_scaled = (X - mean) /
+                        std_dev。<strong style="color: blue;">離散化</strong>是將連續數值轉換為有限個區間或類別。<strong
+                            style="color: blue;">聚合</strong>是將多個數據點匯總成單一值（如求和、平均）。
+                    </div>
+                    <img src="../image/Standardization and Normalization for feature scaling.webp"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Python</strong> 程式語言中，哪個<strong
+                        style="color: blue;">函式庫</strong>（<strong style="color: red;">Library</strong>）被廣泛用於<strong
+                        style="color: blue;">數據處理</strong>、操作和分析，特別是處理<strong
+                        style="color: blue;">表格式數據</strong>（<strong style="color: red;">Tabular Data</strong>）？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">NumPy</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">Pandas</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">Matplotlib</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Scikit-learn</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Pandas</strong> 是 <strong style="color: red;">Python</strong>
+                        中進行<strong style="background-color: #ffff0030;">數據處理和分析</strong>的核心<strong
+                            style="color: blue;">函式庫</strong>。它提供了兩種主要的數據結構：<strong
+                            style="background-color: #ffff0030;">Series</strong>（一維陣列）和 <strong
+                            style="background-color: #ffff0030;">DataFrame</strong>（二維表格），並內建了大量用於數據讀取、寫入、清理、轉換、合併、重塑、<strong
+                            style="color: blue;">聚合</strong>等操作的功能。<strong style="color: red;">NumPy</strong>
+                        主要用於數值計算和處理多維陣列。<strong style="color: red;">Matplotlib</strong> 用於數據視覺化。<strong
+                            style="color: red;">Scikit-learn</strong> 是<strong style="color: blue;">機器學習</strong><strong
+                            style="color: blue;">函式庫</strong>。
+                    </div>
+                    <img src="../image/pandas.png" class="responsive-img">
+                    <img src="../image/Pandas_Series_DataFrame.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">數據倉儲</strong>（<strong
+                        style="color: red;">Data Warehousing</strong>）的 <strong style="color: purple;">ETL</strong>
+                    流程中，"<strong style="color: purple;">T</strong>" 代表哪個步驟？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">萃取</strong>（<strong
+                                style="color: red;">Extract</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">轉換</strong>（<strong
+                                style="color: red;">Transform</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">載入</strong>（<strong
+                                style="color: red;">Load</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">測試（<strong style="color: red;">Test</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">ETL</strong> 是 <strong
+                            style="color: red;">Extract</strong>（<strong style="color: blue;">萃取</strong>）、<strong
+                            style="color: red;">Transform</strong>（<strong style="color: blue;">轉換</strong>）、<strong
+                            style="color: red;">Load</strong>（<strong style="color: blue;">載入</strong>）三個字的縮寫，是建構<strong
+                            style="color: blue;">數據倉儲</strong>的經典流程。
+                        <strong style="color: purple;">E</strong> (<strong
+                            style="color: red;">Extract</strong>)：從各種異質的來源系統（如<strong
+                            style="color: blue;">資料庫</strong>、檔案、<strong style="color: purple;">API</strong>）讀取數據。
+                        <strong style="color: purple;">T</strong> (<strong
+                            style="color: red;">Transform</strong>)：對<strong
+                            style="color: blue;">萃取</strong>的數據進行<strong
+                            style="background-color: #ffff0030;">清理、整合、標準化、計算、聚合</strong>等<strong
+                            style="color: blue;">轉換</strong>操作，使其符合目標<strong style="color: blue;">數據倉儲</strong>的結構和分析需求。
+                        <strong style="color: purple;">L</strong> (<strong style="color: red;">Load</strong>)：將<strong
+                            style="color: blue;">轉換</strong>後的數據<strong style="color: blue;">載入</strong>到目標<strong
+                            style="color: blue;">數據倉儲</strong>中。
+                    </div>
+                    <img src="../image/ETL.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">與<strong style="color: blue;">歸一化</strong>（<strong
+                        style="color: red;">Normalization</strong>）相比，<strong style="color: blue;">標準化</strong>（<strong
+                        style="color: red;">Standardization</strong>）的主要優勢是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">總是將數據範圍限制在 [0, 1] 之間</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">對數據中的<strong style="color: blue;">異常值</strong>（<strong
+                                style="color: red;">Outliers</strong>）<strong
+                                style="background-color: #ffff0030;">相對不敏感</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">計算過程更為簡單快速</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">適用於所有類型的<strong style="color: blue;">機器學習演算法</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">標準化</strong>（<strong style="color: red;">Z-score
+                            Normalization</strong>）是通過減去<strong style="color: blue;">平均值</strong>並除以<strong
+                            style="color: blue;">標準差</strong>來轉換數據。因為<strong style="color: blue;">平均值</strong>和<strong
+                            style="color: blue;">標準差</strong>不像<strong style="color: blue;">最小值</strong>和<strong
+                            style="color: blue;">最大值</strong>那樣容易受到極端值（<strong
+                            style="color: blue;">異常值</strong>）的劇烈影響，所以<strong
+                            style="color: blue;">標準化</strong>通常對<strong style="color: blue;">異常值</strong>更為<strong
+                            style="background-color: #ffff0030;">穩健</strong>（<strong
+                            style="color: red;">Robust</strong>）。<strong style="color: blue;">歸一化</strong>（<strong
+                            style="color: red;">Min-Max Scaling</strong>）使用的<strong
+                            style="color: blue;">最小值</strong>和<strong style="color: blue;">最大值</strong>會直接被<strong
+                            style="color: blue;">異常值</strong>拉伸，導致大部分數據被壓縮到一個很小的範圍內。<strong
+                            style="color: blue;">標準化</strong>後的數據沒有固定的範圍限制。對於某些基於<strong
+                            style="background-color: #ffff0030;">距離</strong>的演算法（如 <strong
+                            style="color: purple;">K-Means</strong>、<strong
+                            style="color: purple;">SVM</strong>）或需要假設數據呈常態分佈的演算法，<strong
+                            style="color: blue;">標準化</strong>通常更受青睞。
+                    </div>
+                    <img src="../image/Standardization and Normalization for feature scaling.webp"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Pandas</strong> <strong
+                        style="color: red;">DataFrame</strong> 中，若要根據某個或多個<strong
+                        style="background-color: #ffff0030;">共同欄位</strong>（<strong style="color: red;">Key
+                        Columns</strong>）將兩個 <strong style="color: red;">DataFrame</strong> <strong
+                        style="background-color: #ffff0030;">合併</strong>起來，類似於<strong
+                        style="color: blue;">資料庫</strong>中的 <strong style="background-color: #ffff0030;">JOIN</strong>
+                    操作，應使用哪個函數？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`merge()`</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`concat()`</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`append()`</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`groupby()`</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Pandas</strong> 的 `merge()` 函數提供了類似 <strong
+                            style="color: purple;">SQL</strong> <strong style="color: red;">JOIN</strong>
+                        的功能，可以根據指定的鍵（`on` 參數）或索引將兩個 <strong style="color: red;">DataFrame</strong> <strong
+                            style="background-color: #ffff0030;">橫向合併</strong>。它支持多種合併方式，如<strong
+                            style="color: blue;">內連接</strong>（`inner`）、<strong
+                            style="color: blue;">左連接</strong>（`left`）、<strong
+                            style="color: blue;">右連接</strong>（`right`）、<strong
+                            style="color: blue;">外連接</strong>（`outer`）。`concat()` 主要用於沿著某個軸（行或列）將多個 <strong
+                            style="color: red;">DataFrame</strong> <strong
+                            style="background-color: #ffff0030;">堆疊</strong>起來。`append()` 是 `concat()` 的一個簡化版本，主要用於在
+                        <strong style="color: red;">DataFrame</strong> 末尾追加行。`groupby()` 用於分組聚合操作。
+                    </div>
+                    <img src="../image/pandas merge.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">將<strong
+                        style="background-color: #ffff0030;">連續的數值型特徵</strong>（如年齡）轉換為有限個區間或類別（如 "青年", "中年",
+                    "老年"）的過程稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">特徵縮放</strong>（<strong
+                                style="color: red;">Feature Scaling</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">獨熱編碼</strong>（<strong
+                                style="color: red;">One-Hot Encoding</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">離散化</strong>（<strong
+                                style="color: red;">Discretization</strong>）或 <strong
+                                style="color: blue;">分箱</strong>（<strong style="color: red;">Binning</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">主成分分析</strong>（<strong
+                                style="color: red;">Principal Component Analysis</strong>, <strong
+                                style="color: purple;">PCA</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">離散化</strong>（<strong style="color: red;">Discretization</strong>）或
+                        <strong style="color: blue;">分箱</strong>（<strong style="color: red;">Binning</strong>）是將<strong
+                            style="background-color: #ffff0030;">連續變數轉換為離散變數</strong>的過程。這可以通過定義固定的區間寬度（<strong
+                            style="color: red;">Equal Width Binning</strong>）或確保每個區間包含大致相同數量的樣本（<strong
+                            style="color: red;">Equal Frequency Binning</strong>）來實現。這樣做有時可以簡化模型，處理非線性關係，或將<strong
+                            style="color: blue;">數值特徵</strong>用於需要類別輸入的演算法。<strong
+                            style="color: blue;">特徵縮放</strong>是改變數值範圍。<strong
+                            style="color: blue;">獨熱編碼</strong>用於處理<strong style="color: blue;">類別變數</strong>。<strong
+                            style="color: purple;">PCA</strong> 是<strong style="color: blue;">降維</strong>技術。
+                    </div>
+                    <img src="../image/Discretization_Binning.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在處理<strong style="color: blue;">類別型數據</strong>（<strong
+                        style="color: red;">Categorical Data</strong>）的<strong
+                        style="color: blue;">缺失值</strong>時，以下哪種<strong style="color: blue;">填補</strong>方法最常用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用<strong style="color: blue;">平均值</strong>（<strong
+                                style="color: red;">Mean</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用<strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用<strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用<strong style="color: blue;">最小值</strong>（<strong
+                                style="color: red;">Minimum</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        對於<strong style="background-color: #ffff0030;">類別型數據</strong>（例如 "顏色"、"城市" 等），計算<strong
+                            style="color: blue;">平均值</strong>或<strong
+                            style="color: blue;">中位數</strong>通常沒有意義。最常用且簡單的<strong
+                            style="color: blue;">填補</strong>方法是使用該欄位中<strong
+                            style="background-color: #ffff0030;">出現頻率最高的類別</strong>，即<strong
+                            style="color: blue;">眾數</strong>（<strong style="color: red;">Mode</strong>），來<strong
+                            style="color: blue;">填補</strong><strong style="color: blue;">缺失值</strong>。雖然這也可能引入<strong
+                            style="color: blue;">偏差</strong>，但在沒有更複雜的模型或領域知識的情況下，這是一種常用的基準方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據清理</strong>中偵測<strong
+                        style="color: blue;">重複數據</strong>（<strong style="color: red;">Duplicate
+                        Data</strong>）時，通常基於什麼來判斷兩筆紀錄是否重複？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">紀錄的<strong style="color: blue;">時間戳記</strong>（<strong
+                                style="color: red;">Timestamp</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">紀錄的記憶體位址（<strong style="color: red;">Memory Address</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">紀錄中<strong style="background-color: #ffff0030;">所有欄位</strong>或<strong
+                                style="background-color: #ffff0030;">指定鍵值欄位</strong>（<strong style="color: red;">Key
+                                Columns</strong>）的值<strong style="background-color: #ffff0030;">完全相同</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">紀錄的<strong style="color: blue;">數值型欄位</strong>的<strong
+                                style="color: blue;">平均值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        偵測<strong style="background-color: #ffff0030;">完全重複的紀錄</strong>通常是比較兩筆紀錄的<strong
+                            style="background-color: #ffff0030;">所有欄位值是否都一模一樣</strong>。在某些情況下，也可以根據業務邏輯定義一組<strong
+                            style="background-color: #ffff0030;">關鍵欄位</strong>（例如 "用戶ID" + "訂單日期"），如果這些<strong
+                            style="background-color: #ffff0030;">關鍵欄位的值相同</strong>，則認為是<strong
+                            style="color: blue;">重複紀錄</strong>。選項A、B、D 不是判斷數據內容是否重複的標準方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions 11-50 -->
+
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">主成分分析</strong>（<strong
+                        style="color: red;">Principal Component Analysis</strong>, <strong
+                        style="color: purple;">PCA</strong>）是一種常用的<strong style="color: blue;">數據處理</strong>技術，其主要目的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">降低數據的維度</strong>（<strong
+                                style="color: red;">Dimensionality Reduction</strong>），同時盡可能<strong
+                                style="background-color: #ffff0030;">保留原始數據的變異性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將數據轉換為<strong style="color: blue;">平均值</strong>為0，<strong
+                                style="color: blue;">標準差</strong>為1</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">填補</strong>數據集中的<strong
+                                style="color: blue;">缺失值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">偵測並移除數據中的<strong style="color: blue;">異常值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">PCA</strong> 是一種非監督式的線性變換技術，常用於<strong
+                            style="background-color: #ffff0030;">數據降維</strong>。它通過尋找數據中<strong
+                            style="background-color: #ffff0030;">方差最大的方向</strong>（<strong
+                            style="color: blue;">主成分</strong>），將原始的高維數據投影到一個新的低維子空間上，同時目標是最大化<strong
+                            style="background-color: #ffff0030;">保留原始數據的變異信息</strong>。<strong
+                            style="color: blue;">降維</strong>有助於減少計算複雜度、去除<strong
+                            style="color: blue;">雜訊</strong>、視覺化高維數據等。選項B是<strong
+                            style="color: blue;">標準化</strong>。選項C是<strong
+                            style="color: blue;">缺失值處理</strong>。選項D是<strong style="color: blue;">異常值處理</strong>。
+                    </div>
+                    <img src="../image/PCA.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當你需要將多個<strong
+                        style="background-color: #ffff0030;">結構相同</strong>（欄位名稱和類型一致）的數據檔案（例如，每個月的銷售紀錄檔）<strong
+                        style="background-color: #ffff0030;">垂直堆疊</strong>成一個大的數據集時，<strong
+                        style="color: red;">Pandas</strong> 中的哪個函數最適合？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`merge()`</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`concat()`</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`pivot_table()`</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`join()`</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `concat()` 函數用於沿著指定的軸（預設是 axis=0，即<strong
+                            style="background-color: #ffff0030;">垂直堆疊</strong>行）將多個 <strong
+                            style="color: red;">Pandas</strong> 物件（如 <strong style="color: red;">DataFrame</strong> 或
+                        <strong style="color: red;">Series</strong>）連接起來。當數據結構相同，需要將它們<strong
+                            style="background-color: #ffff0030;">上下堆疊</strong>時，`concat()` 是最常用的方法。`merge()` 和 `join()`
+                        主要用於基於鍵值的<strong style="background-color: #ffff0030;">橫向合併</strong>。`pivot_table()` 用於創建<strong
+                            style="color: blue;">數據透視表</strong>進行<strong style="color: blue;">聚合</strong>。
+                    </div>
+                    <img src="../image/pandas-concat-dataframes.png" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Apache Spark</strong> 是一個廣泛用於<strong
+                        style="color: blue;">大數據處理</strong>的<strong style="color: blue;">分散式運算框架</strong>。其核心的<strong
+                        style="color: blue;">數據抽象</strong>是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">DataFrame</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">彈性分散式資料集</strong>（<strong
+                                style="color: red;">Resilient Distributed Dataset</strong>, <strong
+                                style="color: purple;">RDD</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">MapReduce</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">Hadoop 分散式檔案系統</strong>（<strong
+                                style="color: red;">Hadoop Distributed File System</strong>, <strong
+                                style="color: purple;">HDFS</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">RDD</strong> 是 <strong style="color: red;">Spark</strong>
+                        最早也是最<strong style="background-color: #ffff0030;">核心的數據抽象</strong>。它代表一個<strong
+                            style="background-color: #ffff0030;">不可變</strong>（<strong
+                            style="color: red;">Immutable</strong>）、<strong
+                            style="background-color: #ffff0030;">可分區</strong>（<strong
+                            style="color: red;">Partitioned</strong>）、<strong
+                            style="background-color: #ffff0030;">可並行操作</strong>（<strong
+                            style="color: red;">Parallelizable</strong>）的元素集合。<strong
+                            style="color: purple;">RDD</strong> 提供了豐富的<strong
+                            style="background-color: #ffff0030;">轉換</strong>（<strong
+                            style="color: red;">Transformations</strong>，如 map, filter, reduceByKey）和<strong
+                            style="background-color: #ffff0030;">動作</strong>（<strong
+                            style="color: red;">Actions</strong>，如 count, collect, save）操作接口，並具有容錯性。雖然 <strong
+                            style="color: red;">Spark</strong> 後續引入了 <strong style="color: red;">DataFrame</strong> 和
+                        <strong style="color: red;">Dataset</strong> 等更高級、更優化的 <strong
+                            style="color: purple;">API</strong>，但 <strong style="color: purple;">RDD</strong>
+                        仍然是其底層基礎。<strong style="color: red;">MapReduce</strong> 是 <strong
+                            style="color: red;">Hadoop</strong> 的計算模型。<strong style="color: purple;">HDFS</strong> 是
+                        <strong style="color: red;">Hadoop</strong> 的儲存系統。<strong style="color: red;">DataFrame</strong>
+                        也是 <strong style="color: red;">Spark</strong> 的一種數據結構，但 <strong
+                            style="color: purple;">RDD</strong> 是更核心的抽象。
+                    </div>
+                    <img src="../image/Resilient Distributed Dataset spark.png" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在進行<strong style="color: blue;">數據聚合</strong>（<strong
+                        style="color: red;">Aggregation</strong>）時，`<strong style="color: purple;">GROUP BY</strong>`
+                    操作通常與哪種類型的函數結合使用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">排序函數（如 `SORT`, `ORDER BY`）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">聚合函數</strong>（如 `SUM`, `AVG`, `COUNT`,
+                            `MAX`, `MIN`）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">視窗函數</strong>（<strong
+                                style="color: red;">Window Functions</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">字串處理函數（如 `CONCAT`, `SUBSTR`）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `<strong style="color: purple;">GROUP BY</strong>` 操作的目的是將數據集中具有相同鍵值的紀錄<strong
+                            style="background-color: #ffff0030;">分組</strong>，然後對每個組應用一個或多個函數。這些函數通常是<strong
+                            style="background-color: #ffff0030;">聚合函數</strong>，它們將每個組內的多個值<strong
+                            style="background-color: #ffff0030;">匯總</strong>成一個單一的結果值（例如，計算每個部門的總銷售額、每個產品的平均評分等）。排序函數用於改變紀錄順序。<strong
+                            style="color: blue;">視窗函數</strong>也在分組數據上操作，但不像<strong
+                            style="color: blue;">聚合函數</strong>那樣將多行壓縮為一行。字串函數用於處理文字。
+                    </div>
+                    <img src="../image/GROUP_BY-avg.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">假設一個數據欄位存在<strong style="color: blue;">缺失值</strong>，且該欄位為<strong
+                        style="color: blue;">數值型</strong>，數據分佈呈現明顯的<strong
+                        style="background-color: #ffff0030;">右偏斜</strong>（<strong
+                        style="color: red;">Right-skewed</strong>）。在這種情況下，使用哪種統計量<strong
+                        style="color: blue;">填補</strong><strong style="color: blue;">缺失值</strong>通常比使用<strong
+                        style="color: blue;">平均值</strong><strong style="background-color: #ffff0030;">更穩健</strong>？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均值</strong>（<strong
+                                style="color: red;">Mean</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">標準差</strong>（<strong
+                                style="color: red;">Standard Deviation</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        當數據分佈<strong style="background-color: #ffff0030;">偏斜</strong>時，<strong
+                            style="color: blue;">平均值</strong>會受到極端值（在<strong
+                            style="background-color: #ffff0030;">右偏斜</strong>情況下是大的數值）的影響而被拉向偏斜的方向。<strong
+                            style="color: blue;">中位數</strong>是將數據排序後位於中間位置的值，它<strong
+                            style="background-color: #ffff0030;">不受極端值的影響</strong>，因此對於偏斜分佈的數據，<strong
+                            style="color: blue;">中位數</strong>更能代表數據的集中趨勢。使用<strong
+                            style="color: blue;">中位數</strong><strong style="color: blue;">填補</strong><strong
+                            style="color: blue;">缺失值</strong>在這種情況下通常比使用<strong
+                            style="color: blue;">平均值</strong>更為<strong
+                            style="background-color: #ffff0030;">穩健</strong>。<strong
+                            style="color: blue;">眾數</strong>主要用於<strong style="color: blue;">類別數據</strong>。<strong
+                            style="color: blue;">標準差</strong>是衡量數據離散程度的指標，不用於<strong style="color: blue;">填補</strong>。
+                    </div>
+                    <img src="../image/skewness-left-right-positive-negative.png" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">相較於傳統的 <strong style="color: purple;">ETL</strong> (<strong
+                        style="color: red;">Extract</strong>, <strong style="color: red;">Transform</strong>, <strong
+                        style="color: red;">Load</strong>)，<strong style="color: purple;">ELT</strong> (<strong
+                        style="color: red;">Extract</strong>, <strong style="color: red;">Load</strong>, <strong
+                        style="color: red;">Transform</strong>) 流程的主要區別和潛在優勢是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">ELT</strong> 完全省略了<strong
+                                style="color: blue;">轉換</strong>（<strong style="color: red;">Transform</strong>）步驟</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">ELT</strong> 先將<strong
+                                style="background-color: #ffff0030;">原始數據載入目標系統</strong>（如<strong
+                                style="color: blue;">數據湖</strong>或現代<strong
+                                style="color: blue;">數據倉儲</strong>），再利用<strong
+                                style="background-color: #ffff0030;">目標系統的運算能力進行轉換</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">ELT</strong> 只能處理<strong
+                                style="color: blue;">結構化數據</strong>，不能處理<strong
+                                style="color: blue;">半結構化</strong>或<strong style="color: blue;">非結構化數據</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">ELT</strong> 的數據載入速度一定比 <strong
+                                style="color: purple;">ETL</strong> 慢</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">ELT</strong> 改變了 <strong style="color: purple;">T</strong> 和
+                        <strong style="color: purple;">L</strong> 的順序。它先將從來源系統<strong
+                            style="color: blue;">萃取</strong>出的<strong
+                            style="background-color: #ffff0030;">原始數據</strong>（或經過少量預處理的數據）直接<strong
+                            style="background-color: #ffff0030;">載入</strong>到目標儲存系統（通常是具有強大運算能力的<strong
+                            style="color: blue;">雲端數據倉儲</strong>或<strong style="color: blue;">數據湖</strong>）。然後，<strong
+                            style="background-color: #ffff0030;">數據轉換工作在目標系統內部進行</strong>，利用其可擴展的計算資源。優勢包括：<strong
+                            style="color: blue;">載入</strong>速度可能更快（因為未經複雜<strong
+                            style="color: blue;">轉換</strong>），可以<strong
+                            style="background-color: #ffff0030;">保留原始數據</strong>以供未來不同的<strong
+                            style="color: blue;">轉換</strong>需求，更適合處理大量、多樣化的數據。<strong
+                            style="color: purple;">ETL</strong> 則需要在<strong style="color: blue;">載入</strong>前完成所有<strong
+                            style="color: blue;">轉換</strong>，通常需要一個獨立的 <strong style="color: purple;">ETL</strong> 伺服器。
+                    </div>
+                    <img src="../image/ETL vs ELT.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在處理非常大的數據集時，為了降低分析或模型訓練的計算成本，可以從原始數據集中<strong
+                        style="background-color: #ffff0030;">選取一部分代表性子集</strong>的過程稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據聚合</strong>（<strong
+                                style="color: red;">Data Aggregation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據整合</strong>（<strong
+                                style="color: red;">Data Integration</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">數據抽樣</strong>（<strong
+                                style="color: red;">Data Sampling</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據標準化</strong>（<strong
+                                style="color: red;">Data Standardization</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據抽樣</strong>是從大的數據母體中<strong
+                            style="background-color: #ffff0030;">選取一部分樣本</strong>（子集）的過程，目的是用這個子集來推斷母體的特性或進行初步的分析與建模。常見的抽樣方法包括<strong
+                            style="color: blue;">簡單隨機抽樣</strong>（<strong style="color: red;">Simple Random
+                            Sampling</strong>）、<strong style="color: blue;">分層抽樣</strong>（<strong
+                            style="color: red;">Stratified Sampling</strong>）、<strong
+                            style="color: blue;">系統抽樣</strong>（<strong style="color: red;">Systematic
+                            Sampling</strong>）等。<strong style="color: blue;">抽樣</strong>可以在保證一定<strong
+                            style="background-color: #ffff0030;">代表性</strong>的前提下，顯著<strong
+                            style="background-color: #ffff0030;">減少處理數據所需的時間和資源</strong>。<strong
+                            style="color: blue;">聚合</strong>是<strong style="color: blue;">匯總</strong>數據，<strong
+                            style="color: blue;">整合</strong>是<strong style="color: blue;">合併</strong>數據，<strong
+                            style="color: blue;">標準化</strong>是<strong style="color: blue;">轉換</strong>數據尺度。
+                    </div>
+                    <img src="../image/Data Sampling.svg" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">以下哪種<strong style="color: blue;">視覺化圖表</strong>最常用於直觀地檢查<strong
+                        style="color: blue;">數值變數</strong>是否存在<strong style="color: blue;">異常值</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong>（<strong
+                                style="color: red;">Pie Chart</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">箱形圖</strong>（<strong
+                                style="color: red;">Box Plot</strong> / <strong style="color: red;">Box-and-Whisker
+                                Plot</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">堆疊長條圖</strong>（<strong
+                                style="color: red;">Stacked Bar Chart</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">熱力圖</strong>（<strong
+                                style="color: red;">Heatmap</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">箱形圖</strong>是一種非常有效的<strong
+                            style="color: blue;">視覺化工具</strong>，用於展示數據的分佈特性，包括<strong
+                            style="color: blue;">中位數</strong>、<strong style="color: blue;">四分位數</strong>（<strong
+                            style="color: red;">Q1</strong>, <strong style="color: red;">Q3</strong>）、全距以及<strong
+                            style="background-color: #ffff0030;">異常值</strong>。箱體代表 <strong
+                            style="color: purple;">IQR</strong>（<strong style="color: red;">Q1</strong> 到 <strong
+                            style="color: red;">Q3</strong> 的範圍），箱外的線（鬚）通常延伸到 <strong style="color: red;">Q1</strong> -
+                        1.5*<strong style="color: purple;">IQR</strong> 和 <strong style="color: red;">Q3</strong> +
+                        1.5*<strong style="color: purple;">IQR</strong> 的範圍內（或數據的最小值/最大值，如果在該範圍內）。<strong
+                            style="background-color: #ffff0030;">超出這些鬚線的點通常被標記出來</strong>，直觀地指示了潛在的<strong
+                            style="color: blue;">異常值</strong>。<strong style="color: blue;">圓餅圖</strong>和<strong
+                            style="color: blue;">長條圖</strong>主要用於比較<strong
+                            style="color: blue;">類別數據</strong>的比例或數量。<strong
+                            style="color: blue;">熱力圖</strong>用於展示矩陣數據的大小關係。
+                    </div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Hadoop</strong> 生態系統中，主要負責<strong
+                        style="background-color: #ffff0030;">資源管理</strong>和<strong
+                        style="background-color: #ffff0030;">任務調度</strong>的元件是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">HDFS</strong> (<strong
+                                style="color: red;">Hadoop Distributed File System</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">YARN</strong> (<strong
+                                style="color: red;">Yet Another Resource Negotiator</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">MapReduce</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Hive</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">YARN</strong> 是 <strong style="color: red;">Hadoop 2.x</strong>
+                        版本後引入的<strong style="color: blue;">資源管理系統</strong>。它將 <strong style="color: red;">MapReduce
+                            1.x</strong> 中 <strong style="color: red;">JobTracker</strong> 的<strong
+                            style="color: blue;">資源管理</strong>和<strong style="color: blue;">任務調度</strong>功能分離開來。<strong
+                            style="color: purple;">YARN</strong> 負責管理 <strong style="color: red;">Hadoop</strong>
+                        叢集中的計算資源（<strong style="color: purple;">CPU</strong>、記憶體等），並根據應用程式（如 <strong
+                            style="color: red;">MapReduce</strong>、<strong style="color: red;">Spark</strong>、<strong
+                            style="color: red;">Flink</strong> 等）的需求進行分配和調度。<strong style="color: purple;">HDFS</strong>
+                        是<strong style="color: blue;">分散式儲存系統</strong>。<strong style="color: red;">MapReduce</strong>
+                        是批次處理的計算模型。<strong style="color: red;">Hive</strong> 是建立在 <strong
+                            style="color: red;">Hadoop</strong> 之上的<strong style="color: blue;">數據倉儲</strong>工具，提供
+                        <strong style="color: purple;">SQL</strong> 介面。
+                    </div>
+                    <img src="../image/Hadoop_YARN.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">獨熱編碼</strong>（<strong
+                        style="color: red;">One-Hot Encoding</strong>）主要用於處理哪種類型的<strong
+                        style="color: blue;">數據特徵</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">連續數值型特徵</strong>（<strong
+                                style="color: red;">Continuous Numerical Features</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">無序類別型特徵</strong>（<strong
+                                style="color: red;">Nominal Categorical Features</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">有序類別型特徵</strong>（<strong
+                                style="color: red;">Ordinal Categorical Features</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列數據</strong>（<strong
+                                style="color: red;">Time Series Data</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">獨熱編碼</strong>是將<strong style="color: blue;">類別變數</strong>轉換為<strong
+                            style="color: blue;">機器學習模型</strong>更容易處理的數值格式的一種常用方法。它特別適用於處理<strong
+                            style="background-color: #ffff0030;">沒有內在順序關係</strong>的<strong
+                            style="color: blue;">類別特徵</strong>（<strong style="color: blue;">名目變數</strong>，<strong
+                            style="color: red;">Nominal</strong>），例如 "顏色"（紅、綠、藍）。它會為每個類別創建一個新的二元（0 或 1）<strong
+                            style="color: blue;">特徵</strong>欄位，如果原始紀錄屬於該類別，則對應欄位為 1，其餘為 0。對於<strong
+                            style="color: blue;">有序類別特徵</strong>（例如 "評級"：差、中、好），有時會使用<strong
+                            style="color: blue;">標籤編碼</strong>（<strong style="color: red;">Label
+                            Encoding</strong>）或其他保留順序資訊的方法。
+                    </div>
+                    <img src="../image/One-Hot Encoding.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據清理</strong>是<strong
+                        style="color: blue;">數據預處理</strong>中的重要環節，其主要目標不包含以下哪一項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">處理<strong style="color: blue;">缺失值</strong>（<strong
+                                style="color: red;">Handling Missing Values</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">識別與處理<strong style="color: blue;">異常值</strong>（<strong
+                                style="color: red;">Identifying and Handling Outliers</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">解決<strong style="color: blue;">數據不一致性</strong>（<strong
+                                style="color: red;">Resolving Inconsistencies</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">直接訓練<strong style="color: blue;">機器學習模型</strong>（<strong
+                                style="color: red;">Training Machine Learning Models Directly</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據清理</strong>的主要目標是<strong
+                            style="background-color: #ffff0030;">提高數據品質</strong>，使其更適合後續的分析和建模。這包括處理<strong
+                            style="background-color: #ffff0030;">缺失值</strong>、<strong
+                            style="background-color: #ffff0030;">異常值</strong>、<strong
+                            style="background-color: #ffff0030;">重複值</strong>、<strong
+                            style="background-color: #ffff0030;">雜訊</strong>以及修正數據格式、單位、編碼等<strong
+                            style="background-color: #ffff0030;">不一致</strong>的問題。直接訓練模型是數據分析流程的後續步驟，而不是<strong
+                            style="color: blue;">數據清理</strong>本身的目標。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">將<strong
+                        style="background-color: #ffff0030;">來自不同數據來源</strong>（例如，客戶基本資料庫和交易紀錄資料庫）的數據<strong
+                        style="background-color: #ffff0030;">合併</strong>在一起，以獲得更全面的客戶視圖，這個過程屬於？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據整合</strong>（<strong
+                                style="color: red;">Data Integration</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據歸約</strong>（<strong
+                                style="color: red;">Data Reduction</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">數據清理</strong>（<strong
+                                style="color: red;">Data Cleaning</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據轉換</strong>（<strong
+                                style="color: red;">Data Transformation</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據整合</strong>是指將來自<strong
+                            style="background-color: #ffff0030;">多個異質數據來源</strong>的數據<strong
+                            style="background-color: #ffff0030;">合併</strong>成一個<strong
+                            style="background-color: #ffff0030;">一致、統一</strong>的數據集的過程。這通常涉及解決<strong
+                            style="color: blue;">數據模式</strong>（<strong style="color: red;">Schema</strong>）匹配、<strong
+                            style="color: blue;">實體識別</strong>（如識別不同來源中的同一個客戶）、處理數據值衝突等問題。目的是提供一個更完整、更全面的數據視圖以支持分析。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">以下哪種<strong style="color: blue;">機器學習演算法</strong>對輸入<strong
+                        style="color: blue;">特徵</strong>的<strong
+                        style="background-color: #ffff0030;">尺度</strong>（<strong
+                        style="color: red;">Scale</strong>）差異最為敏感，因此通常需要進行<strong
+                        style="color: blue;">特徵縮放</strong>（如<strong style="color: blue;">標準化</strong>或<strong
+                        style="color: blue;">歸一化</strong>）？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">決策樹</strong>（<strong
+                                style="color: red;">Decision Tree</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">K-均值聚類</strong>（<strong
+                                style="color: red;">K-Means Clustering</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">隨機森林</strong>（<strong
+                                style="color: red;">Random Forest</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">樸素貝氏</strong>（<strong
+                                style="color: red;">Naive Bayes</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">K-Means 聚類</strong>是基於計算樣本點之間的<strong
+                            style="background-color: #ffff0030;">距離</strong>（通常是歐氏距離）來進行分群的。如果不同<strong
+                            style="color: blue;">特徵</strong>的數值範圍（<strong
+                            style="background-color: #ffff0030;">尺度</strong>）差異很大，那麼<strong
+                            style="background-color: #ffff0030;">尺度較大的特徵會在距離計算中佔主導地位</strong>，使得尺度較小的<strong
+                            style="color: blue;">特徵</strong>幾乎不起作用，導致聚類結果不佳。因此，在使用 <strong
+                            style="color: purple;">K-Means</strong> 或其他<strong
+                            style="background-color: #ffff0030;">基於距離</strong>的演算法（如 <strong
+                            style="color: purple;">SVM</strong>、<strong style="color: purple;">KNN</strong>、<strong
+                            style="color: purple;">PCA</strong>）之前，通常需要對數據進行<strong
+                            style="color: blue;">標準化</strong>或<strong style="color: blue;">歸一化</strong>。<strong
+                            style="color: blue;">決策樹</strong>和<strong style="color: blue;">隨機森林</strong>等基於樹的模型對<strong
+                            style="color: blue;">特徵</strong>尺度不敏感。<strong
+                            style="color: blue;">樸素貝氏</strong>主要基於條件機率，對尺度也不敏感。
+                    </div>
+                    <img src="../image/K-Means.avif" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">分層抽樣</strong>（<strong
+                        style="color: red;">Stratified Sampling</strong>）的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">確保樣本能夠<strong
+                                style="background-color: #ffff0030;">反映母體中不同子群體（層）的比例結構</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">盡可能地減少樣本的數量</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">保證抽樣過程絕對隨機，不考慮母體結構</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只抽取母體中數值最大的樣本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">分層抽樣</strong>首先將母體按照某個或某些<strong
+                            style="color: blue;">特徵</strong>劃分成互不重疊的子群體（稱為「<strong
+                            style="color: blue;">層</strong>」，<strong style="color: red;">Strata</strong>），然後在每個<strong
+                            style="color: blue;">層</strong>內獨立進行<strong
+                            style="color: blue;">隨機抽樣</strong>。這樣做的主要目的是確保最終的樣本能夠準確地<strong
+                            style="background-color: #ffff0030;">反映母體中各個層的比例</strong>，特別是當某些<strong
+                            style="color: blue;">層</strong>的規模較小或<strong style="color: blue;">層</strong>間差異較大時，<strong
+                            style="color: blue;">分層抽樣</strong>可以<strong
+                            style="background-color: #ffff0030;">提高樣本的代表性</strong>，減少抽樣誤差。
+                    </div>
+                    <img src="../image/Stratified Sampling.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">處理數據中的<strong style="color: blue;">異常值</strong>時，以下哪種做法屬於「<strong
+                        style="background-color: #ffff0030;">替換法</strong>」？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">直接刪除包含<strong style="color: blue;">異常值</strong>的紀錄</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將<strong style="color: blue;">異常值</strong>替換為預先定義的<strong
+                                style="background-color: #ffff0030;">上限或下限值</strong>（<strong
+                                style="color: red;">Winsorization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">保留<strong style="color: blue;">異常值</strong>，但在模型選擇上使用對<strong
+                                style="color: blue;">異常值</strong>不敏感的模型</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將<strong style="color: blue;">異常值</strong>作為一個單獨的類別處理</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        處理<strong style="color: blue;">異常值</strong>的方法大致可分為刪除法、<strong
+                            style="background-color: #ffff0030;">替換法</strong>和保留法。<strong
+                            style="background-color: #ffff0030;">替換法</strong>是指用一個較為合理的數值來<strong
+                            style="background-color: #ffff0030;">取代</strong>偵測到的<strong
+                            style="color: blue;">異常值</strong>。<strong style="color: red;">Winsorization</strong>（<strong
+                            style="color: blue;">縮尾處理</strong>）是一種常見的<strong
+                            style="background-color: #ffff0030;">替換法</strong>，它將所有低於某個百分位數（如
+                        5%）的值替換為該百分位數的值，並將所有高於另一個百分位數（如 95%）的值替換為該百分位數的值。其他<strong
+                            style="background-color: #ffff0030;">替換</strong>方法還包括用<strong
+                            style="color: blue;">平均值</strong>、<strong
+                            style="color: blue;">中位數</strong>等替換。選項A是刪除法。選項C是保留法的一種策略。選項D適用於將異常視為一種特殊情況，但不常用於<strong
+                            style="color: blue;">數值異常值</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">SQL</strong> (<strong
+                        style="color: red;">Structured Query Language</strong>) 是一種用於管理和操作<strong
+                        style="color: blue;">關聯式資料庫</strong>的標準語言。以下哪個 <strong style="color: purple;">SQL</strong>
+                    關鍵字用於從表格中<strong style="background-color: #ffff0030;">選取特定的欄位</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`<strong style="color: purple;">SELECT</strong>`</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`<strong style="color: purple;">FROM</strong>`</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`<strong style="color: purple;">WHERE</strong>`</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`<strong style="color: purple;">GROUP BY</strong>`</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        在 <strong style="color: purple;">SQL</strong> 查詢中，`<strong
+                            style="color: purple;">SELECT</strong>` 關鍵字用於指定要從數據表中檢索或計算的<strong
+                            style="background-color: #ffff0030;">欄位</strong>（列）。`<strong
+                            style="color: purple;">FROM</strong>` 關鍵字用於指定數據來源的表格。`<strong
+                            style="color: purple;">WHERE</strong>` 關鍵字用於設定篩選條件，只選取滿足條件的紀錄（行）。`<strong
+                            style="color: purple;">GROUP BY</strong>` 關鍵字用於將具有相同值的行分組，通常與<strong
+                            style="color: blue;">聚合函數</strong>一起使用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當數據欄位的<strong
+                        style="background-color: #ffff0030;">值格式不一致</strong>時，例如日期欄位同時存在 "YYYY/MM/DD" 和 "MM-DD-YYYY"
+                    兩種格式，這屬於哪一類<strong style="color: blue;">數據品質</strong>問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">完整性</strong>（<strong
+                                style="color: red;">Completeness</strong>）問題</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">唯一性</strong>（<strong
+                                style="color: red;">Uniqueness</strong>）問題</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">一致性</strong>（<strong
+                                style="color: red;">Consistency</strong>）問題</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">時效性</strong>（<strong
+                                style="color: red;">Timeliness</strong>）問題</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據一致性</strong>指的是數據在不同地方或不同時間點的表示是否符合相同的標準或規則。日期<strong
+                            style="background-color: #ffff0030;">格式不統一</strong>、單位不一致（如公尺 vs. 英尺）、編碼方式不同（如 'M'/'F' vs.
+                        'Male'/'Female'）等都屬於<strong style="color: blue;">一致性</strong>問題。<strong
+                            style="color: blue;">完整性</strong>涉及數據是否有<strong style="color: blue;">缺失</strong>。<strong
+                            style="color: blue;">唯一性</strong>涉及是否有<strong style="color: blue;">重複紀錄</strong>。<strong
+                            style="color: blue;">時效性</strong>涉及數據是否足夠新。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據湖</strong>（<strong style="color: red;">Data
+                        Lake</strong>）與傳統<strong style="color: blue;">數據倉儲</strong>（<strong style="color: red;">Data
+                        Warehouse</strong>）相比，其主要特點之一是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只能儲存高度<strong style="color: blue;">結構化</strong>、已清理的數據</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">可以儲存<strong
+                                style="background-color: #ffff0030;">各種格式的原始數據</strong>（<strong
+                                style="color: blue;">結構化</strong>、<strong style="color: blue;">半結構化</strong>、<strong
+                                style="color: blue;">非結構化</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據在寫入前必須定義好固定的<strong style="color: blue;">綱要</strong>（<strong
+                                style="color: red;">Schema-on-Write</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">查詢速度通常比優化過的<strong style="color: blue;">數據倉儲</strong>更快</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據湖</strong>是一個集中式的儲存庫，允許以<strong
+                            style="background-color: #ffff0030;">原始格式</strong>儲存大量<strong
+                            style="color: blue;">結構化</strong>、<strong style="color: blue;">半結構化</strong>和<strong
+                            style="color: blue;">非結構化數據</strong>。它通常採用 <strong
+                            style="background-color: #ffff0030;">Schema-on-Read</strong>（讀取時定義綱要）的方法，而不是像傳統<strong
+                            style="color: blue;">數據倉儲</strong>那樣要求在數據載入前就定義好嚴格的<strong
+                            style="color: blue;">綱要</strong>（<strong
+                            style="color: red;">Schema-on-Write</strong>）。這使得<strong
+                            style="color: blue;">數據湖</strong>非常靈活，可以快速地接納各種來源的數據，但後續的查詢和分析可能需要更多的處理。
+                    </div>
+                    <img src="../image/data lake data warehouse lakehouse.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Pandas</strong> 中，對 <strong
+                        style="color: red;">DataFrame</strong> 使用 `groupby()` 函數後，通常會接著調用哪個類型的方法來計算每個<strong
+                        style="color: blue;">分組</strong>的<strong style="color: blue;">匯總</strong>統計量？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`.transform()`</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">聚合方法</strong>（如 `.sum()`,
+                            `.mean()`, `.count()`, `.agg()`）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`.filter()`</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`.apply()` （雖然可以但非最典型用於<strong style="color: blue;">匯總</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `groupby()` 操作本身只是創建了一個 <strong style="color: red;">GroupBy</strong> 物件，定義了<strong
+                            style="color: blue;">分組</strong>方式。要獲得實際的<strong style="color: blue;">匯總</strong>結果，需要在這個
+                        <strong style="color: red;">GroupBy</strong> 物件上調用<strong
+                            style="background-color: #ffff0030;">聚合方法</strong>。<strong
+                            style="color: red;">Pandas</strong> 提供了許多內建的<strong style="color: blue;">聚合方法</strong>，如
+                        `.sum()`, `.mean()`, `.count()`, `.max()`, `.min()`, `.std()` 等。`.agg()` 方法則允許同時應用多個<strong
+                            style="color: blue;">聚合函數</strong>或自定義<strong
+                            style="color: blue;">聚合函數</strong>。`.transform()` 對每個<strong
+                            style="color: blue;">分組</strong>應用函數但返回與原 <strong style="color: red;">DataFrame</strong>
+                        同形狀的結果。`.filter()` 用於篩選<strong style="color: blue;">分組</strong>。`.apply()`
+                        功能更通用，可以應用任意函數，但對於標準的<strong style="color: blue;">匯總</strong>統計，直接使用<strong
+                            style="color: blue;">聚合方法</strong>通常更高效。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">對數轉換</strong>（<strong style="color: red;">Log
+                        Transformation</strong>）是一種常用的<strong style="color: blue;">數據轉換</strong>技術，它主要適用於處理哪種類型的數據分佈？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全對稱的<strong style="color: blue;">常態分佈</strong>（<strong
+                                style="color: red;">Normal Distribution</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">呈現<strong style="background-color: #ffff0030;">正偏態</strong>（<strong
+                                style="color: blue;">右偏斜</strong>, <strong
+                                style="color: red;">Right-skewed</strong>）分佈的數據</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">呈現<strong style="background-color: #ffff0030;">負偏態</strong>（<strong
+                                style="color: blue;">左偏斜</strong>, <strong
+                                style="color: red;">Left-skewed</strong>）分佈的數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">類別型數據</strong>（<strong
+                                style="color: red;">Categorical Data</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">對數轉換</strong>（通常使用自然對數或以10為底的對數）對<strong
+                            style="background-color: #ffff0030;">較大的數值有較強的壓縮作用</strong>，而對較小的數值影響較小。因此，它特別適用於處理<strong
+                            style="background-color: #ffff0030;">正偏態</strong>（<strong
+                            style="color: blue;">右偏斜</strong>）的數據，即數據集中包含一些遠大於大部分數據點的數值。通過<strong
+                            style="color: blue;">對數轉換</strong>，可以有效地<strong
+                            style="background-color: #ffff0030;">減小這些大數值的影響</strong>，使數據分佈更接近對稱或<strong
+                            style="color: blue;">常態分佈</strong>，這有助於滿足某些統計模型（如線性<strong
+                            style="color: blue;">迴歸</strong>）的假設。對於<strong
+                            style="color: blue;">負偏斜數據</strong>，可能需要先進行反射（如 `log(max(X+1) - X)`）再轉換。
+                    </div>
+                    <img src="../image/Skewed Distribution Log Transformation.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">特徵選擇</strong>（<strong
+                        style="color: red;">Feature Selection</strong>）和<strong
+                        style="color: blue;">特徵萃取</strong>（<strong style="color: red;">Feature
+                        Extraction</strong>）都是<strong style="color: blue;">數據歸約</strong>的方法，它們的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">特徵選擇</strong>增加<strong
+                                style="color: blue;">特徵</strong>數量，<strong style="color: blue;">特徵萃取</strong>減少<strong
+                                style="color: blue;">特徵</strong>數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">特徵選擇</strong>是從原始<strong
+                                style="color: blue;">特徵</strong>中<strong
+                                style="background-color: #ffff0030;">挑選子集</strong>，<strong
+                                style="color: blue;">特徵萃取</strong>是<strong
+                                style="background-color: #ffff0030;">創建新的、組合的特徵</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">特徵選擇</strong>只適用於<strong
+                                style="color: blue;">類別特徵</strong>，<strong style="color: blue;">特徵萃取</strong>只適用於<strong
+                                style="color: blue;">數值特徵</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">特徵選擇</strong>旨在最大化<strong
+                                style="color: blue;">特徵</strong>間的相關性，<strong style="color: blue;">特徵萃取</strong>旨在最小化
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">特徵選擇</strong>（如過濾法、包裹法、嵌入法）的目標是直接從原始的<strong
+                            style="color: blue;">特徵</strong>集合中<strong
+                            style="background-color: #ffff0030;">選出一個子集</strong>，移除不相關或冗餘的<strong
+                            style="color: blue;">特徵</strong>，保留的<strong style="color: blue;">特徵</strong>仍然是原始<strong
+                            style="color: blue;">特徵</strong>。<strong style="color: blue;">特徵萃取</strong>（如 <strong
+                            style="color: purple;">PCA</strong>、<strong style="color: purple;">LDA</strong>）則是將原始<strong
+                            style="color: blue;">特徵</strong>轉換到一個新的<strong style="color: blue;">特徵</strong>空間，<strong
+                            style="background-color: #ffff0030;">創建出新的</strong>、通常是原始<strong
+                            style="color: blue;">特徵</strong>線性或非線性<strong
+                            style="background-color: #ffff0030;">組合的特徵</strong>，這些新<strong
+                            style="color: blue;">特徵</strong>可能不再具有直接的物理意義，但希望能更好地捕捉數據中的關鍵資訊並<strong
+                            style="color: blue;">降低維度</strong>。兩者都是<strong style="color: blue;">降維</strong>的方法，但實現方式不同。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當數據集中存在拼寫錯誤或不一致的標籤（例如 "New York", "NY", "new york city"
+                    都指向同一個城市），這屬於哪種<strong style="color: blue;">數據品質</strong>問題，通常需要如何處理？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">缺失值</strong>問題，使用<strong
+                                style="color: blue;">眾數</strong><strong style="color: blue;">填補</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">不一致性</strong>問題，需要進行<strong
+                                style="background-color: #ffff0030;">標準化或映射到統一值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">異常值</strong>問題，使用 <strong
+                                style="color: purple;">IQR</strong> 方法移除</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">重複數據</strong>問題，直接刪除<strong
+                                style="color: blue;">重複紀錄</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        這種情況屬於<strong style="color: blue;">數據不一致性</strong>問題，特別是標籤或類別表示的<strong
+                            style="background-color: #ffff0030;">不一致</strong>。處理方法通常是定義一個<strong
+                            style="background-color: #ffff0030;">標準化的表示方式</strong>（例如，統一使用 "New York"），然後將所有變體（"NY",
+                        "new york city" 等）<strong
+                            style="background-color: #ffff0030;">映射到這個標準值</strong>。這可能需要使用查找表、正則表達式或更複雜的模糊匹配技術。這不屬於<strong
+                            style="color: blue;">缺失值</strong>、典型<strong style="color: blue;">數值異常值</strong>或完全<strong
+                            style="color: blue;">重複紀錄</strong>的問題。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在進行<strong style="color: blue;">缺失值填補</strong>時，使用<strong
+                        style="background-color: #ffff0030;">基於模型的填補方法</strong>（如<strong
+                        style="color: blue;">迴歸填補</strong>、<strong style="color: purple;">KNN</strong><strong
+                        style="color: blue;">填補</strong>）相較於簡單的統計量填補（<strong style="color: blue;">平均值</strong>、<strong
+                        style="color: blue;">中位數</strong>、<strong style="color: blue;">眾數</strong>），其主要優點是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算速度一定更快</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">能夠<strong
+                                style="background-color: #ffff0030;">考慮其他特徵之間的關係</strong>，可能得到<strong
+                                style="background-color: #ffff0030;">更準確的填補值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">不需要任何假設條件</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">適用於所有類型的缺失機制（<strong style="color: purple;">MCAR</strong>, <strong
+                                style="color: purple;">MAR</strong>, <strong style="color: purple;">MNAR</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="background-color: #ffff0030;">基於模型的填補方法</strong>（如使用線性<strong
+                            style="color: blue;">迴歸</strong>預測<strong style="color: blue;">缺失值</strong>，或使用 <strong
+                            style="color: purple;">K</strong> 最近鄰居（<strong style="color: red;">K-Nearest
+                            Neighbors</strong>, <strong style="color: purple;">KNN</strong>）找到相似樣本的值來<strong
+                            style="color: blue;">填補</strong>）利用了數據集中其他<strong
+                            style="color: blue;">特徵</strong>欄位的資訊。它們試圖<strong
+                            style="background-color: #ffff0030;">捕捉特徵之間的相互關係</strong>，因此相比於只考慮單一欄位統計量的簡單填補方法，可能能夠產生更合理、<strong
+                            style="background-color: #ffff0030;">更接近真實情況的填補值</strong>。然而，這些方法通常計算成本更高，且其效果也依賴於模型的選擇和數據本身的特性。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Python</strong> 的 <strong
+                        style="color: red;">Pandas</strong> <strong
+                        style="color: blue;">函式庫</strong>中，`DataFrame.dropna()` 方法的主要功能是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">填補</strong> <strong
+                                style="color: red;">DataFrame</strong> 中的<strong style="color: blue;">缺失值</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">移除</strong> <strong
+                                style="color: red;">DataFrame</strong> 中包含<strong
+                                style="color: blue;">缺失值</strong>（<strong style="color: purple;">NaN</strong>）的<strong
+                                style="background-color: #ffff0030;">行或列</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">移除 <strong style="color: red;">DataFrame</strong> 中的<strong
+                                style="color: blue;">重複行</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">對 <strong style="color: red;">DataFrame</strong> 的數值欄位進行<strong
+                                style="color: blue;">標準化</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `dropna()` 方法用於處理<strong style="color: blue;">缺失值</strong>，其主要功能是<strong
+                            style="background-color: #ffff0030;">移除包含 NaN</strong>（<strong style="color: red;">Not a
+                            Number</strong>，<strong style="color: red;">Pandas</strong> 中代表<strong
+                            style="color: blue;">缺失值</strong>）的標籤。可以通過 `axis` 參數指定是移除包含<strong
+                            style="color: blue;">缺失值</strong>的行（`axis=0`，預設）還是列（`axis=1`）。還可以通過 `how`（'any' 或 'all'）和
+                        `thresh` 參數更精細地控制移除條件。<strong style="color: blue;">填補</strong><strong
+                            style="color: blue;">缺失值</strong>使用 `fillna()` 方法。移除<strong
+                            style="color: blue;">重複行</strong>使用 `drop_duplicates()` 方法。
+                    </div>
+                    <img src="../image/pandas-dataframe-dropna.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">當<strong style="color: blue;">合併</strong>兩個 <strong
+                        style="color: red;">Pandas</strong> <strong style="color: red;">DataFrame</strong> 時，如果只想保留兩個
+                    <strong style="color: red;">DataFrame</strong> 中<strong
+                        style="background-color: #ffff0030;">共同存在的鍵值</strong>所對應的紀錄，應該使用哪種<strong
+                        style="color: blue;">合併</strong>方式（`how` 參數）？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`inner` (<strong style="color: blue;">內連接</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`outer` (<strong style="color: blue;">外連接</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`left` (<strong style="color: blue;">左連接</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`right` (<strong style="color: blue;">右連接</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">內連接</strong>（`how='inner'`）是 `merge()` 函數的預設<strong
+                            style="color: blue;">合併</strong>方式。它只會保留那些在兩個 <strong style="color: red;">DataFrame</strong>
+                        中<strong style="background-color: #ffff0030;">鍵值都存在</strong>的紀錄，類似於 <strong
+                            style="color: purple;">SQL</strong> 的 <strong style="color: red;">INNER
+                            JOIN</strong>。<strong style="color: blue;">外連接</strong>（`outer`）會保留兩個 <strong
+                            style="color: red;">DataFrame</strong> 中所有的鍵值，如果某個鍵值只存在於其中一個 <strong
+                            style="color: red;">DataFrame</strong>，則另一個 <strong style="color: red;">DataFrame</strong>
+                        對應的欄位會被填充為 <strong style="color: purple;">NaN</strong>。<strong
+                            style="color: blue;">左連接</strong>（`left`）會保留左邊 <strong
+                            style="color: red;">DataFrame</strong> 的所有鍵值。<strong
+                            style="color: blue;">右連接</strong>（`right`）會保留右邊 <strong
+                            style="color: red;">DataFrame</strong> 的所有鍵值。
+                    </div>
+                    <img src="../image/pandas merge.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">將<strong style="color: blue;">文本數據</strong>轉換為數值表示的一種簡單方法是計算每個<strong
+                        style="color: blue;">詞彙</strong>在文件中的<strong
+                        style="background-color: #ffff0030;">出現次數</strong>，這被稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">詞袋模型</strong>（<strong
+                                style="color: red;">Bag-of-Words</strong>, <strong style="color: purple;">BoW</strong>）或
+                            <strong style="color: blue;">詞頻</strong>（<strong style="color: red;">Term
+                                Frequency</strong>, <strong style="color: purple;">TF</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">TF-IDF</strong>（<strong
+                                style="color: red;">Term Frequency-Inverse Document Frequency</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">獨熱編碼</strong>（<strong
+                                style="color: red;">One-Hot Encoding</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">詞嵌入</strong>（<strong
+                                style="color: red;">Word Embedding</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">詞袋模型</strong>（<strong
+                            style="color: purple;">BoW</strong>）是一種簡化<strong
+                            style="color: blue;">文本</strong>表示的方法，它忽略文法和詞序，只考慮每個<strong
+                            style="color: blue;">詞彙</strong>在文件中出現的<strong
+                            style="background-color: #ffff0030;">頻率</strong>（<strong
+                            style="color: purple;">TF</strong>）。它將每個文件表示為一個向量，向量的維度是整個語料庫中的<strong
+                            style="color: blue;">詞彙</strong>數量，每個維度的值是對應<strong
+                            style="color: blue;">詞彙</strong>在該文件中的<strong
+                            style="background-color: #ffff0030;">出現次數</strong>。<strong
+                            style="color: purple;">TF-IDF</strong> 在<strong
+                            style="color: blue;">詞頻</strong>的基礎上，乘以<strong
+                            style="color: blue;">逆文件頻率</strong>，以降低常用詞的權重。<strong
+                            style="color: blue;">獨熱編碼</strong>通常用於<strong style="color: blue;">類別變數</strong>。<strong
+                            style="color: blue;">詞嵌入</strong>（如 <strong style="color: red;">Word2Vec</strong>, <strong
+                            style="color: red;">GloVe</strong>）是更複雜的技術，旨在學習<strong
+                            style="color: blue;">詞彙</strong>的語意表示。
+                    </div>
+                    <img src="../image/bag_of_words.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">以下哪種<strong style="color: blue;">數據轉換</strong>方法的主要目的是<strong
+                        style="background-color: #ffff0030;">消除特徵之間的線性相關性</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">標準化</strong>（<strong
+                                style="color: red;">Standardization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">歸一化</strong>（<strong
+                                style="color: red;">Normalization</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">主成分分析</strong>（<strong
+                                style="color: red;">Principal Component Analysis</strong>, <strong
+                                style="color: purple;">PCA</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">對數轉換</strong>（<strong
+                                style="color: red;">Log Transformation</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">PCA</strong> 在尋找數據中<strong
+                            style="color: blue;">方差</strong>最大的方向時，生成的各個<strong
+                            style="color: blue;">主成分</strong>（新的<strong style="color: blue;">特徵</strong>）彼此之間是<strong
+                            style="background-color: #ffff0030;">線性不相關</strong>（正交）的。這是 <strong
+                            style="color: purple;">PCA</strong> 的一個重要特性。因此，<strong style="color: purple;">PCA</strong>
+                        不僅可以用於<strong style="color: blue;">降維</strong>，也可以作為一種<strong
+                            style="color: blue;">數據轉換</strong>方法來消除原始<strong style="color: blue;">特徵</strong>之間的<strong
+                            style="background-color: #ffff0030;">多重共線性</strong>問題。<strong
+                            style="color: blue;">標準化</strong>和<strong style="color: blue;">歸一化</strong>改變數據尺度，<strong
+                            style="color: blue;">對數轉換</strong>改變數據分佈，但它們不直接消除<strong
+                            style="color: blue;">特徵</strong>間的<strong
+                            style="background-color: #ffff0030;">線性相關性</strong>。
+                    </div>
+                    <img src="../image/PCA.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="6" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">簡單隨機抽樣</strong>（<strong
+                        style="color: red;">Simple Random Sampling</strong>）的主要特點是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">將母體分層後再抽樣</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">母體中<strong style="background-color: #ffff0030;">每個個體被抽中的機率完全相等</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">按照固定的間隔抽取樣本</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只抽取母體中特定條件的個體</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">簡單隨機抽樣</strong>是最基本的<strong
+                            style="color: blue;">機率抽樣</strong>方法。它的核心原則是確保母體中的每一個個體都有<strong
+                            style="background-color: #ffff0030;">相同且獨立的機會</strong>被選入樣本中。抽樣過程通常像抽籤一樣，完全<strong
+                            style="background-color: #ffff0030;">隨機</strong>，不考慮個體的任何<strong
+                            style="color: blue;">特徵</strong>或母體的結構。選項A描述的是<strong
+                            style="color: blue;">分層抽樣</strong>。選項C描述的是<strong
+                            style="color: blue;">系統抽樣</strong>。選項D描述的是非機率抽樣中的立意抽樣。
+                    </div>
+                    <img src="../image/Simple Random Sampling.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">處理<strong style="color: blue;">缺失值</strong>時，<strong
+                        style="color: red;">Multiple Imputation</strong> (<strong style="color: blue;">多重插補</strong>)
+                    方法相比於 <strong style="color: red;">Single Imputation</strong> (<strong
+                        style="color: blue;">單一插補</strong>，如均值填補) 的主要優勢在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算速度更快，實施更簡單</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">能夠更好地<strong
+                                style="background-color: #ffff0030;">反映填補值的不確定性</strong>，<strong
+                                style="background-color: #ffff0030;">減少偏差</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">產生唯一的、確定的填補後數據集</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">不需要假設缺失機制</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">單一插補</strong>（如用<strong
+                            style="color: blue;">平均值</strong>填補）會人為地降低數據的變異性，並且沒有考慮到填補值本身的不確定性，可能導致後續分析結果的偏差和標準誤的低估。<strong
+                            style="background-color: #ffff0030;">多重插補</strong>通過生成<strong
+                            style="background-color: #ffff0030;">多個</strong>（例如 5 或 10 個）填補後的完整數據集，每個數據集的<strong
+                            style="color: blue;">缺失值</strong>是用考慮了不確定性的模型（通常基於抽樣）生成的。然後對每個數據集進行分析，最後將結果匯總。這種方法能夠更準確地<strong
+                            style="background-color: #ffff0030;">反映由於缺失值存在而帶來的不確定性</strong>，得到更可靠的分析結果，但計算相對複雜。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">以下哪個工具或技術通常用於實現 <strong style="color: purple;">ETL</strong> 流程中的<strong
+                        style="background-color: #ffff0030;">數據轉換</strong>步驟？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">FTP</strong> (<strong
+                                style="color: red;">File Transfer Protocol</strong>) 伺服器</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">資料庫</strong>備份工具</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">視覺化 ETL 工具</strong>（如
+                            <strong style="color: red;">Informatica</strong>, <strong
+                                style="color: red;">Talend</strong>, <strong
+                                style="color: purple;">SSIS</strong>）或<strong
+                                style="background-color: #ffff0030;">程式碼</strong>（如 <strong
+                                style="color: red;">Python</strong> <strong style="color: red;">Pandas</strong>, <strong
+                                style="color: red;">Spark</strong> <strong style="color: purple;">SQL</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">版本控制系統（如 <strong style="color: red;">Git</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據轉換</strong>是 <strong style="color: purple;">ETL</strong>
+                        流程的核心，涉及<strong style="color: blue;">數據清理</strong>、<strong
+                            style="color: blue;">整合</strong>、計算、格式化等。這可以通過專用的<strong
+                            style="background-color: #ffff0030;">視覺化 ETL 工具</strong>來實現，這些工具通常提供圖形介面來設計<strong
+                            style="color: blue;">轉換</strong>邏輯。也可以通過<strong
+                            style="background-color: #ffff0030;">編寫程式碼</strong>來實現，例如使用 <strong
+                            style="color: red;">Python</strong> 的 <strong style="color: red;">Pandas</strong> <strong
+                            style="color: blue;">函式庫</strong>進行數據操作，或使用 <strong style="color: red;">Spark
+                            SQL</strong>、<strong style="color: red;">PySpark</strong> 等<strong
+                            style="color: blue;">分散式框架</strong>處理<strong style="color: blue;">大數據</strong>。<strong
+                            style="color: purple;">FTP</strong> 用於文件傳輸。備份工具用於數據備份。版本控制用於管理程式碼。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">基於<strong style="color: blue;">密度</strong>的<strong
+                        style="color: blue;">聚類演算法</strong>（如 <strong
+                        style="color: purple;">DBSCAN</strong>）在處理數據時，具有哪項優點，尤其是在<strong
+                        style="color: blue;">異常值偵測</strong>方面？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">能夠發現<strong
+                                style="background-color: #ffff0030;">任意形狀的聚類</strong>，並將不屬於任何<strong
+                                style="color: blue;">聚類</strong>的點識別為<strong
+                                style="background-color: #ffff0030;">噪聲</strong>（<strong
+                                style="color: blue;">異常值</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">需要預先指定<strong style="color: blue;">聚類</strong>的數量 <strong
+                                style="color: purple;">K</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對數據的<strong style="color: blue;">尺度</strong>非常不敏感</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算速度通常比 <strong style="color: purple;">K-Means</strong> 快</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">DBSCAN</strong> (<strong style="color: red;">Density-Based
+                            Spatial Clustering of Applications with Noise</strong>) 是一種基於<strong
+                            style="color: blue;">密度</strong>的<strong style="color: blue;">聚類</strong>方法。它<strong
+                            style="background-color: #ffff0030;">不需要預先指定聚類數量</strong>，可以發現<strong
+                            style="background-color: #ffff0030;">任意形狀的聚類</strong>。其核心思想是，如果一個點的鄰域內包含足夠多的點，則它是一個核心點，<strong
+                            style="color: blue;">密度</strong>相連的核心點形成<strong
+                            style="color: blue;">聚類</strong>。那些鄰域內點數不足且不屬於任何<strong
+                            style="color: blue;">聚類</strong>邊界的點，會被標記為<strong
+                            style="background-color: #ffff0030;">噪聲點</strong>，因此 <strong
+                            style="color: purple;">DBSCAN</strong> 可以同時完成<strong
+                            style="color: blue;">聚類</strong>和<strong style="color: blue;">異常值</strong>（<strong
+                            style="color: blue;">噪聲</strong>）偵測。<strong style="color: purple;">K-Means</strong> 需要指定
+                        <strong style="color: purple;">K</strong> 且通常假設<strong
+                            style="color: blue;">聚類</strong>為球狀。<strong style="color: purple;">DBSCAN</strong> 對參數（鄰域半徑
+                        <strong style="color: purple;">Eps</strong> 和最小點數 <strong
+                            style="color: purple;">MinPts</strong>）和距離度量敏感，計算複雜度可能較高。
+                    </div>
+                    <img src="../image/DBSCAN.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="4" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">以下哪項不是<strong style="color: blue;">數據聚合</strong>操作的常見例子？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算每個部門的<strong style="color: blue;">平均</strong>薪資</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">統計每個產品類別的<strong style="color: blue;">總</strong>銷售額</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將客戶姓名<strong style="background-color: #ffff0030;">轉換為大寫</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">找出每個地區的<strong style="color: blue;">最高</strong>氣溫紀錄</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據聚合</strong>是指將一組數據值<strong
+                            style="background-color: #ffff0030;">匯總</strong>成一個或少數幾個代表性值的過程。計算<strong
+                            style="color: blue;">平均值</strong>（<strong style="color: red;">Mean</strong>）、<strong
+                            style="color: blue;">總和</strong>（<strong style="color: red;">Sum</strong>）、<strong
+                            style="color: blue;">計數</strong>（<strong style="color: red;">Count</strong>）、<strong
+                            style="color: blue;">最大值</strong>（<strong style="color: red;">Max</strong>）、<strong
+                            style="color: blue;">最小值</strong>（<strong style="color: red;">Min</strong>）等都是典型的<strong
+                            style="color: blue;">聚合</strong>操作。將客戶姓名轉換為大寫是一種<strong
+                            style="color: blue;">數據轉換</strong>或<strong
+                            style="color: blue;">數據清理</strong>操作，它作用於單個數據值，而不是將多個值<strong
+                            style="background-color: #ffff0030;">匯總</strong>成一個。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據整合</strong>過程中，"<strong
+                        style="color: blue;">實體解析</strong>" (<strong style="color: red;">Entity Resolution</strong>)
+                    主要解決什麼問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">不同數據來源的數據格式不一致</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">識別並連結不同數據來源中指向同一個真實世界實體</strong>（如客戶、產品）的紀錄</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">填補</strong><strong
+                                style="color: blue;">合併</strong>後數據中的<strong style="color: blue;">缺失值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">降低<strong style="color: blue;">整合</strong>後數據集的<strong
+                                style="color: blue;">維度</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        當從<strong
+                            style="background-color: #ffff0030;">多個來源整合數據</strong>時，同一個真實世界的實體（例如，同一個客戶）可能在不同的來源中有不同的表示方式或不同的識別碼。<strong
+                            style="color: blue;">實體解析</strong>（也稱為<strong style="color: blue;">記錄連結</strong> <strong
+                            style="color: red;">Record Linkage</strong> 或<strong style="color: blue;">重複偵測</strong>
+                        <strong style="color: red;">Duplicate Detection</strong>，但更側重於跨來源）的任務就是<strong
+                            style="background-color: #ffff0030;">找出這些指向同一實體的不同紀錄，並將它們連結起來</strong>，以避免重複計算或得到不一致的分析結果。
+                    </div>
+                    <img src="../image/Entity Resolution.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">下列哪種情況下，使用<strong style="color: blue;">歸一化</strong> (<strong
+                        style="color: red;">Min-Max Scaling</strong>) 可能比<strong style="color: blue;">標準化</strong>
+                    (<strong style="color: red;">Standardization</strong>) 更合適？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據包含許多<strong style="color: blue;">異常值</strong>時</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">希望保留原始數據的零值意義時</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">演算法對輸入數據的<strong
+                                style="background-color: #ffff0030;">範圍有嚴格要求</strong>時（例如，圖像像素值需在 [0, 1] 或 [0, 255]）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據分佈近似<strong style="color: blue;">常態分佈</strong>時</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">歸一化</strong>（<strong style="color: red;">Min-Max
+                            Scaling</strong>）的主要特點是將數據<strong
+                            style="background-color: #ffff0030;">嚴格地縮放到一個固定的區間</strong>（通常是 [0,
+                        1]）。當後續使用的演算法或模型對輸入數據的數值<strong
+                            style="background-color: #ffff0030;">範圍有明確要求</strong>時（例如，某些神經網路的激活函數或圖像處理流程），<strong
+                            style="color: blue;">歸一化</strong>是必要的。<strong
+                            style="color: blue;">標準化</strong>後的數據沒有固定的範圍。如果數據近似<strong
+                            style="color: blue;">常態分佈</strong>，<strong style="color: blue;">標準化</strong>通常效果更好。<strong
+                            style="color: blue;">歸一化</strong>對<strong style="color: blue;">異常值</strong>敏感。<strong
+                            style="color: blue;">標準化</strong>會改變零值的意義（轉換後均值為0）。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="8" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">ETL</strong> 流程中，哪一個階段通常<strong
+                        style="background-color: #ffff0030;">計算成本最高、最耗時</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">萃取</strong>（<strong
+                                style="color: red;">Extract</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">轉換</strong>（<strong
+                                style="color: red;">Transform</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">載入</strong>（<strong
+                                style="color: red;">Load</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">三個階段成本大致相同</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        在傳統的 <strong style="color: purple;">ETL</strong> 流程中，<strong
+                            style="color: blue;">轉換</strong>（<strong style="color: red;">Transform</strong>）階段通常是<strong
+                            style="background-color: #ffff0030;">最複雜、計算成本最高、也最耗時</strong>的環節。因為它涉及到<strong
+                            style="color: blue;">數據清理</strong>、<strong style="color: blue;">驗證</strong>、<strong
+                            style="color: blue;">標準化</strong>、<strong style="color: blue;">整合</strong>、業務邏輯計算、<strong
+                            style="color: blue;">聚合</strong>等多種操作，這些操作可能需要大量的 <strong
+                            style="color: purple;">CPU</strong> 和記憶體資源，尤其是在處理大量數據時。<strong
+                            style="color: blue;">萃取</strong>和<strong style="color: blue;">載入</strong>相對而言，主要是 <strong
+                            style="color: purple;">I/O</strong> 操作，雖然也可能遇到瓶頸，但<strong
+                            style="color: blue;">轉換</strong>階段的計算複雜性往往是主要挑戰。這也是 <strong
+                            style="color: purple;">ELT</strong> 模式興起的原因之一，將複雜的<strong
+                            style="color: blue;">轉換</strong>推遲到<strong style="color: blue;">載入</strong>後進行。
+                    </div>
+                    <img src="../image/ETL.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">主成分分析</strong> (<strong
+                        style="color: purple;">PCA</strong>) 在<strong
+                        style="color: blue;">降維</strong>前，通常建議先對數據進行哪種<strong style="color: blue;">預處理</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">對數轉換</strong>（<strong
+                                style="color: red;">Log Transformation</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">標準化</strong>（<strong
+                                style="color: red;">Standardization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">獨熱編碼</strong>（<strong
+                                style="color: red;">One-Hot Encoding</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">移除所有<strong style="color: blue;">缺失值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">PCA</strong> 是通過尋找數據<strong
+                            style="background-color: #ffff0030;">方差最大的方向</strong>來確定<strong
+                            style="color: blue;">主成分</strong>的。如果不同<strong style="color: blue;">特徵</strong>的<strong
+                            style="color: blue;">尺度</strong>（數值範圍或單位）差異很大，那麼<strong
+                            style="color: blue;">方差</strong>會被<strong style="color: blue;">尺度</strong>大的<strong
+                            style="color: blue;">特徵</strong>所主導，導致 <strong style="color: purple;">PCA</strong>
+                        結果偏向這些<strong style="color: blue;">特徵</strong>。為了避免這種情況，使得每個<strong
+                            style="color: blue;">特徵</strong>對<strong style="color: blue;">主成分</strong>的貢獻更加公平，通常在應用
+                        <strong style="color: purple;">PCA</strong> 之前需要對數據進行<strong
+                            style="background-color: #ffff0030;">標準化</strong>（使其均值為0，標準差為1）。雖然移除<strong
+                            style="color: blue;">缺失值</strong>也是必要的<strong style="color: blue;">預處理</strong>，但<strong
+                            style="color: blue;">標準化</strong>對於 <strong style="color: purple;">PCA</strong> 本身的運作更為關鍵。
+                    </div>
+                    <img src="../image/Standardization and Normalization for feature scaling.webp"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="7" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">若要在 <strong style="color: red;">Python</strong> <strong
+                        style="color: red;">Pandas</strong> 中選取 <strong style="color: red;">DataFrame</strong> 的<strong
+                        style="background-color: #ffff0030;">前 5 行</strong>數據進行快速查看，應使用哪個方法？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`.iloc[5:]`</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`.tail(5)`</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`.head(5)`</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`.sample(5)`</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `.head(n)` 方法用於返回 <strong style="color: red;">DataFrame</strong> 或 <strong
+                            style="color: red;">Series</strong> 的<strong style="background-color: #ffff0030;">前 n
+                            行</strong>數據，預設 n=5。`.tail(n)` 用於返回後 n 行。`.iloc[]` 用於基於整數位置的索引。`.sample(n)` 用於隨機抽取 n
+                        行。因此，查看<strong style="background-color: #ffff0030;">前 5 行</strong>應使用 `.head(5)` 或直接 `.head()`。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據雜訊</strong>（<strong
+                        style="color: red;">Noise</strong>）指的是數據中存在的<strong
+                        style="background-color: #ffff0030;">隨機誤差</strong>或無意義的變異。以下哪項是處理<strong
+                        style="color: blue;">數據雜訊</strong>的常用方法？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">增加更多<strong style="color: blue;">特徵</strong>欄位</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將所有數值放大 100 倍</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">平滑技術</strong>（如<strong
+                                style="color: blue;">移動平均法</strong>、<strong style="color: blue;">分箱法</strong>）或<strong
+                                style="background-color: #ffff0030;">回歸分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">直接刪除整個數據集</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        處理<strong style="color: blue;">數據雜訊</strong>的目標是<strong
+                            style="background-color: #ffff0030;">減少隨機誤差</strong>對數據分析的影響。常用的方法包括：1. <strong
+                            style="background-color: #ffff0030;">分箱</strong>（<strong
+                            style="color: red;">Binning</strong>）：將相鄰的值分組到同一個箱中，然後用箱的<strong
+                            style="color: blue;">平均值</strong>、<strong style="color: blue;">中位數</strong>或邊界值替換箱內所有值。2.
+                        <strong style="background-color: #ffff0030;">回歸</strong>（<strong
+                            style="color: red;">Regression</strong>）：用<strong
+                            style="color: blue;">回歸模型</strong>擬合數據，然後用模型的預測值代替原始值。3. <strong
+                            style="background-color: #ffff0030;">聚類</strong>（<strong
+                            style="color: red;">Clustering</strong>）：檢測並移除不屬於任何<strong
+                            style="color: blue;">聚類</strong>的離群點（可能包含<strong style="color: blue;">雜訊</strong>）。4.
+                        <strong style="background-color: #ffff0030;">平滑</strong>（<strong
+                            style="color: red;">Smoothing</strong>）：例如在<strong
+                            style="color: blue;">時間序列</strong>中使用<strong style="color: blue;">移動平均法</strong>。選項 A、B、D
+                        都不是處理<strong style="color: blue;">雜訊</strong>的標準方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Pandas</strong> 中，若要找出並<strong
+                        style="background-color: #ffff0030;">移除</strong> <strong style="color: red;">DataFrame</strong>
+                    中的<strong style="background-color: #ffff0030;">完全重複行</strong>，<strong
+                        style="background-color: #ffff0030;">保留第一次</strong>出現的紀錄，應使用哪個方法？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">`df.dropna()`</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">`df.fillna(0)`</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">`df.unique()`</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">`df.drop_duplicates(keep='first')`</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `drop_duplicates()` 方法用於<strong style="background-color: #ffff0030;">移除</strong> <strong
+                            style="color: red;">DataFrame</strong> 中的<strong
+                            style="background-color: #ffff0030;">重複資料列</strong>。可透過 `subset` 參數指定要根據哪些欄位來判斷重複。`keep`
+                        參數則用來控制要保留哪一筆重複的紀錄：`<strong
+                            style="background-color: #ffff0030;">'first'</strong>`（保留第一筆，此為預設值）、`'last'`（保留最後一筆）或
+                        `False`（移除所有重複的紀錄）。`dropna()` 用於移除<strong style="color: blue;">缺失值</strong>。`fillna()` 用於<strong
+                            style="color: blue;">填補</strong><strong style="color: blue;">缺失值</strong>。`unique()` 通常用於
+                        <strong style="color: red;">Series</strong>，會<strong
+                            style="background-color: #ffff0030;">傳回</strong>不重複值的<strong
+                            style="background-color: #ffff0030;">陣列</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="5" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">在進行<strong style="color: blue;">數據整合</strong>時，如果兩個來源的<strong
+                        style="background-color: #ffff0030;">數據模式</strong>（<strong
+                        style="color: red;">Schema</strong>，即欄位名稱、類型、順序）<strong
+                        style="background-color: #ffff0030;">不同</strong>，需要先進行哪個步驟？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據模式映射與轉換</strong>（<strong
+                                style="color: red;">Schema Mapping and Transformation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據抽樣</strong>（<strong
+                                style="color: red;">Data Sampling</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">異常值偵測</strong>（<strong
+                                style="color: red;">Outlier Detection</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據載入</strong>（<strong
+                                style="color: red;">Data Loading</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        當<strong style="color: blue;">整合</strong>來自不同來源、具有不同結構的數據時，首要步驟之一是理解並協調這些不同的<strong
+                            style="background-color: #ffff0030;">數據模式</strong>。<strong
+                            style="color: blue;">數據模式映射</strong>涉及識別不同來源中語意相同但名稱或格式可能不同的欄位，並定義它們之間的對應關係。<strong
+                            style="color: blue;">數據模式轉換</strong>則可能涉及重命名欄位、改變數據類型、調整欄位順序等操作，以使來自不同來源的數據能夠在一個統一的結構下進行<strong
+                            style="color: blue;">合併</strong>或比較。這是<strong style="color: blue;">數據整合</strong>中的關鍵挑戰。
+                    </div>
+                    <img src="../image/Schema Mapping.png" class="responsive-img">
+                </div>
+            </div>
+
+        </div>
+        <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions();
+        }
+
+        // Event listeners for filters and search
+        const directionFilter = document.getElementById("directionFilter");
+        const starFilter = document.getElementById("starFilter");
+        const searchButton = document.getElementById("searchButton");
+        const searchInput = document.getElementById("searchInput");
+        const toggleExplanationsButton = document.getElementById("toggleExplanations");
+        const questionsContainer = document.getElementById("questionsContainer");
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+
+        directionFilter.addEventListener("change", filterQuestions);
+        starFilter.addEventListener("change", filterQuestions);
+        searchButton.addEventListener("click", searchQuestions);
+        searchInput.addEventListener("keyup", function (event) {
+            // Trigger search on clearing the input as well
+            if (event.key === "Enter" || searchInput.value === "") {
+                searchQuestions();
+            }
+        });
+
+
+        // Combined filter and search function
+        function filterQuestions() {
+            let direction = directionFilter.value;
+            let stars = starFilter.value;
+            let searchText = searchInput.value.toLowerCase().trim();
+            let questions = questionsContainer.querySelectorAll(".question-card");
+            let anyVisible = false;
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) {
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Display a message if no questions match
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    if (searchText !== "") {
+                        noResultsMessage.textContent = '沒有找到符合篩選和搜尋條件的題目。';
+                    } else {
+                        noResultsMessage.textContent = '沒有找到符合篩選條件的題目。';
+                    }
+                }
+            }
+        }
+        // Search function - calls filterQuestions to integrate search logic
+        function searchQuestions() {
+            filterQuestions();
+        }
+
+
+        // Toggle explanations visibility
+        toggleExplanationsButton.addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            toggleExplanationsButton.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Click options (no change needed from example, just for interaction feedback)
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Basic interaction feedback or potential future grading logic
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply initial filter state (e.g., "all")
+        // Set initial state for toggle button text
+        toggleExplanationsButton.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        // Ensure explanations start visible as per initial state
+        let initialExplanations = document.querySelectorAll(".explanation-container");
+        initialExplanations.forEach(exp => exp.style.display = "block");
+
+
+    </script>
+</body>
+
+</html>

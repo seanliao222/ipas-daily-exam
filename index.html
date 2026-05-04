@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPAS AI 中級 每日練習 2026-05-05</title>
+<style>
+  :root {
+    --blue: #1a73e8;
+    --green: #2e7d32;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --tag-bg: #e3f0ff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+         background: var(--bg); color: #1a1a1a; padding: 16px; }
+  .container { max-width: 860px; margin: 0 auto; }
+
+  /* Header */
+  .header { background: linear-gradient(135deg, #1e3a5f 0%, #1a73e8 100%);
+             color: #fff; padding: 28px 24px; border-radius: 14px;
+             text-align: center; margin-bottom: 24px; }
+  .header h1 { font-size: 1.7rem; margin-bottom: 6px; }
+  .header p  { opacity: .85; font-size: .95rem; }
+
+  /* Controls */
+  .controls { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .btn { padding: 9px 18px; border: none; border-radius: 8px; cursor: pointer;
+          font-size: .9rem; font-weight: 600; transition: opacity .2s; }
+  .btn:hover { opacity: .85; }
+  .btn-primary { background: var(--blue); color: #fff; }
+  .btn-secondary { background: #fff; color: var(--blue); border: 2px solid var(--blue); }
+  .progress-info { margin-left: auto; align-self: center; font-size: .9rem; color: #555; }
+
+  /* Question card */
+  .q-card { background: var(--card); border-radius: 12px; padding: 20px 22px;
+             margin-bottom: 18px; box-shadow: 0 2px 8px rgba(0,0,0,.07);
+             border-left: 4px solid var(--blue); }
+  .q-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .q-num  { font-size: .8rem; color: #888; }
+  .q-tag  { background: var(--tag-bg); color: var(--blue); padding: 2px 9px;
+             border-radius: 20px; font-size: .75rem; font-weight: 600; }
+  .q-text { font-size: 1.05rem; font-weight: 700; line-height: 1.65;
+             margin-bottom: 14px; }
+
+  /* Options */
+  .options { display: flex; flex-direction: column; gap: 7px; }
+  .option  { display: flex; gap: 10px; padding: 9px 14px; border-radius: 8px;
+              background: #f4f6fa; cursor: pointer; transition: background .15s;
+              border: 2px solid transparent; }
+  .option:hover { background: #e8f0fe; }
+  .option.selected { border-color: var(--blue); background: #e8f0fe; }
+  .option.correct  { border-color: var(--green); background: #e8f5e9; }
+  .option.wrong    { border-color: #c62828; background: #ffebee; }
+  .opt-label { font-weight: 700; color: var(--blue); min-width: 22px; }
+
+  /* Answer */
+  .answer-section { margin-top: 14px; padding: 14px 16px;
+                     background: #f1f8e9; border-radius: 8px;
+                     border-left: 3px solid var(--green); display: none; }
+  .answer-section.visible { display: block; }
+  .ans-title { font-weight: 700; color: var(--green); margin-bottom: 6px; }
+  .explanation { font-size: .93rem; line-height: 1.75; color: #333; }
+
+  /* Footer */
+  .footer { text-align: center; color: #aaa; font-size: .8rem;
+             margin-top: 28px; padding-bottom: 30px; }
+
+  @media (max-width: 600px) {
+    .header h1 { font-size: 1.3rem; }
+    .q-text { font-size: .97rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>📚 iPAS AI 中級｜每日練習</h1>
+  <p>2026 年 5 月 5 日（星期二）　共 100 題　涵蓋 L21 AI應用規劃 ＋ L22 數據分析</p>
+</div>
+
+<div class="controls">
+  <button class="btn btn-primary" onclick="toggleAll(true)">顯示所有答案</button>
+  <button class="btn btn-secondary" onclick="toggleAll(false)">隱藏所有答案</button>
+  <span class="progress-info" id="prog">已作答 0 / 100 題</span>
+</div>
+
+<div class="q-card" id="q1">
+  <div class="q-meta">
+    <span class="q-num">第 1 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">在 AI 風險管理中，建立模型卡（Model Cards）或類似的文件記錄，主要是為了？</div>
+  <div class="options" id="opts1">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,1)"><span class="opt-label">A</span><span>申請政府的研發補助</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,1)"><span class="opt-label">B</span><span>提升模型的透明度，記錄其預期用途、性能指標、限制與倫理考量</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,1)"><span class="opt-label">C</span><span>自動化模型的部署流程</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,1)"><span class="opt-label">D</span><span>保護模型的商業機密</span></div>
+  </div>
+  <div class="answer-section" id="ans1">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">模型卡是一種旨在提高 AI 模型透明度和問責性的文件。它通常以簡潔、標準化的格式，記錄關於模型的關鍵資訊，例如：模型的開發者、版本、預期用途、不適用場景、訓練數據描述、使用的演算法、性能評估指標（包括在不同群體上的表現、公平性指標）、已知的限制、潛在風險以及倫理考量等。模型卡可以幫助模型的開發者、使用者和管理者更好地理解模型的特性，做出明智的使用決策，並促進負責任的 AI 實踐。</div>
+  </div>
+</div>
+<div class="q-card" id="q2">
+  <div class="q-meta">
+    <span class="q-num">第 2 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">在大數據背景下評估鑑別式模型時，交叉驗證（Cross-Validation）的主要挑戰是什麼？</div>
+  <div class="options" id="opts2">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,2)"><span class="opt-label">A</span><span>無法提供模型效能的無偏估計</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,2)"><span class="opt-label">B</span><span>重複訓練模型多次，計算成本非常高昂</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,2)"><span class="opt-label">C</span><span>只能用於二元分類問題</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,2)"><span class="opt-label">D</span><span>無法處理時間序列資料</span></div>
+  </div>
+  <div class="answer-section" id="ans2">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">交叉驗證（如 K-摺交叉驗證）是一種常用的模型評估方法，它將數據分成 K 份，輪流使用 K-1 份訓練，1 份驗證，重複 K 次。這能提供更穩健的模型效能估計。然而，在大數據集上，這意味著需要將複雜的模型重複訓練 K 次，每次訓練都可能非常耗時，導致總體的計算成本極高。因此，在大數據場景下，有時會採用簡化的驗證策略，如單次的訓練/驗證/測試集劃分，或使用特定的分散式交叉驗證方法。交叉驗證本身能提供較無偏的估計，可用於多類別問題，也有適用於時間序列的版本。</div>
+  </div>
+</div>
+<div class="q-card" id="q3">
+  <div class="q-meta">
+    <span class="q-num">第 3 題</span>
+    <span class="q-tag">L22 L22102 機率分佈與資料分佈模型</span>
+  </div>
+  <div class="q-text">隨機變數 X 的累積分布函數（Cumulative Distribution Function, CDF）F(x) 定義為？</div>
+  <div class="options" id="opts3">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,3)"><span class="opt-label">A</span><span>P(X = x)</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,3)"><span class="opt-label">B</span><span>P(X ≤ x)</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,3)"><span class="opt-label">C</span><span>P(X > x)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,3)"><span class="opt-label">D</span><span>f(x)，即機率密度函數</span></div>
+  </div>
+  <div class="answer-section" id="ans3">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">累積分布函數（CDF）F(x) 給出的是隨機變數 X 的取值小於或等於某個特定值 x 的機率，即 F(x) = P(X ≤ x)。無論是離散還是連續隨機變數，CDF 都是一個非遞減函數，其值域為 [0, 1]。對於連續變數，CDF 是其 PDF 的積分；對於離散變數，CDF 是其機率質量函數（Probability Mass Function, PMF）的累加和。CDF 完整地描述了一個隨機變數的機率分佈。</div>
+  </div>
+</div>
+<div class="q-card" id="q4">
+  <div class="q-meta">
+    <span class="q-num">第 4 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">若企業希望即時監控交易異常，應選擇下列哪一類數據處理架構？</div>
+  <div class="options" id="opts4">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,4)"><span class="opt-label">A</span><span>批次式資料倉儲</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,4)"><span class="opt-label">B</span><span>離線式資料湖</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,4)"><span class="opt-label">C</span><span>串流處理系統</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,4)"><span class="opt-label">D</span><span>冷資料備援架構</span></div>
+  </div>
+  <div class="answer-section" id="ans4">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 即時監控需要能夠處理連續數據流的系統。 串流處理的特點： • 即時處理：處理數據到達時立即進行處理 • 低延遲：從數據產生到結果輸出的時間很短 • 連續處理：持續處理源源不斷的數據流 串流處理的應用場景： • 交易監控：即時偵測異常交易 • 系統監控：即時監控系統性能 • 推薦系統：即時推薦內容 其他架構的適用場景： • 批次處理：定期批量處理歷史數據 • 資料湖：存儲大量原始數據 • 冷資料備援：長期存儲不常訪問的數據</div>
+  </div>
+</div>
+<div class="q-card" id="q5">
+  <div class="q-meta">
+    <span class="q-num">第 5 題</span>
+    <span class="q-tag">L21 L21103 生成式AI技術與應用</span>
+  </div>
+  <div class="q-text">「圖像修復」（Image Inpainting）任務是指利用生成式AI做什麼？</div>
+  <div class="options" id="opts5">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,5)"><span class="opt-label">A</span><span>提高圖像的整體解析度</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,5)"><span class="opt-label">B</span><span>根據圖像周圍的內容，填補圖像中缺失或損壞的區域</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,5)"><span class="opt-label">C</span><span>將圖像轉換為不同的藝術風格</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,5)"><span class="opt-label">D</span><span>為圖像生成文字描述</span></div>
+  </div>
+  <div class="answer-section" id="ans5">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">圖像修復是生成式AI在圖像處理中的一個應用。其目標是對於輸入圖像中被遮擋、損壞或人為移除的部分（通常用遮罩標出），利用圖像中其他已知區域的上下文資訊，生成合理且視覺上連續的內容來填補這些缺失區域，使得修復後的圖像看起來自然完整。這在照片編輯、文物修復等場景中有應用價值。選項A是超解析度（Super-Resolution）。選項C是風格轉換（Style Transfer）。選項D是圖像描述生成（Image Captioning）。</div>
+  </div>
+</div>
+<div class="q-card" id="q6">
+  <div class="q-meta">
+    <span class="q-num">第 6 題</span>
+    <span class="q-tag">L22 L22202 數據儲存與管理</span>
+  </div>
+  <div class="q-text">在選擇雲端儲存服務時，"儲存層級"（Storage Tiering）或 "儲存類別"（Storage Class）的主要目的是什麼？</div>
+  <div class="options" id="opts6">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,6)"><span class="opt-label">A</span><span>根據數據的存取頻率和效能需求，選擇不同成本和特性的儲存選項，以優化總體擁有成本 (Total Cost of Ownership, TCO)</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,6)"><span class="opt-label">B</span><span>將所有數據都儲存在最高效能的層級</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,6)"><span class="opt-label">C</span><span>增加數據的副本數量</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,6)"><span class="opt-label">D</span><span>簡化數據的加密過程</span></div>
+  </div>
+  <div class="answer-section" id="ans6">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">"> 雲端儲存供應商（如 AWS, Azure, GCP）通常提供多種儲存類別或層級，每種類別在存取效能、可用性、持久性和成本方面有所不同。例如，經常存取的「熱」數據（Hot Data）可以放在標準儲存類別，提供較低的存取延遲但成本較高；不常存取但需要快速檢索的「溫」數據（Warm Data）可以放在不常存取類別，成本較低但可能有檢索費用；而很少存取用於歸檔的「冷」數據（Cold Data）可以放在歸檔儲存（如 AWS Glacier），成本最低但檢索時間可能需要數小時。透過將數據根據其生命週期和存取模式放置在合適的層級，企業可以有效地平衡效能需求和儲存成本。</div>
+  </div>
+</div>
+<div class="q-card" id="q7">
+  <div class="q-meta">
+    <span class="q-num">第 7 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">Power BI 中的 DAX (Data Analysis Expressions) 主要用途是什麼？</div>
+  <div class="options" id="opts7">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,7)"><span class="opt-label">A</span><span>連接不同的數據源</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,7)"><span class="opt-label">B</span><span>設計報表的視覺外觀</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,7)"><span class="opt-label">C</span><span>建立自訂計算欄位、量值和表格，進行複雜的數據分析</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,7)"><span class="opt-label">D</span><span>管理用戶權限和報表分享</span></div>
+  </div>
+  <div class="answer-section" id="ans7">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> DAX (Data Analysis Expressions) 是 Power BI (以及 SQL Server Analysis Services 和 Excel Power Pivot) 中使用的一種公式語言。它包含一系列函數、運算子和常數，可以用來在數據模型中執行進階計算和查詢。使用者可以利用 DAX 創建新的資訊（如計算欄位 Calculated Columns、量值 Measures），這些新資訊基於模型中已有的數據，從而實現更複雜的分析邏輯，例如計算年同比增長率 (Year-over-Year Growth)、移動平均 (Moving Average) 等。</div>
+  </div>
+</div>
+<div class="q-card" id="q8">
+  <div class="q-meta">
+    <span class="q-num">第 8 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">在大數據環境下，為確保鑑別式模型訓練的公平性（Fairness），避免對特定群體（如基於性別、種族）產生歧視性預測，需要關注哪個環節？</div>
+  <div class="options" id="opts8">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,8)"><span class="opt-label">A</span><span>只關注模型的計算效率</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,8)"><span class="opt-label">B</span><span>僅增加模型的複雜度</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,8)"><span class="opt-label">C</span><span>資料收集與前處理、模型訓練演算法、以及模型評估指標的選擇</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,8)"><span class="opt-label">D</span><span>完全忽略受保護的屬性（如性別、種族）</span></div>
+  </div>
+  <div class="answer-section" id="ans8">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">確保 AI 公平性是一個貫穿機器學習生命週期的問題。首先，需要檢查原始數據收集是否存在偏見，以及在前處理中是否加劇了偏見。其次，某些模型演算法可能更容易學習到或放大偏見，需要謹慎選擇或進行調整。最後，評估模型時，除了整體效能，還需要使用特定的公平性指標來衡量模型在不同群體上的表現是否存在差異。簡單地忽略敏感屬性可能不夠，因為其他特徵可能與敏感屬性高度相關，導致間接歧視。因此，需要綜合考慮數據、演算法和評估等多個環節。</div>
+  </div>
+</div>
+<div class="q-card" id="q9">
+  <div class="q-meta">
+    <span class="q-num">第 9 題</span>
+    <span class="q-tag">L25 L25 L21 guide</span>
+  </div>
+  <div class="q-text">在自然語言處理應用中，哪一項任務主要目的是從文字中識別出人名、地名、組織等資訊？</div>
+  <div class="options" id="opts9">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,9)"><span class="opt-label">A</span><span>情感分析（Sentiment Analysis）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,9)"><span class="opt-label">B</span><span>主題建模（Topic Modeling）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,9)"><span class="opt-label">C</span><span>命名實體識別（Named Entity Recognition, NER）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,9)"><span class="opt-label">D</span><span>語音辨識（Speech Recognition）</span></div>
+  </div>
+  <div class="answer-section" id="ans9">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C NER 是 NLP 中的資訊擷取（Information Extraction）任務，用於識別並分類文本中的命名實體。 實體類型 英文標記 範例 人名 PER / PERSON 張三、李明、Bill Gates 地名 LOC / GPE 台北、美國、太平洋 組織名 ORG 台積電、Google、聯合國 時間 DATE / TIME 2024年、下午3點、星期一 金額 MONEY 100元、$50、€20 🎯 其他選項說明： A. 情感分析：判斷文本的情緒傾向（正面/負面/中性） B. 主題建模：從文本集合中發現潛在主題（如 LDA） D. 語音辨識：將語音轉換為文字，屬於語音處理領域 💼 實際應用：客服系統、新聞分析、醫療記錄處理、金融文件分析</div>
+  </div>
+</div>
+<div class="q-card" id="q10">
+  <div class="q-meta">
+    <span class="q-num">第 10 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">當使用大數據訓練鑑別式模型時，如果不同來源的資料在合併時存在格式或語意上的不一致（例如，日期格式不同，或「性別」欄位有「男/女」、「M/F」、「1/0」等多種表示），這主要涉及到大數據的哪個品質維度問題？</div>
+  <div class="options" id="opts10">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,10)"><span class="opt-label">A</span><span>完整性 (Completeness)</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,10)"><span class="opt-label">B</span><span>及時性 (Timeliness)</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,10)"><span class="opt-label">C</span><span>一致性 (Consistency)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,10)"><span class="opt-label">D</span><span>獨特性 (Uniqueness)</span></div>
+  </div>
+  <div class="answer-section" id="ans10">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">數據一致性指的是數據在不同記錄、不同表格或不同系統之間是否遵循相同的標準和定義。當合併來自異構來源的大數據時，常常會遇到表示同一概念卻使用不同格式或代碼的情況，這就是一致性問題。在將這些數據餵給鑑別式模型之前，必須進行清理和轉換，將它們統一成標準格式，否則模型可能無法正確理解和利用這些資訊。完整性指數據是否存在缺失。及時性指數據是否足夠新。獨特性指是否存在重複記錄。</div>
+  </div>
+</div>
+<div class="q-card" id="q11">
+  <div class="q-meta">
+    <span class="q-num">第 11 題</span>
+    <span class="q-tag">L22 L22102 機率分佈與資料分佈模型</span>
+  </div>
+  <div class="q-text">幾何分佈（Geometric Distribution）描述的是在重複獨立的伯努利試驗中，什麼事件發生的機率？</div>
+  <div class="options" id="opts11">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,11)"><span class="opt-label">A</span><span>恰好觀察到 k 次成功</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,11)"><span class="opt-label">B</span><span>直到第一次成功出現時，所需要進行的試驗次數</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,11)"><span class="opt-label">C</span><span>在固定時間內成功的次數</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,11)"><span class="opt-label">D</span><span>試驗成功的比例</span></div>
+  </div>
+  <div class="answer-section" id="ans11">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">幾何分佈也是基於一系列獨立的伯努利試驗（每次成功機率為 p）。它關注的是第一次成功發生前的失敗次數，或者直到第一次成功發生所需的總試驗次數（這兩種定義略有不同，但都屬於幾何分佈）。例如，不斷投擲一枚硬幣直到第一次出現正面，投擲的次數就服從幾何分佈。選項 A 是二項分佈。選項 C 是卜瓦松分佈。選項 D 是一個比例。</div>
+  </div>
+</div>
+<div class="q-card" id="q12">
+  <div class="q-meta">
+    <span class="q-num">第 12 題</span>
+    <span class="q-tag">L21 L21104 多模態人工智慧應用</span>
+  </div>
+  <div class="q-text">多模態人工智慧模型的可解釋性（Interpretability）通常比單模態模型更具挑戰性，主要原因可能包括？</div>
+  <div class="options" id="opts12">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,12)"><span class="opt-label">A</span><span>模型需要處理和融合來自多個異質來源的複雜交互資訊。</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,12)"><span class="opt-label">B</span><span>多模態模型的參數數量通常比單模態模型少。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,12)"><span class="opt-label">C</span><span>多模態數據本身非常容易理解。</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,12)"><span class="opt-label">D</span><span>缺乏用於評估多模態模型性能的指標。</span></div>
+  </div>
+  <div class="answer-section" id="ans12">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">">多模態模型由於需要同時處理來自不同模態的資訊，並學習它們之間複雜的交互和融合模式，其內部運作機制往往比只處理單一模態的模型更加複雜和難以理解。例如，要知道模型最終的決策是基於哪個模態的哪個部分，以及不同模態是如何相互影響的，通常需要更專門的可解釋性分析技術（如多模態注意力圖、跨模態影響分析等）。因此，理解和解釋多模態模型的決策過程是一個重要的研究挑戰。</div>
+  </div>
+</div>
+<div class="q-card" id="q13">
+  <div class="q-meta">
+    <span class="q-num">第 13 題</span>
+    <span class="q-tag">L25 L25 L23 guide</span>
+  </div>
+  <div class="q-text">在深度學習模型的訓練過程中，計算模型輸出與實際值差距的函數稱為什麼？</div>
+  <div class="options" id="opts13">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,13)"><span class="opt-label">A</span><span>激活函數（Activation Function）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,13)"><span class="opt-label">B</span><span>池化函數（Pooling Function）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,13)"><span class="opt-label">C</span><span>損失函數（Loss Function）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,13)"><span class="opt-label">D</span><span>梯度函數（Gradient Function）</span></div>
+  </div>
+  <div class="answer-section" id="ans13">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 損失函數（也稱成本函數 Cost Function）量化模型預測與真實值的差異程度，是訓練的優化目標。 損失函數適用任務公式特點 MSE均方誤差迴歸(1/n)Σ(y-ŷ)²對離群值敏感 MAE平均絕對誤差迴歸(1/n)Σ|y-ŷ|對離群值穩健 Cross-Entropy交叉熵分類-Σy log(ŷ)衡量機率分佈差異 Binary Cross-Entropy二元分類-[y log(ŷ)+(1-y)log(1-ŷ)]邏輯迴歸常用 Hinge LossSVMmax(0, 1-y·ŷ)最大間隔分類 🎯 如何選擇損失函數？ 迴歸任務：MSE（標準）、MAE（有離群值時）、Huber Loss（折衷） 二元分類：Binary Cross-Entropy 多類別分類：Categorical Cross-Entropy + Softmax 多標籤分類：Binary Cross-Entropy（每個標籤獨立）</div>
+  </div>
+</div>
+<div class="q-card" id="q14">
+  <div class="q-meta">
+    <span class="q-num">第 14 題</span>
+    <span class="q-tag">L21 L21103 生成式AI技術與應用</span>
+  </div>
+  <div class="q-text">GitHub Copilot 這類工具主要是利用生成式AI來輔助哪個任務？</div>
+  <div class="options" id="opts14">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,14)"><span class="opt-label">A</span><span>生成藝術圖像</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,14)"><span class="opt-label">B</span><span>編寫和建議程式碼</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,14)"><span class="opt-label">C</span><span>創作音樂樂譜</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,14)"><span class="opt-label">D</span><span>進行股票市場預測</span></div>
+  </div>
+  <div class="answer-section" id="ans14">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">GitHub Copilot 是基於大型語言模型（如OpenAI Codex）開發的AI程式設計助手。它能夠理解開發者的程式碼上下文和註解，自動建議、補全甚至生成整個函數或程式碼區塊，支援多種程式語言，旨在提高開發者的編程效率。這屬於程式碼生成（Code Generation）的應用範疇。</div>
+  </div>
+</div>
+<div class="q-card" id="q15">
+  <div class="q-meta">
+    <span class="q-num">第 15 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">「負責任 AI」（Responsible AI）的核心原則通常包含以下哪些要素？</div>
+  <div class="options" id="opts15">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,15)"><span class="opt-label">A</span><span>速度、成本、可擴展性</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,15)"><span class="opt-label">B</span><span>公平性、可靠性與安全性、隱私與資安、包容性、透明度、問責性</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,15)"><span class="opt-label">C</span><span>開源、雲端原生、微服務化</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,15)"><span class="opt-label">D</span><span>盈利能力、市場佔有率、品牌形象</span></div>
+  </div>
+  <div class="answer-section" id="ans15">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">負責任 AI 是一個綜合性概念，旨在確保 AI 系統的開發和部署是以符合倫理、法律和社會價值的方式進行。雖然不同組織提出的原則略有差異，但核心要素通常圍繞著：公平性 (Fairness，避免偏見和歧視)、可靠性與安全性 (Reliability and Safety，模型穩健、不易被攻擊、結果可信)、隱私與資安 (Privacy and Security，保護數據、防範威脅)、包容性 (Inclusiveness，惠及多元群體、易於使用)、透明度 (Transparency，可解釋性、決策過程可理解)、問責性 (Accountability，明確責任歸屬、建立治理機制)。選項 A 和 C 偏向技術或架構特性，選項 D 偏向商業目標，而選項 B 則直接反映了負責任 AI 的核心價值關懷。</div>
+  </div>
+</div>
+<div class="q-card" id="q16">
+  <div class="q-meta">
+    <span class="q-num">第 16 題</span>
+    <span class="q-tag">L25 L25 L22 guide</span>
+  </div>
+  <div class="q-text">大數據對生成式 AI 內容品質的影響關鍵在於？</div>
+  <div class="options" id="opts16">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,16)"><span class="opt-label">A</span><span>GPU 數量多寡</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,16)"><span class="opt-label">B</span><span>訓練樣本是否具多樣性（Diversity）與語境一致性（Contextual Consistency）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,16)"><span class="opt-label">C</span><span>API 回應速度</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,16)"><span class="opt-label">D</span><span>是否使用 Python 編寫模型</span></div>
+  </div>
+  <div class="answer-section" id="ans16">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B 生成式 AI 的品質高度依賴訓練資料的品質，特別是多樣性和一致性。 資料特性 重要性 影響 多樣性（Diversity） ⭐⭐⭐ 涵蓋各種情境、風格、主題避免模型偏見和侷限 品質（Quality） ⭐⭐⭐ 高品質資料產生高品質輸出「垃圾進，垃圾出」 數量（Quantity） ⭐⭐ 大量資料提升泛化能力但品質比數量更重要 一致性（Consistency） ⭐⭐⭐ 語境邏輯一致避免矛盾資訊 時效性（Timeliness） ⭐⭐ 反映最新知識和趨勢 ⚠️ 資料品質問題的影響： 偏見（Bias）：訓練資料有偏見 → 模型輸出有偏見 幻覺（Hallucination）：資料不一致 → 模型產生虛假資訊 侷限性：資料不夠多樣 → 模型無法處理新情境 低品質輸出：訓練資料品質差 → 生成內容品質差 🎯 提升資料品質的方法： 資料清理：移除重複、錯誤、低品質資料 資料增強：增加資料多樣性 人工審核：確保資料品質和一致性 去偏見：平衡不同群體的代表性 💡 業界案例： GPT-3：</div>
+  </div>
+</div>
+<div class="q-card" id="q17">
+  <div class="q-meta">
+    <span class="q-num">第 17 題</span>
+    <span class="q-tag">L22 L22401 大數據與機器學習</span>
+  </div>
+  <div class="q-text">深度學習 (Deep Learning) 模型（如卷積神經網路 CNN、循環神經網路 RNN）在大數據應用中展現強大能力，特別擅長處理哪種類型的數據？</div>
+  <div class="options" id="opts17">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,17)"><span class="opt-label">A</span><span>小型、結構化的表格數據</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,17)"><span class="opt-label">B</span><span>複雜的非結構化數據，如圖像、語音、自然語言文本</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,17)"><span class="opt-label">C</span><span>只需要少量標籤的數據</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,17)"><span class="opt-label">D</span><span>易於解釋其內部運作原理的數據</span></div>
+  </div>
+  <div class="answer-section" id="ans17">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 深度學習是機器學習的一個分支，其模型（特別是深度神經網路）具有多個處理層，能夠自動從原始數據中學習複雜的、層次化的特徵表示。這使得它們在處理非結構化數據方面表現出色，例如： 卷積神經網路 (Convolutional Neural Network, CNN): 在圖像識別、電腦視覺任務中取得巨大成功。 循環神經網路 (Recurrent Neural Network, RNN及其變體如 LSTM, GRU): 擅長處理序列數據，如自然語言文本、語音、時間序列。 Transformer: 在自然語言處理領域帶來突破，也應用於視覺等領域。 深度學習模型通常需要大量的數據（尤其是標籤數據）來進行訓練，並且模型的可解釋性相對較差（常被視為黑盒子）。</div>
+  </div>
+</div>
+<div class="q-card" id="q18">
+  <div class="q-meta">
+    <span class="q-num">第 18 題</span>
+    <span class="q-tag">L22 L22103 假設檢定與統計推論</span>
+  </div>
+  <div class="q-text">在假設檢定中，型 II 錯誤（Type II Error）是指什麼？其機率通常用哪個符號表示？</div>
+  <div class="options" id="opts18">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,18)"><span class="opt-label">A</span><span>H0 為真時，錯誤地拒絕 H0；機率為 α</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,18)"><span class="opt-label">B</span><span>H0 為偽時，錯誤地未能拒絕 H0；機率為 β</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,18)"><span class="opt-label">C</span><span>H0 為真時，正確地未能拒絕 H0；機率為 1-α</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,18)"><span class="opt-label">D</span><span>H0 為偽時，正確地拒絕 H0；機率為 1-β</span></div>
+  </div>
+  <div class="answer-section" id="ans18">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">假設檢定中可能犯兩種錯誤： 型 I 錯誤：拒絕了實際上為真的 H0（偽陽性 False Positive）。其機率上限由顯著水準 α 控制。 型 II 錯誤：未能拒絕實際上為偽的 H0（偽陰性 False Negative）。其機率用 β 表示。 選項 B 正確定義了型 II 錯誤及其機率符號。選項 A 是型 I 錯誤。選項 C 是正確接受 H0 的情況（置信水平）。選項 D 是正確拒絕 H0 的情況，這個機率 (1-β) 稱為統計檢定力（Statistical Power），代表檢定能夠正確偵測到 H0 為偽的能力。</div>
+  </div>
+</div>
+<div class="q-card" id="q19">
+  <div class="q-meta">
+    <span class="q-num">第 19 題</span>
+    <span class="q-tag">L21 L21101 自然語言處理技術與應用</span>
+  </div>
+  <div class="q-text">自然語言處理 (Natural Language Processing, NLP) 的主要目標是什麼？</div>
+  <div class="options" id="opts19">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,19)"><span class="opt-label">A</span><span>設計更快的電腦硬體</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,19)"><span class="opt-label">B</span><span>使電腦能夠理解、解釋和生成人類語言</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,19)"><span class="opt-label">C</span><span>開發新的程式語言</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,19)"><span class="opt-label">D</span><span>提高資料庫查詢效率</span></div>
+  </div>
+  <div class="answer-section" id="ans19">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">自然語言處理 (NLP) 是人工智慧 (AI) 和語言學領域的一個分支，專注於實現電腦與人類自然語言之間的有效互動。其核心目標是賦予電腦處理和「理解」人類語言的能力，包括文本和語音，進而能夠執行如翻譯、情感分析、問答、摘要生成等任務。其他選項描述的是電腦科學的不同領域。</div>
+  </div>
+</div>
+<div class="q-card" id="q20">
+  <div class="q-meta">
+    <span class="q-num">第 20 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">關於深度學習模型，下列敘述何者不正確？</div>
+  <div class="options" id="opts20">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,20)"><span class="opt-label">A</span><span>卷積神經網路（Convolutional Neural Networks）適合影像辨識</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,20)"><span class="opt-label">B</span><span>ReLU（Rectified Linear Unit）比 tanh 和 Sigmoid 好，因為 ReLU 可以減緩梯度爆炸與消失的現象</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,20)"><span class="opt-label">C</span><span>遞迴神經網路（Recurrent Neural Networks）適合處理序列相關資料</span></div>
+<div class="option" data-label="D" data-correct="true" onclick="choose(this,20)"><span class="opt-label">D</span><span>Elman 神經網路（Elman Neural Networks）適合處理影像辨識</span></div>
+  </div>
+  <div class="answer-section" id="ans20">
+    <div class="ans-title">✅ 正確答案：D</div>
+    <div class="explanation">"> 正確答案：D Elman 神經網路（Elman Neural Networks）是遞迴神經網路（Recurrent Neural Networks, RNN）的一種變體，主要用於處理序列資料，而不是影像辨識。 各神經網路類型的應用領域： 神經網路類型 主要應用領域 核心特點 卷積神經網路 (CNN) 影像辨識、電腦視覺 局部感受野、權重共享 遞迴神經網路 (RNN) 序列資料、自然語言處理 記憶功能、序列建模 Elman 神經網路 時間序列預測、語言建模 上下文層、簡單循環結構 Elman神經網路的特點： • 上下文層：記住前一步的隱藏層狀態 • 簡單循環結構：比標準RNN更容易訓練 • 適用於序列任務：如語言建模、時間序列預測 其他選項的正確性： • CNN確實適合影像辨識 • ReLU確實能減緩梯度消失問題 • RNN確實適合處</div>
+  </div>
+</div>
+<div class="q-card" id="q21">
+  <div class="q-meta">
+    <span class="q-num">第 21 題</span>
+    <span class="q-tag">L22 L22201 數據收集與清理</span>
+  </div>
+  <div class="q-text">哪種缺失值類型表示數據的缺失與觀測到的其他變數或缺失值本身有關，這種情況下直接刪除缺失值可能導致結果偏誤？</div>
+  <div class="options" id="opts21">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,21)"><span class="opt-label">A</span><span>完全隨機缺失（Missing Completely At Random, MCAR）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,21)"><span class="opt-label">B</span><span>隨機缺失（Missing At Random, MAR）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,21)"><span class="opt-label">C</span><span>非隨機缺失（Missing Not At Random, MNAR）或稱不可忽略缺失（Non-Ignorable Missing）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,21)"><span class="opt-label">D</span><span>結構性缺失（Structural Missing）</span></div>
+  </div>
+  <div class="answer-section" id="ans21">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 缺失值的機制通常分為三類，其特性比較如下： 類型 全名 缺失原因 處理影響 MCAR 完全隨機缺失(Missing Completely At Random) 與任何觀測到或未觀測到的變數都無關。 最理想情況，直接刪除對結果影響最小。 MAR 隨機缺失(Missing At Random) 僅與其他觀測到的變數有關。 直接刪除可能導致偏誤，可使用填補方法處理。 MNAR 非隨機缺失(Missing Not At Random) 與缺失值本身或未觀測到的因素有關。 直接刪除或簡單填補會導致嚴重偏誤，處理最困難。</div>
+  </div>
+</div>
+<div class="q-card" id="q22">
+  <div class="q-meta">
+    <span class="q-num">第 22 題</span>
+    <span class="q-tag">L25 L25 L21 guide</span>
+  </div>
+  <div class="q-text">在進行 AI 導入評估時，為確保企業體系具備執行能力，應考量下列哪一項？</div>
+  <div class="options" id="opts22">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,22)"><span class="opt-label">A</span><span>使用者介面風格</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,22)"><span class="opt-label">B</span><span>技術成熟度（Technology Readiness）與部署資源</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,22)"><span class="opt-label">C</span><span>品牌識別度</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,22)"><span class="opt-label">D</span><span>客服滿意度</span></div>
+  </div>
+  <div class="answer-section" id="ans22">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B 評估企業的執行能力需要考量技術準備度和資源配置。 評估項目 具體內容 評估問題 🔧 技術成熟度 • 現有 IT 基礎設施• 資料管理能力• 技術債務狀況 系統是否能支援 AI？資料品質是否足夠？ 👥 人才資源 • AI 專業人才• 資料科學團隊• 領域專家 是否有足夠人才？需要外部支援嗎？ 💻 運算資源 • GPU/TPU 資源• 雲端服務• 儲存空間 運算能力是否足夠？預算是否充足？ 📊 資料資源 • 資料量與品質• 資料標註能力• 資料治理 資料是否可用？是否需要清理？ 🏢 組織準備度 • 變革管理• 跨部門協作• 高層支持 組織是否準備好？文化是否支持創新？ 📈 技術成熟度等級（TRL, Technology Readiness Level）： Level 1-3：基礎研究階段 Level 4-6：技術驗證與原型開發 Level 7-9：系統整合與實際部署 💡 資源評估檢查清單： ✅ 是否有專案預算？ ✅ 是否有技術團隊？ ✅ 是否有足夠的訓練資料？ ✅ 是否有運算基礎設施？ ✅ 是否有高層支持？ ✅ 是否有明確的時程規劃？</div>
+  </div>
+</div>
+<div class="q-card" id="q23">
+  <div class="q-meta">
+    <span class="q-num">第 23 題</span>
+    <span class="q-tag">L21 L21201 AI導入評估</span>
+  </div>
+  <div class="q-text">總體擁有成本 (Total Cost of Ownership, TCO) 的概念在 AI 導入評估中的意義是？</div>
+  <div class="options" id="opts23">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,23)"><span class="opt-label">A</span><span>僅計算 AI 軟體的購買價格</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,23)"><span class="opt-label">B</span><span>評估 AI 系統在其整個生命週期內的全部成本，包括直接和間接成本</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,23)"><span class="opt-label">C</span><span>僅計算模型訓練的電費</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,23)"><span class="opt-label">D</span><span>僅評估 AI 帶來的總收益</span></div>
+  </div>
+  <div class="answer-section" id="ans23">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">總體擁有成本 (TCO) 是一個財務概念，旨在全面評估擁有某項資產（在這裡是 AI 系統）在其整個生命週期內所發生的所有成本。這不僅包括初期的購買或開發成本（直接成本），還包括後續的營運、維護、升級、人員培訓、技術支援、整合、甚至最終的汰換成本（間接成本/隱性成本）。在進行 AI 導入的成本效益分析時，採用 TCO 的視角有助於更全面、更準確地估算總投入，避免低估長期成本，從而做出更明智的投資決策。</div>
+  </div>
+</div>
+<div class="q-card" id="q24">
+  <div class="q-meta">
+    <span class="q-num">第 24 題</span>
+    <span class="q-tag">L22 L22404 大數據隱私保護、安全與合規</span>
+  </div>
+  <div class="q-text">「隱私影響評估」（Privacy Impact Assessment, PIA）或「數據保護影響評估」（Data Protection Impact Assessment, DPIA - GDPR要求）是一種什麼樣的流程？</div>
+  <div class="options" id="opts24">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,24)"><span class="opt-label">A</span><span>評估資料庫性能的流程。</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,24)"><span class="opt-label">B</span><span>在啟動一個新的涉及處理個人數據的項目或系統之前，系統性地識別、評估和降低潛在隱私風險的流程。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,24)"><span class="opt-label">C</span><span>評估員工工作效率的流程。</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,24)"><span class="opt-label">D</span><span>評估市場營銷活動效果的流程。</span></div>
+  </div>
+  <div class="answer-section" id="ans24">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> PIA/DPIA 是一種風險管理工具，旨在幫助組織主動思考和解決與個人數據處理相關的隱私問題。當組織計劃啟動一個可能對個人隱私產生較高風險的新項目時（例如，引入新的監控技術、處理大量敏感數據、進行大規模用戶剖析等），進行PIA/DPIA可以幫助其：(1) 描述數據處理活動。(2) 評估其必要性和相稱性。(3) 識別可能對個人權利和自由產生的風險（如數據洩露、歧視、監控）。(4) 規劃用於應對這些風險的措施（如安全控制、匿名化、最小化數據收集）。這是實現「設計即隱私」（Privacy by Design）原則的重要實踐，也是某些法規（如GDPR）在特定情況下的強制要求。</div>
+  </div>
+</div>
+<div class="q-card" id="q25">
+  <div class="q-meta">
+    <span class="q-num">第 25 題</span>
+    <span class="q-tag">L22 L22203 數據處理技術與工具</span>
+  </div>
+  <div class="q-text">數據清理中偵測重複數據（Duplicate Data）時，通常基於什麼來判斷兩筆紀錄是否重複？</div>
+  <div class="options" id="opts25">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,25)"><span class="opt-label">A</span><span>紀錄的時間戳記（Timestamp）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,25)"><span class="opt-label">B</span><span>紀錄的記憶體位址（Memory Address）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,25)"><span class="opt-label">C</span><span>紀錄中所有欄位或指定鍵值欄位（Key Columns）的值完全相同</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,25)"><span class="opt-label">D</span><span>紀錄的數值型欄位的平均值</span></div>
+  </div>
+  <div class="answer-section" id="ans25">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 偵測完全重複的紀錄通常是比較兩筆紀錄的所有欄位值是否都一模一樣。在某些情況下，也可以根據業務邏輯定義一組關鍵欄位（例如 "用戶ID" + "訂單日期"），如果這些關鍵欄位的值相同，則認為是重複紀錄。選項A、B、D 不是判斷數據內容是否重複的標準方法。</div>
+  </div>
+</div>
+<div class="q-card" id="q26">
+  <div class="q-meta">
+    <span class="q-num">第 26 題</span>
+    <span class="q-tag">L21 L21301 數據準備與模型選擇</span>
+  </div>
+  <div class="q-text">以下哪種方法通常有助於緩解模型的過擬合（Overfitting）問題？</div>
+  <div class="options" id="opts26">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,26)"><span class="opt-label">A</span><span>增加模型複雜度（例如增加神經網路層數或決策樹深度）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,26)"><span class="opt-label">B</span><span>減少訓練數據量</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,26)"><span class="opt-label">C</span><span>使用正規化（Regularization）技術，如 L1 或 L2 正規化</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,26)"><span class="opt-label">D</span><span>訓練更長的時間</span></div>
+  </div>
+  <div class="answer-section" id="ans26">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">緩解過擬合的方法主要有： 增加訓練數據量：讓模型看到更多樣例，減少對特定雜訊的記憶。 降低模型複雜度：使用更簡單的模型結構（如減少層數、節點數、特徵數）。 正規化（Regularization）：在損失函數中加入對模型參數的懲罰項（如 L1/L2 範數），限制模型參數的大小，使其更平滑，降低複雜度。 Dropout：在神經網路訓練中隨機停用一部分神經元，減少神經元之間的協同適應。 早期停止（Early Stopping）：在驗證集效能不再提升時停止訓練。 選項 A 和 D 通常會加劇過擬合。選項 B 會使過擬合更容易發生。選項 C（正規化）是常用的防止過擬合的技術。</div>
+  </div>
+</div>
+<div class="q-card" id="q27">
+  <div class="q-meta">
+    <span class="q-num">第 27 題</span>
+    <span class="q-tag">L21 L21104 多模態人工智慧應用</span>
+  </div>
+  <div class="q-text">為一段無聲影片自動配上合理的音效（如腳步聲、關門聲、環境音），這項技術屬於多模態AI的哪個應用方向？</div>
+  <div class="options" id="opts27">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,27)"><span class="opt-label">A</span><span>視覺問答 (VQA)</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,27)"><span class="opt-label">B</span><span>跨模態生成（視覺到聽覺）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,27)"><span class="opt-label">C</span><span>多模態情感分析</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,27)"><span class="opt-label">D</span><span>多模態摘要</span></div>
+  </div>
+  <div class="answer-section" id="ans27">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 這項任務需要模型理解影片的視覺內容（例如，有人在走路、門被關上、場景在戶外），並根據這些視覺線索生成或選擇對應的、聽起來自然的音效。輸入是視覺模態（無聲影片），輸出是聽覺模態（音效）。這是一個典型的從視覺模態到聽覺模態的跨模態生成任務，有時也被稱為視覺引導的音訊生成（Visually-Guided Audio Generation）或視覺音效合成（Visual Sound Synthesis）。</div>
+  </div>
+</div>
+<div class="q-card" id="q28">
+  <div class="q-meta">
+    <span class="q-num">第 28 題</span>
+    <span class="q-tag">L22 L22404 大數據隱私保護、安全與合規</span>
+  </div>
+  <div class="q-text">差分隱私通常通過添加噪聲來實現。以下哪種噪聲分佈常用於滿足差分隱私的要求，尤其是在處理計數或數值型查詢時？</div>
+  <div class="options" id="opts28">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,28)"><span class="opt-label">A</span><span>均勻分佈（Uniform Distribution）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,28)"><span class="opt-label">B</span><span>拉普拉斯分佈（Laplace Distribution）或高斯分佈（Gaussian Distribution）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,28)"><span class="opt-label">C</span><span>柏努力分佈（Bernoulli Distribution）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,28)"><span class="opt-label">D</span><span>泊松分佈（Poisson Distribution）</span></div>
+  </div>
+  <div class="answer-section" id="ans28">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 為了滿足差分隱私的數學定義，添加的噪聲需要具有特定的機率分佈特性。拉普拉斯機制（Laplace Mechanism）常用於響應數值型查詢（如計數、求和、平均值），它添加從拉普拉斯分佈中抽樣的噪聲，噪聲的大小與查詢的L1敏感度成正比，與隱私預算ε成反比。高斯機制（Gaussian Mechanism）則常用於L2敏感度的查詢或在滿足(ε, δ)-差分隱私（一種稍微放鬆的定義）時使用，它添加從高斯分佈中抽樣的噪聲。選擇哪種機制和分佈取決於具體的查詢類型和所需的隱私定義。</div>
+  </div>
+</div>
+<div class="q-card" id="q29">
+  <div class="q-meta">
+    <span class="q-num">第 29 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">假設有一組成績資料呈現常態分配，平均數為 70，標準差為 10，若某位學生的成績為 90，該學生的 Z 分數約為多少？</div>
+  <div class="options" id="opts29">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,29)"><span class="opt-label">A</span><span>0</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,29)"><span class="opt-label">B</span><span>1</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,29)"><span class="opt-label">C</span><span>2</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,29)"><span class="opt-label">D</span><span>3</span></div>
+  </div>
+  <div class="answer-section" id="ans29">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C Z 分數的計算公式為：Z = (X - μ) / σ 計算過程： • X = 90（學生成績） • μ = 70（平均數） • σ = 10（標準差） • Z = (90 - 70) / 10 = 20 / 10 = 2 Z 分數的意義： • Z = 0：成績等於平均數 • Z = 1：成績高於平均數一個標準差 • Z = 2：成績高於平均數兩個標準差 • Z = -1：成績低於平均數一個標準差</div>
+  </div>
+</div>
+<div class="q-card" id="q30">
+  <div class="q-meta">
+    <span class="q-num">第 30 題</span>
+    <span class="q-tag">L22 L22404 大數據隱私保護、安全與合規</span>
+  </div>
+  <div class="q-text">在AI倫理討論中，「人類福祉」（Human Well-being）原則強調AI系統的開發和部署應以什麼為目標？</div>
+  <div class="options" id="opts30">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,30)"><span class="opt-label">A</span><span>最大化開發者的利潤。</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,30)"><span class="opt-label">B</span><span>促進人類的繁榮、尊嚴和權利，避免對個人或社會造成傷害。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,30)"><span class="opt-label">C</span><span>展示最先進的技術能力。</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,30)"><span class="opt-label">D</span><span>取代所有人類工作。</span></div>
+  </div>
+  <div class="answer-section" id="ans30">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 許多AI倫理指南都將促進人類福祉作為核心目標。這意味著AI技術的發展和應用應旨在造福人類和社會，例如提高生活質量、增進健康、擴大機會、保護環境等。同時，也必須積極預見和減輕AI可能帶來的負面影響和風險，如失業、歧視、隱私侵犯、安全威脅或社會不平等等。這要求在AI的設計、開發、部署和治理過程中，始終將人的價值、權利和福祉置於中心地位。</div>
+  </div>
+</div>
+<div class="q-card" id="q31">
+  <div class="q-meta">
+    <span class="q-num">第 31 題</span>
+    <span class="q-tag">L22 L22401 大數據與機器學習</span>
+  </div>
+  <div class="q-text">在處理大數據中的類別特徵 (Categorical Features) 時，如果某個特徵的基數（唯一值的數量）非常高，使用獨熱編碼 (One-Hot Encoding) 可能會導致什麼問題？</div>
+  <div class="options" id="opts31">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,31)"><span class="opt-label">A</span><span>產生極高維度且稀疏的特徵向量，增加計算和儲存負擔</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,31)"><span class="opt-label">B</span><span>丟失類別之間的順序關係</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,31)"><span class="opt-label">C</span><span>無法處理缺失值</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,31)"><span class="opt-label">D</span><span>降低模型的解釋性</span></div>
+  </div>
+  <div class="answer-section" id="ans31">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">"> 獨熱編碼將每個類別值轉換成一個二元向量，其中對應類別的位置為 1，其餘為 0。如果一個類別特徵有 N 個唯一值，獨熱編碼會產生 N 個新的二元特徵。當 N 非常大時（高基數特徵，High-Cardinality Feature），例如用戶 ID 或商品 ID，獨熱編碼會導致特徵維度急劇增加，並且生成的向量非常稀疏（大部分元素為 0），這會顯著增加模型的計算複雜度、記憶體消耗，並可能引發維度災難。在這種情況下，可能需要考慮其他編碼方法，如特徵雜湊 (Feature Hashing) 或嵌入 (Embeddings)。丟失順序關係（選項B）是獨熱編碼的特點，但不一定是問題。</div>
+  </div>
+</div>
+<div class="q-card" id="q32">
+  <div class="q-meta">
+    <span class="q-num">第 32 題</span>
+    <span class="q-tag">L21 L21102 電腦視覺技術與應用</span>
+  </div>
+  <div class="q-text">SIFT (Scale-Invariant Feature Transform) 是一種著名的圖像特徵描述子，它具有對哪些變換保持不變性的特點？</div>
+  <div class="options" id="opts32">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,32)"><span class="opt-label">A</span><span>僅旋轉不變性</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,32)"><span class="opt-label">B</span><span>僅尺度不變性</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,32)"><span class="opt-label">C</span><span>尺度、旋轉和亮度變換不變性，並對視角變換具有部分不變性</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,32)"><span class="opt-label">D</span><span>顏色變換不變性</span></div>
+  </div>
+  <div class="answer-section" id="ans32">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">SIFT 是一種用於偵測和描述圖像局部特徵的演算法。其設計目標是使提取出的特徵（關鍵點及其描述子）在圖像發生某些幾何或光學變換時仍能保持穩定和可匹配。SIFT 特徵具有以下主要不變性： 尺度不變性 (Scale Invariance): 無論物體在圖像中放大或縮小，都能偵測到相似的關鍵點。 旋轉不變性 (Rotation Invariance): 即使圖像被旋轉，也能偵測到相似的關鍵點並生成一致的描述子。 亮度變換不變性 (Illumination Invariance): 對光照強度的變化具有穩健性。 視角變換部分不變性 (Affine/Viewpoint Invariance): 對於一定程度的視角變化（仿射變換）也能保持穩定。 SIFT 主要處理灰階圖像，對顏色變換不直接具備不變性。其強大的穩定性使其在物體識別、圖像匹配、3D 重建等領域得到廣泛應用，儘管其計算量相對較大。</div>
+  </div>
+</div>
+<div class="q-card" id="q33">
+  <div class="q-meta">
+    <span class="q-num">第 33 題</span>
+    <span class="q-tag">L21 L21202 AI導入規劃</span>
+  </div>
+  <div class="q-text">規劃 AI 專案團隊時，採用 RACI 模型（負責 Responsible, 當責 Accountable, 諮詢 Consulted, 告知 Informed）的主要目的是？</div>
+  <div class="options" id="opts33">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,33)"><span class="opt-label">A</span><span>評估團隊成員的技術水平</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,33)"><span class="opt-label">B</span><span>清晰地界定專案中各項任務或活動由誰負責執行、誰最終承擔成敗責任、需要諮詢誰以及需要告知誰</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,33)"><span class="opt-label">C</span><span>決定團隊的薪資結構</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,33)"><span class="opt-label">D</span><span>選擇團隊使用的溝通工具</span></div>
+  </div>
+  <div class="answer-section" id="ans33">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">RACI 模型是一個常用的職責分配矩陣工具，用於釐清複雜專案中不同角色在各項任務上的職責： R (Responsible): 負責實際執行任務的人。（可能有多個 R） A (Accountable): 對任務的最終完成和品質負有當責（擁有權 Ownership）的人，通常每個任務只有一個 A。 C (Consulted): 在任務執行前或執行中需要提供意見或專業知識而被諮詢的人。（雙向溝通） I (Informed): 任務完成後或過程中需要被告知進度或結果的人。（單向溝通） 在 AI 專案這種涉及多方協作的場景中，使用 RACI 模型可以明確每個人的角色和期望，減少職責不清、溝通混亂或重複工作的問題，提高團隊協作效率。</div>
+  </div>
+</div>
+<div class="q-card" id="q34">
+  <div class="q-meta">
+    <span class="q-num">第 34 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">數據視覺化的主要目的是什麼？</div>
+  <div class="options" id="opts34">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,34)"><span class="opt-label">A</span><span>讓報表看起來更美觀</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,34)"><span class="opt-label">B</span><span>幫助人們更容易地理解數據中的模式、趨勢和洞察</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,34)"><span class="opt-label">C</span><span>取代所有的文字報告</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,34)"><span class="opt-label">D</span><span>自動執行數據分析</span></div>
+  </div>
+  <div class="answer-section" id="ans34">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 數據視覺化是將數據轉換成圖形或圖像形式的過程。其核心目標是利用人類視覺系統的強大模式識別能力，使複雜的數據更容易被理解、分析和溝通。透過視覺化，可以快速發現數據中的模式、趨勢、關聯性、異常值等，從而獲得有價值的洞察，輔助決策。雖然美觀也很重要，但並非主要目的。視覺化是溝通工具，通常輔助而非取代文字報告，也不能自動執行分析，而是呈現分析結果。</div>
+  </div>
+</div>
+<div class="q-card" id="q35">
+  <div class="q-meta">
+    <span class="q-num">第 35 題</span>
+    <span class="q-tag">L21 L21201 AI導入評估</span>
+  </div>
+  <div class="q-text">在進行 AI 導入的數據評估時，以下哪個因素最為關鍵？</div>
+  <div class="options" id="opts35">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,35)"><span class="opt-label">A</span><span>數據的品質、數量、相關性和可用性</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,35)"><span class="opt-label">B</span><span>數據儲存的硬碟品牌</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,35)"><span class="opt-label">C</span><span>數據視覺化工具的美觀程度</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,35)"><span class="opt-label">D</span><span>數據產生的時間是否都在晚上</span></div>
+  </div>
+  <div class="answer-section" id="ans35">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">">數據是 AI 模型的「燃料」，其重要性不言而喻。在評估數據準備度時，需要考量： 品質 (Quality): 數據是否準確、完整、一致？是否存在錯誤值、缺失值、異常值？（Garbage In, Garbage Out） 數量 (Quantity): 是否有足夠的數據量來訓練一個有效的模型？（特別是監督式學習） 相關性 (Relevance): 數據是否與要解決的業務問題直接相關？是否包含能預測目標的特徵？ 可用性 (Availability/Accessibility): 數據是否容易取得？是否需要跨部門整合？是否存在隱私或法規限制？ 缺乏高品質、足夠數量且相關的可用數據，是許多 AI 專案失敗的主要原因之一。其他選項（硬碟品牌、視覺化美觀、產生時間）通常不是評估數據本身是否適合 AI 應用的核心因素。</div>
+  </div>
+</div>
+<div class="q-card" id="q36">
+  <div class="q-meta">
+    <span class="q-num">第 36 題</span>
+    <span class="q-tag">L22 L22103 假設檢定與統計推論</span>
+  </div>
+  <div class="q-text">在 A/B 測試中，如果過早停止實驗（例如，剛看到 P 值略小於 0.05 就停止），可能會導致什麼問題？</div>
+  <div class="options" id="opts36">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,36)"><span class="opt-label">A</span><span>浪費計算資源</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,36)"><span class="opt-label">B</span><span>增加犯型 I 錯誤的機率（即錯誤地認為有顯著差異，而實際上沒有）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,36)"><span class="opt-label">C</span><span>降低統計檢定力</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,36)"><span class="opt-label">D</span><span>無法計算效應大小</span></div>
+  </div>
+  <div class="answer-section" id="ans36">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">在 A/B 測試（或任何假設檢定）進行過程中，P 值會隨機波動。如果在收集數據的過程中反覆查看 P 值，並在 P 值首次達到顯著水準時就停止實驗（這種做法稱為 P-hacking 或 Optional Stopping），會嚴重扭曲型 I 錯誤率。即使 H0 為真（兩方案無差異），由於隨機波動，P 值也有可能在實驗早期偶然達到顯著。如果我們只在這種情況下停止並宣稱結果顯著，那麼我們做出錯誤判斷（犯型 I 錯誤）的實際機率將遠高於預設的 α 水準。正確的做法應該是在實驗開始前就根據檢定力分析（Power Analysis）確定所需的樣本量，並收集足夠的數據後再進行最終分析和決策，而不是中途根據 P 值決定是否停止。</div>
+  </div>
+</div>
+<div class="q-card" id="q37">
+  <div class="q-meta">
+    <span class="q-num">第 37 題</span>
+    <span class="q-tag">L22 L22301 統計學在大數據中的應用</span>
+  </div>
+  <div class="q-text">重尾分佈（Heavy-tailed Distribution）或稱長尾分佈（Long-tailed Distribution）在大數據分析中很常見，例如財富分佈、網站流量分佈。這種分佈的主要特徵是什麼？</div>
+  <div class="options" id="opts37">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,37)"><span class="opt-label">A</span><span>分佈的尾部快速下降，極端值很少見</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,37)"><span class="opt-label">B</span><span>分佈的尾部下降緩慢，出現極端大（或小）值的機率比正態分佈高得多</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,37)"><span class="opt-label">C</span><span>分佈完全對稱，且均值等於中位數</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,37)"><span class="opt-label">D</span><span>所有數據點的值都完全相同</span></div>
+  </div>
+  <div class="answer-section" id="ans37">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 重尾分佈（如帕累托分佈 Pareto Distribution、柯西分佈 Cauchy Distribution）的特點是其機率密度函數的尾部比指數分佈或常態分佈下降得更慢。這意味著出現遠離中心（非常大或非常小）的極端值的可能性相對較高。在這種分佈下，樣本平均值和變異數可能不穩定，甚至不存在（如柯西分佈），傳統基於常態假設的統計方法可能不再適用。例如，少數富豪可能擁有社會大部分財富，少數熱門網頁可能佔據了絕大部分流量。</div>
+  </div>
+</div>
+<div class="q-card" id="q38">
+  <div class="q-meta">
+    <span class="q-num">第 38 題</span>
+    <span class="q-tag">L21 L21104 多模態人工智慧應用</span>
+  </div>
+  <div class="q-text">多模態表徵學習（Multi-Modal Representation Learning）的核心目標是？</div>
+  <div class="options" id="opts38">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,38)"><span class="opt-label">A</span><span>為每一種模態分別找到最優的降維方法。</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,38)"><span class="opt-label">B</span><span>學習一個能夠捕捉和整合跨模態資訊的共享或協調的潛在表示空間。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,38)"><span class="opt-label">C</span><span>將所有模態的資料轉換為統一的文字描述。</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,38)"><span class="opt-label">D</span><span>最大化單一模態內部的資訊量。</span></div>
+  </div>
+  <div class="answer-section" id="ans38">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">多模態表徵學習的目的是將來自不同模態的原始數據，映射到一個或多個潛在的向量空間中，使得這些向量（表徵）能夠有效地捕捉各模態自身以及模態之間的關聯性和互補性資訊。理想的表徵空間應該有助於下游任務（如分類、檢索、生成等）。這通常涉及學習一個共享的空間（Shared Space），讓語意相關的不同模態數據點在該空間中彼此靠近；或是學習協調的空間（Coordinated Spaces），使得不同模態的表徵之間存在明確的對應或轉換關係。其核心在於「整合跨模態資訊」。</div>
+  </div>
+</div>
+<div class="q-card" id="q39">
+  <div class="q-meta">
+    <span class="q-num">第 39 題</span>
+    <span class="q-tag">L22 L22202 數據儲存與管理</span>
+  </div>
+  <div class="q-text">相較於自行建置和維護本地儲存基礎設施，使用公有雲儲存服務的主要優勢通常包含哪些？</div>
+  <div class="options" id="opts39">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,39)"><span class="opt-label">A</span><span>對儲存硬體擁有完全的實體控制權</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,39)"><span class="opt-label">B</span><span>固定且可預測的每月成本，與使用量無關</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,39)"><span class="opt-label">C</span><span>彈性擴展 (Elasticity)、按用量付費 (Pay-as-you-go)、高可用性和持久性、以及減少維運負擔</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,39)"><span class="opt-label">D</span><span>不受網路連線速度的影響</span></div>
+  </div>
+  <div class="answer-section" id="ans39">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 使用公有雲儲存（如 AWS S3, Azure Blob Storage, Google Cloud Storage）的主要優勢包括： 彈性擴展: 可以根據需求快速增加或減少儲存容量。 按用量付費: 通常只需為實際使用的儲存空間和數據傳輸付費，避免了前期大量的硬體投資。 高可用性/持久性: 雲服務商通常透過多重複製和跨區域部署來提供高水平的服務可靠性和數據持久性。 減少維運負擔: 無需自行管理硬體採購、部署、維護、升級和監控等工作。 相對地，缺點可能包括對硬體的控制權較少、成本可能隨用量增加而難以預測、效能可能受網路影響以及數據隱私和合規性的考量。</div>
+  </div>
+</div>
+<div class="q-card" id="q40">
+  <div class="q-meta">
+    <span class="q-num">第 40 題</span>
+    <span class="q-tag">L25 L25 L22 guide</span>
+  </div>
+  <div class="q-text">下列哪一個情況較適合使用單樣本 t 檢定（One-Sample t-test）？</div>
+  <div class="options" id="opts40">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,40)"><span class="opt-label">A</span><span>比較兩群獨立樣本平均差異</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,40)"><span class="opt-label">B</span><span>比較一組樣本與既定平均值的差異</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,40)"><span class="opt-label">C</span><span>分析兩變數間的線性關係</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,40)"><span class="opt-label">D</span><span>檢定類別分佈是否一致</span></div>
+  </div>
+  <div class="answer-section" id="ans40">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B 單樣本 t 檢定用於檢定一組樣本的平均數是否與已知的母體平均數（或理論值）有顯著差異。 檢定類型 比較對象 範例情境 ✅ 單樣本 t 檢定（One-Sample t-test） 一組樣本 vs 已知值 檢定某班平均身高是否為 170 公分 獨立樣本 t 檢定（Independent t-test） 兩組獨立樣本 比較男生與女生的平均身高 成對樣本 t 檢定（Paired t-test） 同一組的前後測 比較訓練前後的成績差異 📊 單樣本 t 檢定的應用情境： 品質管制：檢定產品平均重量是否符合標準（如 500g） 教育評估：檢定某班平均成績是否達到全國平均（如 75 分） 醫學研究：檢定病患平均體溫是否正常（如 37°C） 市場調查：檢定顧客滿意度是否達標（如 4 分） 🎯 其他選項說明： A. 兩群獨立樣本：使用獨立樣本 t 檢定 C. 線性關係：使用相關分析或迴歸分析 D. 類別分佈：使用卡方檢定（χ² test）</div>
+  </div>
+</div>
+<div class="q-card" id="q41">
+  <div class="q-meta">
+    <span class="q-num">第 41 題</span>
+    <span class="q-tag">L25 L25 L22 guide</span>
+  </div>
+  <div class="q-text">為了加速大數據環境下的 AI 模型訓練，以下哪一項為常見技術？</div>
+  <div class="options" id="opts41">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,41)"><span class="opt-label">A</span><span>早期停止（Early Stopping）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,41)"><span class="opt-label">B</span><span>批次分群（Mini-batching）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,41)"><span class="opt-label">C</span><span>混合精度訓練（Mixed Precision Training）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,41)"><span class="opt-label">D</span><span>主成分分析（PCA）</span></div>
+  </div>
+  <div class="answer-section" id="ans41">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 混合精度訓練結合 FP16（16位元浮點數）和 FP32（32位元浮點數），大幅加速訓練同時節省記憶體。 加速技術 原理 效果 ✅ 混合精度訓練 使用 FP16 計算，FP32 儲存權重 速度提升 2-3倍，記憶體減半 分散式訓練（Distributed Training） 多 GPU/多機器平行訓練 線性加速 梯度累積（Gradient Accumulation） 累積多個 batch 的梯度再更新 模擬大 batch size 模型並行（Model Parallelism） 將模型切分到多個 GPU 訓練超大模型 🚀 其他選項說明： A. Early Stopping：防止過擬合，非加速技術 B. Mini-batching：標準訓練方式，非特殊加速技術 D. PCA：降維技術，可間接加速但非主要加速方法 💻 PyTorch 實作： from torch.cuda.amp import autocast, GradScaler scaler = GradScaler() with autocast(): output = model(input) loss = criterion(output, target) scaler.scale(loss).backward() scaler.step(optimizer) scaler.update()</div>
+  </div>
+</div>
+<div class="q-card" id="q42">
+  <div class="q-meta">
+    <span class="q-num">第 42 題</span>
+    <span class="q-tag">L22 L22201 數據收集與清理</span>
+  </div>
+  <div class="q-text">隔離森林（Isolation Forest）是一種用於異常偵測的演算法，它的基本原理是？</div>
+  <div class="options" id="opts42">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,42)"><span class="opt-label">A</span><span>計算數據點到群集中心的距離</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,42)"><span class="opt-label">B</span><span>異常點比正常點更容易被隨機分割所「隔離」出來（即需要較少的分割次數就能將其單獨分離）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,42)"><span class="opt-label">C</span><span>假設數據服從多元常態分佈</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,42)"><span class="opt-label">D</span><span>基於數據點的局部密度</span></div>
+  </div>
+  <div class="answer-section" id="ans42">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">隔離森林是一種基於集成樹的無監督異常偵測方法。它不依賴於距離或密度計算，而是利用了異常點的特性：異常點通常數量稀少且特徵值與正常點差異較大。隔離森林隨機地選取特徵和分割點來構建多棵隔離樹（iTree）。其核心思想是，異常點由於其稀疏和獨特性，在這些隨機樹中平均只需要較少的分割次數就能被完全隔離到一個葉節點；而正常點由於處於密集區域，通常需要經過更多次的分割才能被隔離。因此，可以根據一個點在多棵樹中被隔離所需的平均路徑長度來判斷其異常程度，路徑越短越可能是異常點。</div>
+  </div>
+</div>
+<div class="q-card" id="q43">
+  <div class="q-meta">
+    <span class="q-num">第 43 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">進行 AI 影響評估（AI Impact Assessment, AIIA）時，除了評估對個人的影響，還應考慮對哪個層面的影響？</div>
+  <div class="options" id="opts43">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,43)"><span class="opt-label">A</span><span>僅考慮對開發團隊的影響</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,43)"><span class="opt-label">B</span><span>對社會群體、環境及整體社會結構的影響</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,43)"><span class="opt-label">C</span><span>僅考慮對公司股價的影響</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,43)"><span class="opt-label">D</span><span>僅考慮對硬體供應商的影響</span></div>
+  </div>
+  <div class="answer-section" id="ans43">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">AI 的影響是廣泛且深遠的，不能只侷限於個人層面。一個全面的 AI 影響評估（類似於隱私影響評估 PIA 或資料保護影響評估 DPIA 的概念）應該系統性地分析 AI 系統在整個生命週期中，可能對不同利害關係人產生的正面和負面影響，這包括：(1) 對個人的影響（如權利、自由、安全）；(2) 對特定社會群體的影響（如公平性、歧視）；(3) 對環境的影響（如能源消耗）；(4) 對社會整體結構的影響（如就業市場、人際互動、民主程序）。這種宏觀的評估有助於更全面地理解 AI 的潛在風險和效益，做出更負責任的決策。</div>
+  </div>
+</div>
+<div class="q-card" id="q44">
+  <div class="q-meta">
+    <span class="q-num">第 44 題</span>
+    <span class="q-tag">L22 L22101 敘述性統計與資料摘要技術</span>
+  </div>
+  <div class="q-text">第一四分位數（Q1）與第 25 百分位數（P25）的關係是？</div>
+  <div class="options" id="opts44">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,44)"><span class="opt-label">A</span><span>Q1 通常大於 P25</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,44)"><span class="opt-label">B</span><span>Q1 通常小於 P25</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,44)"><span class="opt-label">C</span><span>Q1 等於 P25</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,44)"><span class="opt-label">D</span><span>兩者之間沒有固定關係</span></div>
+  </div>
+  <div class="answer-section" id="ans44">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">四分位數是百分位數的特殊情況。第一四分位數（Q1）定義為將數據從小到大排序後，排在第 25% 位置的數值，也就是第 25 百分位數（P25）。同理，第二四分位數（Q2）等於第 50 百分位數（P50，即中位數），第三四分位數（Q3）等於第 75 百分位數（P75）。</div>
+  </div>
+</div>
+<div class="q-card" id="q45">
+  <div class="q-meta">
+    <span class="q-num">第 45 題</span>
+    <span class="q-tag">L22 L22401 大數據與機器學習</span>
+  </div>
+  <div class="q-text">智慧城市利用來自交通感測器、監視器、市民回報等大量數據，結合機器學習模型來優化交通號誌、預測交通擁堵、規劃公共運輸路線，這是大數據與機器學習在哪個領域的應用？</div>
+  <div class="options" id="opts45">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,45)"><span class="opt-label">A</span><span>醫療保健</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,45)"><span class="opt-label">B</span><span>零售業</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,45)"><span class="opt-label">C</span><span>都市規劃與交通管理</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,45)"><span class="opt-label">D</span><span>娛樂媒體</span></div>
+  </div>
+  <div class="answer-section" id="ans45">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 智慧城市是整合資通訊技術 (Information and Communication Technology, ICT) 和物聯網 (Internet of Things, IoT) 技術來管理城市資產和服務的框架。其中，利用從城市基礎設施（如交通、能源、水務）收集的大數據，並應用機器學習進行分析和預測，以改善城市運營效率、提升市民生活品質，是其核心應用之一。題目描述的交通優化即為都市規劃與交通管理領域的典型應用。</div>
+  </div>
+</div>
+<div class="q-card" id="q46">
+  <div class="q-meta">
+    <span class="q-num">第 46 題</span>
+    <span class="q-tag">L22 L22302 常見的大數據分析方法</span>
+  </div>
+  <div class="q-text">主成分分析 (PCA) 尋找的是數據中具有最大什麼特性的方向？</div>
+  <div class="options" id="opts46">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,46)"><span class="opt-label">A</span><span>平均值 (Mean)</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,46)"><span class="opt-label">B</span><span>變異數 (Variance)</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,46)"><span class="opt-label">C</span><span>相關性 (Correlation)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,46)"><span class="opt-label">D</span><span>偏度 (Skewness)</span></div>
+  </div>
+  <div class="answer-section" id="ans46">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 主成分分析 (Principal Component Analysis, PCA) 是一種線性降維技術。它的核心思想是找到一組新的正交基（稱為主成分），使得數據在這些基上的投影具有最大的變異數。第一個主成分是數據變異最大的方向，第二個主成分是與第一個主成分正交且變異次大的方向，依此類推。通過保留前幾個變異數最大的主成分，可以在損失少量資訊的情況下顯著降低數據維度。</div>
+  </div>
+</div>
+<div class="q-card" id="q47">
+  <div class="q-meta">
+    <span class="q-num">第 47 題</span>
+    <span class="q-tag">L22 L22201 數據收集與清理</span>
+  </div>
+  <div class="q-text">在處理偵測到的異常值時，下列哪種處理方式可能會引入偏誤或損失資訊？</div>
+  <div class="options" id="opts47">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,47)"><span class="opt-label">A</span><span>將異常值視為特殊情況單獨分析</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,47)"><span class="opt-label">B</span><span>使用穩健（Robust）的統計方法或模型，降低異常值的影響</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,47)"><span class="opt-label">C</span><span>對異常值進行轉換（如 Winsorization）</span></div>
+<div class="option" data-label="D" data-correct="true" onclick="choose(this,47)"><span class="opt-label">D</span><span>不加分析地直接刪除所有偵測到的異常值</span></div>
+  </div>
+  <div class="answer-section" id="ans47">
+    <div class="ans-title">✅ 正確答案：D</div>
+    <div class="explanation">">異常值不一定都是錯誤的數據，它們有時可能代表了真實但罕見的事件、重要的極端情況或數據產生過程中的特殊模式。直接刪除所有異常值（D）雖然簡單，但可能：(1) 損失有價值的訊息：如果異常值是真實的，刪除它們會導致對現象的理解不完整。(2) 引入偏誤：如果異常值的出現不是隨機的，刪除它們可能會使樣本不再能代表母體。(3) 影響模型性能：某些情況下，模型需要學會處理這些極端情況。因此，在處理異常值前，應先嘗試理解其產生的原因。可能的處理方式包括：(A) 單獨分析；(B) 使用對異常值不敏感的模型或方法；(C) 進行數據轉換限制其影響；或者，如果確認是數據錯誤，則進行修正或刪除。直接刪除應謹慎使用。</div>
+  </div>
+</div>
+<div class="q-card" id="q48">
+  <div class="q-meta">
+    <span class="q-num">第 48 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">在文本資料處理過程中，通常會需要「將接續的文本轉換為詞彙單位」，以便後續的處理。請問上述所指的是文本資料處理中的哪一個方法？</div>
+  <div class="options" id="opts48">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,48)"><span class="opt-label">A</span><span>詞形還原（Lemmatization）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,48)"><span class="opt-label">B</span><span>停用詞移除（Stopword Removal）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,48)"><span class="opt-label">C</span><span>斷詞（Tokenization）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,48)"><span class="opt-label">D</span><span>詞頻-逆向文件頻率（Term Frequency-Inverse Document Frequency, TF-IDF）</span></div>
+  </div>
+  <div class="answer-section" id="ans48">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 斷詞（Tokenization）是自然語言處理（Natural Language Processing, NLP）中最基礎且重要的步驟之一。 斷詞的定義與功能： • 將連續的文本分割成詞彙單位（tokens） • 為後續的詞形還原、詞性標註等處理做準備 • 處理不同語言的斷詞規則和特殊情況 斷詞的類型： 斷詞類型 說明 範例 詞語級斷詞 將文本分割為單詞 "I am happy" → ["I", "am", "happy"] 子詞級斷詞 將單詞進一步分割為子詞單位 "unhappiness" → ["un", "happi", "ness"] 字元級斷詞 將文本分割為單個字元 "Hello" → ["H", "e", "l", "l", "o"] 其他選項的區別： • 詞形還原：將詞彙轉換為詞典中的基本形式 • 停用詞移除：移除常見但無意義的詞彙 • TF-IDF：計算詞彙在文檔中的重要性權重 斷詞在NLP管道中的位置： 1. 原始文本 2. 斷詞（Tokenization） 3. 詞形還原（<span class="englis</div>
+  </div>
+</div>
+<div class="q-card" id="q49">
+  <div class="q-meta">
+    <span class="q-num">第 49 題</span>
+    <span class="q-tag">L21 L21301 數據準備與模型選擇</span>
+  </div>
+  <div class="q-text">隨機森林（Random Forest）相比於單個決策樹（Decision Tree）的主要優勢是？</div>
+  <div class="options" id="opts49">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,49)"><span class="opt-label">A</span><span>模型解釋性更強</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,49)"><span class="opt-label">B</span><span>通常具有更好的泛化能力，不易過擬合</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,49)"><span class="opt-label">C</span><span>訓練速度更快</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,49)"><span class="opt-label">D</span><span>只需要更少的記憶體</span></div>
+  </div>
+  <div class="answer-section" id="ans49">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">隨機森林是一種集成學習（Ensemble Learning）方法，它透過構建多個決策樹並將它們的預測結果進行整合（分類問題用投票，回歸問題用平均）來做出最終預測。其核心思想是「隨機化」：1. 透過自助採樣（Bootstrap Sampling）為每棵樹隨機抽取訓練樣本；2. 在每個節點分裂時，只從隨機抽取的部分特徵中選擇最佳分裂點。這兩個隨機性使得每棵樹之間具有差異性，降低了模型整體的變異（Variance），從而有效減少了單個決策樹容易過擬合的問題，提高了模型的穩定性和泛化能力。缺點是模型解釋性不如單棵樹，且訓練和預測通常比單棵樹慢。</div>
+  </div>
+</div>
+<div class="q-card" id="q50">
+  <div class="q-meta">
+    <span class="q-num">第 50 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">負責任 AI 實踐中，提供使用者清晰易懂的說明文件或介面提示，告知 AI 系統的能力、限制以及如何正確使用，這有助於實現哪個原則？</div>
+  <div class="options" id="opts50">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,50)"><span class="opt-label">A</span><span>公平性</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,50)"><span class="opt-label">B</span><span>安全性</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,50)"><span class="opt-label">C</span><span>透明度與包容性</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,50)"><span class="opt-label">D</span><span>問責性</span></div>
+  </div>
+  <div class="answer-section" id="ans50">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">提供清晰的說明有助於提高系統的透明度，讓使用者了解他們正在與什麼樣的系統互動，系統能做什麼、不能做什麼，以及可能的風險。同時，易懂的說明和提示也體現了包容性原則，確保不同背景和能力的使用者都能理解和有效使用該系統，避免因誤解或誤用而產生問題。雖然這也可能間接影響安全性（正確使用可避免危險）和問責性（使用者了解自身責任），但其最直接的目的是促進理解（透明度）和易用性（包容性）。</div>
+  </div>
+</div>
+<div class="q-card" id="q51">
+  <div class="q-meta">
+    <span class="q-num">第 51 題</span>
+    <span class="q-tag">L21 L21101 自然語言處理技術與應用</span>
+  </div>
+  <div class="q-text">自然語言處理 (NLP) 通常涉及處理哪種類型的資料？</div>
+  <div class="options" id="opts51">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,51)"><span class="opt-label">A</span><span>非結構化的文本和語音資料</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,51)"><span class="opt-label">B</span><span>結構化的表格資料 (Tabular data)</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,51)"><span class="opt-label">C</span><span>圖像和影像資料</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,51)"><span class="opt-label">D</span><span>時間序列資料 (Time series data)</span></div>
+  </div>
+  <div class="answer-section" id="ans51">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">">NLP 主要關注的是人類用來交流的自然語言，其表現形式主要是文本（如文章、郵件、聊天記錄）和語音。這些資料通常是非結構化的，意味著它們沒有預先定義好的格式或組織方式（不像資料庫中的表格）。處理和理解這種非結構化的語言資料是 NLP 的核心挑戰。選項 B 是傳統數據分析或機器學習常處理的對象。選項 C 屬於電腦視覺。選項 D 也是機器學習的一個重要領域，但與 NLP 不同。</div>
+  </div>
+</div>
+<div class="q-card" id="q52">
+  <div class="q-meta">
+    <span class="q-num">第 52 題</span>
+    <span class="q-tag">L21 L21202 AI導入規劃</span>
+  </div>
+  <div class="q-text">在規劃 AI 導入的變革管理時，有效的溝通計畫應具備哪些特點？</div>
+  <div class="options" id="opts52">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,52)"><span class="opt-label">A</span><span>只在高階主管之間進行溝通</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,52)"><span class="opt-label">B</span><span>只在專案結束後才告知員工結果</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,52)"><span class="opt-label">C</span><span>針對不同利害關係人，在適當時機，使用適當管道，傳達清晰、一致、透明的資訊，並提供雙向回饋的機會</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,52)"><span class="opt-label">D</span><span>盡量使用技術術語，展現專業性</span></div>
+  </div>
+  <div class="answer-section" id="ans52">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">溝通是變革管理的靈魂。一個有效的溝通計畫應考慮： 對象 (Audience): 識別不同的利害關係人（高管、中階主管、一線員工、IT 人員、客戶等），了解他們關心的重點和資訊需求。 內容 (Message): 傳達的資訊要清晰、簡潔、一致、透明。說明變革的原因（Why）、目標（What）、影響（Impact）、時程（When）、以及對個人的意義（WIIFM - What's In It For Me?）。避免過多的技術術語，使用對方能理解的語言。 時機 (Timing): 在專案的不同階段（規劃、執行、上線、評估）進行適時的溝通，讓利害關係人保持知情。 管道 (Channel): 根據溝通對象和內容選擇合適的管道（如全員大會、部門會議、郵件、內部通訊、工作坊）。 雙向性 (Two-way): 提供提問、表達疑慮和提供回饋的管道，積極傾聽並回應。 良好的溝通有助於建立信任、減少謠言、管理期望、爭取支持，是推動變革順利進行的關鍵。</div>
+  </div>
+</div>
+<div class="q-card" id="q53">
+  <div class="q-meta">
+    <span class="q-num">第 53 題</span>
+    <span class="q-tag">L22 L22102 機率分佈與資料分佈模型</span>
+  </div>
+  <div class="q-text">根據中央極限定理，當樣本大小 n 增大時，樣本平均數的分佈會發生什麼變化？</div>
+  <div class="options" id="opts53">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,53)"><span class="opt-label">A</span><span>分佈的平均數會偏離母體平均數</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,53)"><span class="opt-label">B</span><span>分佈會越來越接近常態分佈，且分佈的標準差（標準誤）會減小</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,53)"><span class="opt-label">C</span><span>分佈會越來越偏離常態分佈</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,53)"><span class="opt-label">D</span><span>分佈的標準差會增大</span></div>
+  </div>
+  <div class="answer-section" id="ans53">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">中央極限定理（CLT）說明了樣本平均數抽樣分佈的兩個重要特性隨樣本大小 n 的變化： 趨近常態：無論母體分佈如何，只要 n 足夠大，樣本平均數的分佈就會近似於常態分佈。 標準誤減小：樣本平均數分佈的標準差，即標準誤 (SE)，等於 σ/√n。當樣本大小 n 增大時，標準誤 σ/√n 會減小。這意味著隨著樣本量的增加，樣本平均數會更緊密地圍繞在母體平均數 μ 周圍，即樣本平均數作為母體平均數估計量的精度會提高。 因此，選項 B 正確描述了這兩個變化。</div>
+  </div>
+</div>
+<div class="q-card" id="q54">
+  <div class="q-meta">
+    <span class="q-num">第 54 題</span>
+    <span class="q-tag">L21 L21201 AI導入評估</span>
+  </div>
+  <div class="q-text">在數據評估階段發現數據量不足時，可以考慮採取以下哪種措施？</div>
+  <div class="options" id="opts54">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,54)"><span class="opt-label">A</span><span>立即放棄 AI 專案</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,54)"><span class="opt-label">B</span><span>隨機生成一些假數據</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,54)"><span class="opt-label">C</span><span>探索數據增強 (Data Augmentation)、遷移學習 (Transfer Learning)、或尋找外部數據源/合成數據 (Synthetic Data) 的可能性</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,54)"><span class="opt-label">D</span><span>要求業務部門立即產生更多數據</span></div>
+  </div>
+  <div class="answer-section" id="ans54">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">數據量不足是 AI 專案中常見的問題。面對這種情況，可以考慮以下應對策略： 數據增強 (Data Augmentation): 對現有數據進行變換（如圖像翻轉、旋轉；文本同義詞替換）以生成更多樣例。 遷移學習 (Transfer Learning): 利用在大型相關數據集上預訓練好的模型，在少量目標數據上進行微調。 尋找外部數據源: 購買或利用公開的數據集來補充自有數據。 生成合成數據 (Synthetic Data): 利用生成模型（如 GAN）創建人工數據，模擬真實數據的分佈。 採用對數據量要求較低的模型: 例如一些傳統機器學習方法或針對小樣本學習設計的演算法。 調整專案範疇: 縮小問題範圍，使其對數據量的要求降低。 直接放棄或隨機生成假數據通常不是最佳選擇。要求業務部門立即產生數據可能不切實際。</div>
+  </div>
+</div>
+<div class="q-card" id="q55">
+  <div class="q-meta">
+    <span class="q-num">第 55 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">在 Power BI Desktop 中，哪個視圖主要用於建立視覺效果和報表頁面佈局？</div>
+  <div class="options" id="opts55">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,55)"><span class="opt-label">A</span><span>資料檢視 (Data view)</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,55)"><span class="opt-label">B</span><span>模型檢視 (Model view)</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,55)"><span class="opt-label">C</span><span>報表檢視 (Report view)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,55)"><span class="opt-label">D</span><span>查詢編輯器 (Power Query Editor)</span></div>
+  </div>
+  <div class="answer-section" id="ans55">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> Power BI Desktop 主要有三個核心視圖： 報表檢視 (Report view): 這是創建視覺效果（圖表、地圖、卡片等）和設計報表頁面佈局的主要工作區域。 資料檢視 (Data view): 用於查看、排序、篩選和檢查模型中的數據表格。 模型檢視 (Model view): 用於查看和管理數據模型中的資料表之間的關聯性。 查詢編輯器 (Power Query Editor) 是用於數據導入、清理和轉換的獨立視窗。</div>
+  </div>
+</div>
+<div class="q-card" id="q56">
+  <div class="q-meta">
+    <span class="q-num">第 56 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">設計數據儀表板 (Dashboard) 時，最重要的原則之一是什麼？</div>
+  <div class="options" id="opts56">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,56)"><span class="opt-label">A</span><span>盡可能包含最多的圖表和指標</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,56)"><span class="opt-label">B</span><span>使用最複雜、最新穎的圖表類型</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,56)"><span class="opt-label">C</span><span>清晰地呈現關鍵資訊，並根據目標受眾的需求進行設計</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,56)"><span class="opt-label">D</span><span>每隔幾分鐘自動刷新一次數據</span></div>
+  </div>
+  <div class="answer-section" id="ans56">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 有效的儀表板設計應該以清晰傳達關鍵資訊為首要目標。這意味著： 1.了解受眾：儀表板是為誰設計的？他們關心哪些指標？他們的數據素養如何？ 2.聚焦關鍵指標 (KPIs)：不應堆砌過多資訊，而應突出最重要的指標，避免資訊過載。 3.選擇合適的圖表：根據要傳達的資訊選擇最有效的圖表類型。 4.保持簡潔與一致：版面配置清晰，視覺風格一致，易於理解。 5.提供上下文：僅有數字是不夠的，需要比較（例如與目標、與上期比較）和趨勢來賦予數字意義。 包含過多圖表、使用不必要的複雜圖表，或僅僅頻繁刷新數據都可能降低儀表板的有效性。 ></div>
+  </div>
+</div>
+<div class="q-card" id="q57">
+  <div class="q-meta">
+    <span class="q-num">第 57 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">面對大數據集中的高維度特徵（High-Dimensional Features），在訓練鑑別式模型前，進行降維（Dimensionality Reduction）的主要好處不包含下列哪項？</div>
+  <div class="options" id="opts57">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,57)"><span class="opt-label">A</span><span>減少模型的訓練時間與計算資源需求</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,57)"><span class="opt-label">B</span><span>緩解「維度災難」（Curse of Dimensionality）問題，可能有助於提升模型泛化能力</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,57)"><span class="opt-label">C</span><span>去除冗餘或不相關的特徵</span></div>
+<div class="option" data-label="D" data-correct="true" onclick="choose(this,57)"><span class="opt-label">D</span><span>保證能找到原始資料中所有潛在的非線性關係</span></div>
+  </div>
+  <div class="answer-section" id="ans57">
+    <div class="ans-title">✅ 正確答案：D</div>
+    <div class="explanation">"> 降維技術（如主成分分析 PCA、線性判別分析 LDA、t-SNE等）旨在將高維度數據轉換為低維度表示，同時盡可能保留重要資訊。其好處包括：減少計算量、緩解維度災難（高維空間數據稀疏，模型難以學習）、去除雜訊和冗餘特徵、有助於資料視覺化。然而，降維過程本身可能會損失部分資訊，特別是非線性降維方法雖然能捕捉非線性結構，但不能保證找到 *所有* 潛在的非線性關係，且線性降維方法（如PCA）主要捕捉線性關係。因此，D選項的「保證」過於絕對，不是降維的主要好處或能力。 .comparison-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); } .comparison-table th, .comparison-table td { border: 1px solid #ddd; padding: 10px; text-align: left; } .comparison-table th { background-color: #e9ecef; font-weight: bold; color: #2c3e50; } .comparison-table td strong { color: #3498db; } .comparison-table tr:nth-chil</div>
+  </div>
+</div>
+<div class="q-card" id="q58">
+  <div class="q-meta">
+    <span class="q-num">第 58 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">下列何種卷積神經網路（Convolution Neural Networks, CNN）是將卷積層加寬而非加深？</div>
+  <div class="options" id="opts58">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,58)"><span class="opt-label">A</span><span>R-CNN</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,58)"><span class="opt-label">B</span><span>Inception</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,58)"><span class="opt-label">C</span><span>ResNet</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,58)"><span class="opt-label">D</span><span>VGG19</span></div>
+  </div>
+  <div class="answer-section" id="ans58">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B Inception 系列（GoogleNet）採用多分支結構，在同一層使用不同大小的卷積核來增加網路的寬度。 Inception 模組的特點： • 多尺度處理：同時使用 1×1、3×3、5×5 卷積核 • 寬度優化：增加網路寬度而非深度 • 計算效率：使用 1×1 卷積進行降維 其他架構的比較： • VGG：注重深度，層數較多 • ResNet：注重深度，引入殘差連接 • R-CNN：物件偵測系列，不是純粹的 CNN 架構</div>
+  </div>
+</div>
+<div class="q-card" id="q59">
+  <div class="q-meta">
+    <span class="q-num">第 59 題</span>
+    <span class="q-tag">L21 L21103 生成式AI技術與應用</span>
+  </div>
+  <div class="q-text">生成對抗網路（Generative Adversarial Network, GAN）是由哪兩個主要部分組成的？</div>
+  <div class="options" id="opts59">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,59)"><span class="opt-label">A</span><span>編碼器（Encoder）和解碼器（Decoder）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,59)"><span class="opt-label">B</span><span>生成器（Generator）和判別器（Discriminator）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,59)"><span class="opt-label">C</span><span>代理（Agent）和環境（Environment）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,59)"><span class="opt-label">D</span><span>查詢（Query）和鍵（Key）/值（Value）</span></div>
+  </div>
+  <div class="answer-section" id="ans59">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">GAN是生成式AI中一種重要的模型架構。它包含兩個相互競爭的神經網路：生成器負責從隨機雜訊中生成「假」數據，試圖模仿真實數據；判別器則負責判斷輸入的數據是「真」（來自真實數據集）還是「假」（由生成器生成）。兩者透過對抗訓練，生成器努力生成更逼真的數據來欺騙判別器，而判別器則努力提高辨別真偽的能力，最終促使生成器產生高品質的生成內容。選項A是自編碼器（Autoencoder）或VAE的組成。選項C是強化學習的概念。選項D是Transformer中注意力機制的組成部分。</div>
+  </div>
+</div>
+<div class="q-card" id="q60">
+  <div class="q-meta">
+    <span class="q-num">第 60 題</span>
+    <span class="q-tag">L21 L21302 AI技術系統集成與部署</span>
+  </div>
+  <div class="q-text">對於一個需要處理大量圖像數據的 AI 視覺應用，架構設計中通常需要包含哪個關鍵元件來高效儲存和管理圖像檔案？</div>
+  <div class="options" id="opts60">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,60)"><span class="opt-label">A</span><span>記憶體內數據庫（In-memory Database）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,60)"><span class="opt-label">B</span><span>物件儲存（Object Storage）服務（如 AWS S3, Google Cloud Storage）或分散式文件系統（如 HDFS）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,60)"><span class="opt-label">C</span><span>消息佇列（Message Queue）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,60)"><span class="opt-label">D</span><span>API 閘道器（API Gateway）</span></div>
+  </div>
+  <div class="answer-section" id="ans60">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">圖像、影片等非結構化數據通常檔案較大，且數量可能非常龐大。傳統的關聯式資料庫或本地文件系統可能不適合大規模儲存和管理。物件儲存服務（如 S3）提供了高擴展性、高可用性、高持久性且成本相對較低的儲存方案，非常適合存放大量的非結構化數據檔案。分散式文件系統（如 Hadoop Distributed File System, HDFS）則常用於大數據處理框架中，也能夠儲存大規模文件。記憶體內數據庫（A）主要用於高速快取。消息佇列（C）用於異步通信。API 閘道器（D）用於管理 API 請求。</div>
+  </div>
+</div>
+<div class="q-card" id="q61">
+  <div class="q-meta">
+    <span class="q-num">第 61 題</span>
+    <span class="q-tag">L22 L22203 數據處理技術與工具</span>
+  </div>
+  <div class="q-text">將連續的數值型特徵（如年齡）轉換為有限個區間或類別（如 "青年", "中年", "老年"）的過程稱為什麼？</div>
+  <div class="options" id="opts61">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,61)"><span class="opt-label">A</span><span>特徵縮放（Feature Scaling）</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,61)"><span class="opt-label">B</span><span>獨熱編碼（One-Hot Encoding）</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,61)"><span class="opt-label">C</span><span>離散化（Discretization）或 分箱（Binning）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,61)"><span class="opt-label">D</span><span>主成分分析（Principal Component Analysis, PCA）</span></div>
+  </div>
+  <div class="answer-section" id="ans61">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 離散化（Discretization）或 分箱（Binning）是將連續變數轉換為離散變數的過程。這可以通過定義固定的區間寬度（Equal Width Binning）或確保每個區間包含大致相同數量的樣本（Equal Frequency Binning）來實現。這樣做有時可以簡化模型，處理非線性關係，或將數值特徵用於需要類別輸入的演算法。特徵縮放是改變數值範圍。獨熱編碼用於處理類別變數。PCA 是降維技術。</div>
+  </div>
+</div>
+<div class="q-card" id="q62">
+  <div class="q-meta">
+    <span class="q-num">第 62 題</span>
+    <span class="q-tag">L22 L22102 機率分佈與資料分佈模型</span>
+  </div>
+  <div class="q-text">貝氏定理（Bayes' Theorem）提供了一種更新機率的方法，它描述了哪個機率與哪個機率之間的關係？</div>
+  <div class="options" id="opts62">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,62)"><span class="opt-label">A</span><span>邊際機率（Marginal Probability）和聯合機率（Joint Probability）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,62)"><span class="opt-label">B</span><span>後驗機率（Posterior Probability）與事前機率（Prior Probability）、概度（Likelihood）和證據（Evidence）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,62)"><span class="opt-label">C</span><span>條件機率（Conditional Probability）和互斥事件的機率</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,62)"><span class="opt-label">D</span><span>獨立事件的機率和相依事件的機率</span></div>
+  </div>
+  <div class="answer-section" id="ans62">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">貝氏定理的公式通常寫為：P(A|B) = [P(B|A) * P(A)] / P(B)。它描述了在觀察到證據 B 之後，事件 A 發生的後驗機率 P(A|B) 如何從事件 A 的事前機率 P(A)（在觀察到 B 之前的信念）透過概度 P(B|A)（假設 A 發生時，觀察到 B 的機率）和證據 B 的邊際機率 P(B)（觀察到 B 的總機率）來更新。即：後驗機率 ∝ 概度 × 事前機率。貝氏定理是貝氏統計推斷和許多機器學習演算法（如貝氏分類器）的基礎。 📊 貝氏定理的核心概念 事前機率 (Prior Probability) P(A)： 這是您還沒有看到新證據時，對某事（事件 A）發生的機率。這是您最初的信念。 概度 (Likelihood) P(B|A)： 這是假設某事（事件 A）已經發生的情況下，您看到這個新證據 (B) 的可能性有多大。 邊際機率 P(B)： 這是看到新證據 (B) 本身發生的總機率。 後驗機率 (Posterior Probability) P(A|B)：</st</div>
+  </div>
+</div>
+<div class="q-card" id="q63">
+  <div class="q-meta">
+    <span class="q-num">第 63 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">在需要處理極度不平衡的大數據分類任務中（例如，罕見疾病檢測），哪個評估指標對於評估模型找出所有正例（例如，所有患病者）的能力最為關鍵？</div>
+  <div class="options" id="opts63">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,63)"><span class="opt-label">A</span><span>準確率 (Accuracy)</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,63)"><span class="opt-label">B</span><span>精確率 (Precision)</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,63)"><span class="opt-label">C</span><span>召回率 (Recall / True Positive Rate)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,63)"><span class="opt-label">D</span><span>特異度 (Specificity / True Negative Rate)</span></div>
+  </div>
+  <div class="answer-section" id="ans63">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">召回率（Recall）衡量的是所有實際為正例的樣本中，被模型正確預測為正例的比例（Recall = TP / (TP + FN)，其中 TP 是真陽性，FN 是偽陰性）。在像罕見疾病檢測這樣的應用中，漏掉一個真正的病例（偽陰性）的代價可能非常高。因此，最大化召回率（即盡可能找出所有真正的正例）通常是首要目標，即使這可能犧牲一些精確率（Precision，即預測為正例的樣本中有多少是真正例，Precision = TP / (TP + FP)）。準確率在不平衡數據下有誤導性。特異度衡量找出所有負例的能力。</div>
+  </div>
+</div>
+<div class="q-card" id="q64">
+  <div class="q-meta">
+    <span class="q-num">第 64 題</span>
+    <span class="q-tag">L21 L21102 電腦視覺技術與應用</span>
+  </div>
+  <div class="q-text">在深度學習中，激活函數 (Activation Function)，如 ReLU (Rectified Linear Unit)，在 CNN 中的主要作用是？</div>
+  <div class="options" id="opts64">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,64)"><span class="opt-label">A</span><span>減少模型的參數數量</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,64)"><span class="opt-label">B</span><span>為模型引入非線性，使其能夠學習和表示更複雜的函數關係</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,64)"><span class="opt-label">C</span><span>進行特徵降維</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,64)"><span class="opt-label">D</span><span>歸一化輸入數據</span></div>
+  </div>
+  <div class="answer-section" id="ans64">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">卷積運算和全連接層的仿射變換本身都是線性操作。如果神經網路只由線性層堆疊而成，那麼整個網路無論多深，其表達能力也等價於一個單層的線性模型，無法學習複雜的模式。激活函數（如 Sigmoid, Tanh, ReLU 及其變體 Leaky ReLU, PReLU 等）被應用在線性層的輸出之後，引入非線性 (Non-linearity) 變換。這使得神經網路能夠擬合非線性的複雜函數，從而可以處理現實世界中複雜的模式識別任務，如圖像分類、物體偵測等。ReLU (f(x) = max(0, x)) 因其計算簡單、能有效緩解梯度消失問題（在正區間梯度為 1）而成為 CNN 中最常用的激活函數之一。</div>
+  </div>
+</div>
+<div class="q-card" id="q65">
+  <div class="q-meta">
+    <span class="q-num">第 65 題</span>
+    <span class="q-tag">L21 L21301 數據準備與模型選擇</span>
+  </div>
+  <div class="q-text">對於數值型特徵進行「標準化」（Standardization）的主要目的是？</div>
+  <div class="options" id="opts65">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,65)"><span class="opt-label">A</span><span>將所有數值轉換到 [0, 1] 的區間內</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,65)"><span class="opt-label">B</span><span>將特徵數值轉換為平均數為 0，標準差為 1 的分佈，使不同尺度的特徵具有可比性</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,65)"><span class="opt-label">C</span><span>將數值型特徵轉換為類別型特徵</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,65)"><span class="opt-label">D</span><span>處理數據中的離群值（Outliers）</span></div>
+  </div>
+  <div class="answer-section" id="ans65">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">標準化（通常指 Z-score standardization）是常用的數據預處理步驟，計算公式為 (X - μ) / σ，其中 μ 是特徵的平均數，σ 是標準差。標準化的主要目的是消除不同特徵之間因尺度（單位或數值範圍）不同而帶來的影響。許多機器學習演算法（如基於距離的演算法 SVM、KNN，或需要梯度下降優化的模型如線性回歸、神經網路）對特徵的尺度敏感，標準化可以使不同特徵具有相似的尺度和重要性，有助於模型更快收斂且表現更好。選項A描述的是「最小最大縮放」（Min-Max Scaling）或稱為正規化（Normalization）。</div>
+  </div>
+</div>
+<div class="q-card" id="q66">
+  <div class="q-meta">
+    <span class="q-num">第 66 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">瀑布圖 (Waterfall Chart) 通常用於視覺化什麼？</div>
+  <div class="options" id="opts66">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,66)"><span class="opt-label">A</span><span>數據點在地理空間上的分佈</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,66)"><span class="opt-label">B</span><span>一個初始值如何受到一系列正面和負面變化的影響，最終達到一個結束值</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,66)"><span class="opt-label">C</span><span>多個類別在不同時間點的佔比變化</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,66)"><span class="opt-label">D</span><span>兩個變數之間的相關性強度</span></div>
+  </div>
+  <div class="answer-section" id="ans66">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 瀑布圖（也稱橋樑圖 Bridge Chart）非常適合用來展示一個數值如何從一個起始點，經過一系列正向（增加）和負向（減少）的變動，最終達到一個終點。它常被用於財務分析，例如顯示淨收入如何從總收入開始，減去各種成本和費用得到；或者分析某項指標（如銷售額、客戶數）隨時間的增減變化及其構成因素。</div>
+  </div>
+</div>
+<div class="q-card" id="q67">
+  <div class="q-meta">
+    <span class="q-num">第 67 題</span>
+    <span class="q-tag">L22 L22302 常見的大數據分析方法</span>
+  </div>
+  <div class="q-text">哪種分群方法會產生一個樹狀結構（樹狀圖，Dendrogram），展示數據點如何逐步合併或分裂成群集？</div>
+  <div class="options" id="opts67">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,67)"><span class="opt-label">A</span><span>K-平均演算法 (K-means)</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,67)"><span class="opt-label">B</span><span>階層式分群 (Hierarchical Clustering)</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,67)"><span class="opt-label">C</span><span>DBSCAN (Density-Based Spatial Clustering of Applications with Noise)</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,67)"><span class="opt-label">D</span><span>高斯混合模型 (Gaussian Mixture Model, GMM)</span></div>
+  </div>
+  <div class="answer-section" id="ans67">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 階層式分群（又稱層次聚類）建立一個群集的層次結構。它有兩種主要方式：凝聚式（agglomerative，由下往上，從單個點開始逐步合併最相似的群集）和分裂式（divisive，由上往下，從包含所有點的單一群集開始逐步分裂）。其結果可以用樹狀圖 (Dendrogram) 來視覺化，顯示群集的合併或分裂過程以及它們之間的層次關係。K-means 需要預先指定 K 值，產生 K 個扁平的群集。DBSCAN 是基於密度的分群方法。GMM 是基於機率模型的分群方法。</div>
+  </div>
+</div>
+<div class="q-card" id="q68">
+  <div class="q-meta">
+    <span class="q-num">第 68 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">企業在生成式 AI導入中，可選擇下列哪一種模型壓縮（Model Compression）技術以減少記憶體使用？</div>
+  <div class="options" id="opts68">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,68)"><span class="opt-label">A</span><span>參數剪枝</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,68)"><span class="opt-label">B</span><span>增加訓練數據量</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,68)"><span class="opt-label">C</span><span>增加模型層數</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,68)"><span class="opt-label">D</span><span>使用更高維數據</span></div>
+  </div>
+  <div class="answer-section" id="ans68">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">"> 正確答案：A 參數剪枝（Parameter Pruning）是模型壓縮技術中最常用和有效的方法之一。 參數剪枝的原理： • 移除不重要的權重參數 • 保留對模型性能影響較大的參數 • 顯著減少模型大小和記憶體使用 參數剪枝的類型： 剪枝類型 說明 壓縮效果 非結構化剪枝 隨機移除個別權重 壓縮率高，但需要特殊硬體 結構化剪枝 移除整個神經元或濾波器 壓縮率中等，但通用性好 動態剪枝 在運行時動態決定保留的權重 壓縮率高，運行時自適應 其他選項為何不正確： • 增加訓練數據量：會增加記憶體使用而非減少 • 增加模型層數：會增加模型大小和記憶體需求 • 使用更高維數據：會增加計算和記憶體負擔 模型壓縮的其他技術： • 量化：降低權重精度 • 知識蒸餾：將大模型知識轉移到小模型 • 低秩分解：矩陣分解降低參數量 • 參數共享：不同層共享參數</div>
+  </div>
+</div>
+<div class="q-card" id="q69">
+  <div class="q-meta">
+    <span class="q-num">第 69 題</span>
+    <span class="q-tag">L21 L21102 電腦視覺技術與應用</span>
+  </div>
+  <div class="q-text">角點偵測 (Corner Detection) 演算法（如 Harris Corner Detector）主要尋找圖像中的什麼區域？</div>
+  <div class="options" id="opts69">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,69)"><span class="opt-label">A</span><span>平坦的、紋理單一的區域</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,69)"><span class="opt-label">B</span><span>只有單一方向邊緣的區域</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,69)"><span class="opt-label">C</span><span>在各個方向上圖像強度變化都很大的區域（即兩條或多條邊緣的交點）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,69)"><span class="opt-label">D</span><span>亮度最高的區域</span></div>
+  </div>
+  <div class="answer-section" id="ans69">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">角點是圖像中重要的局部特徵點。直觀地說，角點是兩條或多條邊緣的交匯處。從數學上看，角點通常被定義為：如果以該點為中心取一個小的圖像窗口，當這個窗口向任何方向移動時，窗口內的圖像內容都會發生顯著變化。相比之下，平坦區域的窗口移動時內容基本不變，邊緣區域的窗口沿邊緣方向移動時內容變化不大，只有垂直於邊緣方向移動時才顯著變化。Harris 角點偵測器就是基於這種思想，通過計算圖像梯度矩陣的特徵值來判斷某個點是否為角點（角點處兩個特徵值都較大）。角點是穩定且資訊豐富的特徵，常用於圖像匹配、追蹤、拼接等任務。</div>
+  </div>
+</div>
+<div class="q-card" id="q70">
+  <div class="q-meta">
+    <span class="q-num">第 70 題</span>
+    <span class="q-tag">L21 L21104 多模態人工智慧應用</span>
+  </div>
+  <div class="q-text">將一段文字描述（如“一隻貓坐在窗台上”）轉換為對應的3D模型，這屬於哪一類的跨模態任務？</div>
+  <div class="options" id="opts70">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,70)"><span class="opt-label">A</span><span>文字到語音生成（Text-to-Speech）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,70)"><span class="opt-label">B</span><span>文字到3D模型生成（Text-to-3D）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,70)"><span class="opt-label">C</span><span>圖像到文字生成（Image-to-Text）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,70)"><span class="opt-label">D</span><span>語音到文字生成（Speech-to-Text）</span></div>
+  </div>
+  <div class="answer-section" id="ans70">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">跨模態生成任務的核心是從一種模態生成另一種模態。在這個例子中，輸入是文字模態（描述），輸出是3D模型（一種視覺/幾何模態）。因此，這是一個典型的文字到3D模型生成的跨模態任務。隨著3D內容需求的增加（如元宇宙、遊戲、設計等），Text-to-3D也成為一個新興且活躍的研究方向。</div>
+  </div>
+</div>
+<div class="q-card" id="q71">
+  <div class="q-meta">
+    <span class="q-num">第 71 題</span>
+    <span class="q-tag">L22 L22401 大數據與機器學習</span>
+  </div>
+  <div class="q-text">線上 A/B 測試是一種常用於評估不同版本（例如，網頁設計、推薦算法）效果的方法，在大數據環境下進行 A/B 測試需要特別注意什麼？</div>
+  <div class="options" id="opts71">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,71)"><span class="opt-label">A</span><span>只需要測試極少量的用戶即可得出結論</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,71)"><span class="opt-label">B</span><span>可以同時測試數百種版本的變化</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,71)"><span class="opt-label">C</span><span>確保用戶被隨機分配到不同組別、收集足夠的數據量以達到統計顯著性，並監控實驗結果</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,71)"><span class="opt-label">D</span><span>測試時間越短越好</span></div>
+  </div>
+  <div class="answer-section" id="ans71">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> A/B 測試（或更一般的多變量測試）是基於數據驅動決策的重要方法。在大數據或線上環境中成功執行 A/B 測試的關鍵在於： 隨機化 (Randomization): 必須將用戶（流量）隨機、無偏地分配到對照組 (A) 和實驗組 (B)，以確保組間的可比性。 樣本量 (Sample Size): 需要收集足夠的數據量，使得觀察到的效果差異具有統計顯著性 (Statistical Significance)，能夠排除隨機波動的影響。 明確的指標 (Metrics): 需要預先定義好用來衡量效果的關鍵指標（例如，點擊率、轉換率）。 監控與分析 (Monitoring & Analysis): 監控實驗過程，並在結束後使用恰當的統計方法分析結果。 雖然大數據使得測試大量用戶成為可能，但仍需謹慎設計和執行以獲得可靠結論。同時測試過多版本（選項B）會增加複雜性並需要更大流量。</div>
+  </div>
+</div>
+<div class="q-card" id="q72">
+  <div class="q-meta">
+    <span class="q-num">第 72 題</span>
+    <span class="q-tag">L21 L21102 電腦視覺技術與應用</span>
+  </div>
+  <div class="q-text">圖像增強 (Image Enhancement) 技術，如直方圖等化 (Histogram Equalization)，其主要目的是？</div>
+  <div class="options" id="opts72">
+<div class="option" data-label="A" data-correct="true" onclick="choose(this,72)"><span class="opt-label">A</span><span>改善圖像的視覺品質或突顯某些感興趣的特徵，例如提高圖像對比度</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,72)"><span class="opt-label">B</span><span>縮小圖像的檔案大小</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,72)"><span class="opt-label">C</span><span>移除圖像中的所有物體</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,72)"><span class="opt-label">D</span><span>將圖像轉換為向量表示</span></div>
+  </div>
+  <div class="answer-section" id="ans72">
+    <div class="ans-title">✅ 正確答案：A</div>
+    <div class="explanation">">圖像增強是圖像處理的一個分支，旨在通過修改圖像的像素值來改善其視覺效果，或使其更適合於特定的應用。直方圖等化是一種常用的對比度增強技術，它通過重新分佈圖像的像素強度值，使得強度值的直方圖盡可能平坦，從而擴展圖像的動態範圍，使原本過暗或過亮的區域細節更清晰。其他的圖像增強技術還包括對比度拉伸、伽馬校正、銳化濾波等。</div>
+  </div>
+</div>
+<div class="q-card" id="q73">
+  <div class="q-meta">
+    <span class="q-num">第 73 題</span>
+    <span class="q-tag">L21 L21101 自然語言處理技術與應用</span>
+  </div>
+  <div class="q-text">困惑度 (Perplexity) 是評估語言模型常用的指標，較低的困惑度通常表示什麼？</div>
+  <div class="options" id="opts73">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,73)"><span class="opt-label">A</span><span>模型預測的文本更加隨機</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,73)"><span class="opt-label">B</span><span>模型對於測試文本的預測能力較好，能夠以較高的機率生成該文本</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,73)"><span class="opt-label">C</span><span>模型包含的參數數量較少</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,73)"><span class="opt-label">D</span><span>模型訓練所需的時間較短</span></div>
+  </div>
+  <div class="answer-section" id="ans73">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">困惑度 (Perplexity, PPL) 是語言模型評估指標，它基於模型在測試集上分配的機率。具體來說，PPL 是測試集反向機率的幾何平均值的 2 的指數次方（或自然指數 e 的指數次方，取決於對數底）。直觀上，困惑度可以理解為模型在預測下一個詞時平均有多少種可能的選擇。困惑度越低，表示模型對測試集數據的擬合越好，也就是說模型賦予測試集中實際出現的詞序列更高的機率，表明模型學習到的語言模式更接近真實數據分佈，預測能力更強。</div>
+  </div>
+</div>
+<div class="q-card" id="q74">
+  <div class="q-meta">
+    <span class="q-num">第 74 題</span>
+    <span class="q-tag">L21 L21104 多模態人工智慧應用</span>
+  </div>
+  <div class="q-text">OpenAI的CLIP（Contrastive Language–Image Pre-training）模型，其核心訓練思想是利用什麼樣的學習方法？</div>
+  <div class="options" id="opts74">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,74)"><span class="opt-label">A</span><span>掩碼語言模型（Masked Language Modeling）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,74)"><span class="opt-label">B</span><span>對比學習（Contrastive Learning）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,74)"><span class="opt-label">C</span><span>自回歸生成（Autoregressive Generation）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,74)"><span class="opt-label">D</span><span>強化學習（Reinforcement Learning）</span></div>
+  </div>
+  <div class="answer-section" id="ans74">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">CLIP模型通過在網路上收集的大量（圖像，文字描述）配對數據進行預訓練。其核心目標是學習一個共享的嵌入空間，使得在這個空間中，相互匹配的圖像和文字的嵌入向量之間的相似度（如餘弦相似度）最大化，而不匹配的圖像和文字的嵌入向量之間的相似度則最小化。這種「拉近正樣本，推開負樣本」的學習策略就是對比學習。透過這種方式，CLIP學會了圖像和文字之間豐富的語意關聯，使其在零樣本（zero-shot）圖像分類等任務上表現出色。</div>
+  </div>
+</div>
+<div class="q-card" id="q75">
+  <div class="q-meta">
+    <span class="q-num">第 75 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">Apache Spark 是一個常用於大數據處理與分析的框架，其 MLLib 函式庫提供了多種機器學習演算法。相較於傳統的 Hadoop MapReduce，Spark 主要的優勢是什麼，使其更適合迭代式的機器學習演算法（如許多鑑別式模型的訓練過程）？</div>
+  <div class="options" id="opts75">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,75)"><span class="opt-label">A</span><span>僅支援 Python 語言</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,75)"><span class="opt-label">B</span><span>基於記憶體的運算（In-Memory Computing），大幅減少了迭代過程中的磁碟讀寫開銷</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,75)"><span class="opt-label">C</span><span>完全不需要進行資料前處理</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,75)"><span class="opt-label">D</span><span>只能處理結構化資料</span></div>
+  </div>
+  <div class="answer-section" id="ans75">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 許多機器學習演算法（尤其是優化過程，如梯度下降）需要多次迭代處理數據。傳統的 Hadoop MapReduce 在每次迭代之間需要將中間結果寫入磁碟（HDFS）再讀出，造成大量的 I/O 開銷。Spark 引入了彈性分散式資料集（Resilient Distributed Dataset, RDD）和後來的 DataFrame/Dataset API，允許將數據和中間結果緩存在記憶體中，極大地加速了需要多次數據掃描和迭代計算的任務，使其非常適合機器學習應用。Spark 支援多種語言（Scala, Java, Python, R），需要資料前處理，也能處理多種格式的資料。</div>
+  </div>
+</div>
+<div class="q-card" id="q76">
+  <div class="q-meta">
+    <span class="q-num">第 76 題</span>
+    <span class="q-tag">L21 L21102 電腦視覺技術與應用</span>
+  </div>
+  <div class="q-text">實例分割 (Instance Segmentation) 與語意分割 (Semantic Segmentation) 的主要區別是什麼？</div>
+  <div class="options" id="opts76">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,76)"><span class="opt-label">A</span><span>實例分割速度更快</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,76)"><span class="opt-label">B</span><span>實例分割需要區分同一物體類別的不同實例，而語意分割不需要</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,76)"><span class="opt-label">C</span><span>語意分割輸出邊界框，實例分割輸出掩碼</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,76)"><span class="opt-label">D</span><span>實例分割只能處理特定類別，語意分割可以處理所有類別</span></div>
+  </div>
+  <div class="answer-section" id="ans76">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">兩者都是像素級別的圖像分割任務，但目標不同： 語意分割 (Semantic Segmentation): 為圖像中的每個像素分配一個物體類別標籤。它只關心像素屬於哪個類別（如貓、狗、樹），不區分這個類別下的不同個體。例如，圖像中有三隻貓，語意分割會將所有屬於貓的像素標記為「貓」。 實例分割 (Instance Segmentation): 在語意分割的基礎上，進一步區分同一類別的不同實例 (Instances)。例如，圖像中有三隻貓，實例分割會將它們分別標記為「貓1」、「貓2」、「貓3」。 因此，實例分割提供了比語意分割更豐富的資訊，是一個更具挑戰性的任務。Mask R-CNN 是實例分割領域的代表性模型。</div>
+  </div>
+</div>
+<div class="q-card" id="q77">
+  <div class="q-meta">
+    <span class="q-num">第 77 題</span>
+    <span class="q-tag">L22 L22202 數據儲存與管理</span>
+  </div>
+  <div class="q-text">元數據（Metadata）在數據儲存與管理中扮演什麼重要角色？</div>
+  <div class="options" id="opts77">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,77)"><span class="opt-label">A</span><span>直接包含業務交易的數值</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,77)"><span class="opt-label">B</span><span>描述數據的數據，提供數據的背景資訊，如來源、格式、結構、擁有者、創建時間、存取權限等</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,77)"><span class="opt-label">C</span><span>用於加密數據的密鑰</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,77)"><span class="opt-label">D</span><span>數據的備份副本</span></div>
+  </div>
+  <div class="answer-section" id="ans77">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 元數據（Metadata）常被稱為「關於數據的數據」（Data about Data）。它提供了描述數據特徵和背景的資訊，使得數據更容易被發現、理解、管理和使用。例如，檔案系統的元數據包含檔案名稱、大小、創建/修改時間、權限等；資料庫的元數據（數據字典）包含表格名稱、欄位名稱、數據類型、約束等；圖片的元數據（如 EXIF）可能包含相機型號、拍攝時間、地理位置等。有效的元數據管理對於數據治理、數據搜尋、數據整合和數據分析至關重要，尤其是在資料湖等包含大量異質數據的環境中。</div>
+  </div>
+</div>
+<div class="q-card" id="q78">
+  <div class="q-meta">
+    <span class="q-num">第 78 題</span>
+    <span class="q-tag">L22 L22401 大數據與機器學習</span>
+  </div>
+  <div class="q-text">大數據的「高速性」(Velocity) 對於機器學習模型的主要挑戰是什麼？</div>
+  <div class="options" id="opts78">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,78)"><span class="opt-label">A</span><span>數據儲存空間不足</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,78)"><span class="opt-label">B</span><span>需要能夠即時或近乎即時地處理數據流，並快速更新模型或進行預測</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,78)"><span class="opt-label">C</span><span>數據類型過於單一</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,78)"><span class="opt-label">D</span><span>缺乏足夠的標籤數據</span></div>
+  </div>
+  <div class="answer-section" id="ans78">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 大數據的高速性指的是數據產生和傳輸的速度非常快，例如來自感測器、社交媒體、金融交易等的數據流。這對機器學習提出了挑戰，因為模型需要能夠： 1. 即時處理：在數據到達時快速進行處理和分析，而不是等待批次處理。 2. 線上學習 (Online Learning)：能夠根據新到達的數據持續更新模型，以適應數據分佈的變化。 3. 快速預測：能夠在數據流上快速做出預測或決策。 這通常需要使用流處理框架（如 Spark Streaming, Flink）和支援線上學習的演算法。儲存空間（選項A）主要與 Volume 相關。數據類型（選項C）與 Variety 相關。標籤數據缺乏（選項D）是監督式學習的普遍問題。</div>
+  </div>
+</div>
+<div class="q-card" id="q79">
+  <div class="q-meta">
+    <span class="q-num">第 79 題</span>
+    <span class="q-tag">L25 中級樣題 202509</span>
+  </div>
+  <div class="q-text">在優化器中，哪一個方法會自動調整每個參數的學習率，特別適用於稀疏資料？</div>
+  <div class="options" id="opts79">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,79)"><span class="opt-label">A</span><span>Momentum</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,79)"><span class="opt-label">B</span><span>Adagrad</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,79)"><span class="opt-label">C</span><span>Adam</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,79)"><span class="opt-label">D</span><span>SGD</span></div>
+  </div>
+  <div class="answer-section" id="ans79">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B Adagrad 為每個參數自適應地調整學習率，對於稀疏特徵特別有效。 Adagrad 的特點： • 自適應學習率：根據參數的歷史梯度調整學習率 • 稀疏資料友好：頻繁出現的特徵學習率較小，稀疏特徵學習率較大 • 無需手動調參：自動調整學習率衰減 Adagrad 的公式： θ_{t+1} = θ_t - (η / √(G_t + ε)) * g_t 其中 G_t 是歷史梯度平方的累積和 Adagrad 的局限性： • 學習率衰減過快：後期學習率可能變得過小 • 記憶體需求：需要存儲所有歷史梯度</div>
+  </div>
+</div>
+<div class="q-card" id="q80">
+  <div class="q-meta">
+    <span class="q-num">第 80 題</span>
+    <span class="q-tag">L21 L21103 生成式AI技術與應用</span>
+  </div>
+  <div class="q-text">關於生成式AI的未來發展趨勢，以下描述何者較不可能？</div>
+  <div class="options" id="opts80">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,80)"><span class="opt-label">A</span><span>模型朝向多模態（Multi-modal）能力發展</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,80)"><span class="opt-label">B</span><span>更注重模型效率、可控性和安全性</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,80)"><span class="opt-label">C</span><span>完全取代人類進行所有決策和創造性工作</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,80)"><span class="opt-label">D</span><span>與特定領域知識更深度地結合</span></div>
+  </div>
+  <div class="answer-section" id="ans80">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">生成式AI的未來發展趨於整合多種模態（文本、圖像、聲音等）以更全面地理解世界；同時，隨著模型能力增強，如何提高效率（用於部署）、增強可控性（減少幻覺和有害輸出）、保障安全性將是關鍵；將通用模型與特定領域知識（如醫療、法律、金融）結合以提供專業服務也是重要方向。然而，認為AI會「完全取代」人類的決策和創造力是一種過於簡化和極端的看法。AI更可能作為強大的輔助工具，增強人類的能力，而非完全替代，特別是在涉及複雜價值判斷、情感和原創性的領域。</div>
+  </div>
+</div>
+<div class="q-card" id="q81">
+  <div class="q-meta">
+    <span class="q-num">第 81 題</span>
+    <span class="q-tag">L25 L25 L23 guide</span>
+  </div>
+  <div class="q-text">在深度學習中，哪一個是為了引入非線性（Non-linearity），使神經網路能學習複雜模式的元件？</div>
+  <div class="options" id="opts81">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,81)"><span class="opt-label">A</span><span>損失函數（Loss Function）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,81)"><span class="opt-label">B</span><span>激活函數（Activation Function）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,81)"><span class="opt-label">C</span><span>隱藏層（Hidden Layer）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,81)"><span class="opt-label">D</span><span>梯度下降（Gradient Descent）</span></div>
+  </div>
+  <div class="answer-section" id="ans81">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B 沒有激活函數，多層神經網路等同於單層線性模型，無法學習複雜的非線性關係。 激活函數公式範圍優點缺點 ReLUmax(0, x)[0, ∞)計算快緩解梯度消失Dead ReLU 問題 Leaky ReLUmax(αx, x)(-∞, ∞)解決 Dead ReLU需調整 α Sigmoid1/(1+e^(-x))(0, 1)輸出機率梯度消失非零中心 Tanh(e^x-e^(-x))/(e^x+e^(-x))(-1, 1)零中心梯度消失 GELUx·Φ(x)(-∞, ∞)Transformer 常用計算較複雜 🎯 為什麼需要非線性？ 若只有線性變換：f(x) = W₃(W₂(W₁x)) = (W₃W₂W₁)x = Wx，多層等於單層！ 💡 選擇激活函數的建議： 隱藏層：優先使用 ReLU 或其變體 輸出層（二元分類）：Sigmoid 輸出層（多類別分類）：Softmax 輸出層（迴歸）：線性（無激活函數）</div>
+  </div>
+</div>
+<div class="q-card" id="q82">
+  <div class="q-meta">
+    <span class="q-num">第 82 題</span>
+    <span class="q-tag">L25 L25 L22 guide</span>
+  </div>
+  <div class="q-text">在處理由 IoT 裝置產生的大規模即時資料時，系統架構應優先考量下列哪一項需求？</div>
+  <div class="options" id="opts82">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,82)"><span class="opt-label">A</span><span>高解析圖像處理能力</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,82)"><span class="opt-label">B</span><span>即時串流處理與低延遲反應能力</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,82)"><span class="opt-label">C</span><span>複雜圖形關係查詢能力</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,82)"><span class="opt-label">D</span><span>靜態資料的批次整合能力</span></div>
+  </div>
+  <div class="answer-section" id="ans82">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B IoT 資料的核心特性是高頻率、連續性、即時性，需要低延遲的串流處理架構。 🏗️ IoT 資料處理架構： 資料擷取層：MQTT、CoAP 協定收集感測器資料 訊息佇列：Kafka、RabbitMQ 緩衝資料流 串流處理：Flink、Storm 即時分析 儲存層：時間序列資料庫（InfluxDB、TimescaleDB） 視覺化：Grafana 即時監控儀表板 💼 實際應用：智慧工廠設備監控、智慧城市交通管理、智慧農業環境監測</div>
+  </div>
+</div>
+<div class="q-card" id="q83">
+  <div class="q-meta">
+    <span class="q-num">第 83 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">「對抗性攻擊」（Adversarial Attack）是指對 AI 模型輸入進行微小、人眼難以察覺的擾動，卻能導致模型產生錯誤輸出的情況。這主要暴露了 AI 模型的哪方面風險？</div>
+  <div class="options" id="opts83">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,83)"><span class="opt-label">A</span><span>模型偏見風險</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,83)"><span class="opt-label">B</span><span>資料隱私風險</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,83)"><span class="opt-label">C</span><span>模型穩健性（Robustness）與安全性風險</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,83)"><span class="opt-label">D</span><span>模型可解釋性風險</span></div>
+  </div>
+  <div class="answer-section" id="ans83">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">">對抗性攻擊顯示了許多 AI 模型（尤其是深度學習模型）在面對刻意設計的惡意輸入時可能非常脆弱。即使輸入的擾動非常微小，人類可能根本無法分辨其與正常輸入的差異，但模型卻可能做出完全錯誤的判斷（例如，將停止標誌誤判為速限標誌）。這暴露了模型在面對非預期或惡意輸入時的不穩定性（缺乏穩健性），以及可能被惡意利用的安全漏洞。這對於需要高可靠性和安全性的應用（如自動駕駛、醫療診斷、金融風控）構成了嚴重威脅。</div>
+  </div>
+</div>
+<div class="q-card" id="q84">
+  <div class="q-meta">
+    <span class="q-num">第 84 題</span>
+    <span class="q-tag">L22 L22103 假設檢定與統計推論</span>
+  </div>
+  <div class="q-text">信賴區間提供的是對哪個值的估計範圍？</div>
+  <div class="options" id="opts84">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,84)"><span class="opt-label">A</span><span>樣本統計量（如樣本平均數）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,84)"><span class="opt-label">B</span><span>未知的母體參數（如母體平均數、母體比例）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,84)"><span class="opt-label">C</span><span>單個觀測值</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,84)"><span class="opt-label">D</span><span>P 值</span></div>
+  </div>
+  <div class="answer-section" id="ans84">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">信賴區間是統計推論中參數估計的一種方法。它利用樣本數據計算出一個區間（包含下限和上限），並伴隨一個信賴水準（如 95%），用來估計未知的母體參數可能落入的範圍。例如，樣本平均數的信賴區間是用來估計母體平均數 μ 的範圍；樣本比例的信賴區間是用來估計母體比例 p 的範圍。它不是對樣本統計量本身（A）或單個觀測值（C）的估計，也與 P 值（D）的概念不同。</div>
+  </div>
+</div>
+<div class="q-card" id="q85">
+  <div class="q-meta">
+    <span class="q-num">第 85 題</span>
+    <span class="q-tag">L22 L22402 大數據在鑑別式AI應用</span>
+  </div>
+  <div class="q-text">「聯邦學習」（Federated Learning）作為一種新興的處理大數據和隱私保護的技術，其核心思想是什麼？</div>
+  <div class="options" id="opts85">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,85)"><span class="opt-label">A</span><span>將所有分散的資料集中到一個中央伺服器進行模型訓練</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,85)"><span class="opt-label">B</span><span>讓模型訓練發生在數據所在的本地裝置上，只將模型更新（而非原始數據）傳回中央伺服器進行聚合</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,85)"><span class="opt-label">C</span><span>僅使用公開可用的數據集進行訓練</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,85)"><span class="opt-label">D</span><span>對所有原始數據進行加密後再傳輸到雲端</span></div>
+  </div>
+  <div class="answer-section" id="ans85">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">聯邦學習旨在解決數據分散且具有隱私敏感性的場景下的機器學習問題（例如，訓練手機輸入法模型而不收集用戶輸入內容）。其核心方法是：1) 中央伺服器將模型分發到各個本地裝置（如手機）。2) 每個裝置使用自己的本地數據訓練模型，產生模型更新（如梯度）。3) 各裝置只將模型更新（通常經過加密或差分隱私處理）發送回中央伺服器。4) 中央伺服器聚合來自多個裝置的模型更新，產生一個改進後的全域模型，再分發下去。這個過程中，原始數據始終保留在本地，不離開裝置，從而保護了數據隱私。</div>
+  </div>
+</div>
+<div class="q-card" id="q86">
+  <div class="q-meta">
+    <span class="q-num">第 86 題</span>
+    <span class="q-tag">L22 L22201 數據收集與清理</span>
+  </div>
+  <div class="q-text">ETL（Extract, Transform, Load）是數據整合和處理中常見的流程，其中的「Transform」階段主要執行什麼任務？</div>
+  <div class="options" id="opts86">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,86)"><span class="opt-label">A</span><span>從多個來源系統提取數據（Extract）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,86)"><span class="opt-label">B</span><span>對提取出的數據進行清理、轉換、標準化、聚合等操作，使其符合目標系統的要求（Transform）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,86)"><span class="opt-label">C</span><span>將處理好的數據載入到目標數據庫或數據倉儲（Load）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,86)"><span class="opt-label">D</span><span>監控數據流的運行狀態</span></div>
+  </div>
+  <div class="answer-section" id="ans86">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">ETL 流程描述了將數據從源系統移動到目標系統（通常是數據倉儲或數據湖）的標準步驟： Extract（提取）：從一個或多個異質的源系統（如資料庫、檔案、API）讀取數據。 Transform（轉換）：這是數據處理的核心階段，涉及對提取出的原始數據進行各種操作，以使其適用於分析或目標系統的格式。常見的轉換操作包括：數據清理（處理缺失、異常、重複、不一致）、數據驗證、數據類型轉換、格式標準化、單位換算、數據聚合（計算總和、平均值等）、數據拆分或合併、衍生新欄位（特徵工程）等。 Load（載入）：將經過轉換和清理的數據寫入到目標系統中。 Transform 階段是確保數據品質和可用性的關鍵。</div>
+  </div>
+</div>
+<div class="q-card" id="q87">
+  <div class="q-meta">
+    <span class="q-num">第 87 題</span>
+    <span class="q-tag">L22 L22404 大數據隱私保護、安全與合規</span>
+  </div>
+  <div class="q-text">日誌管理（Log Management）系統（如 ELK Stack: Elasticsearch, Logstash, Kibana 或 Splunk）在大數據安全中的主要作用是？</div>
+  <div class="options" id="opts87">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,87)"><span class="opt-label">A</span><span>直接阻止網路攻擊。</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,87)"><span class="opt-label">B</span><span>集中收集、儲存、分析來自各種系統和應用的大量日誌數據，以便進行安全事件監控、異常檢測、威脅追溯和合規性審計。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,87)"><span class="opt-label">C</span><span>加密所有傳輸中的數據。</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,87)"><span class="opt-label">D</span><span>管理用戶的身份和權限。</span></div>
+  </div>
+  <div class="answer-section" id="ans87">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 現代IT系統會產生海量的日誌數據（如操作系統日誌、應用日誌、網路設備日誌、安全設備日誌）。日誌管理系統的核心功能是將這些分散的、格式各異的大數據日誌進行集中採集、解析、索引和儲存，並提供強大的搜索、分析和視覺化能力。在安全領域，這使得安全團隊能夠：(1) 實時監控可疑活動或異常模式。(2) 在發生安全事件（如數據洩露、入侵）後，進行調查和追溯，了解攻擊路徑和影響範圍。(3) 生成報表以滿足合規性審計要求（如記錄訪問控制、系統變更等）。有效的日誌管理是建立縱深防禦和快速響應能力的基礎。</div>
+  </div>
+</div>
+<div class="q-card" id="q88">
+  <div class="q-meta">
+    <span class="q-num">第 88 題</span>
+    <span class="q-tag">L22 L22303 數據可視化工具</span>
+  </div>
+  <div class="q-text">在 Tableau 中，可以將度量從「連續」(Continuous) 轉換為「離散」(Discrete) 以達到什麼效果？</div>
+  <div class="options" id="opts88">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,88)"><span class="opt-label">A</span><span>進行更複雜的數學計算</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,88)"><span class="opt-label">B</span><span>將數值視為獨立的標籤或標頭，而不是連續的軸</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,88)"><span class="opt-label">C</span><span>改變數據的原始值</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,88)"><span class="opt-label">D</span><span>啟動地圖視覺化功能</span></div>
+  </div>
+  <div class="answer-section" id="ans88">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 在 Tableau 中，欄位可以是連續的（綠色藥丸）或離散的（藍色藥丸）。連續欄位在拖放到工作表時會創建連續的軸，而離散欄位會創建獨立的標籤或標頭。將一個度量（通常預設為連續）轉換為離散，可以將其數值視為單獨的類別。例如，如果想將年份（一個數值度量）作為表格的列標頭，而不是作為連續的時間軸，就可以將其轉換為離散維度。</div>
+  </div>
+</div>
+<div class="q-card" id="q89">
+  <div class="q-meta">
+    <span class="q-num">第 89 題</span>
+    <span class="q-tag">L25 L25 L21 guide</span>
+  </div>
+  <div class="q-text">在電腦視覺（Computer Vision, CV）中，影像分類（Image Classification）的主要任務是？</div>
+  <div class="options" id="opts89">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,89)"><span class="opt-label">A</span><span>區分影像中不同實體的邊界</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,89)"><span class="opt-label">B</span><span>產生新的影像內容</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,89)"><span class="opt-label">C</span><span>為整張圖片指定一個標籤（Label）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,89)"><span class="opt-label">D</span><span>判斷影像是否含有文字</span></div>
+  </div>
+  <div class="answer-section" id="ans89">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 影像分類是電腦視覺的基礎任務，目標是將整張影像歸類到預定義的類別中。 CV 任務 目標 輸出 範例 ✅ 影像分類 識別整張圖片內容 單一類別標籤 「這是一隻貓」 物件偵測（Object Detection） 找出物件位置+分類 邊界框 + 類別 「左上角有一隻貓」 語義分割（Semantic Segmentation） 像素級分類 每個像素的類別 「這些像素是貓」 實例分割（Instance Segmentation） 區分不同個體 每個物件的遮罩 「貓1、貓2」 影像生成（Image Generation） 創造新影像 新圖片 GAN、Diffusion 🎯 經典模型： AlexNet（2012）：深度學習在影像分類的突破 VGG（2014）：更深的網路架構 ResNet（2015）：殘差連接解決梯度消失 EfficientNet（2019）：平衡深度、寬度、解析度 Vision Transformer（2020）：將 Transformer 應用於視覺</div>
+  </div>
+</div>
+<div class="q-card" id="q90">
+  <div class="q-meta">
+    <span class="q-num">第 90 題</span>
+    <span class="q-tag">L21 L21203 AI風險管理</span>
+  </div>
+  <div class="q-text">為了提高 AI 系統的透明度與可解釋性，可以使用下列哪種技術方法？</div>
+  <div class="options" id="opts90">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,90)"><span class="opt-label">A</span><span>增加模型的隱藏層數量</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,90)"><span class="opt-label">B</span><span>使用 LIME 或 SHAP 等模型事後解釋（Post-hoc Explanation）工具</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,90)"><span class="opt-label">C</span><span>對訓練數據進行加密</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,90)"><span class="opt-label">D</span><span>將模型部署在邊緣裝置上</span></div>
+  </div>
+  <div class="answer-section" id="ans90">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">提高 AI 透明度和可解釋性的方法主要有兩類：(1) 內在可解釋模型（Intrinsically Interpretable Models）：選用本身結構相對簡單、決策過程容易理解的模型，如線性模型、決策樹。(2) 事後解釋技術（Post-hoc Explanation Techniques）：對於複雜的黑盒子模型（如深度學習），在其訓練完成後，使用額外的工具來解釋其特定預測的原因。LIME（Local Interpretable Model-agnostic Explanations）和 SHAP（SHapley Additive exPlanations）是兩種常用的事後解釋技術，它們可以分析特定輸入特徵對於模型預測結果的貢獻程度，提供局部的或全局的解釋。增加隱藏層（A）通常會降低可解釋性。加密數據（C）和邊緣部署（D）與模型解釋性無直接關係。</div>
+  </div>
+</div>
+<div class="q-card" id="q91">
+  <div class="q-meta">
+    <span class="q-num">第 91 題</span>
+    <span class="q-tag">L22 L22103 假設檢定與統計推論</span>
+  </div>
+  <div class="q-text">假設檢定的基本邏輯類似於？</div>
+  <div class="options" id="opts91">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,91)"><span class="opt-label">A</span><span>直接證明理論的正確性</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,91)"><span class="opt-label">B</span><span>反證法（Proof by Contradiction）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,91)"><span class="opt-label">C</span><span>歸納推理（Inductive Reasoning）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,91)"><span class="opt-label">D</span><span>演繹推理（Deductive Reasoning）</span></div>
+  </div>
+  <div class="answer-section" id="ans91">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">假設檢定的邏輯與反證法非常相似。在反證法中，我們想證明一個命題 P 為真，我們會先假設 P 的反面（非 P）為真，然後從這個假設出發進行推導，如果推導出一個矛盾的結果，就說明最初的假設（非 P）是錯誤的，從而證明 P 必須為真。在假設檢定中，我們想找到支持對立假設 H1 的證據，於是我們先假設虛無假設 H0（通常是 H1 的反面或無效狀態）為真，然後看在 H0 為真的前提下，觀察到的樣本結果是不是一個非常不可能發生（小機率）的事件。如果是，我們就拒絕 H0，間接支持 H1。這種「假設前提，看是否導出與觀測矛盾」的思路，與反證法的邏輯一致。</div>
+  </div>
+</div>
+<div class="q-card" id="q92">
+  <div class="q-meta">
+    <span class="q-num">第 92 題</span>
+    <span class="q-tag">L22 L22403 大數據在生成式 AI 應用</span>
+  </div>
+  <div class="q-text">在訓練大型生成式模型時，除了數據平行處理，當模型本身過於龐大無法放入單一GPU記憶體時，會採用哪種分散式訓練策略？</div>
+  <div class="options" id="opts92">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,92)"><span class="opt-label">A</span><span>只使用CPU進行訓練</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,92)"><span class="opt-label">B</span><span>模型平行處理（Model Parallelism），將模型的不同部分（如不同的層或注意力頭）分散到不同的GPU上</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,92)"><span class="opt-label">C</span><span>梯度累加（Gradient Accumulation）</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,92)"><span class="opt-label">D</span><span>提前停止（Early Stopping）</span></div>
+  </div>
+  <div class="answer-section" id="ans92">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 模型平行處理是解決單個計算設備無法容納超大模型問題的關鍵技術。它將一個巨大的模型切分成多個部分，並將這些部分分別放置在不同的GPU或其他計算單元上。在計算過程中，數據或中間結果需要在這些單元之間進行通信。常見的模型平行處理方式包括張量平行（Tensor Parallelism，將單個操作的計算分散）、管道平行（Pipeline Parallelism，將模型的不同層按順序放在不同設備上，形成流水線）等。這通常與數據平行處理結合使用（例如，DeepSpeed框架中的ZeRO技術），以應對超大規模模型的訓練挑戰。梯度累加和提前停止是訓練優化技巧，但不能解決模型過大的問題。</div>
+  </div>
+</div>
+<div class="q-card" id="q93">
+  <div class="q-meta">
+    <span class="q-num">第 93 題</span>
+    <span class="q-tag">L22 L22203 數據處理技術與工具</span>
+  </div>
+  <div class="q-text">在進行缺失值填補時，使用基於模型的填補方法（如迴歸填補、KNN填補）相較於簡單的統計量填補（平均值、中位數、眾數），其主要優點是什麼？</div>
+  <div class="options" id="opts93">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,93)"><span class="opt-label">A</span><span>計算速度一定更快</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,93)"><span class="opt-label">B</span><span>能夠考慮其他特徵之間的關係，可能得到更準確的填補值</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,93)"><span class="opt-label">C</span><span>不需要任何假設條件</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,93)"><span class="opt-label">D</span><span>適用於所有類型的缺失機制（MCAR, MAR, MNAR）</span></div>
+  </div>
+  <div class="answer-section" id="ans93">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 基於模型的填補方法（如使用線性迴歸預測缺失值，或使用 K 最近鄰居（K-Nearest Neighbors, KNN）找到相似樣本的值來填補）利用了數據集中其他特徵欄位的資訊。它們試圖捕捉特徵之間的相互關係，因此相比於只考慮單一欄位統計量的簡單填補方法，可能能夠產生更合理、更接近真實情況的填補值。然而，這些方法通常計算成本更高，且其效果也依賴於模型的選擇和數據本身的特性。</div>
+  </div>
+</div>
+<div class="q-card" id="q94">
+  <div class="q-meta">
+    <span class="q-num">第 94 題</span>
+    <span class="q-tag">L21 L21101 自然語言處理技術與應用</span>
+  </div>
+  <div class="q-text">語料庫 (Corpus) 在 NLP 中指的是什麼？</div>
+  <div class="options" id="opts94">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,94)"><span class="opt-label">A</span><span>一種特定的 NLP 演算法</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,94)"><span class="opt-label">B</span><span>用於訓練或評估 NLP 模型的大量結構化或非結構化的文本（或語音）數據集合</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,94)"><span class="opt-label">C</span><span>儲存詞嵌入向量的資料庫</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,94)"><span class="opt-label">D</span><span>定義詞性標籤的標準</span></div>
+  </div>
+  <div class="answer-section" id="ans94">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">語料庫是 NLP 研究和應用的基礎。它指的是為了特定目的（如語言學研究、模型訓練、評估）而收集和整理的大量真實世界語言材料的集合。語料庫可以是純文本（如新聞文章、小說、網頁），也可以是語音數據。根據是否帶有標註資訊，可以分為無標註語料庫 (Unannotated Corpus) 和 標註語料庫 (Annotated Corpus)（例如，帶有詞性標註、句法樹、命名實體標註的語料庫）。語料庫的規模、多樣性和品質對 NLP 模型的效能有著至關重要的影響。</div>
+  </div>
+</div>
+<div class="q-card" id="q95">
+  <div class="q-meta">
+    <span class="q-num">第 95 題</span>
+    <span class="q-tag">L25 L25 L22 guide</span>
+  </div>
+  <div class="q-text">標準差（Standard Deviation, SD）的統計意義為何？</div>
+  <div class="options" id="opts95">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,95)"><span class="opt-label">A</span><span>資料中最大與最小值的距離</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,95)"><span class="opt-label">B</span><span>數據分佈的對稱程度</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,95)"><span class="opt-label">C</span><span>資料平均偏離中心值的程度</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,95)"><span class="opt-label">D</span><span>代表資料的平均數</span></div>
+  </div>
+  <div class="answer-section" id="ans95">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 正確答案：C 標準差衡量資料的離散程度，數值越大表示資料越分散，越小表示資料越集中。 統計量 符號 意義 單位 變異數（Variance） σ² 或 s² 偏差平方的平均 原單位的平方 ✅ 標準差（Standard Deviation） σ 或 s 變異數的平方根平均偏離程度 與原資料相同單位 全距（Range） R 最大值 - 最小值 與原資料相同單位 變異係數（CV） CV 標準差 ÷ 平均數相對離散程度 無單位（百分比） 📐 標準差計算公式： 母體標準差：σ = √[Σ(xi - μ)² / N] 樣本標準差：s = √[Σ(xi - x̄)² / (n-1)] 其中：xi = 各數值，μ = 母體平均，x̄ = 樣本平均，N = 母體數，n = 樣本數 📊 實例說明： 班級 A：成績 [70, 72, 75, 78, 80] → 平均 75，標準差 ≈ 3.7（成績集中） 班級 B：成績 [50, 60, 75, 90, 100] → 平均 75，標準差 ≈ 19.4（成績分散） 兩班平均相同，但標準差顯示班級 B 的成績差異更大。 🎯 標準差的應用： 📈 風險評估：投資報酬率的標準差代表風險（波動性） 🎯 品質管制：產品尺寸標準差越小，品質越穩定 📊 常態分佈：68-95-99.7 法則</div>
+  </div>
+</div>
+<div class="q-card" id="q96">
+  <div class="q-meta">
+    <span class="q-num">第 96 題</span>
+    <span class="q-tag">L22 L22202 數據儲存與管理</span>
+  </div>
+  <div class="q-text">資料倉儲（Data Warehouse）的主要目的是什麼？</div>
+  <div class="options" id="opts96">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,96)"><span class="opt-label">A</span><span>處理即時交易資料 (Real-time transaction processing)</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,96)"><span class="opt-label">B</span><span>儲存非結構化數據 (Unstructured data)</span></div>
+<div class="option" data-label="C" data-correct="true" onclick="choose(this,96)"><span class="opt-label">C</span><span>整合來自多個來源的結構化數據，支援商業智慧 (BI, Business Intelligence) 和決策分析</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,96)"><span class="opt-label">D</span><span>提供低延遲的鍵值查詢 (Low-latency key-value lookups)</span></div>
+  </div>
+  <div class="answer-section" id="ans96">
+    <div class="ans-title">✅ 正確答案：C</div>
+    <div class="explanation">"> 資料倉儲是一個專門設計用於報告和數據分析的系統。它通常會從企業內部的多個營運系統（如 ERP, CRM）中抽取（Extract）、轉換（Transform）、載入（Load）結構化的歷史數據（此過程稱為 ETL），並將其整理成適合分析的模式（如星型模型、雪花模型）。主要目標是提供一個統一、乾淨、一致的數據視圖，以支援管理階層的決策制定和商業智慧應用，而非處理日常交易或儲存原始、未經處理的非結構化數據。</div>
+  </div>
+</div>
+<div class="q-card" id="q97">
+  <div class="q-meta">
+    <span class="q-num">第 97 題</span>
+    <span class="q-tag">L25 L25 L21 guide</span>
+  </div>
+  <div class="q-text">當 AI 導入規劃需評估系統部署模式時，若考量資料隱私與本地控制需求，應優先考慮？</div>
+  <div class="options" id="opts97">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,97)"><span class="opt-label">A</span><span>第三方雲端部署（Cloud Deployment）</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,97)"><span class="opt-label">B</span><span>地端私有部署（On-Premises Deployment）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,97)"><span class="opt-label">C</span><span>區塊鏈（Blockchain）儲存方式</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,97)"><span class="opt-label">D</span><span>外包給 AI 公司</span></div>
+  </div>
+  <div class="answer-section" id="ans97">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">"> 正確答案：B 地端私有部署將系統部署在企業自有的伺服器上，提供最高的資料控制權和隱私保護。 部署模式 優點 缺點 適用情境 ✅ 地端部署（On-Premises） • 完全資料控制• 高度隱私保護• 符合法規要求• 無網路依賴 • 初期成本高• 維護負擔重• 擴展性較差• 需專業團隊 金融、醫療政府機關敏感資料處理 公有雲（Public Cloud） • 快速部署• 彈性擴展• 按需付費• 免維護 • 資料外流風險• 依賴網路• 合規挑戰• 長期成本高 新創公司快速驗證彈性需求 私有雲（Private Cloud） • 資料可控• 客製化高• 安全性佳• 彈性擴展 • 建置成本高• 技術門檻高• 維護複雜 大型企業混合需求 混合雲（Hybrid Cloud） • 彈性配置• 平衡成本• 漸進遷移 • 架構複雜• 管理困難• 整合挑戰 過渡階段分級資料 邊緣運算（Edge Computing） • 低延遲• 離線運作• 隱私保護• 頻寬節省 • 運算能力限制• 管理分散• 更新困難 IoT 裝置即時應用自動駕駛 🔒 資料隱私考量： GDPR（General Data Protection Regulation）：歐盟一般資料保護規範 個資法：台灣個人資料保護法 資料主權：資料儲存地點的法律管轄權 資料外洩風險</div>
+  </div>
+</div>
+<div class="q-card" id="q98">
+  <div class="q-meta">
+    <span class="q-num">第 98 題</span>
+    <span class="q-tag">L22 L22101 敘述性統計與資料摘要技術</span>
+  </div>
+  <div class="q-text">柴比雪夫不等式（Chebyshev's Inequality）提供了一個關於數據分佈的什麼樣的資訊？</div>
+  <div class="options" id="opts98">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,98)"><span class="opt-label">A</span><span>任何數據分佈都必定是對稱的</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,98)"><span class="opt-label">B</span><span>對於任何分佈形態的數據，至少有多少比例的數據會落在距離平均數 k 個標準差的範圍內</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,98)"><span class="opt-label">C</span><span>只有常態分佈的數據才具有意義</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,98)"><span class="opt-label">D</span><span>數據的峰度必定為 0</span></div>
+  </div>
+  <div class="answer-section" id="ans98">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">柴比雪夫不等式是一個普遍適用於任何機率分佈（無論其形狀如何）的定理。它說明，對於任何 k > 1，至少有 (1 - 1/k^2) 比例的數據會落在距離平均數 k 個標準差的範圍 [μ - kσ, μ + kσ] 之內。例如，當 k=2 時，至少有 (1 - 1/2^2) = 3/4 = 75% 的數據落在平均數 ±2 個標準差內；當 k=3 時，至少有 (1 - 1/3^2) = 8/9 ≈ 88.9% 的數據落在平均數 ±3 個標準差內。相較於只適用於常態分佈的經驗法則（68-95-99.7 法則），柴比雪夫不等式提供了一個更保守但適用範圍更廣的下限保證。</div>
+  </div>
+</div>
+<div class="q-card" id="q99">
+  <div class="q-meta">
+    <span class="q-num">第 99 題</span>
+    <span class="q-tag">L22 L22102 機率分佈與資料分佈模型</span>
+  </div>
+  <div class="q-text">指數分佈的機率密度函數（PDF）具有什麼特性？</div>
+  <div class="options" id="opts99">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,99)"><span class="opt-label">A</span><span>對稱的鐘形</span></div>
+<div class="option" data-label="B" data-correct="true" onclick="choose(this,99)"><span class="opt-label">B</span><span>單調遞減且恆為正（對於 x > 0）</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,99)"><span class="opt-label">C</span><span>U 形</span></div>
+<div class="option" data-label="D" data-correct="false" onclick="choose(this,99)"><span class="opt-label">D</span><span>在某個區間內為常數</span></div>
+  </div>
+  <div class="answer-section" id="ans99">
+    <div class="ans-title">✅ 正確答案：B</div>
+    <div class="explanation">">指數分佈的機率密度函數為 f(x) = λ * exp(-λx)，其中 x ≥ 0 且 λ > 0（λ 是事件發生率）。這個函數在 x=0 時取得最大值 λ，然後隨著 x 的增加而指數級地單調遞減，趨近於 0。因此，它是一個典型的右偏分佈，表示短時間間隔發生的機率較高，長時間間隔發生的機率較低。選項 A 是常態分佈。選項 D 是均勻分佈。</div>
+  </div>
+</div>
+<div class="q-card" id="q100">
+  <div class="q-meta">
+    <span class="q-num">第 100 題</span>
+    <span class="q-tag">L21 L21201 AI導入評估</span>
+  </div>
+  <div class="q-text">在 AI 風險管理中，對於已識別出的高風險項目，可以採取的應對策略不包含以下哪項？</div>
+  <div class="options" id="opts100">
+<div class="option" data-label="A" data-correct="false" onclick="choose(this,100)"><span class="opt-label">A</span><span>風險規避 (Avoidance)：改變計畫以完全避開風險。</span></div>
+<div class="option" data-label="B" data-correct="false" onclick="choose(this,100)"><span class="opt-label">B</span><span>風險轉移 (Transfer)：將風險轉嫁給第三方（如購買保險、外包）。</span></div>
+<div class="option" data-label="C" data-correct="false" onclick="choose(this,100)"><span class="opt-label">C</span><span>風險緩解 (Mitigation)：採取措施降低風險發生的可能性或影響程度。</span></div>
+<div class="option" data-label="D" data-correct="true" onclick="choose(this,100)"><span class="opt-label">D</span><span>風險忽視 (Ignorance)：完全忽略風險的存在。</span></div>
+  </div>
+  <div class="answer-section" id="ans100">
+    <div class="ans-title">✅ 正確答案：D</div>
+    <div class="explanation">">標準的風險管理流程通常包括風險識別、風險分析、風險評估和風險應對。對於已識別和評估的風險，常見的應對策略有四種（有時加入第五種「接受」）： 規避 (Avoidance): 透過改變專案範疇、目標或方法，完全消除風險事件發生的可能性。 轉移 (Transfer): 將風險的後果和應對責任轉移給第三方，例如購買保險或將特定環節外包。 緩解 (Mitigation): 採取積極措施來降低風險發生的機率或減輕其發生時的負面影響。這是最常用的策略。 接受 (Acceptance): 對於發生機率低或影響小的風險，或應對成本過高的風險，選擇不採取特別行動，並準備好應對其可能後果（被動接受或設立應急儲備）。 忽視 (Ignorance) 風險並不是一種有效的風險管理策略，它只會讓組織暴露在未知的威脅之下。</div>
+  </div>
+</div>
+
+<div class="footer">iPAS AI 中級每日練習 ｜ 2026-05-05 ｜ 自動產生</div>
+</div>
+
+<script>
+const TOTAL = 100;
+let answered = new Set();
+
+function choose(el, qn) {
+  const opts = document.getElementById('opts'+qn);
+  if (opts.dataset.done) return;
+  opts.dataset.done = '1';
+  // Mark all options
+  opts.querySelectorAll('.option').forEach(o => {
+    if (o.dataset.correct === 'true')  o.classList.add('correct');
+    else if (o === el) o.classList.add('wrong');
+  });
+  el.classList.add('selected');
+  // Show answer
+  document.getElementById('ans'+qn).classList.add('visible');
+  answered.add(qn);
+  document.getElementById('prog').textContent = '已作答 ' + answered.size + ' / ' + TOTAL + ' 題';
+}
+
+function toggleAll(show) {
+  for (let i=1; i<=TOTAL; i++) {
+    let sec = document.getElementById('ans'+i);
+    if (show) sec.classList.add('visible');
+    else sec.classList.remove('visible');
+  }
+}
+</script>
+</body>
+</html>

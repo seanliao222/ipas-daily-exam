@@ -1,0 +1,3097 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 iPAS AI中級 - L23 機器學習技術與應用</title>
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/r.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            min-height: 100vh;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px 20px;
+            margin: -20px -20px 30px -20px;
+            text-align: center;
+            border-radius: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+
+        .header-container .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-container, .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-label, .search-label {
+            font-weight: bold;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+
+        select, input[type="text"] {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .directions-container {
+            background: linear-gradient(135deg, #fff5e6, #ffe6cc);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 6px solid #ff9800;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .directions-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #e65100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-item:hover {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+
+        .direction-number {
+            min-width: 60px;
+            height: 35px;
+            padding: 0 12px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .direction-item:hover .direction-number {
+            background: white;
+            color: #ff9800;
+        }
+
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-left: 5px solid #667eea;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .question-id {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #667eea;
+        }
+
+        .question-frequency {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .question-content {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option-item:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .option-item.correct {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-left: 5px solid #28a745;
+            font-weight: 500;
+        }
+
+        .option-item.correct:hover {
+            background: linear-gradient(135deg, #c3e6cb, #b1dfbb);
+        }
+
+        .option-label {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .option-item.correct .option-label {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .option-text {
+            flex: 1;
+            padding-top: 3px;
+        }
+
+        .explanation-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 5px solid #17a2b8;
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #17a2b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explanation-content {
+            line-height: 1.9;
+            color: #2c3e50;
+        }
+
+        .term-cn {
+            color: #0000ff;
+            font-weight: bold;
+        }
+
+        .term-en {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .term-abbr {
+            color: #800080;
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: #ffff0030;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+            font-size: 1.5rem;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header-container {
+                margin: -10px -10px 20px -10px;
+                padding: 20px 15px;
+            }
+
+            .header-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-content {
+                font-size: 1.05rem;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    
+        /* 蝔?蝣澆?憛見撘?*/
+        pre {
+            background: #f6f8fa !important;
+            border: 1px solid #e1e4e8 !important;
+            border-radius: 8px !important;
+            padding: 16px !important;
+            overflow-x: auto !important;
+            margin: 15px 0 !important;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+            font-size: 14px !important;
+            line-height: 1.6 !important;
+        }
+
+        code {
+            background: #f6f8fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+
+        pre code {
+            background: transparent !important;
+            padding: 0 !important;
+            color: inherit !important;
+            font-size: inherit !important;
+        }
+
+        .hljs {
+            background: #f6f8fa !important;
+            color: #24292e !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>📚 iPAS AI應用規劃師 中級考試</h1>
+            <div class="subtitle">L23 機器學習技術與應用 完整題庫</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">🎯 篩選方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">🔍 搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div>
+                <button id="toggleExplanations">顯示/隱藏解析</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">📋 評鑑主題</div>
+            <div class="directions-grid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">L231</div>
+                    <div>🔢 機器學習基礎數學</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">L232</div>
+                    <div>🤖 機器學習與深度學習</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">L233</div>
+                    <div>⚙️ 機器學習建模與參數調校</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">L234</div>
+                    <div>🛡️ 機器學習治理</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- L231 機器學習基礎數學 - 第1題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #1</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若欲描述<span class="term-cn">隨機變數</span>（<span class="term-en">Random Variable</span>）在<span class="highlight">連續範圍</span>內取值的<span class="term-cn">機率分佈</span>（<span class="term-en">Probability Distribution</span>），最適合使用下列哪一種函數？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">機率質量函數</span>（<span class="term-abbr">PMF</span>, <span class="term-en">Probability Mass Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">條件機率</span>（<span class="term-en">Conditional Probability</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">機率密度函數</span>（<span class="term-abbr">PDF</span>, <span class="term-en">Probability Density Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">累積分佈函數</span>（<span class="term-abbr">CDF</span>, <span class="term-en">Cumulative Distribution Function</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        
+                        <p>在機器學習中，理解<span class="highlight">連續型隨機變數</span>與<span class="highlight">離散型隨機變數</span>的差異非常重要。</p>
+
+                        <table>
+                            <tr>
+                                <th>函數類型</th>
+                                <th>適用變數</th>
+                                <th>特性</th>
+                                <th>範例</th>
+                            </tr>
+                            <tr>
+                                <td>✅ <span class="term-abbr">PDF</span><br>機率密度函數</td>
+                                <td>連續型</td>
+                                <td>曲線下面積代表機率<br>單點機率為 0</td>
+                                <td>身高、體重、溫度</td>
+                            </tr>
+                            <tr>
+                                <td><span class="term-abbr">PMF</span><br>機率質量函數</td>
+                                <td>離散型</td>
+                                <td>直接給出每個值的機率</td>
+                                <td>骰子點數、人數</td>
+                            </tr>
+                            <tr>
+                                <td><span class="term-abbr">CDF</span><br>累積分佈函數</td>
+                                <td>兩者皆可</td>
+                                <td>P(X ≤ x) 的累積機率</td>
+                                <td>通用於所有分佈</td>
+                            </tr>
+                        </table>
+
+                        <p><strong>🎯 <span class="term-abbr">PDF</span> 的重要特性：</strong></p>
+                        <ul>
+                            <li><strong>非負性：</strong>f(x) ≥ 0 對所有 x 成立</li>
+                            <li><strong>總面積為 1：</strong>∫ f(x)dx = 1（整個範圍積分）</li>
+                            <li><strong>區間機率：</strong>P(a ≤ X ≤ b) = ∫[a,b] f(x)dx</li>
+                            <li><strong>單點機率為 0：</strong>P(X = x) = 0（連續型特性）</li>
+                        </ul>
+
+                        <p><strong>📊 常見的連續型分佈：</strong></p>
+                        <ul>
+                            <li><span class="term-cn">常態分佈</span>（<span class="term-en">Normal Distribution</span>）：最常用，鐘形曲線</li>
+                            <li><span class="term-cn">均勻分佈</span>（<span class="term-en">Uniform Distribution</span>）：所有值機率相等</li>
+                            <li><span class="term-cn">指數分佈</span>（<span class="term-en">Exponential Distribution</span>）：等待時間模型</li>
+                            <li><span class="term-cn">貝塔分佈</span>（<span class="term-en">Beta Distribution</span>）：機率的機率分佈</li>
+                        </ul>
+
+                        <p><strong>💼 機器學習應用：</strong></p>
+                        <ul>
+                            <li><span class="highlight">特徵分佈分析</span>：了解資料特性</li>
+                            <li><span class="highlight">異常值偵測</span>：低機率密度區域</li>
+                            <li><span class="highlight">生成模型</span>：<span class="term-abbr">VAE</span>、<span class="term-abbr">GAN</span> 學習資料分佈</li>
+                            <li><span class="highlight">貝氏推論</span>：先驗與後驗分佈</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第2題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #2</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若一個<span class="term-cn">隨機變數</span>服從<span class="term-cn">伯努利分佈</span>（<span class="term-en">Bernoulli Distribution</span>），則該變數可能取值為下列哪一組？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">任何實數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">0 或 1</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">正整數</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">任意整數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        
+                        <p><span class="term-cn">伯努利分佈</span>是最簡單的<span class="highlight">離散型機率分佈</span>，用於描述<span class="highlight">單次二元實驗</span>的結果（成功或失敗）。</p>
+
+                        <table>
+                            <tr>
+                                <th>特性</th>
+                                <th>說明</th>
+                                <th>數學表示</th>
+                            </tr>
+                            <tr>
+                                <td>取值範圍</td>
+                                <td>只有兩個可能值</td>
+                                <td>X ∈ {0, 1}</td>
+                            </tr>
+                            <tr>
+                                <td>參數</td>
+                                <td>成功機率 p</td>
+                                <td>0 ≤ p ≤ 1</td>
+                            </tr>
+                            <tr>
+                                <td>機率質量函數</td>
+                                <td>P(X=1) = p<br>P(X=0) = 1-p</td>
+                                <td>P(X=k) = p^k(1-p)^(1-k)</td>
+                            </tr>
+                            <tr>
+                                <td>期望值</td>
+                                <td>平均值</td>
+                                <td>E[X] = p</td>
+                            </tr>
+                            <tr>
+                                <td>變異數</td>
+                                <td>離散程度</td>
+                                <td>Var(X) = p(1-p)</td>
+                            </tr>
+                        </table>
+
+                        <p><strong>🎯 伯努利分佈的應用場景：</strong></p>
+                        <ul>
+                            <li><strong>🎲 單次實驗：</strong>拋一次硬幣（正面/反面）</li>
+                            <li><strong>✅ 二元分類：</strong>郵件是否為垃圾郵件</li>
+                            <li><strong>🏥 醫療診斷：</strong>病人是否患病</li>
+                            <li><strong>🔍 點擊預測：</strong>用戶是否點擊廣告</li>
+                            <li><strong>⚠️ 異常偵測：</strong>交易是否異常</li>
+                        </ul>
+
+                        <p><strong>📊 相關分佈：</strong></p>
+                        <ul>
+                            <li><strong><span class="term-cn">二項分佈</span>（<span class="term-en">Binomial Distribution</span>）：</strong>n 次獨立伯努利試驗的成功次數</li>
+                            <li><strong><span class="term-cn">幾何分佈</span>（<span class="term-en">Geometric Distribution</span>）：</strong>首次成功所需的試驗次數</li>
+                            <li><strong><span class="term-cn">負二項分佈</span>（<span class="term-en">Negative Binomial Distribution</span>）：</strong>達到 r 次成功所需的試驗次數</li>
+                        </ul>
+
+                        <p><strong>💼 機器學習中的應用：</strong></p>
+                        <ul>
+                            <li><span class="term-cn">邏輯迴歸</span>（<span class="term-en">Logistic Regression</span>）：假設目標變數服從伯努利分佈</li>
+                            <li><span class="term-cn">貝氏分類器</span>（<span class="term-en">Naive Bayes Classifier</span>）：二元特徵建模</li>
+                            <li><span class="term-abbr">GAN</span> 的鑑別器：真/假二元判斷</li>
+                            <li><span class="term-cn">強化學習</span>：動作成功/失敗的建模</li>
+                        </ul>
+
+                        <p><strong>🔑 記憶口訣：</strong>伯努利 = <span class="highlight">單次</span> + <span class="highlight">二元</span>（0或1）</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第3題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #3</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">主成分分析</span>（<span class="term-abbr">PCA</span>, <span class="term-en">Principal Component Analysis</span>）中，常使用哪一種<span class="term-cn">矩陣分解</span>（<span class="term-en">Matrix Decomposition</span>）技術來找出資料的<span class="highlight">主軸方向</span>？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">矩陣求逆</span>（<span class="term-en">Matrix Inversion</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">矩陣轉置</span>（<span class="term-en">Matrix Transpose</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">特徵值分解</span>（<span class="term-en">Eigenvalue Decomposition</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">條件機率分解</span>（<span class="term-en">Conditional Probability Decomposition</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        
+                        <p><span class="term-abbr">PCA</span> 是最常用的<span class="highlight">降維技術</span>，透過<span class="highlight">特徵值分解</span>找出資料變異最大的方向。</p>
+
+                        <table>
+                            <tr>
+                                <th>步驟</th>
+                                <th>操作</th>
+                                <th>目的</th>
+                            </tr>
+                            <tr>
+                                <td>1️⃣ 資料標準化</td>
+                                <td>中心化（減去平均值）<br>可選：標準化（除以標準差）</td>
+                                <td>消除量綱影響</td>
+                            </tr>
+                            <tr>
+                                <td>2️⃣ 計算共變異數矩陣</td>
+                                <td>Σ = (1/n)X^T X</td>
+                                <td>衡量特徵間的相關性</td>
+                            </tr>
+                            <tr>
+                                <td>3️⃣ 特徵值分解</td>
+                                <td>Σ = VΛV^T<br>V: 特徵向量<br>Λ: 特徵值</td>
+                                <td>找出主成分方向</td>
+                            </tr>
+                            <tr>
+                                <td>4️⃣ 選擇主成分</td>
+                                <td>選取前 k 個最大特徵值<br>對應的特徵向量</td>
+                                <td>保留最重要的資訊</td>
+                            </tr>
+                            <tr>
+                                <td>5️⃣ 資料轉換</td>
+                                <td>Y = XV_k</td>
+                                <td>投影到低維空間</td>
+                            </tr>
+                        </table>
+
+                        <p><strong>🎯 特徵值與特徵向量的意義：</strong></p>
+                        <ul>
+                            <li><strong><span class="term-cn">特徵向量</span>（<span class="term-en">Eigenvector</span>）：</strong>主成分的<span class="highlight">方向</span>（資料變異最大的軸）</li>
+                            <li><strong><span class="term-cn">特徵值</span>（<span class="term-en">Eigenvalue</span>）：</strong>該方向上的<span class="highlight">變異量</span>（重要性）</li>
+                            <li><strong>排序：</strong>特徵值由大到小排列，對應最重要到最不重要的方向</li>
+                            <li><strong>解釋變異比例：</strong>λ_i / Σλ_j 表示第 i 個主成分解釋的變異比例</li>
+                        </ul>
+
+                        <p><strong>📊 如何選擇主成分數量 k？</strong></p>
+                        <ul>
+                            <li><strong>累積解釋變異：</strong>選擇能解釋 85-95% 變異的前 k 個主成分</li>
+                            <li><strong>陡坡圖法：</strong>觀察特徵值的<span class="term-cn">碎石圖</span>（<span class="term-en">Scree Plot</span>），找到「手肘點」</li>
+                            <li><strong>Kaiser 準則：</strong>保留特徵值 > 1 的主成分（標準化後）</li>
+                            <li><strong>交叉驗證：</strong>根據下游任務的效能決定</li>
+                        </ul>
+
+                        <p><strong>💼 PCA 的應用：</strong></p>
+                        <ul>
+                            <li><strong>🎨 資料視覺化：</strong>降至 2D/3D 進行繪圖</li>
+                            <li><strong>⚡ 加速訓練：</strong>減少特徵數量，降低計算成本</li>
+                            <li><strong>🔍 特徵工程：</strong>去除冗餘特徵，減少共線性</li>
+                            <li><strong>🖼️ 影像壓縮：</strong>保留主要資訊，減少儲存空間</li>
+                            <li><strong>🔊 降噪：</strong>去除低變異的雜訊成分</li>
+                        </ul>
+
+                        <p><strong>⚠️ PCA 的限制：</strong></p>
+                        <ul>
+                            <li>假設<span class="highlight">線性關係</span>，無法捕捉非線性結構</li>
+                            <li>對<span class="highlight">離群值敏感</span>，建議先處理異常值</li>
+                            <li>主成分<span class="highlight">難以解釋</span>，是原始特徵的線性組合</li>
+                            <li>需要<span class="highlight">標準化</span>，否則大數值特徵會主導結果</li>
+                        </ul>
+
+                        <p><strong>🔄 相關技術：</strong></p>
+                        <ul>
+                            <li><span class="term-abbr">SVD</span>（<span class="term-en">Singular Value Decomposition</span>）：更穩定的 PCA 實作方式</li>
+                            <li><span class="term-cn">核主成分分析</span>（<span class="term-en">Kernel PCA</span>）：處理非線性關係</li>
+                            <li><span class="term-abbr">t-SNE</span>：非線性降維，適合視覺化</li>
+                            <li><span class="term-abbr">UMAP</span>：更快的非線性降維方法</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第4題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #4</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若想將<span class="term-cn">高維資料</span>（<span class="term-en">High-Dimensional Data</span>）映射至較低維度空間，同時保留資料的<span class="highlight">主要變異</span>（<span class="term-en">Main Variance</span>），常用下列哪一種方法？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">邊際機率估計</span>（<span class="term-en">Marginal Probability Estimation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">矩陣轉置</span>（<span class="term-en">Matrix Transpose</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">主成分分析</span>（<span class="term-abbr">PCA</span>, <span class="term-en">Principal Component Analysis</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">累積機率計算</span>（<span class="term-en">Cumulative Probability Calculation</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-abbr">PCA</span> 的核心目標就是<span class="highlight">降維</span>（<span class="term-en">Dimensionality Reduction</span>），將高維資料投影到低維空間，同時<span class="highlight">最大化保留變異資訊</span>。</p>
+                        <table>
+                            <tr><th>降維方法</th><th>類型</th><th>特點</th><th>適用場景</th></tr>
+                            <tr><td>✅ <span class="term-abbr">PCA</span></td><td>線性/非監督</td><td>保留最大變異<br>正交投影</td><td>資料視覺化<br>特徵壓縮</td></tr>
+                            <tr><td><span class="term-abbr">LDA</span></td><td>線性/監督</td><td>最大化類別分離度</td><td>分類前處理</td></tr>
+                            <tr><td><span class="term-abbr">t-SNE</span></td><td>非線性/非監督</td><td>保留局部結構</td><td>高維資料視覺化</td></tr>
+                            <tr><td><span class="term-abbr">UMAP</span></td><td>非線性/非監督</td><td>保留全局+局部結構</td><td>大規模資料視覺化</td></tr>
+                        </table>
+                        <p><strong>🎯 PCA 降維的優勢：</strong></p>
+                        <ul>
+                            <li><strong>維度災難：</strong>解決<span class="term-cn">維度詛咒</span>（<span class="term-en">Curse of Dimensionality</span>）問題</li>
+                            <li><strong>計算效率：</strong>減少特徵數量，加速模型訓練</li>
+                            <li><strong>去除冗餘：</strong>消除高度相關的特徵</li>
+                            <li><strong>視覺化：</strong>降至 2D/3D 便於人類理解</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第5題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #5</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">梯度下降</span>（<span class="term-en">Gradient Descent</span>）中，「<span class="term-cn">梯度</span>（<span class="term-en">Gradient</span>）」代表下列哪一項？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">資料點個數</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型精確度</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">損失函數</span>（<span class="term-en">Loss Function</span>）對參數的<span class="term-cn">偏微分</span>（<span class="term-en">Partial Derivative</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型計算速度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="highlight">梯度</span>是<span class="highlight">損失函數對所有參數的偏微分向量</span>，指出損失函數<span class="highlight">增長最快的方向</span>。</p>
+                        <table>
+                            <tr><th>概念</th><th>數學表示</th><th>意義</th></tr>
+                            <tr><td>梯度</td><td>∇L(θ) = [∂L/∂θ₁, ∂L/∂θ₂, ...]</td><td>損失增長最快的方向</td></tr>
+                            <tr><td>梯度下降</td><td>θ ← θ - α∇L(θ)</td><td>沿負梯度方向更新參數</td></tr>
+                            <tr><td>學習率</td><td>α（alpha）</td><td>控制每次更新的步長</td></tr>
+                        </table>
+                        <p><strong>🎯 梯度下降的變體：</strong></p>
+                        <ul>
+                            <li><strong><span class="term-abbr">BGD</span>（<span class="term-en">Batch Gradient Descent</span>）：</strong>使用全部資料計算梯度，穩定但慢</li>
+                            <li><strong><span class="term-abbr">SGD</span>（<span class="term-en">Stochastic Gradient Descent</span>）：</strong>每次用一筆資料，快但不穩定</li>
+                            <li><strong><span class="term-abbr">Mini-batch GD</span>：</strong>折衷方案，使用小批次資料</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第6題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #6</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在進行<span class="term-cn">假設檢定</span>（<span class="term-en">Hypothesis Testing</span>）時，<span class="term-cn">顯著水準</span>（<span class="term-en">Significance Level</span>, α）表示什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">平均值的大小</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型運算速度</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">拒絕<span class="term-cn">虛無假設</span>（<span class="term-en">Null Hypothesis</span>）時所容許的<span class="term-cn">型一錯誤</span>（<span class="term-en">Type I Error</span>）機率</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">資料筆數多少</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="highlight">顯著水準 α</span> 是我們願意承擔<span class="highlight">錯誤拒絕真實虛無假設</span>的最大機率，常見值為 0.05 或 0.01。</p>
+                        <table>
+                            <tr><th>錯誤類型</th><th>實際情況</th><th>決策</th><th>後果</th></tr>
+                            <tr><td>✅ 正確</td><td>H₀ 為真</td><td>接受 H₀</td><td>正確決策</td></tr>
+                            <tr><td>❌ 型一錯誤<br>（α）</td><td>H₀ 為真</td><td>拒絕 H₀</td><td><span class="highlight">誤報</span>（False Positive）</td></tr>
+                            <tr><td>❌ 型二錯誤<br>（β）</td><td>H₀ 為假</td><td>接受 H₀</td><td><span class="highlight">漏報</span>（False Negative）</td></tr>
+                            <tr><td>✅ 正確</td><td>H₀ 為假</td><td>拒絕 H₀</td><td>正確決策（檢定力 1-β）</td></tr>
+                        </table>
+                        <p><strong>🎯 假設檢定步驟：</strong></p>
+                        <ul>
+                            <li><strong>1️⃣ 建立假設：</strong>H₀（虛無假設）vs H₁（對立假設）</li>
+                            <li><strong>2️⃣ 選擇顯著水準：</strong>通常 α = 0.05</li>
+                            <li><strong>3️⃣ 計算檢定統計量：</strong>如 t 值、z 值</li>
+                            <li><strong>4️⃣ 計算 p 值：</strong>觀察到此結果的機率</li>
+                            <li><strong>5️⃣ 做出決策：</strong>若 p < α，拒絕 H₀</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第7題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #7</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若資料集中存在<span class="term-cn">極端值</span>（<span class="term-en">Extreme Value</span>），以下哪一種<span class="term-cn">集中趨勢指標</span>（<span class="term-en">Central Tendency Measure</span>）較不受影響？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">平均數</span>（<span class="term-en">Mean</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">變異數</span>（<span class="term-en">Variance</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">標準差</span>（<span class="term-en">Standard Deviation</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">中位數</span>（<span class="term-en">Median</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：D</strong></p>
+                        <p><span class="term-cn">中位數</span>是<span class="highlight">穩健統計量</span>（<span class="term-en">Robust Statistic</span>），不受極端值影響，因為它只關注<span class="highlight">資料的中間位置</span>。</p>
+                        <table>
+                            <tr><th>統計量</th><th>定義</th><th>對極端值敏感度</th><th>適用情境</th></tr>
+                            <tr><td><span class="term-cn">平均數</span></td><td>所有值的總和 ÷ 個數</td><td>❌ 非常敏感</td><td>資料對稱、無極端值</td></tr>
+                            <tr><td>✅ <span class="term-cn">中位數</span></td><td>排序後的中間值</td><td>✅ 不敏感</td><td>有極端值或偏態分佈</td></tr>
+                            <tr><td><span class="term-cn">眾數</span></td><td>出現最多次的值</td><td>✅ 不敏感</td><td>類別資料</td></tr>
+                            <tr><td><span class="term-cn">變異數</span></td><td>離均差平方的平均</td><td>❌ 非常敏感</td><td>衡量離散程度</td></tr>
+                            <tr><td><span class="term-cn">標準差</span></td><td>變異數的平方根</td><td>❌ 非常敏感</td><td>與原始資料同單位</td></tr>
+                        </table>
+                        <p><strong>📊 範例說明：</strong></p>
+                        <p>資料：[1, 2, 3, 4, 100]</p>
+                        <ul>
+                            <li><strong>平均數：</strong>(1+2+3+4+100)/5 = 22（被 100 嚴重拉高）</li>
+                            <li><strong>中位數：</strong>3（不受 100 影響）</li>
+                        </ul>
+                        <p><strong>🎯 穩健統計量：</strong></p>
+                        <ul>
+                            <li><span class="term-cn">中位數</span>（<span class="term-en">Median</span>）</li>
+                            <li><span class="term-abbr">IQR</span>（<span class="term-en">Interquartile Range</span>, 四分位距）</li>
+                            <li><span class="term-abbr">MAD</span>（<span class="term-en">Median Absolute Deviation</span>, 中位數絕對偏差）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第8題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #8</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    以下哪一種<span class="term-cn">優化方法</span>（<span class="term-en">Optimization Method</span>）會累積每個參數的<span class="highlight">歷史梯度大小</span>，以調整<span class="term-cn">學習率</span>（<span class="term-en">Learning Rate</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Momentum</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Adagrad</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-abbr">SGD</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">Batch Normalization</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-en">Adagrad</span>（<span class="term-en">Adaptive Gradient</span>）會<span class="highlight">累積歷史梯度的平方和</span>，對頻繁更新的參數降低學習率，對稀疏更新的參數提高學習率。</p>
+                        <table>
+                            <tr><th>優化器</th><th>核心機制</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-abbr">SGD</span></td><td>基本梯度下降</td><td>簡單、記憶體小</td><td>收斂慢、易卡在鞍點</td></tr>
+                            <tr><td><span class="term-en">Momentum</span></td><td>累積動量</td><td>加速收斂、減少震盪</td><td>可能衝過最優點</td></tr>
+                            <tr><td>✅ <span class="term-en">Adagrad</span></td><td>自適應學習率</td><td>適合稀疏資料</td><td>學習率持續下降</td></tr>
+                            <tr><td><span class="term-en">RMSprop</span></td><td>指數移動平均梯度</td><td>解決 Adagrad 學習率衰減問題</td><td>需調整衰減率</td></tr>
+                            <tr><td><span class="term-en">Adam</span></td><td>結合 Momentum + RMSprop</td><td>最常用、效果好</td><td>可能過度自適應</td></tr>
+                        </table>
+                        <p><strong>🔧 Adagrad 更新公式：</strong></p>
+                        <ul>
+                            <li>累積梯度平方：G_t = G_{t-1} + (∇L)²</li>
+                            <li>參數更新：θ ← θ - (α / √(G_t + ε)) × ∇L</li>
+                            <li>ε 是防止除以零的小常數</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第9題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #9</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    當<span class="term-cn">深度學習模型</span>（<span class="term-en">Deep Learning Model</span>）在訓練時出現<span class="term-cn">梯度爆炸</span>（<span class="term-en">Gradient Explosion</span>）現象，應優先採用哪種技術加以處理？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">增大學習率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">梯度裁剪</span>（<span class="term-en">Gradient Clipping</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">減少資料量</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">刪除輸入特徵</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">梯度爆炸</span>是指在<span class="highlight">反向傳播</span>（<span class="term-en">Backpropagation</span>）過程中，梯度值變得<span class="highlight">異常巨大</span>，導致參數更新過大，模型無法收斂。</p>
+                        <table>
+                            <tr><th>問題</th><th>現象</th><th>解決方法</th></tr>
+                            <tr><td>✅ <span class="term-cn">梯度爆炸</span></td><td>梯度值過大<br>損失變成 NaN<br>參數更新劇烈</td><td><strong>梯度裁剪</strong><br>降低學習率<br>權重初始化<br>Batch Normalization</td></tr>
+                            <tr><td><span class="term-cn">梯度消失</span></td><td>梯度值過小<br>參數幾乎不更新<br>深層網路難訓練</td><td>殘差連接（ResNet）<br>LSTM/GRU<br>更好的激活函數（ReLU）</td></tr>
+                        </table>
+                        <p><strong>🔧 梯度裁剪方法：</strong></p>
+                        <ul>
+                            <li><strong>按值裁剪：</strong>if |g| > threshold, then g = threshold × sign(g)</li>
+                            <li><strong>按範數裁剪：</strong>if ||g|| > threshold, then g = g × (threshold / ||g||)</li>
+                        </ul>
+                        <p><strong>🎯 預防梯度爆炸的技術：</strong></p>
+                        <ul>
+                            <li><strong>權重初始化：</strong>Xavier、He 初始化</li>
+                            <li><strong>正規化：</strong>Batch Normalization、Layer Normalization</li>
+                            <li><strong>架構設計：</strong>殘差連接、跳躍連接</li>
+                            <li><strong>學習率調整：</strong>使用較小的學習率或學習率衰減</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L231 機器學習基礎數學 - 第10題 -->
+            <div class="question-card" data-direction="1">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #10</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-cn">邏輯迴歸</span>（<span class="term-en">Logistic Regression</span>）模型在處理<span class="term-cn">二元分類問題</span>（<span class="term-en">Binary Classification</span>）時，通常假設目標變數服從哪種分佈？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">常態分佈</span>（<span class="term-en">Normal Distribution</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">均勻分佈</span>（<span class="term-en">Uniform Distribution</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">伯努利分佈</span>（<span class="term-en">Bernoulli Distribution</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">泊松分佈</span>（<span class="term-en">Poisson Distribution</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">邏輯迴歸</span>是<span class="highlight">廣義線性模型</span>（<span class="term-abbr">GLM</span>, <span class="term-en">Generalized Linear Model</span>）的一種，假設目標變數 Y 服從<span class="highlight">伯努利分佈</span>（Y ∈ {0, 1}）。</p>
+                        <table>
+                            <tr><th>模型</th><th>目標變數分佈</th><th>連結函數</th><th>應用</th></tr>
+                            <tr><td>線性迴歸</td><td>常態分佈</td><td>恆等函數</td><td>預測連續值</td></tr>
+                            <tr><td>✅ 邏輯迴歸</td><td>伯努利分佈</td><td>Logit（Sigmoid）</td><td>二元分類</td></tr>
+                            <tr><td>泊松迴歸</td><td>泊松分佈</td><td>Log</td><td>計數資料</td></tr>
+                            <tr><td>多項邏輯迴歸</td><td>多項分佈</td><td>Softmax</td><td>多類別分類</td></tr>
+                        </table>
+                        <p><strong>🔧 邏輯迴歸的核心：</strong></p>
+                        <ul>
+                            <li><strong>線性組合：</strong>z = w₁x₁ + w₂x₂ + ... + b</li>
+                            <li><strong>Sigmoid 函數：</strong>σ(z) = 1 / (1 + e^(-z))</li>
+                            <li><strong>輸出機率：</strong>P(Y=1|X) = σ(z)，範圍 [0, 1]</li>
+                            <li><strong>決策邊界：</strong>當 P(Y=1|X) ≥ 0.5 時，預測為類別 1</li>
+                        </ul>
+                        <p><strong>📊 損失函數：</strong></p>
+                        <p><span class="term-cn">交叉熵損失</span>（<span class="term-en">Cross-Entropy Loss</span>）：<br>L = -[y log(ŷ) + (1-y) log(1-ŷ)]</p>
+                        <p><strong>💼 應用場景：</strong>垃圾郵件偵測、疾病診斷、信用評分、點擊率預測</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第11題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #11</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-cn">機器學習</span>（<span class="term-en">Machine Learning</span>）中，若輸入資料<span class="highlight">沒有標註</span>，欲探索潛在的群組或模式，應屬於哪種學習類型？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">監督式學習</span>（<span class="term-en">Supervised Learning</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">半監督式學習</span>（<span class="term-en">Semi-supervised Learning</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">非監督式學習</span>（<span class="term-en">Unsupervised Learning</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">強化式學習</span>（<span class="term-en">Reinforcement Learning</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">非監督式學習</span>處理<span class="highlight">無標籤資料</span>，目標是發現資料中的<span class="highlight">隱藏結構</span>或<span class="highlight">模式</span>。</p>
+                        <table>
+                            <tr><th>學習類型</th><th>資料特性</th><th>目標</th><th>代表演算法</th></tr>
+                            <tr><td><span class="term-cn">監督式學習</span></td><td>有標籤 (X, Y)</td><td>學習 X→Y 的映射</td><td>分類、迴歸<br>決策樹、SVM</td></tr>
+                            <tr><td>✅ <span class="term-cn">非監督式學習</span></td><td>無標籤 (X)</td><td>發現資料結構</td><td>聚類、降維<br>K-means、PCA</td></tr>
+                            <tr><td><span class="term-cn">半監督式學習</span></td><td>少量標籤+大量無標籤</td><td>利用無標籤資料輔助</td><td>自訓練、協同訓練</td></tr>
+                            <tr><td><span class="term-cn">強化式學習</span></td><td>狀態-動作-獎勵</td><td>學習最優策略</td><td>Q-Learning、DQN</td></tr>
+                        </table>
+                        <p><strong>🎯 非監督式學習的主要任務：</strong></p>
+                        <ul>
+                            <li><strong>聚類（Clustering）：</strong>K-means、DBSCAN、階層式聚類</li>
+                            <li><strong>降維（Dimensionality Reduction）：</strong>PCA、t-SNE、UMAP</li>
+                            <li><strong>異常偵測（Anomaly Detection）：</strong>Isolation Forest、One-Class SVM</li>
+                            <li><strong>關聯規則（Association Rules）：</strong>Apriori、FP-Growth</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第12題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #12</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">監督式學習</span>中，當模型要預測一個<span class="highlight">連續數值</span>時，這種任務稱為什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">分類</span>（<span class="term-en">Classification</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">迴歸</span>（<span class="term-en">Regression</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">聚類</span>（<span class="term-en">Clustering</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">降維</span>（<span class="term-en">Dimensionality Reduction</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">迴歸</span>任務的目標是預測<span class="highlight">連續型數值</span>，而<span class="term-cn">分類</span>任務預測<span class="highlight">離散型類別</span>。</p>
+                        <table>
+                            <tr><th>任務類型</th><th>輸出</th><th>範例</th><th>演算法</th></tr>
+                            <tr><td>✅ <span class="term-cn">迴歸</span></td><td>連續數值</td><td>房價預測<br>溫度預測<br>股價預測</td><td>線性迴歸<br>決策樹迴歸<br>神經網路</td></tr>
+                            <tr><td><span class="term-cn">二元分類</span></td><td>2 個類別</td><td>垃圾郵件偵測<br>疾病診斷</td><td>邏輯迴歸<br>SVM<br>神經網路</td></tr>
+                            <tr><td><span class="term-cn">多類別分類</span></td><td>≥3 個類別</td><td>手寫數字辨識<br>物種分類</td><td>Softmax 迴歸<br>隨機森林<br>CNN</td></tr>
+                        </table>
+                        <p><strong>🎯 迴歸模型：</strong></p>
+                        <ul>
+                            <li><strong>線性迴歸：</strong>最簡單，假設線性關係</li>
+                            <li><strong>多項式迴歸：</strong>處理非線性關係</li>
+                            <li><strong>Ridge/Lasso 迴歸：</strong>加入正則化</li>
+                            <li><strong>決策樹迴歸：</strong>非參數方法</li>
+                            <li><strong>支援向量迴歸（SVR）：</strong>使用核技巧</li>
+                            <li><strong>神經網路：</strong>處理複雜非線性關係</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第13題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #13</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">深度學習</span>中，用於學習資料中<span class="highlight">局部特徵</span>（<span class="term-en">Local Features</span>）的網路架構通常是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">循環神經網路</span>（<span class="term-abbr">RNN</span>, <span class="term-en">Recurrent Neural Network</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">決策樹</span>（<span class="term-en">Decision Tree</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">卷積神經網路</span>（<span class="term-abbr">CNN</span>, <span class="term-en">Convolutional Neural Network</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">隨機森林</span>（<span class="term-en">Random Forest</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-abbr">CNN</span> 透過<span class="term-cn">卷積層</span>（<span class="term-en">Convolutional Layer</span>）使用<span class="highlight">局部感受野</span>（<span class="term-en">Local Receptive Field</span>）提取<span class="highlight">局部特徵</span>，特別適合處理<span class="highlight">具有空間結構</span>的資料（如影像）。</p>
+                        <table>
+                            <tr><th>網路架構</th><th>擅長處理</th><th>核心機制</th><th>應用</th></tr>
+                            <tr><td>✅ <span class="term-abbr">CNN</span></td><td>空間資料<br>（影像、影片）</td><td>卷積、池化<br>局部連接<br>權重共享</td><td>影像分類<br>物件偵測<br>影像分割</td></tr>
+                            <tr><td><span class="term-abbr">RNN</span></td><td>序列資料<br>（文字、語音）</td><td>循環連接<br>記憶狀態</td><td>語言模型<br>機器翻譯<br>語音辨識</td></tr>
+                            <tr><td><span class="term-en">Transformer</span></td><td>序列資料<br>（任何模態）</td><td>自注意力機制<br>平行處理</td><td>NLP<br>電腦視覺<br>多模態</td></tr>
+                        </table>
+                        <p><strong>🎯 CNN 的核心組件：</strong></p>
+                        <ul>
+                            <li><strong>卷積層：</strong>使用濾波器（Filter/Kernel）提取特徵</li>
+                            <li><strong>池化層：</strong>降低維度，增加平移不變性（Max Pooling、Average Pooling）</li>
+                            <li><strong>激活函數：</strong>引入非線性（ReLU、Leaky ReLU）</li>
+                            <li><strong>全連接層：</strong>最後進行分類或迴歸</li>
+                        </ul>
+                        <p><strong>💡 CNN 的優勢：</strong></p>
+                        <ul>
+                            <li><strong>參數共享：</strong>同一個濾波器在整張圖上使用，大幅減少參數</li>
+                            <li><strong>局部連接：</strong>每個神經元只連接局部區域，降低計算量</li>
+                            <li><strong>平移不變性：</strong>無論特徵在哪個位置都能偵測到</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第14題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #14</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-cn">支援向量機</span>（<span class="term-abbr">SVM</span>, <span class="term-en">Support Vector Machine</span>）若用於<span class="term-cn">迴歸問題</span>，稱為什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Logistic Regression</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Decision Tree Regression</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Random Forest</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">支援向量迴歸</span>（<span class="term-abbr">SVR</span>, <span class="term-en">Support Vector Regression</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：D</strong></p>
+                        <p><span class="term-abbr">SVR</span> 是 <span class="term-abbr">SVM</span> 的迴歸版本，目標是找到一個<span class="highlight">函數</span>，使大部分資料點落在<span class="highlight">ε-管道</span>（ε-tube）內。</p>
+                        <table>
+                            <tr><th>模型</th><th>任務</th><th>目標</th></tr>
+                            <tr><td><span class="term-abbr">SVM</span></td><td>分類</td><td>找到<span class="highlight">最大間隔</span>的決策邊界</td></tr>
+                            <tr><td>✅ <span class="term-abbr">SVR</span></td><td>迴歸</td><td>找到包含最多資料點的 ε-管道</td></tr>
+                        </table>
+                        <p><strong>🎯 SVR 的特點：</strong></p>
+                        <ul>
+                            <li><strong>ε-不敏感損失：</strong>誤差在 ε 範圍內不計算損失</li>
+                            <li><strong>支援向量：</strong>只有管道邊界上的點影響模型</li>
+                            <li><strong>核技巧：</strong>可處理非線性關係（RBF、多項式核）</li>
+                            <li><strong>穩健性：</strong>對離群值較不敏感</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第15題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #15</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    機器學習模型若<span class="highlight">過度學習</span>訓練資料中的雜訊，導致<span class="term-cn">泛化能力</span>（<span class="term-en">Generalization Ability</span>）下降，此現象稱為什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">欠擬合</span>（<span class="term-en">Underfitting</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">過擬合</span>（<span class="term-en">Overfitting</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">特徵縮放</span>（<span class="term-en">Feature Scaling</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">梯度爆炸</span>（<span class="term-en">Gradient Explosion</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">過擬合</span>是機器學習中最常見的問題，模型在<span class="highlight">訓練集表現很好</span>，但在<span class="highlight">測試集表現差</span>。</p>
+                        <table>
+                            <tr><th>現象</th><th>訓練誤差</th><th>測試誤差</th><th>原因</th><th>解決方法</th></tr>
+                            <tr><td><span class="term-cn">欠擬合</span></td><td>高</td><td>高</td><td>模型太簡單<br>特徵不足</td><td>增加模型複雜度<br>增加特徵<br>減少正則化</td></tr>
+                            <tr><td>✅ <span class="term-cn">過擬合</span></td><td>低</td><td>高</td><td>模型太複雜<br>訓練資料不足<br>學習雜訊</td><td>正則化<br>Dropout<br>Early Stopping<br>增加資料</td></tr>
+                            <tr><td>理想狀態</td><td>低</td><td>低</td><td>模型複雜度適中</td><td>持續優化</td></tr>
+                        </table>
+                        <p><strong>🎯 防止過擬合的方法：</strong></p>
+                        <ul>
+                            <li><strong>正則化：</strong>L1（Lasso）、L2（Ridge）懲罰大權重</li>
+                            <li><strong>Dropout：</strong>隨機關閉神經元</li>
+                            <li><strong>Early Stopping：</strong>驗證誤差不再下降時停止訓練</li>
+                            <li><strong>資料增強：</strong>增加訓練資料多樣性</li>
+                            <li><strong>交叉驗證：</strong>更可靠的模型評估</li>
+                            <li><strong>集成學習：</strong>結合多個模型降低變異</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第16題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #16</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">深度學習</span>中，哪一個是為了引入<span class="highlight">非線性</span>（<span class="term-en">Non-linearity</span>），使神經網路能學習複雜模式的元件？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">損失函數</span>（<span class="term-en">Loss Function</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">激活函數</span>（<span class="term-en">Activation Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">隱藏層</span>（<span class="term-en">Hidden Layer</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">梯度下降</span>（<span class="term-en">Gradient Descent</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p>沒有<span class="term-cn">激活函數</span>，多層神經網路等同於<span class="highlight">單層線性模型</span>，無法學習複雜的非線性關係。</p>
+                        <table>
+                            <tr><th>激活函數</th><th>公式</th><th>範圍</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-abbr">ReLU</span></td><td>max(0, x)</td><td>[0, ∞)</td><td>計算快<br>緩解梯度消失</td><td>Dead ReLU 問題</td></tr>
+                            <tr><td><span class="term-en">Leaky ReLU</span></td><td>max(αx, x)</td><td>(-∞, ∞)</td><td>解決 Dead ReLU</td><td>需調整 α</td></tr>
+                            <tr><td><span class="term-en">Sigmoid</span></td><td>1/(1+e^(-x))</td><td>(0, 1)</td><td>輸出機率</td><td>梯度消失<br>非零中心</td></tr>
+                            <tr><td><span class="term-en">Tanh</span></td><td>(e^x-e^(-x))/(e^x+e^(-x))</td><td>(-1, 1)</td><td>零中心</td><td>梯度消失</td></tr>
+                            <tr><td><span class="term-abbr">GELU</span></td><td>x·Φ(x)</td><td>(-∞, ∞)</td><td>Transformer 常用</td><td>計算較複雜</td></tr>
+                        </table>
+                        <p><strong>🎯 為什麼需要非線性？</strong></p>
+                        <p>若只有線性變換：f(x) = W₃(W₂(W₁x)) = (W₃W₂W₁)x = Wx，多層等於單層！</p>
+                        <p><strong>💡 選擇激活函數的建議：</strong></p>
+                        <ul>
+                            <li><strong>隱藏層：</strong>優先使用 ReLU 或其變體</li>
+                            <li><strong>輸出層（二元分類）：</strong>Sigmoid</li>
+                            <li><strong>輸出層（多類別分類）：</strong>Softmax</li>
+                            <li><strong>輸出層（迴歸）：</strong>線性（無激活函數）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第17題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #17</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若想在機器學習中降低模型<span class="highlight">過度擬合風險</span>，可採用哪種方法？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高學習率</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">減少資料量</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">正則化</span>（<span class="term-en">Regularization</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">隨機刪除特徵</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">正則化</span>透過在<span class="term-cn">損失函數</span>中加入<span class="highlight">懲罰項</span>，限制模型複雜度，防止過擬合。</p>
+                        <table>
+                            <tr><th>正則化方法</th><th>懲罰項</th><th>效果</th><th>特點</th></tr>
+                            <tr><td><span class="term-abbr">L1</span> 正則化<br>（Lasso）</td><td>λ Σ|w_i|</td><td>產生<span class="highlight">稀疏解</span></td><td>自動特徵選擇<br>部分權重變為 0</td></tr>
+                            <tr><td><span class="term-abbr">L2</span> 正則化<br>（Ridge）</td><td>λ Σw_i²</td><td>權重<span class="highlight">均勻縮小</span></td><td>所有權重都變小<br>不會變為 0</td></tr>
+                            <tr><td><span class="term-en">Elastic Net</span></td><td>λ₁Σ|w_i| + λ₂Σw_i²</td><td>結合 L1 + L2</td><td>兼具兩者優點</td></tr>
+                            <tr><td><span class="term-en">Dropout</span></td><td>隨機關閉神經元</td><td>防止共適應</td><td>深度學習專用</td></tr>
+                        </table>
+                        <p><strong>🎯 正則化的直觀理解：</strong></p>
+                        <ul>
+                            <li><strong>L1：</strong>鼓勵模型「選擇」重要特徵，忽略不重要的</li>
+                            <li><strong>L2：</strong>鼓勵模型「平均使用」所有特徵，避免過度依賴某些特徵</li>
+                        </ul>
+                        <p><strong>💡 超參數 λ 的作用：</strong></p>
+                        <ul>
+                            <li><strong>λ = 0：</strong>無正則化，可能過擬合</li>
+                            <li><strong>λ 適中：</strong>平衡擬合與複雜度</li>
+                            <li><strong>λ 過大：</strong>過度懲罰，可能欠擬合</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第18題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #18</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在深度學習模型的訓練過程中，計算<span class="highlight">模型輸出與實際值差距</span>的函數稱為什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">激活函數</span>（<span class="term-en">Activation Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">池化函數</span>（<span class="term-en">Pooling Function</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">損失函數</span>（<span class="term-en">Loss Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">梯度函數</span>（<span class="term-en">Gradient Function</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">損失函數</span>（也稱<span class="term-cn">成本函數</span> <span class="term-en">Cost Function</span>）量化模型預測與真實值的<span class="highlight">差異程度</span>，是訓練的<span class="highlight">優化目標</span>。</p>
+                        <table>
+                            <tr><th>損失函數</th><th>適用任務</th><th>公式</th><th>特點</th></tr>
+                            <tr><td><span class="term-abbr">MSE</span><br>均方誤差</td><td>迴歸</td><td>(1/n)Σ(y-ŷ)²</td><td>對離群值敏感</td></tr>
+                            <tr><td><span class="term-abbr">MAE</span><br>平均絕對誤差</td><td>迴歸</td><td>(1/n)Σ|y-ŷ|</td><td>對離群值穩健</td></tr>
+                            <tr><td><span class="term-en">Cross-Entropy</span><br>交叉熵</td><td>分類</td><td>-Σy log(ŷ)</td><td>衡量機率分佈差異</td></tr>
+                            <tr><td><span class="term-en">Binary Cross-Entropy</span></td><td>二元分類</td><td>-[y log(ŷ)+(1-y)log(1-ŷ)]</td><td>邏輯迴歸常用</td></tr>
+                            <tr><td><span class="term-en">Hinge Loss</span></td><td>SVM</td><td>max(0, 1-y·ŷ)</td><td>最大間隔分類</td></tr>
+                        </table>
+                        <p><strong>🎯 如何選擇損失函數？</strong></p>
+                        <ul>
+                            <li><strong>迴歸任務：</strong>MSE（標準）、MAE（有離群值時）、Huber Loss（折衷）</li>
+                            <li><strong>二元分類：</strong>Binary Cross-Entropy</li>
+                            <li><strong>多類別分類：</strong>Categorical Cross-Entropy + Softmax</li>
+                            <li><strong>多標籤分類：</strong>Binary Cross-Entropy（每個標籤獨立）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第19題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #19</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-en">Transformer</span> 模型中用來捕捉輸入序列不同位置間<span class="highlight">依賴關係</span>（<span class="term-en">Dependency</span>）的核心機制是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">池化機制</span>（<span class="term-en">Pooling</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">注意力機制</span>（<span class="term-en">Attention Mechanism</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">決策樹分支</span>（<span class="term-en">Decision Tree Branch</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">激活函數</span>（<span class="term-en">Activation Function</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-en">Transformer</span> 的核心是<span class="term-cn">自注意力機制</span>（<span class="term-en">Self-Attention</span>），能<span class="highlight">同時關注序列中所有位置</span>，捕捉長距離依賴關係。</p>
+                        <table>
+                            <tr><th>架構</th><th>處理序列方式</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-abbr">RNN</span></td><td>順序處理<br>（一個接一個）</td><td>理論上能處理任意長度</td><td>梯度消失<br>無法平行化<br>長距離依賴困難</td></tr>
+                            <tr><td><span class="term-abbr">LSTM</span>/<span class="term-abbr">GRU</span></td><td>順序處理<br>（有記憶門控）</td><td>緩解梯度消失<br>更好的長期記憶</td><td>仍無法平行化<br>計算慢</td></tr>
+                            <tr><td>✅ <span class="term-en">Transformer</span></td><td>平行處理<br>（注意力機制）</td><td>完全平行化<br>捕捉長距離依賴<br>訓練快速</td><td>計算複雜度 O(n²)<br>記憶體需求大</td></tr>
+                        </table>
+                        <p><strong>🎯 自注意力機制的運作：</strong></p>
+                        <ul>
+                            <li><strong>Query（查詢）：</strong>當前位置想要什麼資訊</li>
+                            <li><strong>Key（鍵）：</strong>每個位置提供什麼資訊</li>
+                            <li><strong>Value（值）：</strong>實際的資訊內容</li>
+                            <li><strong>注意力分數：</strong>計算 Query 與所有 Key 的相似度</li>
+                            <li><strong>加權求和：</strong>根據注意力分數加權所有 Value</li>
+                        </ul>
+                        <p><strong>💡 多頭注意力（Multi-Head Attention）：</strong></p>
+                        <p>使用多組 Q、K、V，讓模型從<span class="highlight">不同角度</span>關注資訊（如：語法、語義、位置等）。</p>
+                        <p><strong>🌟 Transformer 的影響：</strong></p>
+                        <ul>
+                            <li><strong>NLP：</strong>BERT、GPT、T5 等大型語言模型</li>
+                            <li><strong>電腦視覺：</strong>Vision Transformer (ViT)、DETR</li>
+                            <li><strong>多模態：</strong>CLIP、Flamingo、GPT-4V</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L232 機器學習與深度學習 - 第20題 -->
+            <div class="question-card" data-direction="2">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #20</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">決策樹模型</span>（<span class="term-en">Decision Tree</span>）中，用於判斷<span class="highlight">分裂效果好壞</span>的指標，常見的是下列哪一種？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">機率密度函數</span>（<span class="term-en">Probability Density Function</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">均方根誤差</span>（<span class="term-en">Root Mean Squared Error</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">基尼不純度</span>（<span class="term-en">Gini Impurity</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">卷積核大小</span>（<span class="term-en">Kernel Size</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p>決策樹透過<span class="highlight">分裂準則</span>（<span class="term-en">Splitting Criterion</span>）選擇最佳特徵和分裂點，目標是讓子節點更<span class="highlight">純淨</span>（同質性更高）。</p>
+                        <table>
+                            <tr><th>分裂準則</th><th>公式</th><th>範圍</th><th>特點</th></tr>
+                            <tr><td>✅ <span class="term-cn">基尼不純度</span></td><td>Gini = 1 - Σp_i²</td><td>[0, 0.5]</td><td>CART 演算法使用<br>計算快速</td></tr>
+                            <tr><td><span class="term-cn">資訊熵</span><br>（<span class="term-en">Entropy</span>）</td><td>H = -Σp_i log₂(p_i)</td><td>[0, log₂(k)]</td><td>ID3、C4.5 使用<br>理論基礎強</td></tr>
+                            <tr><td><span class="term-cn">資訊增益</span><br>（<span class="term-en">Information Gain</span>）</td><td>IG = H(parent) - Σw_i·H(child_i)</td><td>[0, ∞)</td><td>衡量熵的減少量</td></tr>
+                            <tr><td><span class="term-cn">增益比</span><br>（<span class="term-en">Gain Ratio</span>）</td><td>GR = IG / SplitInfo</td><td>[0, 1]</td><td>修正資訊增益偏好<br>多值特徵的問題</td></tr>
+                        </table>
+                        <p><strong>🎯 基尼不純度的直觀理解：</strong></p>
+                        <ul>
+                            <li><strong>Gini = 0：</strong>完全純淨，所有樣本屬於同一類別</li>
+                            <li><strong>Gini = 0.5：</strong>最不純淨（二分類時），類別均勻分佈</li>
+                            <li><strong>目標：</strong>選擇能<span class="highlight">最大化降低基尼不純度</span>的分裂</li>
+                        </ul>
+                        <p><strong>📊 範例計算（二分類）：</strong></p>
+                        <p>節點有 100 個樣本，60 個正類、40 個負類：<br>Gini = 1 - (0.6² + 0.4²) = 1 - (0.36 + 0.16) = 0.48</p>
+                        <p><strong>💡 決策樹的優缺點：</strong></p>
+                        <ul>
+                            <li><strong>優點：</strong>易解釋、無需特徵縮放、處理非線性、自動特徵選擇</li>
+                            <li><strong>缺點：</strong>易過擬合、不穩定（資料小變化導致樹結構大變）</li>
+                            <li><strong>改進：</strong>隨機森林、梯度提升樹（XGBoost、LightGBM）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第21題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #21</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    針對<span class="term-cn">缺失值</span>（<span class="term-en">Missing Value</span>）的處理，下列哪種方法屬於利用<span class="highlight">模型進行補值</span>的方式？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">刪除法</span>（<span class="term-en">Deletion</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">均值填補</span>（<span class="term-en">Mean Imputation</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">預測模型填補</span>（<span class="term-en">Predictive Imputation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">缺失指標編碼</span>（<span class="term-en">Missing Indicator</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">預測模型填補</span>使用<span class="highlight">機器學習模型</span>（如迴歸、KNN）根據其他特徵預測缺失值，比簡單統計方法更精確。</p>
+                        <table>
+                            <tr><th>處理方法</th><th>類型</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-cn">刪除法</span></td><td>移除資料</td><td>簡單直接</td><td>損失資訊<br>可能引入偏差</td></tr>
+                            <tr><td><span class="term-cn">均值/中位數填補</span></td><td>統計填補</td><td>快速簡單</td><td>忽略特徵間關係<br>低估變異數</td></tr>
+                            <tr><td><span class="term-cn">眾數填補</span></td><td>統計填補</td><td>適合類別變數</td><td>可能過度集中</td></tr>
+                            <tr><td>✅ <span class="term-cn">預測模型填補</span></td><td>模型填補</td><td>考慮特徵關係<br>更準確</td><td>計算成本高<br>可能過擬合</td></tr>
+                            <tr><td><span class="term-abbr">KNN</span> 填補</td><td>模型填補</td><td>利用相似樣本</td><td>對高維資料慢</td></tr>
+                            <tr><td><span class="term-abbr">MICE</span><br>多重插補</td><td>迭代填補</td><td>考慮不確定性</td><td>計算複雜</td></tr>
+                        </table>
+                        <p><strong>🎯 預測模型填補的步驟：</strong></p>
+                        <ul>
+                            <li><strong>1️⃣ 選擇模型：</strong>線性迴歸、KNN、隨機森林等</li>
+                            <li><strong>2️⃣ 訓練模型：</strong>使用無缺失值的樣本訓練</li>
+                            <li><strong>3️⃣ 預測填補：</strong>用模型預測缺失值</li>
+                            <li><strong>4️⃣ 驗證效果：</strong>檢查填補後的資料分佈</li>
+                        </ul>
+                        <p><strong>💡 選擇填補方法的考量：</strong></p>
+                        <ul>
+                            <li><strong>缺失比例：</strong>&lt;5% 可刪除，5-20% 填補，&gt;20% 考慮刪除該特徵</li>
+                            <li><strong>缺失機制：</strong>隨機缺失（MAR）vs 非隨機缺失（MNAR）</li>
+                            <li><strong>資料類型：</strong>數值型 vs 類別型</li>
+                            <li><strong>計算資源：</strong>簡單方法 vs 複雜模型</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第22題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #22</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在進行<span class="term-cn">異常值</span>（<span class="term-en">Outlier</span>）偵測時，哪種方法是利用<span class="highlight">統計特徵分佈</span>來判斷離群點？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-abbr">KNN</span> 補值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">四分位距法</span>（<span class="term-abbr">IQR</span>, <span class="term-en">Interquartile Range</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Isolation Forest</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">One-hot Encoding</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-abbr">IQR</span> 方法基於<span class="highlight">箱型圖</span>（<span class="term-en">Box Plot</span>）的統計原理，是最常用的<span class="highlight">統計型異常值偵測方法</span>。</p>
+                        <table>
+                            <tr><th>偵測方法</th><th>類型</th><th>原理</th><th>適用場景</th></tr>
+                            <tr><td>✅ <span class="term-abbr">IQR</span> 方法</td><td>統計方法</td><td>Q1 - 1.5×IQR 或<br>Q3 + 1.5×IQR 之外</td><td>單變量<br>不假設分佈</td></tr>
+                            <tr><td>Z-score 方法</td><td>統計方法</td><td>|z| > 3 視為異常</td><td>假設常態分佈</td></tr>
+                            <tr><td><span class="term-en">Isolation Forest</span></td><td>機器學習</td><td>異常點更容易被隔離</td><td>高維資料<br>無監督</td></tr>
+                            <tr><td><span class="term-abbr">LOF</span><br>局部離群因子</td><td>密度方法</td><td>比較局部密度</td><td>不同密度的群集</td></tr>
+                            <tr><td><span class="term-en">One-Class SVM</span></td><td>機器學習</td><td>學習正常資料邊界</td><td>複雜分佈</td></tr>
+                        </table>
+                        <p><strong>🎯 IQR 方法詳解：</strong></p>
+                        <ul>
+                            <li><strong>Q1（第一四分位數）：</strong>25% 的資料點</li>
+                            <li><strong>Q3（第三四分位數）：</strong>75% 的資料點</li>
+                            <li><strong>IQR = Q3 - Q1：</strong>中間 50% 資料的範圍</li>
+                            <li><strong>下界：</strong>Q1 - 1.5 × IQR</li>
+                            <li><strong>上界：</strong>Q3 + 1.5 × IQR</li>
+                            <li><strong>異常值：</strong>超出上下界的資料點</li>
+                        </ul>
+                        <p><strong>💡 處理異常值的策略：</strong></p>
+                        <ul>
+                            <li><strong>刪除：</strong>確定是錯誤資料時</li>
+                            <li><strong>替換：</strong>用中位數、邊界值替換</li>
+                            <li><strong>轉換：</strong>對數轉換、Box-Cox 轉換</li>
+                            <li><strong>分箱：</strong>將連續值離散化</li>
+                            <li><strong>保留：</strong>可能是重要資訊（如詐欺偵測）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第23題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #23</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    下列哪一種<span class="term-cn">特徵選擇方法</span>（<span class="term-en">Feature Selection Method</span>）會<span class="highlight">直接在模型訓練過程中</span>進行特徵挑選？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Filter</span> 方法</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Wrapper</span> 方法</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Embedded</span> 方法</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">One-hot Encoding</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-en">Embedded</span>（<span class="term-cn">嵌入式</span>）方法將<span class="highlight">特徵選擇嵌入模型訓練過程</span>，在學習參數的同時自動選擇特徵。</p>
+                        <table>
+                            <tr><th>方法類型</th><th>時機</th><th>代表技術</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-en">Filter</span><br>過濾法</td><td>訓練前</td><td>相關係數<br>卡方檢定<br>互資訊</td><td>快速<br>模型無關</td><td>忽略特徵交互作用</td></tr>
+                            <tr><td><span class="term-en">Wrapper</span><br>包裝法</td><td>訓練中<br>（迭代）</td><td>前向選擇<br>後向消除<br>RFE</td><td>考慮特徵組合<br>針對特定模型</td><td>計算成本高<br>易過擬合</td></tr>
+                            <tr><td>✅ <span class="term-en">Embedded</span><br>嵌入法</td><td>訓練中<br>（同時）</td><td>Lasso<br>Ridge<br>決策樹<br>XGBoost</td><td>效率高<br>考慮特徵交互<br>防止過擬合</td><td>模型相依</td></tr>
+                        </table>
+                        <p><strong>🎯 Embedded 方法的代表：</strong></p>
+                        <ul>
+                            <li><strong>Lasso (L1 正則化)：</strong>自動將不重要特徵的係數縮減為 0</li>
+                            <li><strong>決策樹：</strong>透過特徵重要性（Feature Importance）選擇</li>
+                            <li><strong>隨機森林：</strong>計算每個特徵的平均不純度減少量</li>
+                            <li><strong>XGBoost/LightGBM：</strong>提供多種特徵重要性指標</li>
+                            <li><strong>彈性網路（Elastic Net）：</strong>結合 L1 和 L2</li>
+                        </ul>
+                        <p><strong>💡 如何選擇特徵選擇方法？</strong></p>
+                        <ul>
+                            <li><strong>資料量大、特徵多：</strong>優先 Filter（快速篩選）</li>
+                            <li><strong>追求最佳效能：</strong>Wrapper（但計算成本高）</li>
+                            <li><strong>平衡效率與效果：</strong>Embedded（推薦）</li>
+                            <li><strong>組合使用：</strong>Filter 初篩 + Embedded 精選</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第24題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #24</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在進行<span class="term-cn">特徵轉換</span>（<span class="term-en">Feature Transformation</span>）時，若資料存在<span class="highlight">極端偏高的右偏分佈</span>（<span class="term-en">Right-Skewed Distribution</span>），常用哪種轉換以降低<span class="term-cn">偏態</span>（<span class="term-en">Skewness</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">平方根轉換</span>（<span class="term-en">Square Root Transform</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">對數轉換</span>（<span class="term-en">Log Transform</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Label Encoding</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">缺失指標編碼</span>（<span class="term-en">Missing Indicator</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">對數轉換</span>是處理<span class="highlight">右偏分佈</span>最常用的方法，能有效<span class="highlight">壓縮大值、擴展小值</span>，使分佈更接近常態。</p>
+                        <table>
+                            <tr><th>轉換方法</th><th>公式</th><th>適用情況</th><th>效果</th></tr>
+                            <tr><td>✅ <span class="term-cn">對數轉換</span></td><td>log(x) 或 log(x+1)</td><td>強右偏<br>數值範圍大</td><td>強力壓縮<br>處理乘法關係</td></tr>
+                            <tr><td><span class="term-cn">平方根轉換</span></td><td>√x</td><td>中度右偏<br>計數資料</td><td>溫和壓縮</td></tr>
+                            <tr><td><span class="term-cn">Box-Cox 轉換</span></td><td>(x^λ - 1) / λ</td><td>自動找最佳 λ</td><td>最優轉換<br>需正值</td></tr>
+                            <tr><td><span class="term-cn">Yeo-Johnson 轉換</span></td><td>Box-Cox 擴展</td><td>可處理負值</td><td>更通用</td></tr>
+                            <tr><td><span class="term-cn">倒數轉換</span></td><td>1/x</td><td>極端右偏</td><td>反轉分佈</td></tr>
+                        </table>
+                        <p><strong>🎯 對數轉換的優勢：</strong></p>
+                        <ul>
+                            <li><strong>降低偏態：</strong>將右偏分佈轉為接近常態分佈</li>
+                            <li><strong>穩定變異數：</strong>減少異質變異性</li>
+                            <li><strong>處理乘法關係：</strong>log(xy) = log(x) + log(y)</li>
+                            <li><strong>壓縮數值範圍：</strong>減少極端值影響</li>
+                        </ul>
+                        <p><strong>⚠️ 使用注意事項：</strong></p>
+                        <ul>
+                            <li><strong>零值處理：</strong>使用 log(x+1) 或 log(x+c)</li>
+                            <li><strong>負值處理：</strong>先平移或使用 Yeo-Johnson</li>
+                            <li><strong>解釋性：</strong>轉換後的係數解釋會改變</li>
+                        </ul>
+                        <p><strong>💼 常見應用場景：</strong></p>
+                        <ul>
+                            <li>收入、房價等金融資料</li>
+                            <li>網站流量、點擊次數</li>
+                            <li>基因表達量</li>
+                            <li>人口統計資料</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第25題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #25</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在模型訓練過程中，若模型在<span class="highlight">訓練集表現良好</span>，但<span class="highlight">測試集效能不佳</span>，可能是發生了什麼問題？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">欠擬合</span>（<span class="term-en">Underfitting</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">特徵縮放</span>（<span class="term-en">Feature Scaling</span>）失敗</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">過擬合</span>（<span class="term-en">Overfitting</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">批次大小</span>（<span class="term-en">Batch Size</span>）過小</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p>這是<span class="term-cn">過擬合</span>的<span class="highlight">典型症狀</span>：模型記住了訓練資料的細節和雜訊，但無法泛化到新資料。</p>
+                        <table>
+                            <tr><th>診斷</th><th>訓練誤差</th><th>驗證/測試誤差</th><th>問題</th><th>解決方案</th></tr>
+                            <tr><td>理想狀態</td><td>低</td><td>低</td><td>無</td><td>繼續優化</td></tr>
+                            <tr><td><span class="term-cn">欠擬合</span></td><td>高</td><td>高</td><td>模型太簡單</td><td>增加複雜度<br>增加特徵<br>減少正則化</td></tr>
+                            <tr><td>✅ <span class="term-cn">過擬合</span></td><td>低</td><td>高</td><td>模型太複雜<br>記住雜訊</td><td>正則化<br>Dropout<br>Early Stopping<br>增加資料</td></tr>
+                            <tr><td>高變異</td><td>不穩定</td><td>不穩定</td><td>資料不足<br>模型不穩定</td><td>交叉驗證<br>集成學習</td></tr>
+                        </table>
+                        <p><strong>🎯 偵測過擬合的方法：</strong></p>
+                        <ul>
+                            <li><strong>學習曲線：</strong>訓練誤差持續下降，驗證誤差上升或停滯</li>
+                            <li><strong>驗證集評估：</strong>定期在驗證集上評估效能</li>
+                            <li><strong>交叉驗證：</strong>多折驗證的效能差異大</li>
+                            <li><strong>模型複雜度分析：</strong>參數數量遠大於樣本數</li>
+                        </ul>
+                        <p><strong>💡 防止過擬合的完整策略：</strong></p>
+                        <ul>
+                            <li><strong>增加資料：</strong>資料增強、收集更多資料</li>
+                            <li><strong>正則化：</strong>L1、L2、Elastic Net</li>
+                            <li><strong>Dropout：</strong>隨機關閉神經元（深度學習）</li>
+                            <li><strong>Early Stopping：</strong>驗證誤差不再改善時停止</li>
+                            <li><strong>簡化模型：</strong>減少層數、神經元數量</li>
+                            <li><strong>集成學習：</strong>Bagging、Boosting 降低變異</li>
+                            <li><strong>交叉驗證：</strong>更可靠的效能評估</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第26題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #26</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-cn">交叉驗證</span>（<span class="term-en">Cross-Validation</span>）中，哪一種方法在每次驗證中<span class="highlight">只留下一筆樣本</span>作為驗證集，其餘皆用於訓練？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-abbr">K-fold</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Stratified K-fold</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-abbr">LOOCV</span>（<span class="term-en">Leave-One-Out Cross-Validation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">Repeated K-fold</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-abbr">LOOCV</span> 是 <span class="term-abbr">K-fold</span> 的<span class="highlight">極端情況</span>（K = n），每次只用一個樣本驗證，其餘 n-1 個樣本訓練。</p>
+                        <table>
+                            <tr><th>交叉驗證方法</th><th>折數</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-abbr">K-fold</span></td><td>通常 5 或 10</td><td>平衡效率與準確度<br>最常用</td><td>可能有隨機性</td></tr>
+                            <tr><td><span class="term-en">Stratified K-fold</span></td><td>K 折（保持比例）</td><td>保持類別分佈<br>適合不平衡資料</td><td>僅適用分類</td></tr>
+                            <tr><td>✅ <span class="term-abbr">LOOCV</span></td><td>n 折（n=樣本數）</td><td>幾乎無偏估計<br>確定性結果</td><td>計算成本極高<br>高變異</td></tr>
+                            <tr><td><span class="term-en">Repeated K-fold</span></td><td>重複多次 K-fold</td><td>更穩定的估計</td><td>計算成本高</td></tr>
+                            <tr><td><span class="term-en">Time Series Split</span></td><td>時間序列專用</td><td>避免資料洩漏</td><td>僅適用時間序列</td></tr>
+                        </table>
+                        <p><strong>🎯 LOOCV 的特點：</strong></p>
+                        <ul>
+                            <li><strong>訓練集大小：</strong>n-1（幾乎使用全部資料）</li>
+                            <li><strong>驗證次數：</strong>n 次（每個樣本都當過驗證集）</li>
+                            <li><strong>無隨機性：</strong>結果完全確定</li>
+                            <li><strong>計算成本：</strong>需訓練 n 個模型</li>
+                        </ul>
+                        <p><strong>💡 何時使用 LOOCV？</strong></p>
+                        <ul>
+                            <li><strong>資料量很小：</strong>無法承受資料分割的損失</li>
+                            <li><strong>需要精確估計：</strong>追求最小偏差</li>
+                            <li><strong>模型訓練快：</strong>計算成本可接受</li>
+                        </ul>
+                        <p><strong>⚠️ LOOCV 的限制：</strong></p>
+                        <ul>
+                            <li><strong>計算昂貴：</strong>大資料集不實用</li>
+                            <li><strong>高變異：</strong>訓練集高度相似，估計變異大</li>
+                            <li><strong>不適合深度學習：</strong>訓練成本太高</li>
+                        </ul>
+                        <p><strong>🎯 實務建議：</strong></p>
+                        <ul>
+                            <li><strong>一般情況：</strong>5-fold 或 10-fold</li>
+                            <li><strong>資料少：</strong>10-fold 或 LOOCV</li>
+                            <li><strong>不平衡資料：</strong>Stratified K-fold</li>
+                            <li><strong>時間序列：</strong>Time Series Split</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第27題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #27</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在訓練深度學習模型時，<span class="highlight">隨機將部分神經元暫時關閉</span>以減少過擬合的技術是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Early Stopping</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Dropout</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Batch Normalization</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">Quantization</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-en">Dropout</span> 在訓練時<span class="highlight">隨機丟棄</span>（機率 p）部分神經元，強迫網路學習<span class="highlight">更穩健的特徵</span>，防止神經元之間的<span class="term-cn">共適應</span>（<span class="term-en">Co-adaptation</span>）。</p>
+                        <table>
+                            <tr><th>技術</th><th>作用時機</th><th>目的</th><th>效果</th></tr>
+                            <tr><td>✅ <span class="term-en">Dropout</span></td><td>訓練時</td><td>隨機關閉神經元</td><td>防止過擬合<br>類似集成學習</td></tr>
+                            <tr><td><span class="term-en">Early Stopping</span></td><td>訓練過程</td><td>監控驗證誤差<br>適時停止</td><td>防止過度訓練</td></tr>
+                            <tr><td><span class="term-en">Batch Normalization</span></td><td>每層之間</td><td>標準化激活值</td><td>加速訓練<br>穩定梯度</td></tr>
+                            <tr><td><span class="term-en">Quantization</span></td><td>訓練後</td><td>降低精度</td><td>模型壓縮<br>加速推論</td></tr>
+                        </table>
+                        <p><strong>🎯 Dropout 的運作機制：</strong></p>
+                        <ul>
+                            <li><strong>訓練階段：</strong>每個神經元以機率 p 被關閉（輸出為 0）</li>
+                            <li><strong>測試階段：</strong>使用所有神經元，但輸出乘以 (1-p) 進行縮放</li>
+                            <li><strong>常用比例：</strong>p = 0.5（隱藏層）、p = 0.2（輸入層）</li>
+                        </ul>
+                        <p><strong>💡 Dropout 的優勢：</strong></p>
+                        <ul>
+                            <li><strong>防止共適應：</strong>神經元不能過度依賴特定的其他神經元</li>
+                            <li><strong>集成效果：</strong>相當於訓練多個子網路並平均</li>
+                            <li><strong>簡單有效：</strong>實作容易，效果顯著</li>
+                            <li><strong>正則化：</strong>隱式的模型正則化</li>
+                        </ul>
+                        <p><strong>🔄 Dropout 的變體：</strong></p>
+                        <ul>
+                            <li><strong>DropConnect：</strong>隨機關閉連接而非神經元</li>
+                            <li><strong>Spatial Dropout：</strong>關閉整個特徵圖（CNN 專用）</li>
+                            <li><strong>Variational Dropout：</strong>貝氏觀點的 Dropout</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第28題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #28</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">模型壓縮技術</span>（<span class="term-en">Model Compression</span>）中，<span class="term-cn">知識蒸餾</span>（<span class="term-en">Knowledge Distillation</span>）的主要目的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">減少資料維度</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">降低參數數量使模型更小</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將<span class="term-cn">大型模型</span>（<span class="term-en">Teacher Model</span>）的知識轉移至<span class="term-cn">小型模型</span>（<span class="term-en">Student Model</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增強資料平衡</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">知識蒸餾</span>讓<span class="highlight">小模型學習大模型的輸出分佈</span>，而非僅學習硬標籤，獲得更豐富的知識。</p>
+                        <table>
+                            <tr><th>模型壓縮技術</th><th>原理</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td>✅ <span class="term-cn">知識蒸餾</span></td><td>學生模型模仿<br>教師模型的軟標籤</td><td>保留效能<br>模型變小</td><td>需要教師模型<br>訓練時間長</td></tr>
+                            <tr><td><span class="term-cn">剪枝</span><br>（<span class="term-en">Pruning</span>）</td><td>移除不重要的<br>權重或神經元</td><td>直接減少參數</td><td>可能損失效能<br>需微調</td></tr>
+                            <tr><td><span class="term-cn">量化</span><br>（<span class="term-en">Quantization</span>）</td><td>降低數值精度<br>（FP32→INT8）</td><td>大幅減少記憶體<br>加速推論</td><td>精度損失</td></tr>
+                            <tr><td><span class="term-cn">低秩分解</span></td><td>矩陣分解</td><td>減少參數</td><td>實作複雜</td></tr>
+                        </table>
+                        <p><strong>🎯 知識蒸餾的核心概念：</strong></p>
+                        <ul>
+                            <li><strong>教師模型（Teacher）：</strong>大型、高效能的預訓練模型</li>
+                            <li><strong>學生模型（Student）：</strong>小型、輕量的目標模型</li>
+                            <li><strong>軟標籤（Soft Labels）：</strong>教師模型的機率分佈（含溫度參數）</li>
+                            <li><strong>硬標籤（Hard Labels）：</strong>原始的 one-hot 標籤</li>
+                        </ul>
+                        <p><strong>🔧 蒸餾損失函數：</strong></p>
+                        <p>L = α × L_hard + (1-α) × L_soft</p>
+                        <ul>
+                            <li><strong>L_hard：</strong>學生模型與真實標籤的交叉熵</li>
+                            <li><strong>L_soft：</strong>學生模型與教師模型軟標籤的 KL 散度</li>
+                            <li><strong>α：</strong>平衡兩種損失的權重</li>
+                        </ul>
+                        <p><strong>💡 溫度參數（Temperature, T）：</strong></p>
+                        <ul>
+                            <li><strong>T = 1：</strong>標準 Softmax</li>
+                            <li><strong>T > 1：</strong>軟化機率分佈，提供更多類別間關係資訊</li>
+                            <li><strong>訓練時：</strong>使用高溫（如 T=3-5）</li>
+                            <li><strong>推論時：</strong>使用 T=1</li>
+                        </ul>
+                        <p><strong>🌟 知識蒸餾的應用：</strong></p>
+                        <ul>
+                            <li><strong>模型部署：</strong>將大模型壓縮到邊緣設備</li>
+                            <li><strong>BERT 蒸餾：</strong>DistilBERT、TinyBERT</li>
+                            <li><strong>跨架構蒸餾：</strong>CNN → MobileNet</li>
+                            <li><strong>自蒸餾：</strong>模型自己當教師</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第29題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #29</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">優化器</span>（<span class="term-en">Optimizer</span>）中，哪一個方法會<span class="highlight">自動調整每個參數的學習率</span>，特別適用於<span class="term-cn">稀疏資料</span>（<span class="term-en">Sparse Data</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Momentum</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Adagrad</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Adam</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-abbr">SGD</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-en">Adagrad</span> 對<span class="highlight">頻繁更新的參數降低學習率</span>，對<span class="highlight">稀疏更新的參數提高學習率</span>，特別適合處理稀疏特徵（如文字、推薦系統）。</p>
+                        <table>
+                            <tr><th>優化器</th><th>自適應學習率</th><th>動量</th><th>適用場景</th></tr>
+                            <tr><td><span class="term-abbr">SGD</span></td><td>❌</td><td>❌</td><td>簡單問題<br>需手動調整學習率</td></tr>
+                            <tr><td><span class="term-en">Momentum</span></td><td>❌</td><td>✅</td><td>加速收斂<br>減少震盪</td></tr>
+                            <tr><td>✅ <span class="term-en">Adagrad</span></td><td>✅</td><td>❌</td><td>稀疏資料<br>NLP、推薦系統</td></tr>
+                            <tr><td><span class="term-en">RMSprop</span></td><td>✅</td><td>❌</td><td>解決 Adagrad 學習率衰減</td></tr>
+                            <tr><td><span class="term-en">Adam</span></td><td>✅</td><td>✅</td><td>最常用<br>深度學習首選</td></tr>
+                        </table>
+                        <p><strong>🎯 Adagrad 的特點：</strong></p>
+                        <ul>
+                            <li><strong>累積梯度平方：</strong>G_t = G_{t-1} + g_t²</li>
+                            <li><strong>自適應學習率：</strong>η_t = η / √(G_t + ε)</li>
+                            <li><strong>稀疏特徵優勢：</strong>很少出現的特徵獲得較大更新</li>
+                        </ul>
+                        <p><strong>⚠️ Adagrad 的問題：</strong></p>
+                        <p>學習率<span class="highlight">單調遞減</span>，長時間訓練後可能變得過小，導致訓練停滯。</p>
+                        <p><strong>💡 優化器選擇建議：</strong></p>
+                        <ul>
+                            <li><strong>一般深度學習：</strong>Adam（預設首選）</li>
+                            <li><strong>稀疏資料：</strong>Adagrad 或 Adam</li>
+                            <li><strong>需要最佳效能：</strong>SGD + Momentum（需仔細調參）</li>
+                            <li><strong>RNN/LSTM：</strong>RMSprop 或 Adam</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L233 機器學習建模與參數調校 - 第30題 -->
+            <div class="question-card" data-direction="3">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #30</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-en">One-hot Encoding</span> 在什麼情況下可能造成模型的<span class="highlight">運算負擔加重</span>？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">缺失值多的資料</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">資料集中某類別種類 10 種</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">類別變數具有<span class="term-cn">高基數</span>（<span class="term-en">High Cardinality</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">資料集中無重複樣本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">高基數</span>指類別數量<span class="highlight">非常多</span>（如郵遞區號、用戶 ID），使用 <span class="term-en">One-hot Encoding</span> 會產生<span class="highlight">大量稀疏特徵</span>，導致維度爆炸。</p>
+                        <table>
+                            <tr><th>編碼方法</th><th>適用情況</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-en">One-hot Encoding</span></td><td>低基數<br>（&lt;10-20 類別）</td><td>無序數假設<br>模型易理解</td><td>高基數時維度爆炸<br>稀疏矩陣</td></tr>
+                            <tr><td><span class="term-en">Label Encoding</span></td><td>有序類別<br>（如：低/中/高）</td><td>維度不增加</td><td>引入虛假順序關係</td></tr>
+                            <tr><td><span class="term-en">Target Encoding</span></td><td>高基數類別</td><td>維度不增加<br>捕捉目標關係</td><td>易過擬合<br>需正則化</td></tr>
+                            <tr><td><span class="term-en">Embedding</span></td><td>高基數類別<br>（深度學習）</td><td>學習低維表示<br>捕捉相似性</td><td>需大量資料<br>訓練時間長</td></tr>
+                            <tr><td><span class="term-en">Frequency Encoding</span></td><td>高基數類別</td><td>簡單有效</td><td>忽略類別語義</td></tr>
+                        </table>
+                        <p><strong>🎯 高基數問題的範例：</strong></p>
+                        <ul>
+                            <li><strong>郵遞區號：</strong>可能有數千個不同值</li>
+                            <li><strong>用戶 ID：</strong>百萬級別的唯一值</li>
+                            <li><strong>產品 ID：</strong>電商平台的商品編號</li>
+                            <li><strong>IP 位址：</strong>網路日誌分析</li>
+                        </ul>
+                        <p><strong>💡 處理高基數類別的策略：</strong></p>
+                        <ul>
+                            <li><strong>分組（Binning）：</strong>將相似類別合併</li>
+                            <li><strong>頻率編碼：</strong>用出現頻率替代</li>
+                            <li><strong>目標編碼：</strong>用目標變數的統計量編碼</li>
+                            <li><strong>嵌入（Embedding）：</strong>學習低維稠密表示</li>
+                            <li><strong>特徵雜湊：</strong>Hash Trick 降維</li>
+                            <li><strong>刪除：</strong>若資訊量低，直接移除</li>
+                        </ul>
+                        <p><strong>⚠️ One-hot Encoding 的維度爆炸：</strong></p>
+                        <p>若有 1000 個類別，One-hot 會產生 1000 個新特徵，且 99.9% 的值都是 0（極度稀疏）。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第31題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #31</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在<span class="term-cn">個人資料保護法規</span>的框架下，下列哪一組資訊單獨使用時，最明確地被歸類為「<span class="term-cn">直接識別個人身份資訊</span>（<span class="term-en">Directly Identifiable Information</span>, <span class="term-abbr">PII</span>）」？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">出生日期、郵遞區號、職業</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">網站 <span class="term-en">Cookie ID</span>、設備 <span class="term-abbr">IP</span> 位址、地理定位資訊</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">姓名、電子郵件地址、身分證字號</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">網路行為模式、匿名化統計數據、加密後的密碼雜湊值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">直接識別資訊</span>是指<span class="highlight">單獨使用即可識別特定個人</span>的資料，無需額外資訊輔助。</p>
+                        <table>
+                            <tr><th>資訊類型</th><th>範例</th><th>識別性</th><th>法規要求</th></tr>
+                            <tr><td>✅ <span class="term-cn">直接識別資訊</span></td><td>姓名、身分證字號<br>護照號碼、電子郵件<br>手機號碼</td><td>單獨可識別</td><td>最高保護等級<br>需明確同意</td></tr>
+                            <tr><td><span class="term-cn">間接識別資訊</span></td><td>出生日期+郵遞區號<br>職業+性別+年齡</td><td>組合後可識別</td><td>需適當保護<br>去識別化處理</td></tr>
+                            <tr><td><span class="term-cn">敏感個資</span></td><td>健康資料、基因<br>犯罪記錄、宗教信仰</td><td>特殊類別</td><td>特別保護<br>嚴格限制使用</td></tr>
+                            <tr><td><span class="term-cn">匿名資料</span></td><td>統計數據<br>去識別化資料</td><td>無法識別</td><td>不受個資法規範</td></tr>
+                        </table>
+                        <p><strong>🎯 重要法規：</strong></p>
+                        <ul>
+                            <li><strong><span class="term-abbr">GDPR</span>（<span class="term-en">General Data Protection Regulation</span>）：</strong>歐盟一般資料保護規範</li>
+                            <li><strong>台灣個資法：</strong>個人資料保護法</li>
+                            <li><strong><span class="term-abbr">CCPA</span>（<span class="term-en">California Consumer Privacy Act</span>）：</strong>加州消費者隱私法</li>
+                        </ul>
+                        <p><strong>💡 個資保護的核心原則：</strong></p>
+                        <ul>
+                            <li><strong>合法性：</strong>需有法律依據或當事人同意</li>
+                            <li><strong>目的限制：</strong>僅用於特定、明確、合法目的</li>
+                            <li><strong>資料最小化：</strong>僅收集必要資料</li>
+                            <li><strong>準確性：</strong>確保資料正確且即時更新</li>
+                            <li><strong>儲存限制：</strong>不得超過必要期限</li>
+                            <li><strong>完整性與機密性：</strong>適當的安全措施</li>
+                        </ul>
+                        <p><strong>🔒 AI 系統中的個資保護：</strong></p>
+                        <ul>
+                            <li><strong>資料去識別化：</strong>移除或遮蔽直接識別資訊</li>
+                            <li><strong>差分隱私：</strong>在資料中加入雜訊保護隱私</li>
+                            <li><strong>聯邦學習：</strong>資料不離開本地端</li>
+                            <li><strong>同態加密：</strong>加密狀態下進行運算</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第32題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #32</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    以下哪一種資料處理方式屬於「<span class="term-cn">隨機擾動</span>（<span class="term-en">Noise Injection</span>）」？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">把姓名改成代號</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將薪資加入隨機誤差</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將地址改成縣市級別</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">以星號遮蔽身分證號</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">隨機擾動</span>透過<span class="highlight">加入隨機雜訊</span>來保護隱私，使得無法精確還原原始值，但保留統計特性。</p>
+                        <table>
+                            <tr><th>隱私保護技術</th><th>方法</th><th>範例</th><th>特點</th></tr>
+                            <tr><td>✅ <span class="term-cn">隨機擾動</span></td><td>加入隨機雜訊</td><td>薪資 50000<br>→ 50000 + N(0,1000)</td><td>保留統計特性<br>無法還原個體</td></tr>
+                            <tr><td><span class="term-cn">假名化</span><br>（<span class="term-en">Pseudonymization</span>）</td><td>替換為代號</td><td>張三 → ID_001</td><td>可逆（有對照表）<br>仍屬個資</td></tr>
+                            <tr><td><span class="term-cn">泛化</span><br>（<span class="term-en">Generalization</span>）</td><td>降低精確度</td><td>台北市中正區<br>→ 台北市</td><td>降低識別性<br>損失資訊</td></tr>
+                            <tr><td><span class="term-cn">遮蔽</span><br>（<span class="term-en">Masking</span>）</td><td>部分隱藏</td><td>A123456789<br>→ A12***6789</td><td>簡單直觀<br>可能仍可識別</td></tr>
+                            <tr><td><span class="term-cn">抑制</span><br>（<span class="term-en">Suppression</span>）</td><td>完全移除</td><td>刪除敏感欄位</td><td>最安全<br>損失最多資訊</td></tr>
+                        </table>
+                        <p><strong>🎯 差分隱私（Differential Privacy）：</strong></p>
+                        <p>隨機擾動的進階版本，提供<span class="highlight">數學上可證明的隱私保證</span>。</p>
+                        <ul>
+                            <li><strong>核心概念：</strong>單一個體的加入或移除，對查詢結果的影響可忽略</li>
+                            <li><strong>隱私預算 ε：</strong>控制隱私保護程度（ε 越小越安全）</li>
+                            <li><strong>應用：</strong>Google、Apple、Microsoft 的隱私統計</li>
+                        </ul>
+                        <p><strong>💡 選擇隱私保護技術的考量：</strong></p>
+                        <ul>
+                            <li><strong>資料用途：</strong>統計分析 vs 個體查詢</li>
+                            <li><strong>隱私需求：</strong>法規要求的保護等級</li>
+                            <li><strong>資料效用：</strong>保留多少可用資訊</li>
+                            <li><strong>可逆性：</strong>是否需要還原原始資料</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第33題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #33</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在 <span class="term-abbr">AI</span> <span class="term-cn">偏見治理</span>（<span class="term-en">Bias Governance</span>）中，對不同群體調整模型<span class="term-cn">預測閾值</span>（<span class="term-en">Prediction Threshold</span>），屬於哪一種偏見修正方法？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">資料泛化</span>（<span class="term-en">Data Generalization</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">結果門檻調整</span>（<span class="term-en">Post-processing Threshold Adjustment</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">模型剪枝</span>（<span class="term-en">Model Pruning</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">資料增強</span>（<span class="term-en">Data Augmentation</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：B</strong></p>
+                        <p><span class="term-cn">結果門檻調整</span>是<span class="highlight">後處理</span>（<span class="term-en">Post-processing</span>）階段的去偏方法，在模型訓練完成後，針對不同群體設定不同的決策閾值以達成公平性。</p>
+                        <table>
+                            <tr><th>去偏階段</th><th>方法</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td><span class="term-cn">前處理</span><br>（<span class="term-en">Pre-processing</span>）</td><td>重新採樣<br>重新加權<br>資料增強</td><td>模型無關<br>可重複使用</td><td>可能損失資訊<br>改變資料分佈</td></tr>
+                            <tr><td><span class="term-cn">訓練中</span><br>（<span class="term-en">In-processing</span>）</td><td>公平性約束<br>對抗式去偏<br>公平性正則化</td><td>直接優化公平性<br>效果較好</td><td>模型相依<br>訓練複雜</td></tr>
+                            <tr><td>✅ <span class="term-cn">後處理</span><br>（<span class="term-en">Post-processing</span>）</td><td>閾值調整<br>校準<br>拒絕選項</td><td>模型無關<br>實作簡單<br>可快速調整</td><td>可能降低整體準確度</td></tr>
+                        </table>
+                        <p><strong>🎯 閾值調整的運作方式：</strong></p>
+                        <ul>
+                            <li><strong>標準做法：</strong>所有群體使用相同閾值（如 0.5）</li>
+                            <li><strong>公平調整：</strong>為不同群體設定不同閾值</li>
+                            <li><strong>範例：</strong>群體 A 閾值 0.4，群體 B 閾值 0.6</li>
+                            <li><strong>目標：</strong>達成特定公平性指標（如相等機會）</li>
+                        </ul>
+                        <p><strong>💡 AI 偏見的來源：</strong></p>
+                        <ul>
+                            <li><strong>歷史偏見：</strong>訓練資料反映過去的不公平</li>
+                            <li><strong>代表性偏見：</strong>某些群體樣本不足</li>
+                            <li><strong>測量偏見：</strong>標籤或特徵的測量方式有偏</li>
+                            <li><strong>聚合偏見：</strong>對不同群體使用相同模型</li>
+                            <li><strong>評估偏見：</strong>評估指標未考慮公平性</li>
+                        </ul>
+                        <p><strong>🔍 常見的偏見案例：</strong></p>
+                        <ul>
+                            <li><strong>招聘系統：</strong>對女性候選人評分較低</li>
+                            <li><strong>信用評分：</strong>對少數族裔不利</li>
+                            <li><strong>司法系統：</strong>再犯預測對特定族群有偏</li>
+                            <li><strong>人臉辨識：</strong>對深色皮膚準確度較低</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第34題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #34</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若企業想確保 <span class="term-abbr">AI</span> 模型在不同群體間「<span class="highlight">真正該被選擇者</span>」皆有同等機會被正確預測，應採用哪一個<span class="term-cn">公平性指標</span>（<span class="term-en">Fairness Metric</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-en">Equal Opportunity</span>（<span class="term-cn">相等機會</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Demographic Parity</span>（<span class="term-cn">人口統計均等</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-abbr">K-Anonymity</span>（<span class="term-cn">K-匿名性</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-abbr">T-Closeness</span>（<span class="term-cn">T-接近性</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：A</strong></p>
+                        <p><span class="term-en">Equal Opportunity</span> 要求<span class="highlight">真陽性率</span>（<span class="term-abbr">TPR</span>, <span class="term-en">True Positive Rate</span>）在所有群體間相等，確保「真正符合條件者」有相同的被正確識別機會。</p>
+                        <table>
+                            <tr><th>公平性指標</th><th>定義</th><th>適用場景</th><th>限制</th></tr>
+                            <tr><td>✅ <span class="term-en">Equal Opportunity</span></td><td>TPR 相等<br>P(Ŷ=1|Y=1,A=a) 相同</td><td>招聘、貸款審核<br>關注真正合格者</td><td>未考慮 FPR</td></tr>
+                            <tr><td><span class="term-en">Demographic Parity</span></td><td>正預測率相等<br>P(Ŷ=1|A=a) 相同</td><td>廣告投放<br>資源分配</td><td>忽略真實標籤<br>可能降低準確度</td></tr>
+                            <tr><td><span class="term-en">Equalized Odds</span></td><td>TPR 和 FPR 都相等</td><td>司法預測<br>醫療診斷</td><td>更嚴格<br>難以達成</td></tr>
+                            <tr><td><span class="term-en">Predictive Parity</span></td><td>PPV 相等<br>P(Y=1|Ŷ=1,A=a) 相同</td><td>風險評估</td><td>與其他指標衝突</td></tr>
+                        </table>
+                        <p><strong>🎯 混淆矩陣與公平性：</strong></p>
+                        <table>
+                            <tr><th></th><th>實際為正</th><th>實際為負</th></tr>
+                            <tr><td>預測為正</td><td>TP（真陽性）</td><td>FP（假陽性）</td></tr>
+                            <tr><td>預測為負</td><td>FN（假陰性）</td><td>TN（真陰性）</td></tr>
+                        </table>
+                        <ul>
+                            <li><strong>TPR（召回率）：</strong>TP / (TP + FN)</li>
+                            <li><strong>FPR（假陽性率）：</strong>FP / (FP + TN)</li>
+                            <li><strong>PPV（精確率）：</strong>TP / (TP + FP)</li>
+                        </ul>
+                        <p><strong>💡 公平性指標的權衡：</strong></p>
+                        <ul>
+                            <li><strong>不可能三角：</strong>無法同時滿足所有公平性定義</li>
+                            <li><strong>準確度 vs 公平性：</strong>追求公平可能降低整體準確度</li>
+                            <li><strong>群體間權衡：</strong>改善一個群體可能損害另一個</li>
+                        </ul>
+                        <p><strong>🔍 選擇公平性指標的考量：</strong></p>
+                        <ul>
+                            <li><strong>應用情境：</strong>錯誤類型的相對成本</li>
+                            <li><strong>利害關係人：</strong>誰會受到影響</li>
+                            <li><strong>法律要求：</strong>是否有明確規範</li>
+                            <li><strong>社會價值：</strong>組織的倫理立場</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第35題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #35</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若企業欲在 <span class="term-abbr">AI</span> 專案中降低<span class="term-cn">敏感特徵</span>（<span class="term-en">Sensitive Feature</span>）（如性別）的影響，可以採取哪種<span class="highlight">模型內部處理</span>方式？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">對抗式去偏模型</span>（<span class="term-en">Adversarial Debiasing</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">模型蒸餾</span>（<span class="term-en">Model Distillation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">雜湊處理</span>（<span class="term-en">Hashing</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">結果門檻調整</span>（<span class="term-en">Threshold Adjustment</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：A</strong></p>
+                        <p><span class="term-cn">對抗式去偏</span>使用<span class="highlight">對抗訓練</span>（<span class="term-en">Adversarial Training</span>）機制，讓模型學習<span class="highlight">無法從預測結果推斷敏感屬性</span>的表示。</p>
+                        <table>
+                            <tr><th>訓練中去偏方法</th><th>原理</th><th>優點</th><th>缺點</th></tr>
+                            <tr><td>✅ <span class="term-cn">對抗式去偏</span></td><td>主模型預測目標<br>對抗器預測敏感屬性<br>最小化對抗器準確度</td><td>學習公平表示<br>效果好</td><td>訓練複雜<br>需調整超參數</td></tr>
+                            <tr><td><span class="term-cn">公平性約束</span></td><td>在損失函數中<br>加入公平性懲罰項</td><td>直接優化公平性</td><td>可能降低準確度</td></tr>
+                            <tr><td><span class="term-cn">重新加權</span></td><td>調整不同群體的<br>樣本權重</td><td>簡單有效</td><td>需知道敏感屬性</td></tr>
+                            <tr><td><span class="term-cn">公平表示學習</span></td><td>學習與敏感屬性<br>獨立的特徵</td><td>可遷移</td><td>可能損失資訊</td></tr>
+                        </table>
+                        <p><strong>🎯 對抗式去偏的架構：</strong></p>
+                        <ul>
+                            <li><strong>預測器（Predictor）：</strong>主要任務模型，預測目標變數 Y</li>
+                            <li><strong>對抗器（Adversary）：</strong>嘗試從預測器的輸出預測敏感屬性 A</li>
+                            <li><strong>訓練目標：</strong>最大化預測器準確度，同時最小化對抗器準確度</li>
+                            <li><strong>結果：</strong>預測器學到的表示無法被用來推斷敏感屬性</li>
+                        </ul>
+                        <p><strong>💡 處理敏感特徵的策略：</strong></p>
+                        <ul>
+                            <li><strong>移除敏感特徵：</strong>簡單但不夠（代理變數問題）</li>
+                            <li><strong>對抗式去偏：</strong>訓練中處理，效果較好</li>
+                            <li><strong>公平性約束：</strong>明確優化公平性指標</li>
+                            <li><strong>因果推論：</strong>識別並阻斷不公平的因果路徑</li>
+                        </ul>
+                        <p><strong>⚠️ 代理變數（Proxy Variables）問題：</strong></p>
+                        <p>即使移除敏感特徵（如性別），模型仍可能透過<span class="highlight">相關特徵</span>（如職業、興趣）間接學到偏見。</p>
+                        <p><strong>🔍 實務案例：</strong></p>
+                        <ul>
+                            <li><strong>招聘系統：</strong>確保性別不影響錄取決策</li>
+                            <li><strong>信用評分：</strong>避免種族歧視</li>
+                            <li><strong>廣告投放：</strong>公平展示機會</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第36題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #36</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若資料集中存在<span class="term-cn">群體樣本數不均</span>（<span class="term-en">Imbalanced Group Samples</span>），造成模型偏向多數群體，適合採用哪種技術？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">權重初始化</span>（<span class="term-en">Weight Initialization</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">權重衰減</span>（<span class="term-en">Weight Decay</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">類別重加權</span>（<span class="term-en">Class Reweighting</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">全量訓練</span>（<span class="term-en">Full Batch Training</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">類別重加權</span>透過<span class="highlight">調整不同群體的樣本權重</span>，讓模型更重視少數群體，平衡訓練過程。</p>
+                        <table>
+                            <tr><th>處理不平衡方法</th><th>類型</th><th>做法</th><th>適用情境</th></tr>
+                            <tr><td>✅ <span class="term-cn">類別重加權</span></td><td>演算法層面</td><td>少數群體權重 ↑<br>多數群體權重 ↓</td><td>所有模型<br>實作簡單</td></tr>
+                            <tr><td><span class="term-cn">過採樣</span><br>（<span class="term-en">Oversampling</span>）</td><td>資料層面</td><td>複製或生成<br>少數群體樣本</td><td>資料量小時</td></tr>
+                            <tr><td><span class="term-cn">欠採樣</span><br>（<span class="term-en">Undersampling</span>）</td><td>資料層面</td><td>減少多數群體樣本</td><td>資料量大時</td></tr>
+                            <tr><td><span class="term-abbr">SMOTE</span></td><td>合成資料</td><td>在少數群體樣本間<br>插值生成新樣本</td><td>連續特徵為主</td></tr>
+                            <tr><td><span class="term-cn">集成方法</span></td><td>模型層面</td><td>多個平衡子集<br>訓練多個模型</td><td>追求高準確度</td></tr>
+                        </table>
+                        <p><strong>🎯 類別重加權的計算：</strong></p>
+                        <ul>
+                            <li><strong>反比例加權：</strong>w_i = n_total / (n_classes × n_i)</li>
+                            <li><strong>平衡加權：</strong>w_i = n_max / n_i</li>
+                            <li><strong>自定義權重：</strong>根據業務需求調整</li>
+                        </ul>
+                        <p><strong>💡 不平衡問題的影響：</strong></p>
+                        <ul>
+                            <li><strong>模型偏向多數類：</strong>傾向預測多數群體</li>
+                            <li><strong>少數類召回率低：</strong>漏報少數群體</li>
+                            <li><strong>評估指標誤導：</strong>準確度高但無意義</li>
+                            <li><strong>公平性問題：</strong>對少數群體不公平</li>
+                        </ul>
+                        <p><strong>📊 評估不平衡資料的指標：</strong></p>
+                        <ul>
+                            <li><strong>F1-Score：</strong>精確率與召回率的調和平均</li>
+                            <li><strong>AUC-ROC：</strong>不受類別分佈影響</li>
+                            <li><strong>PR 曲線：</strong>精確率-召回率曲線</li>
+                            <li><strong>分群指標：</strong>每個群體分別評估</li>
+                        </ul>
+                        <p><strong>⚠️ 注意事項：</strong></p>
+                        <ul>
+                            <li>過度加權可能導致<span class="highlight">過擬合</span>少數群體</li>
+                            <li>需在<span class="highlight">驗證集</span>上調整權重</li>
+                            <li>結合多種方法效果更好</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第37題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #37</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    <span class="term-abbr">T-Closeness</span>（<span class="term-cn">T-接近性</span>）技術主要是為了降低什麼風險？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">機率分佈差異</span>造成的<span class="term-cn">識別風險</span>（<span class="term-en">Identification Risk</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">資料重複風險</span>（<span class="term-en">Data Duplication Risk</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">訓練時間過長</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">演算法震盪問題</span>（<span class="term-en">Algorithm Oscillation</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：A</strong></p>
+                        <p><span class="term-abbr">T-Closeness</span> 要求每個<span class="term-cn">等價類</span>（<span class="term-en">Equivalence Class</span>）中<span class="term-cn">敏感屬性</span>的分佈，與整體資料集的分佈<span class="highlight">接近</span>（距離 ≤ t），防止透過分佈差異推斷個體資訊。</p>
+                        <table>
+                            <tr><th>隱私模型</th><th>保護機制</th><th>優點</th><th>限制</th></tr>
+                            <tr><td><span class="term-abbr">K-Anonymity</span><br>K-匿名性</td><td>每個等價類<br>至少有 k 個記錄</td><td>簡單直觀<br>易實作</td><td>易受同質性攻擊<br>背景知識攻擊</td></tr>
+                            <tr><td><span class="term-abbr">L-Diversity</span><br>L-多樣性</td><td>每個等價類中<br>敏感屬性至少有 L 個<br>不同值</td><td>防止同質性攻擊</td><td>未考慮分佈<br>語義接近性問題</td></tr>
+                            <tr><td>✅ <span class="term-abbr">T-Closeness</span><br>T-接近性</td><td>等價類中敏感屬性分佈<br>與整體分佈的距離 ≤ t</td><td>最強保護<br>考慮分佈差異</td><td>實作複雜<br>資訊損失大</td></tr>
+                        </table>
+                        <p><strong>🎯 T-Closeness 的核心概念：</strong></p>
+                        <ul>
+                            <li><strong>等價類：</strong>具有相同準識別符（如年齡、郵遞區號）的記錄群組</li>
+                            <li><strong>敏感屬性：</strong>需要保護的資訊（如疾病、收入）</li>
+                            <li><strong>分佈距離：</strong>使用 Earth Mover's Distance 或其他距離度量</li>
+                            <li><strong>閾值 t：</strong>允許的最大分佈差異</li>
+                        </ul>
+                        <p><strong>📊 範例說明：</strong></p>
+                        <p><strong>整體資料集疾病分佈：</strong>感冒 60%、糖尿病 30%、癌症 10%</p>
+                        <p><strong>某等價類疾病分佈：</strong>感冒 10%、糖尿病 20%、癌症 70%</p>
+                        <p>→ 分佈差異大，可推斷該群組高風險，<span class="highlight">不滿足 T-Closeness</span></p>
+                        <p><strong>💡 隱私保護模型的演進：</strong></p>
+                        <ul>
+                            <li><strong>K-Anonymity：</strong>基礎保護，防止直接識別</li>
+                            <li><strong>L-Diversity：</strong>增強保護，防止同質性攻擊</li>
+                            <li><strong>T-Closeness：</strong>最強保護，防止分佈推論攻擊</li>
+                        </ul>
+                        <p><strong>⚠️ 實務考量：</strong></p>
+                        <ul>
+                            <li><strong>隱私 vs 效用：</strong>保護越強，資料可用性越低</li>
+                            <li><strong>計算成本：</strong>T-Closeness 實作複雜度高</li>
+                            <li><strong>參數選擇：</strong>k、l、t 需根據應用場景調整</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第38題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #38</div>
+                    <div class="question-frequency">⭐⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    在 <span class="term-abbr">AI</span> <span class="term-cn">公平性治理</span>（<span class="term-en">Fairness Governance</span>）中，企業應建立什麼<span class="highlight">跨部門組織</span>，確保公平性納入日常決策流程？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">模型剪枝委員會</span>（<span class="term-en">Model Pruning Committee</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-abbr">AI</span> <span class="term-cn">蒸餾中心</span>（<span class="term-en">Distillation Center</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">公平性審查委員會</span>（<span class="term-en">Fairness Review Board</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">隨機抽樣團隊</span>（<span class="term-en">Random Sampling Team</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">公平性審查委員會</span>是<span class="highlight">跨職能團隊</span>，負責監督 AI 系統的公平性，確保符合倫理標準和法規要求。</p>
+                        <table>
+                            <tr><th>治理組織</th><th>成員組成</th><th>職責</th></tr>
+                            <tr><td>✅ <span class="term-cn">公平性審查委員會</span></td><td>技術、法務、倫理<br>業務、人權專家</td><td>審查 AI 系統公平性<br>制定公平性政策<br>處理申訴案件<br>定期稽核</td></tr>
+                            <tr><td><span class="term-cn">AI 倫理委員會</span></td><td>高階主管、專家<br>外部顧問</td><td>制定倫理準則<br>重大決策審批<br>風險評估</td></tr>
+                            <tr><td><span class="term-cn">資料治理團隊</span></td><td>資料工程師<br>隱私專家、法務</td><td>資料品質管理<br>隱私保護<br>合規性確保</td></tr>
+                        </table>
+                        <p><strong>🎯 公平性審查委員會的職能：</strong></p>
+                        <ul>
+                            <li><strong>事前審查：</strong>評估 AI 專案的公平性風險</li>
+                            <li><strong>開發監督：</strong>確保開發過程遵循公平性原則</li>
+                            <li><strong>上線審核：</strong>部署前的公平性測試與驗證</li>
+                            <li><strong>持續監控：</strong>定期檢視已部署系統的公平性</li>
+                            <li><strong>事件處理：</strong>調查並處理公平性投訴</li>
+                            <li><strong>政策制定：</strong>建立組織的公平性標準</li>
+                        </ul>
+                        <p><strong>💡 AI 治理的最佳實踐：</strong></p>
+                        <ul>
+                            <li><strong>多元團隊：</strong>包含不同背景和專業的成員</li>
+                            <li><strong>明確流程：</strong>標準化的審查程序</li>
+                            <li><strong>透明度：</strong>公開審查標準和決策理由</li>
+                            <li><strong>問責機制：</strong>明確責任歸屬</li>
+                            <li><strong>持續改進：</strong>定期檢討並更新政策</li>
+                        </ul>
+                        <p><strong>📋 AI 公平性審查檢查清單：</strong></p>
+                        <ul>
+                            <li>✅ 訓練資料是否代表所有群體？</li>
+                            <li>✅ 是否存在歷史偏見？</li>
+                            <li>✅ 敏感特徵如何處理？</li>
+                            <li>✅ 選擇哪些公平性指標？</li>
+                            <li>✅ 不同群體的效能差異？</li>
+                            <li>✅ 是否有申訴機制？</li>
+                            <li>✅ 如何監控持續公平性？</li>
+                        </ul>
+                        <p><strong>🌟 國際 AI 治理框架：</strong></p>
+                        <ul>
+                            <li><strong>歐盟 AI 法案：</strong>風險分級管理</li>
+                            <li><strong>OECD AI 原則：</strong>包容性成長、以人為本</li>
+                            <li><strong>IEEE 倫理標準：</strong>透明、問責、公平</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第39題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #39</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    若企業欲降低 <span class="term-abbr">AI</span> 模型因<span class="term-cn">少數群體樣本過少</span>而造成的<span class="term-cn">過擬合風險</span>，可以採用哪種<span class="term-cn">資料增強方法</span>（<span class="term-en">Data Augmentation</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-abbr">SMOTE</span>（<span class="term-en">Synthetic Minority Over-sampling Technique</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-en">Softmax</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-en">Momentum</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-en">Dropout</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：A</strong></p>
+                        <p><span class="term-abbr">SMOTE</span> 透過在<span class="highlight">少數類樣本之間插值</span>生成<span class="highlight">合成樣本</span>，增加少數群體的資料量，改善類別不平衡問題。</p>
+                        <table>
+                            <tr><th>資料增強方法</th><th>適用資料</th><th>原理</th><th>優點</th></tr>
+                            <tr><td>✅ <span class="term-abbr">SMOTE</span></td><td>表格資料<br>（連續特徵）</td><td>在 k 近鄰間<br>線性插值</td><td>生成多樣化樣本<br>不單純複製</td></tr>
+                            <tr><td><span class="term-cn">影像增強</span></td><td>影像資料</td><td>旋轉、翻轉<br>裁剪、色彩調整</td><td>保留語義<br>增加多樣性</td></tr>
+                            <tr><td><span class="term-cn">文字增強</span></td><td>文字資料</td><td>同義詞替換<br>回譯、插入刪除</td><td>保持語義<br>增加變化</td></tr>
+                            <tr><td><span class="term-abbr">GAN</span> 生成</td><td>各類資料</td><td>生成對抗網路<br>學習資料分佈</td><td>高品質合成<br>高度逼真</td></tr>
+                        </table>
+                        <p><strong>🎯 SMOTE 的運作步驟：</strong></p>
+                        <ul>
+                            <li><strong>1️⃣ 選擇少數類樣本：</strong>隨機選一個少數類樣本 x</li>
+                            <li><strong>2️⃣ 找 k 近鄰：</strong>找出 x 的 k 個最近鄰居（通常 k=5）</li>
+                            <li><strong>3️⃣ 隨機選鄰居：</strong>從 k 個鄰居中隨機選一個 x_nn</li>
+                            <li><strong>4️⃣ 線性插值：</strong>x_new = x + λ × (x_nn - x)，λ ∈ [0,1]</li>
+                            <li><strong>5️⃣ 重複：</strong>直到達到目標樣本數</li>
+                        </ul>
+                        <p><strong>💡 SMOTE 的變體：</strong></p>
+                        <ul>
+                            <li><strong>Borderline-SMOTE：</strong>只在邊界區域生成樣本</li>
+                            <li><strong>ADASYN：</strong>根據密度自適應生成</li>
+                            <li><strong>SMOTE-ENN：</strong>結合 SMOTE 和 Edited Nearest Neighbors</li>
+                            <li><strong>SMOTE-Tomek：</strong>移除 Tomek links 清理邊界</li>
+                        </ul>
+                        <p><strong>⚠️ SMOTE 的限制：</strong></p>
+                        <ul>
+                            <li><strong>高維詛咒：</strong>高維空間中插值可能不合理</li>
+                            <li><strong>類別重疊：</strong>可能在重疊區域生成噪音</li>
+                            <li><strong>類別特徵：</strong>不適合類別型特徵</li>
+                            <li><strong>過度生成：</strong>可能導致過擬合</li>
+                        </ul>
+                        <p><strong>🔍 實務建議：</strong></p>
+                        <ul>
+                            <li>結合<span class="highlight">重加權</span>和 <span class="term-abbr">SMOTE</span></li>
+                            <li>在<span class="highlight">訓練集</span>上使用，不要在測試集</li>
+                            <li>先標準化特徵再使用 SMOTE</li>
+                            <li>評估時使用<span class="highlight">分層交叉驗證</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L234 機器學習治理 - 第40題 -->
+            <div class="question-card" data-direction="4">
+                <div class="question-header">
+                    <div class="question-id">📝 題目 #40</div>
+                    <div class="question-frequency">⭐⭐⭐⭐</div>
+                </div>
+                <div class="question-content">
+                    下列哪一項<span class="highlight">不是</span>常見的<span class="term-cn">隱私保護基礎技術</span>（<span class="term-en">Privacy Protection Technique</span>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="term-cn">遮蔽</span>（<span class="term-en">Masking</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="term-cn">泛化</span>（<span class="term-en">Generalization</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="term-cn">知識蒸餾</span>（<span class="term-en">Knowledge Distillation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="term-cn">分桶</span>（<span class="term-en">Bucketing</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 詳細解析</div>
+                    <div class="explanation-content">
+                        <p><strong>正確答案：C</strong></p>
+                        <p><span class="term-cn">知識蒸餾</span>是<span class="highlight">模型壓縮技術</span>，用於減小模型大小，<span class="highlight">不是隱私保護技術</span>。</p>
+                        <table>
+                            <tr><th>技術</th><th>類型</th><th>目的</th><th>範例</th></tr>
+                            <tr><td>✅ <span class="term-cn">遮蔽</span></td><td>隱私保護</td><td>隱藏部分資訊</td><td>A12***6789</td></tr>
+                            <tr><td>✅ <span class="term-cn">泛化</span></td><td>隱私保護</td><td>降低精確度</td><td>25歲 → 20-30歲</td></tr>
+                            <tr><td>✅ <span class="term-cn">分桶</span></td><td>隱私保護</td><td>將連續值離散化</td><td>收入 → 低/中/高</td></tr>
+                            <tr><td>❌ <span class="term-cn">知識蒸餾</span></td><td>模型壓縮</td><td>減小模型大小</td><td>大模型 → 小模型</td></tr>
+                        </table>
+                        <p><strong>🎯 常見隱私保護技術總覽：</strong></p>
+                        <ul>
+                            <li><strong>遮蔽（Masking）：</strong>部分隱藏敏感資訊</li>
+                            <li><strong>泛化（Generalization）：</strong>降低資料精確度</li>
+                            <li><strong>分桶（Bucketing）：</strong>將數值分組</li>
+                            <li><strong>假名化（Pseudonymization）：</strong>替換為代號</li>
+                            <li><strong>抑制（Suppression）：</strong>完全移除</li>
+                            <li><strong>擾動（Perturbation）：</strong>加入雜訊</li>
+                            <li><strong>加密（Encryption）：</strong>密碼學保護</li>
+                            <li><strong>差分隱私（Differential Privacy）：</strong>數學保證</li>
+                        </ul>
+                        <p><strong>💡 隱私保護技術的選擇：</strong></p>
+                        <ul>
+                            <li><strong>資料類型：</strong>數值、類別、文字</li>
+                            <li><strong>使用場景：</strong>分析、展示、分享</li>
+                            <li><strong>隱私需求：</strong>法規要求的保護等級</li>
+                            <li><strong>資料效用：</strong>需保留多少可用性</li>
+                            <li><strong>可逆性：</strong>是否需要還原</li>
+                        </ul>
+                        <p><strong>🔒 隱私保護的層次：</strong></p>
+                        <ul>
+                            <li><strong>Level 1：</strong>基礎去識別化（遮蔽、假名化）</li>
+                            <li><strong>Level 2：</strong>統計保護（泛化、分桶）</li>
+                            <li><strong>Level 3：</strong>形式化隱私（K-匿名、差分隱私）</li>
+                            <li><strong>Level 4：</strong>密碼學保護（加密、安全多方計算）</li>
+                        </ul>
+                        <p><strong>⚠️ 隱私 vs 效用的權衡：</strong></p>
+                        <p>隱私保護程度越高，資料的<span class="highlight">可用性和準確性</span>通常越低，需要在兩者間找到平衡點。</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        // 篩選功能
+        function filterByDirection(direction) {
+            const cards = document.querySelectorAll('.question-card');
+            cards.forEach(card => {
+                if (direction === 'all' || card.dataset.direction == direction) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            document.getElementById('directionFilter').value = direction === 'all' ? 'all' : direction.toString();
+        }
+
+        document.getElementById('directionFilter').addEventListener('change', function() {
+            const value = this.value;
+            filterByDirection(value === 'all' ? 'all' : parseInt(value));
+        });
+
+        // 搜尋功能
+        document.getElementById('searchButton').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.question-card');
+            
+            cards.forEach(card => {
+                const content = card.textContent.toLowerCase();
+                if (content.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchButton').click();
+            }
+        });
+
+        // 顯示/隱藏解析
+        let explanationsVisible = true;
+        document.getElementById('toggleExplanations').addEventListener('click', function() {
+            const explanations = document.querySelectorAll('.explanation-container');
+            explanationsVisible = !explanationsVisible;
+            
+            explanations.forEach(exp => {
+                exp.style.display = explanationsVisible ? 'block' : 'none';
+            });
+        });
+
+        // 回到頂部按鈕
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 進度條
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+    
+        // ????瘜?鈭?
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+            document.querySelectorAll('pre:not(:has(code))').forEach((block) => {
+                const code = document.createElement('code');
+                code.textContent = block.textContent;
+                block.textContent = '';
+                block.appendChild(code);
+                hljs.highlightElement(code);
+            });
+        });</script>
+</body>
+</html>

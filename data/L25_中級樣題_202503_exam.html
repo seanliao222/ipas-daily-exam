@@ -1,0 +1,2609 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師中級能力鑑定-考試樣題 114.03版</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container::before {
+            content: '🤖';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 120px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2.5rem;
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container div {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* 出題方向/科目區塊樣式 */
+        .sections-container {
+            background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 6px solid #667eea;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .sections-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+
+        .sections-title::before {
+            content: '📚';
+            margin-right: 10px;
+            font-size: 1.6rem;
+        }
+
+        .sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .section-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .section-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .section-number {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .section-item:hover .section-number {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: scale(1.1);
+        }
+
+        .section-text {
+            flex-grow: 1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            position: relative;
+        }
+
+        .question-card {
+            background: white;
+            border: 2px solid #e1e8ed;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .question-id {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .question-frequency {
+            color: #e74c3c;
+            font-weight: 700;
+            font-size: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .question-content {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            cursor: pointer;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            border-radius: 12px;
+            cursor: default;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .option-item:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            border-color: #adb5bd;
+        }
+
+        .option-item.correct {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-color: #28a745;
+            border-width: 3px;
+            animation: correctPulse 0.6s ease;
+        }
+
+        @keyframes correctPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .option-item.correct:hover {
+            background: linear-gradient(135deg, #c3e6cb, #b1dfbb);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .option-label {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .option-item.correct .option-label {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .option-text {
+            flex-grow: 1;
+            word-break: break-word;
+            line-height: 1.6;
+        }
+
+        .explanation-container {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: block;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .explanation-container::before {
+            content: '💡';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .explanation-header::after {
+            content: '';
+            flex-grow: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #ffc107, #ff8c00);
+            margin-left: 15px;
+            border-radius: 1px;
+        }
+
+        .explanation-content {
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+
+        /* Formatting Styles */
+        .highlight {
+            background-color: #ffff0030;
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .chinese-term {
+            color: rgb(0, 0, 255);
+            font-weight: bold;
+        }
+
+        .acronym-term {
+            color: rgb(128, 0, 128);
+            font-weight: bold;
+        }
+
+        .english-term {
+            color: rgb(255, 0, 0);
+            font-weight: bold;
+        }
+
+        /* Controls styling */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container,
+        .toggle-explanations {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            font-weight: 600;
+            margin-right: 10px;
+            white-space: nowrap;
+            color: #495057;
+        }
+
+        select,
+        input[type="text"] {
+            padding: 10px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-family: inherit;
+            flex-grow: 1;
+            min-width: 180px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-left: 8px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #toggleExplanations {
+            margin-left: 0;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+            font-size: 1.5rem;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .back-to-top:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+            border-radius: 0;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            background-size: 400% 400%;
+            width: 0%;
+            border-radius: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* RWD */
+        @media (max-width: 1000px) {
+            .container {
+                margin: 15px;
+                padding: 20px 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container,
+            .toggle-explanations {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                flex-grow: 1;
+            }
+
+            button {
+                flex-shrink: 0;
+            }
+
+            .search-container button {
+                margin-left: 10px;
+            }
+
+            .sections-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .header-container h1 {
+                font-size: 2rem;
+            }
+
+            .header-container div {
+                font-size: 1.1rem;
+            }
+
+            .option-item,
+            .explanation-container,
+            button {
+                font-size: 0.95rem;
+            }
+
+            .option-label {
+                width: 25px;
+                height: 25px;
+                min-width: 25px;
+                font-size: 0.9rem;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .sections-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                margin: 8px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .header-container h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-container div {
+                font-size: 1rem;
+            }
+
+            .option-item,
+            button,
+            .explanation-container {
+                font-size: 0.9rem;
+            }
+
+            .question-content {
+                font-size: 1rem;
+            }
+
+            .sections-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* No results message style */
+        #noResultsMessage {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9ff, #e8f2ff);
+            border-radius: 15px;
+            display: none;
+            border: 2px dashed #667eea;
+        }
+
+        #noResultsMessage h3 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Table styles for explanations */
+        .explanation-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .explanation-content table th,
+        .explanation-content table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .explanation-content table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .explanation-content table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .explanation-content table tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        /* List styles */
+        .explanation-content ul,
+        .explanation-content ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .explanation-content li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        /* Responsive images */
+        .responsive-img {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <a href="https://shopee.tw/aeqoxmc2op" target="_blank" style="color: white; text-decoration: none;">
+                📚 HTML 考題小舖
+            </a>
+            <br>
+            <a href="https://shopee.tw/product/1521490221/26383698942/" target="_blank"
+                style="color: rgb(235, 217, 100); text-decoration: none;">
+                📖 iPAS AI應用規劃師-初級能力鑑定 精選模擬試題/重點整理(免費試閱)
+            </a>
+            <br>
+            <a href="https://shopee.tw/product/1521490221/24444142662/" target="_blank"
+                style="color: rgb(235, 217, 100); text-decoration: none;">
+                📖 iPAS AI應用規劃師-中級能力鑑定 精選模擬試題/重點整理(免費試閱)
+            </a>
+            <br>
+            <a href="https://shopee.tw/product/1521490221/40000479749/" target="_blank"
+                style="color: rgb(235, 217, 100); text-decoration: none;">
+                📖 2025年最新版 Azure AI900 微軟中文版題庫【免費試閱】
+            </a>
+            <br>
+            <a href="https://shopee.tw/product/1521490221/29386470090/" target="_blank"
+                style="color: rgb(235, 217, 100); text-decoration: none;">
+                📖 2025年最新版微軟證照題庫系列【AZ-900】【AI-102】【AI-900】【DP-900】【PL-900】等
+            </a>
+
+            <h1>🧠 iPAS AI應用規劃師 中級能力鑑定</h1>
+            <div>📋 考試樣題 (114年3月版)</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="subjectFilter" class="filter-label">📋 篩選科目：</label>
+                <select id="subjectFilter">
+                    <option value="all">全科目</option>
+                    <option value="subject1">科目一: L21 人工智慧技術應用與規劃</option>
+                    <option value="subject2">科目二: L22 大數據處理分析與應用</option>
+                    <option value="subject3">科目三: L23 機器學習技術與應用</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">⭐ 篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="sections-container">
+            <div class="sections-title">📖 官方樣題</div>
+            <div class="sections-grid" id="sectionsGrid">
+                <div class="section-item" onclick="filterBySubject('subject1')">
+                    <div class="section-number">一</div>
+                    <div class="section-text">🧠 L21 人工智慧技術應用與規劃 (5題)</div>
+                </div>
+                <div class="section-item" onclick="filterBySubject('subject2')">
+                    <div class="section-number">二</div>
+                    <div class="section-text">📊 L22 大數據處理分析與應用 (5題)</div>
+                </div>
+                <div class="section-item" onclick="filterBySubject('subject3')">
+                    <div class="section-number">三</div>
+                    <div class="section-text">🔬 L23 機器學習技術與應用 (5題)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <h2>🧠 科目一: 人工智慧技術應用與規劃</h2>
+
+            <!-- L21 Question 1 -->
+            <div class="question-card" data-subject="subject1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L21-1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">下列何者並未使用<span class="chinese-term">人工智慧</span>（<span class="acronym-term">AI</span>）或<span class="chinese-term">機器學習</span>（<span class="acronym-term">ML</span>）技術？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight">使用一組預定義規則來確定最佳移動做法的象棋遊戲</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用<span class="chinese-term">深度神經網路</span>來提高其準確性的語音識別系統</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用感測器和預定義的自動駕駛汽車-定義導航規則</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用<span class="chinese-term">自然語言處理</span>演算法來理解和反應用戶查詢的聊天機器人</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="highlight">基於規則的系統</span>（<span class="english-term">Rule-based System</span>）與 <span class="acronym-term">AI</span>/<span class="acronym-term">ML</span> 的核心差異在於<span class="highlight">學習能力</span>。<br><br>
+                        
+                        <strong>各選項分析：</strong><br>
+                        <table>
+                            <tr>
+                                <th>選項</th>
+                                <th>技術類型</th>
+                                <th>是否使用 AI/ML</th>
+                            </tr>
+                            <tr>
+                                <td><strong>A. 預定義規則象棋</strong></td>
+                                <td>規則系統</td>
+                                <td>❌ 否</td>
+                            </tr>
+                            <tr>
+                                <td><strong>B. 深度神經網路語音識別</strong></td>
+                                <td><span class="chinese-term">深度學習</span>（<span class="english-term">Deep Learning</span>）</td>
+                                <td>✅ 是</td>
+                            </tr>
+                            <tr>
+                                <td><strong>C. 自動駕駛汽車</strong></td>
+                                <td><span class="chinese-term">電腦視覺</span> + <span class="acronym-term">ML</span></td>
+                                <td>✅ 是</td>
+                            </tr>
+                            <tr>
+                                <td><strong>D. NLP 聊天機器人</strong></td>
+                                <td><span class="chinese-term">自然語言處理</span>（<span class="acronym-term">NLP</span>）</td>
+                                <td>✅ 是</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 關鍵區別：</strong><br>
+                        • <span class="highlight">規則系統</span>：完全依賴人工編寫的規則，無法從經驗中學習<br>
+                        • <span class="highlight">AI/ML 系統</span>：能從數據中學習模式，持續改進性能<br><br>
+                        
+                        <strong>💡 實例說明：</strong><br>
+                        傳統象棋程式使用 <span class="english-term">Minimax</span> 演算法和評估函數，所有策略都是程式設計師預先定義的。相比之下，<span class="english-term">AlphaZero</span> 這類 <span class="acronym-term">AI</span> 系統則透過<span class="chinese-term">強化學習</span>（<span class="english-term">Reinforcement Learning</span>）自我對弈，發展出超越人類的策略。
+                    </div>
+                </div>
+            </div>
+
+            <!-- L21 Question 2 -->
+            <div class="question-card" data-subject="subject1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L21-2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在文本資料處理過程中，通常會需要「將接續的文本轉換為詞彙單位」，以便後續的處理。請問上述所指的是文本資料處理中的哪一個方法？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="chinese-term">詞形還原</span>（<span class="english-term">Lemmatization</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="chinese-term">停用詞移除</span>（<span class="english-term">Stopword Removal</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="highlight"><span class="chinese-term">斷詞</span>（<span class="english-term">Tokenization</span>）</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="chinese-term">詞頻-逆向文件頻率</span>（<span class="english-term">Term Frequency-Inverse Document Frequency</span>, <span class="acronym-term">TF-IDF</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：C</strong><br><br>
+                        <span class="chinese-term">斷詞</span>（<span class="english-term">Tokenization</span>）是 <span class="acronym-term">NLP</span> 處理流程中的<span class="highlight">第一步</span>，負責將連續文本切分成有意義的詞彙單位。<br><br>
+                        
+                        <strong>📊 NLP 文本處理流程：</strong><br>
+                        <table>
+                            <tr>
+                                <th>步驟</th>
+                                <th>技術名稱</th>
+                                <th>功能說明</th>
+                                <th>範例</th>
+                            </tr>
+                            <tr>
+                                <td>1️⃣</td>
+                                <td><strong><span class="chinese-term">斷詞</span></strong></td>
+                                <td>將文本切分成詞彙</td>
+                                <td>"我愛AI" → ["我", "愛", "AI"]</td>
+                            </tr>
+                            <tr>
+                                <td>2️⃣</td>
+                                <td><span class="chinese-term">停用詞移除</span></td>
+                                <td>移除無意義的常見詞</td>
+                                <td>移除 "的"、"是"、"在" 等</td>
+                            </tr>
+                            <tr>
+                                <td>3️⃣</td>
+                                <td><span class="chinese-term">詞形還原</span></td>
+                                <td>將詞彙轉為基本形式</td>
+                                <td>"running" → "run"</td>
+                            </tr>
+                            <tr>
+                                <td>4️⃣</td>
+                                <td><span class="acronym-term">TF-IDF</span></td>
+                                <td>計算詞彙重要性權重</td>
+                                <td>評估詞彙在文檔中的重要性</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🔍 斷詞的類型：</strong><br>
+                        • <span class="highlight">詞級斷詞</span>（<span class="english-term">Word-level</span>）：切分成完整單詞<br>
+                        • <span class="highlight">字元級斷詞</span>（<span class="english-term">Character-level</span>）：切分成單個字元<br>
+                        • <span class="highlight">子詞級斷詞</span>（<span class="english-term">Subword-level</span>）：如 <span class="english-term">BPE</span>、<span class="english-term">WordPiece</span><br><br>
+                        
+                        <strong>💡 為什麼斷詞很重要？</strong><br>
+                        機器學習模型無法直接處理原始文本，必須先將文本轉換為<span class="highlight">數值表示</span>。斷詞是這個轉換過程的基礎，決定了模型能「看到」哪些語言單位。
+                    </div>
+                </div>
+            </div>
+
+            <!-- L21 Question 3 -->
+            <div class="question-card" data-subject="subject1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L21-3</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列何者為<span class="chinese-term">自然語言處理</span>（<span class="acronym-term">NLP</span>）在<span class="chinese-term">機器學習</span>應用中的主要用途？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight"><span class="chinese-term">情緒分析</span></span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="chinese-term">圖像識別</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="chinese-term">預測性維護</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="chinese-term">供應鏈優化</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="chinese-term">情緒分析</span>（<span class="english-term">Sentiment Analysis</span>）是 <span class="acronym-term">NLP</span> 最典型的應用之一，用於<span class="highlight">理解文本中的情感傾向</span>。<br><br>
+                        
+                        <strong>📱 NLP 主要應用領域：</strong><br>
+                        <table>
+                            <tr>
+                                <th>應用</th>
+                                <th>說明</th>
+                                <th>實際案例</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 情緒分析</strong></td>
+                                <td>判斷文本的正負面情緒</td>
+                                <td>社群媒體輿情監控、產品評論分析</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="chinese-term">文本分類</span></strong></td>
+                                <td>將文本歸類到預定義類別</td>
+                                <td>垃圾郵件過濾、新聞分類</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="chinese-term">命名實體識別</span></strong></td>
+                                <td>識別人名、地名、組織名</td>
+                                <td>資訊擷取、知識圖譜建構</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="chinese-term">機器翻譯</span></strong></td>
+                                <td>自動翻譯不同語言</td>
+                                <td>Google 翻譯、DeepL</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="chinese-term">問答系統</span></strong></td>
+                                <td>理解問題並提供答案</td>
+                                <td>智能客服、ChatGPT</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>❌ 其他選項為何不正確：</strong><br>
+                        • <strong>圖像識別</strong>：屬於<span class="chinese-term">電腦視覺</span>（<span class="english-term">Computer Vision</span>）領域<br>
+                        • <strong>預測性維護</strong>：屬於<span class="chinese-term">時間序列分析</span>和<span class="chinese-term">異常檢測</span><br>
+                        • <strong>供應鏈優化</strong>：屬於<span class="chinese-term">運籌學</span>（<span class="english-term">Operations Research</span>）<br><br>
+                        
+                        <strong>🎯 情緒分析的技術方法：</strong><br>
+                        • <span class="highlight">基於詞典</span>：使用情緒詞典評分<br>
+                        • <span class="highlight">機器學習</span>：訓練分類模型（如 <span class="acronym-term">SVM</span>、<span class="english-term">Naive Bayes</span>）<br>
+                        • <span class="highlight">深度學習</span>：使用 <span class="acronym-term">LSTM</span>、<span class="acronym-term">BERT</span> 等模型
+                    </div>
+                </div>
+            </div>
+
+            <!-- L21 Question 4 -->
+            <div class="question-card" data-subject="subject1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L21-4</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">關於<span class="chinese-term">深度學習</span>模型，下列敘述何者不正確？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="chinese-term">卷積神經網路</span>（<span class="english-term">Convolutional Neural Networks</span>）適合影像辨識</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="acronym-term">ReLU</span>（<span class="english-term">Rectified Linear Unit</span>）比 <span class="english-term">tanh</span> 和 <span class="english-term">Sigmoid</span> 好，因為 <span class="acronym-term">ReLU</span> 可以減緩梯度爆炸與消失的現象</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="chinese-term">遞迴神經網路</span>（<span class="english-term">Recurrent Neural Networks</span>）適合處理序列相關資料</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="highlight"><span class="english-term">Elman</span> <span class="chinese-term">神經網路</span>（<span class="english-term">Elman Neural Networks</span>）適合處理影像辨識</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：D</strong><br><br>
+                        <span class="english-term">Elman</span> <span class="chinese-term">神經網路</span>是一種<span class="highlight">遞迴神經網路</span>（<span class="acronym-term">RNN</span>），主要用於<span class="highlight">序列資料處理</span>，而非影像辨識。<br><br>
+                        
+                        <strong>🧠 深度學習模型與應用領域：</strong><br>
+                        <table>
+                            <tr>
+                                <th>模型類型</th>
+                                <th>適用領域</th>
+                                <th>核心特點</th>
+                                <th>代表架構</th>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">CNN</span></strong></td>
+                                <td>✅ 影像辨識</td>
+                                <td>局部感受野、權重共享</td>
+                                <td>ResNet, VGG, Inception</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">RNN</span></strong></td>
+                                <td>✅ 序列資料</td>
+                                <td>記憶前一時刻的狀態</td>
+                                <td>LSTM, GRU, Elman</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="english-term">Transformer</span></strong></td>
+                                <td>✅ NLP、視覺</td>
+                                <td>自注意力機制</td>
+                                <td>BERT, GPT, ViT</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">GAN</span></strong></td>
+                                <td>✅ 生成任務</td>
+                                <td>對抗式訓練</td>
+                                <td>StyleGAN, CycleGAN</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>⚡ 激活函數比較：</strong><br>
+                        <table>
+                            <tr>
+                                <th>激活函數</th>
+                                <th>公式範圍</th>
+                                <th>優點</th>
+                                <th>缺點</th>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">ReLU</span></strong></td>
+                                <td>[0, +∞)</td>
+                                <td>✅ 計算快速<br>✅ 緩解梯度消失</td>
+                                <td>❌ 可能出現神經元死亡</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sigmoid</strong></td>
+                                <td>(0, 1)</td>
+                                <td>✅ 輸出可解釋為機率</td>
+                                <td>❌ 梯度消失嚴重</td>
+                            </tr>
+                            <tr>
+                                <td><strong>tanh</strong></td>
+                                <td>(-1, 1)</td>
+                                <td>✅ 零中心化</td>
+                                <td>❌ 梯度消失問題</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 Elman 神經網路特點：</strong><br>
+                        • 是最早的 <span class="acronym-term">RNN</span> 架構之一（1990年提出）<br>
+                        • 具有<span class="highlight">上下文層</span>（<span class="english-term">Context Layer</span>）記憶歷史資訊<br>
+                        • 適用於<span class="highlight">時間序列預測</span>、<span class="highlight">語言建模</span>等序列任務<br>
+                        • 現代應用中多被 <span class="acronym-term">LSTM</span> 和 <span class="acronym-term">GRU</span> 取代
+                    </div>
+                </div>
+            </div>
+
+            <!-- L21 Question 5 -->
+            <div class="question-card" data-subject="subject1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L21-5</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列何者為<span class="chinese-term">機器學習</span>模型在業界部署的主要趨勢？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight">越來越多地採用<span class="chinese-term">自動化機器學習</span>（<span class="acronym-term">AutoML</span>）技術</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">轉向使用更簡單的機器學習算法</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">基於雲的機器學習平台的使用率下降</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">依賴手動超參數調整進行模型優化</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="acronym-term">AutoML</span>（<span class="english-term">Automated Machine Learning</span>）是當前 <span class="acronym-term">ML</span> 部署的<span class="highlight">主流趨勢</span>，旨在<span class="highlight">降低技術門檻</span>並<span class="highlight">提升開發效率</span>。<br><br>
+                        
+                        <strong>🚀 AutoML 的核心功能：</strong><br>
+                        <table>
+                            <tr>
+                                <th>功能模組</th>
+                                <th>自動化內容</th>
+                                <th>效益</th>
+                            </tr>
+                            <tr>
+                                <td><strong>特徵工程</strong></td>
+                                <td>自動生成、選擇特徵</td>
+                                <td>節省人工特徵設計時間</td>
+                            </tr>
+                            <tr>
+                                <td><strong>模型選擇</strong></td>
+                                <td>從多種算法中選最佳</td>
+                                <td>避免主觀偏見</td>
+                            </tr>
+                            <tr>
+                                <td><strong>超參數優化</strong></td>
+                                <td>自動調整模型參數</td>
+                                <td>提升模型性能</td>
+                            </tr>
+                            <tr>
+                                <td><strong>神經架構搜索</strong></td>
+                                <td>自動設計網路結構</td>
+                                <td>發現最優架構</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>☁️ 主流 AutoML 平台：</strong><br>
+                        • <strong>Google Cloud AutoML</strong>：支援視覺、語言、表格數據<br>
+                        • <strong>Azure Machine Learning</strong>：提供自動化 ML 管道<br>
+                        • <strong>Amazon SageMaker Autopilot</strong>：端到端自動化訓練<br>
+                        • <strong>H2O.ai</strong>：開源 AutoML 框架<br>
+                        • <strong>Auto-sklearn</strong>：基於 scikit-learn 的 AutoML<br><br>
+                        
+                        <strong>❌ 其他選項為何不正確：</strong><br>
+                        • <strong>選項 B</strong>：實際趨勢是使用<span class="highlight">更複雜但自動化</span>的模型<br>
+                        • <strong>選項 C</strong>：雲平台使用率實際上<span class="highlight">持續上升</span><br>
+                        • <strong>選項 D</strong>：趨勢是朝向<span class="highlight">自動化超參數優化</span><br><br>
+                        
+                        <strong>📈 AutoML 的優勢：</strong><br>
+                        • 🎯 <span class="highlight">民主化 AI</span>：讓非專家也能使用 ML<br>
+                        • ⚡ <span class="highlight">加速開發</span>：縮短模型開發週期<br>
+                        • 🎨 <span class="highlight">釋放創造力</span>：讓專家專注於問題定義<br>
+                        • 📊 <span class="highlight">一致性</span>：標準化的模型開發流程
+                    </div>
+                </div>
+            </div>
+
+            <h2>📊 科目二: 大數據處理分析與應用</h2>
+
+            <!-- L22 Question 1 -->
+            <div class="question-card" data-subject="subject2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L22-1</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在巨量資料分析班中，共有一年級至四年級，每個年級有 50 個學生，且學生身高呈<span class="chinese-term">常態分佈</span>。下列敘述何者不正確？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">要檢測一年級和二年級的平均身高是否有差異，可以利用 <span class="english-term">t</span> 檢定</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">要檢測一年級、二年級、三年級之間的平均身高是否有差異，可以利用 <span class="english-term">t</span> 檢定</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">要檢測二年級、三年級、四年級之間的平均身高是否有差異，可以利用 <span class="english-term">F</span> 檢定</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="highlight">要檢測一年級的平均身高是否等於 170 公分，可以利用<span class="chinese-term">卡方檢定</span></span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：D</strong><br><br>
+                        檢測<span class="highlight">平均值是否等於特定數值</span>應使用 <span class="english-term">t</span> 檢定，而非<span class="chinese-term">卡方檢定</span>（<span class="english-term">Chi-square Test</span>）。<br><br>
+                        
+                        <strong>📊 統計檢定方法比較：</strong><br>
+                        <table>
+                            <tr>
+                                <th>檢定方法</th>
+                                <th>適用情境</th>
+                                <th>比較對象</th>
+                                <th>資料類型</th>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="english-term">t</span> 檢定</strong></td>
+                                <td>比較 1-2 組平均值</td>
+                                <td>• 單樣本 vs 固定值<br>• 兩組平均值</td>
+                                <td>連續型數值</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">ANOVA</span><br>(<span class="english-term">F</span> 檢定)</strong></td>
+                                <td>比較 3 組以上平均值</td>
+                                <td>多組平均值</td>
+                                <td>連續型數值</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="chinese-term">卡方檢定</span></strong></td>
+                                <td>檢定類別變數關聯性</td>
+                                <td>類別分佈、獨立性</td>
+                                <td>類別型資料</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>✅ 各選項分析：</strong><br>
+                        <strong>選項 A：</strong>✅ 正確 - <span class="highlight">兩組平均值比較</span>使用<span class="english-term">獨立樣本 t 檢定</span><br>
+                        <strong>選項 B：</strong>❌ 不正確 - <span class="highlight">三組以上</span>應使用 <span class="acronym-term">ANOVA</span>（<span class="english-term">F</span> 檢定），而非 <span class="english-term">t</span> 檢定<br>
+                        <strong>選項 C：</strong>✅ 正確 - <span class="highlight">三組平均值比較</span>使用 <span class="acronym-term">ANOVA</span>（<span class="english-term">F</span> 檢定）<br>
+                        <strong>選項 D：</strong>❌ 不正確 - <span class="highlight">單樣本平均值檢定</span>應使用<span class="english-term">單樣本 t 檢定</span><br><br>
+                        
+                        <strong>🎯 卡方檢定的正確用途：</strong><br>
+                        • <span class="highlight">適合度檢定</span>：檢驗觀察分佈是否符合理論分佈<br>
+                        • <span class="highlight">獨立性檢定</span>：檢驗兩個類別變數是否獨立<br>
+                        • <span class="highlight">同質性檢定</span>：檢驗不同群體的類別分佈是否相同<br><br>
+                        
+                        <strong>💡 範例說明：</strong><br>
+                        假設要檢定「性別」與「是否喜歡數學」的關聯性：<br>
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>喜歡</th>
+                                <th>不喜歡</th>
+                            </tr>
+                            <tr>
+                                <td><strong>男生</strong></td>
+                                <td>30</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td><strong>女生</strong></td>
+                                <td>25</td>
+                                <td>25</td>
+                            </tr>
+                        </table>
+                        這種情況才適合使用<span class="chinese-term">卡方檢定</span>！
+                    </div>
+                </div>
+            </div>
+
+            <!-- L22 Question 2 -->
+            <div class="question-card" data-subject="subject2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L22-2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">關於<span class="chinese-term">接受者操作特徵</span>（<span class="acronym-term">ROC</span>）曲線，下列敘述何者正確？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight"><span class="acronym-term">ROC</span> 曲線繪製了<span class="chinese-term">真陽性率</span>與<span class="chinese-term">偽陽性率</span>的關係</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="acronym-term">ROC</span> 曲線用於評估模型的準確性</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="acronym-term">ROC</span> 曲線下的面積（<span class="acronym-term">AUC-ROC</span>）始終等於 1</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="acronym-term">ROC</span> 曲線只適用於二元分類問題</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="acronym-term">ROC</span>（<span class="english-term">Receiver Operating Characteristic</span>）曲線是評估<span class="highlight">分類模型性能</span>的重要工具，橫軸為<span class="chinese-term">偽陽性率</span>（<span class="acronym-term">FPR</span>），縱軸為<span class="chinese-term">真陽性率</span>（<span class="acronym-term">TPR</span>）。<br><br>
+                        
+                        <strong>📈 ROC 曲線核心概念：</strong><br>
+                        <table>
+                            <tr>
+                                <th>指標</th>
+                                <th>英文全名</th>
+                                <th>計算公式</th>
+                                <th>意義</th>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">TPR</span></strong></td>
+                                <td><span class="english-term">True Positive Rate</span></td>
+                                <td>TP / (TP + FN)</td>
+                                <td>正確識別正例的比例（召回率）</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">FPR</span></strong></td>
+                                <td><span class="english-term">False Positive Rate</span></td>
+                                <td>FP / (FP + TN)</td>
+                                <td>錯誤識別為正例的比例</td>
+                            </tr>
+                            <tr>
+                                <td><strong><span class="acronym-term">AUC</span></strong></td>
+                                <td><span class="english-term">Area Under Curve</span></td>
+                                <td>ROC 曲線下面積</td>
+                                <td>模型整體性能（0.5-1.0）</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 AUC 值的解讀：</strong><br>
+                        • <span class="highlight">AUC = 1.0</span>：完美分類器<br>
+                        • <span class="highlight">AUC = 0.9-1.0</span>：優秀<br>
+                        • <span class="highlight">AUC = 0.8-0.9</span>：良好<br>
+                        • <span class="highlight">AUC = 0.7-0.8</span>：一般<br>
+                        • <span class="highlight">AUC = 0.5</span>：隨機猜測（無用）<br>
+                        • <span class="highlight">AUC < 0.5</span>：比隨機還差<br><br>
+                        
+                        <strong>❌ 其他選項為何不正確：</strong><br>
+                        <strong>選項 B：</strong>ROC 曲線評估的是<span class="highlight">分類能力</span>，而非單純的準確性（<span class="english-term">Accuracy</span>）<br>
+                        <strong>選項 C：</strong>AUC 範圍是 <span class="highlight">0.5 到 1.0</span>，只有完美分類器才等於 1<br>
+                        <strong>選項 D：</strong>ROC 曲線可透過 <span class="highlight">One-vs-Rest</span> 或 <span class="highlight">One-vs-One</span> 策略擴展到<span class="highlight">多類別分類</span><br><br>
+                        
+                        <strong>💡 ROC vs PR 曲線：</strong><br>
+                        • <span class="highlight">ROC 曲線</span>：適合<span class="highlight">類別平衡</span>的資料集<br>
+                        • <span class="highlight">PR 曲線</span>（<span class="english-term">Precision-Recall</span>）：適合<span class="highlight">類別不平衡</span>的資料集
+                    </div>
+                </div>
+            </div>
+
+            <!-- L22 Question 3 -->
+            <div class="question-card" data-subject="subject2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L22-3</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列何者不屬於<span class="chinese-term">特徵工程</span>（<span class="english-term">Feature Engineering</span>）？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="chinese-term">轉換</span>（<span class="english-term">Transformation</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="chinese-term">萃取</span>（<span class="english-term">Extraction</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="chinese-term">挑選</span>（<span class="english-term">Selection</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="highlight"><span class="chinese-term">預測</span>（<span class="english-term">Prediction</span>）</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：D</strong><br><br>
+                        <span class="chinese-term">預測</span>（<span class="english-term">Prediction</span>）是<span class="highlight">模型應用階段</span>的任務，而非<span class="chinese-term">特徵工程</span>的一部分。<br><br>
+                        
+                        <strong>🔧 特徵工程的核心步驟：</strong><br>
+                        <table>
+                            <tr>
+                                <th>步驟</th>
+                                <th>英文名稱</th>
+                                <th>說明</th>
+                                <th>範例</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 特徵轉換</strong></td>
+                                <td><span class="english-term">Transformation</span></td>
+                                <td>改變特徵的表示形式</td>
+                                <td>對數轉換、標準化、正規化</td>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 特徵萃取</strong></td>
+                                <td><span class="english-term">Extraction</span></td>
+                                <td>從原始資料中提取新特徵</td>
+                                <td>PCA、文本的 TF-IDF</td>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 特徵選擇</strong></td>
+                                <td><span class="english-term">Selection</span></td>
+                                <td>選擇最相關的特徵子集</td>
+                                <td>過濾法、包裝法、嵌入法</td>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 特徵建構</strong></td>
+                                <td><span class="english-term">Construction</span></td>
+                                <td>組合現有特徵創造新特徵</td>
+                                <td>交互特徵、多項式特徵</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 特徵轉換的常見方法：</strong><br>
+                        • <span class="highlight">標準化</span>（<span class="english-term">Standardization</span>）：轉換為均值0、標準差1<br>
+                        • <span class="highlight">正規化</span>（<span class="english-term">Normalization</span>）：縮放到 [0,1] 或 [-1,1]<br>
+                        • <span class="highlight">對數轉換</span>：處理偏態分佈<br>
+                        • <span class="highlight">編碼</span>：類別變數轉數值（<span class="english-term">One-Hot</span>、<span class="english-term">Label Encoding</span>）<br><br>
+                        
+                        <strong>🔍 特徵選擇的三大方法：</strong><br>
+                        <table>
+                            <tr>
+                                <th>方法類型</th>
+                                <th>特點</th>
+                                <th>代表技術</th>
+                            </tr>
+                            <tr>
+                                <td><strong>過濾法</strong></td>
+                                <td>獨立於模型，計算快速</td>
+                                <td>相關係數、卡方檢定、互資訊</td>
+                            </tr>
+                            <tr>
+                                <td><strong>包裝法</strong></td>
+                                <td>依賴模型性能，計算慢</td>
+                                <td>遞迴特徵消除（RFE）</td>
+                            </tr>
+                            <tr>
+                                <td><strong>嵌入法</strong></td>
+                                <td>模型訓練中自動選擇</td>
+                                <td>Lasso、決策樹特徵重要性</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>💡 為什麼特徵工程重要？</strong><br>
+                        業界有句名言：「<span class="highlight">資料和特徵決定了機器學習的上限，而模型和演算法只是逼近這個上限而已</span>」。好的特徵工程可以：<br>
+                        • 🎯 提升模型準確性<br>
+                        • ⚡ 加快訓練速度<br>
+                        • 🧹 降低過擬合風險<br>
+                        • 💡 增強模型可解釋性
+                    </div>
+                </div>
+            </div>
+
+            <!-- L22 Question 4 -->
+            <div class="question-card" data-subject="subject2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L22-4</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">下拉網路商城的老闆擬透過<span class="chinese-term">機器學習</span>的方式，利用過往的產品銷售資料，預測下一季的產品銷售數量，以調整現有的庫存水位。下列哪一個類型的模型，比較適合應用在老闆期望的預測目標？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="chinese-term">決策樹分類器</span>（<span class="english-term">Decision Tree Classifier</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="acronym-term">K-means</span> <span class="chinese-term">分群</span>（<span class="english-term">K-means Clustering</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="chinese-term">主成份分析</span>（<span class="english-term">Principal Component Analysis</span>, <span class="acronym-term">PCA</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="highlight"><span class="chinese-term">線性迴歸</span>（<span class="english-term">Linear Regression</span>）</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：D</strong><br><br>
+                        預測<span class="highlight">銷售數量</span>（連續數值）屬於<span class="highlight">迴歸問題</span>，應使用<span class="chinese-term">迴歸模型</span>，而非分類、分群或降維模型。<br><br>
+                        
+                        <strong>🎯 機器學習任務類型：</strong><br>
+                        <table>
+                            <tr>
+                                <th>任務類型</th>
+                                <th>目標</th>
+                                <th>輸出類型</th>
+                                <th>代表算法</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 迴歸</strong></td>
+                                <td>預測連續數值</td>
+                                <td>數值（如銷售量、價格）</td>
+                                <td>線性迴歸、決策樹迴歸</td>
+                            </tr>
+                            <tr>
+                                <td><strong>❌ 分類</strong></td>
+                                <td>預測類別標籤</td>
+                                <td>類別（如是/否、A/B/C）</td>
+                                <td>邏輯迴歸、決策樹分類器</td>
+                            </tr>
+                            <tr>
+                                <td><strong>❌ 分群</strong></td>
+                                <td>發現資料群組</td>
+                                <td>群組標籤（無監督）</td>
+                                <td>K-means、DBSCAN</td>
+                            </tr>
+                            <tr>
+                                <td><strong>❌ 降維</strong></td>
+                                <td>減少特徵數量</td>
+                                <td>低維特徵空間</td>
+                                <td>PCA、t-SNE</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>📊 各選項分析：</strong><br>
+                        <strong>選項 A - 決策樹分類器：</strong><br>
+                        • ❌ 用於<span class="highlight">分類任務</span>（預測類別）<br>
+                        • 輸出：離散類別標籤<br>
+                        • 範例：預測客戶是否會流失（是/否）<br><br>
+                        
+                        <strong>選項 B - K-means 分群：</strong><br>
+                        • ❌ 用於<span class="highlight">無監督學習</span>（發現資料結構）<br>
+                        • 輸出：群組標籤<br>
+                        • 範例：客戶分群、市場區隔<br><br>
+                        
+                        <strong>選項 C - 主成份分析（PCA）：</strong><br>
+                        • ❌ 用於<span class="highlight">降維</span>（減少特徵數量）<br>
+                        • 輸出：低維度特徵<br>
+                        • 範例：視覺化高維資料、去除冗餘特徵<br><br>
+                        
+                        <strong>選項 D - 線性迴歸：</strong><br>
+                        • ✅ 用於<span class="highlight">迴歸任務</span>（預測連續數值）<br>
+                        • 輸出：連續數值<br>
+                        • 範例：預測銷售量、房價、溫度<br><br>
+                        
+                        <strong>🛒 銷售預測的進階模型：</strong><br>
+                        除了線性迴歸，實務上還可考慮：<br>
+                        • <span class="highlight">時間序列模型</span>：<span class="acronym-term">ARIMA</span>、<span class="english-term">Prophet</span><br>
+                        • <span class="highlight">樹模型</span>：<span class="english-term">Random Forest Regressor</span>、<span class="english-term">XGBoost</span><br>
+                        • <span class="highlight">深度學習</span>：<span class="acronym-term">LSTM</span>、<span class="english-term">Transformer</span><br><br>
+                        
+                        <strong>💡 實務建議：</strong><br>
+                        銷售預測通常需要考慮：<br>
+                        • 📅 <span class="highlight">季節性</span>：節慶、促銷活動<br>
+                        • 📈 <span class="highlight">趨勢</span>：長期增長或衰退<br>
+                        • 🔄 <span class="highlight">週期性</span>：週末、月底效應<br>
+                        • 🎯 <span class="highlight">外部因素</span>：經濟指標、競爭對手
+                    </div>
+                </div>
+            </div>
+
+            <!-- L22 Question 5 -->
+            <div class="question-card" data-subject="subject2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L22-5</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">對於低結構化的文本或圖像資料，下列哪一種<span class="chinese-term">特徵工程</span>（<span class="english-term">Feature Engineering</span>）方法最為適用？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="chinese-term">特徵改善</span>（<span class="english-term">Feature Improvement</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="chinese-term">特徵建構</span>（<span class="english-term">Feature Construction</span>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="highlight"><span class="chinese-term">特徵學習</span>（<span class="english-term">Feature Learning</span>）</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="chinese-term">特徵選擇</span>（<span class="english-term">Feature Selection</span>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：C</strong><br><br>
+                        對於<span class="highlight">低結構化資料</span>（如文本、圖像、音訊），<span class="chinese-term">特徵學習</span>（<span class="english-term">Feature Learning</span>）能<span class="highlight">自動學習</span>有效的特徵表示，無需人工設計。<br><br>
+                        
+                        <strong>📊 資料結構化程度與特徵工程：</strong><br>
+                        <table>
+                            <tr>
+                                <th>資料類型</th>
+                                <th>結構化程度</th>
+                                <th>適合方法</th>
+                                <th>範例</th>
+                            </tr>
+                            <tr>
+                                <td><strong>結構化資料</strong></td>
+                                <td>高</td>
+                                <td>特徵選擇、特徵建構</td>
+                                <td>表格資料、數值資料</td>
+                            </tr>
+                            <tr>
+                                <td><strong>半結構化資料</strong></td>
+                                <td>中</td>
+                                <td>特徵萃取 + 特徵學習</td>
+                                <td>JSON、XML、日誌</td>
+                            </tr>
+                            <tr>
+                                <td><strong>非結構化資料</strong></td>
+                                <td>低</td>
+                                <td>✅ 特徵學習</td>
+                                <td>文本、圖像、音訊、影片</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🧠 特徵學習的核心技術：</strong><br>
+                        <table>
+                            <tr>
+                                <th>資料類型</th>
+                                <th>特徵學習方法</th>
+                                <th>代表模型</th>
+                            </tr>
+                            <tr>
+                                <td><strong>📝 文本</strong></td>
+                                <td>詞嵌入、語言模型</td>
+                                <td>Word2Vec、BERT、GPT</td>
+                            </tr>
+                            <tr>
+                                <td><strong>🖼️ 圖像</strong></td>
+                                <td>卷積神經網路</td>
+                                <td>CNN、ResNet、ViT</td>
+                            </tr>
+                            <tr>
+                                <td><strong>🎵 音訊</strong></td>
+                                <td>頻譜分析、深度學習</td>
+                                <td>WaveNet、Wav2Vec</td>
+                            </tr>
+                            <tr>
+                                <td><strong>🎬 影片</strong></td>
+                                <td>時空特徵學習</td>
+                                <td>3D CNN、Video Transformer</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 特徵學習 vs 傳統特徵工程：</strong><br>
+                        <table>
+                            <tr>
+                                <th>比較項目</th>
+                                <th>傳統特徵工程</th>
+                                <th>特徵學習</th>
+                            </tr>
+                            <tr>
+                                <td><strong>人工參與</strong></td>
+                                <td>需要領域專家設計</td>
+                                <td>✅ 自動學習</td>
+                            </tr>
+                            <tr>
+                                <td><strong>適用資料</strong></td>
+                                <td>結構化資料</td>
+                                <td>✅ 非結構化資料</td>
+                            </tr>
+                            <tr>
+                                <td><strong>特徵品質</strong></td>
+                                <td>依賴專家經驗</td>
+                                <td>✅ 資料驅動，更客觀</td>
+                            </tr>
+                            <tr>
+                                <td><strong>計算成本</strong></td>
+                                <td>低</td>
+                                <td>❌ 高（需要大量資料和算力）</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>💡 實例說明：</strong><br>
+                        <strong>文本特徵學習：</strong><br>
+                        • 傳統方法：人工設計 <span class="acronym-term">TF-IDF</span>、<span class="english-term">N-gram</span><br>
+                        • 特徵學習：<span class="english-term">Word2Vec</span> 自動學習詞向量，捕捉語義關係<br>
+                        &nbsp;&nbsp;例如：king - man + woman ≈ queen<br><br>
+                        
+                        <strong>圖像特徵學習：</strong><br>
+                        • 傳統方法：人工設計 <span class="acronym-term">SIFT</span>、<span class="acronym-term">HOG</span> 特徵<br>
+                        • 特徵學習：<span class="acronym-term">CNN</span> 自動學習邊緣、紋理、物件等層次化特徵<br><br>
+                        
+                        <strong>🚀 為什麼特徵學習適合非結構化資料？</strong><br>
+                        • 🎯 <span class="highlight">自動化</span>：無需人工設計複雜特徵<br>
+                        • 📈 <span class="highlight">可擴展</span>：能處理高維度、複雜的資料<br>
+                        • 🧠 <span class="highlight">端到端</span>：從原始資料直接學習到預測<br>
+                        • 💪 <span class="highlight">性能優越</span>：在影像、語音、文本任務上超越傳統方法
+                    </div>
+                </div>
+            </div>
+
+            <h2>🔬 科目三: 機器學習技術與應用</h2>
+
+            <!-- L23 Question 1 -->
+            <div class="question-card" data-subject="subject3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L23-1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在 <span class="english-term">MapReduce</span> 計算框架中，關於 <span class="english-term">Map</span> 和 <span class="english-term">Reduce</span> 所負責處理資料的問題，下列敘述何者正確？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight"><span class="english-term">Map</span>：一組資料映射成另一組資料；<span class="english-term">Reduce</span>：統合與歸納資料</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="english-term">Map</span>：地圖式的搜索資料；<span class="english-term">Reduce</span>：統合與歸納資料</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="english-term">Map</span>：一組資料映射成另一組資料；<span class="english-term">Reduce</span>：過濾不符合的資料</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="english-term">Map</span>：一組資料映射成另一組資料；<span class="english-term">Reduce</span>：生成更多的資料</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="english-term">MapReduce</span> 是<span class="highlight">分散式運算框架</span>的經典模型，由 <span class="english-term">Google</span> 提出，用於處理<span class="highlight">大規模資料集</span>。<br><br>
+                        
+                        <strong>🔄 MapReduce 運作流程：</strong><br>
+                        <table>
+                            <tr>
+                                <th>階段</th>
+                                <th>功能</th>
+                                <th>輸入</th>
+                                <th>輸出</th>
+                            </tr>
+                            <tr>
+                                <td><strong>1️⃣ Map</strong></td>
+                                <td>將資料<span class="highlight">映射轉換</span></td>
+                                <td>原始資料</td>
+                                <td>鍵值對 (key, value)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2️⃣ Shuffle</strong></td>
+                                <td>依 key 分組排序</td>
+                                <td>Map 輸出</td>
+                                <td>分組後的鍵值對</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3️⃣ Reduce</strong></td>
+                                <td><span class="highlight">統合歸納</span>資料</td>
+                                <td>分組後的資料</td>
+                                <td>最終結果</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>📝 經典範例：字數統計（Word Count）</strong><br>
+                        <table>
+                            <tr>
+                                <th>階段</th>
+                                <th>處理內容</th>
+                            </tr>
+                            <tr>
+                                <td><strong>輸入</strong></td>
+                                <td>"Hello World Hello AI"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Map 階段</strong></td>
+                                <td>(Hello, 1), (World, 1), (Hello, 1), (AI, 1)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Shuffle 階段</strong></td>
+                                <td>(Hello, [1, 1]), (World, [1]), (AI, [1])</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reduce 階段</strong></td>
+                                <td>(Hello, 2), (World, 1), (AI, 1)</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 Map 和 Reduce 的核心功能：</strong><br>
+                        <strong>Map 階段：</strong><br>
+                        • ✅ <span class="highlight">映射轉換</span>：將輸入資料轉換為鍵值對<br>
+                        • ✅ <span class="highlight">並行處理</span>：多個 Map 任務同時執行<br>
+                        • ✅ <span class="highlight">資料分散</span>：將大資料集分割處理<br><br>
+                        
+                        <strong>Reduce 階段：</strong><br>
+                        • ✅ <span class="highlight">統合歸納</span>：將相同 key 的 value 聚合<br>
+                        • ✅ <span class="highlight">彙總計算</span>：執行求和、計數、平均等操作<br>
+                        • ✅ <span class="highlight">結果輸出</span>：產生最終結果<br><br>
+                        
+                        <strong>💡 MapReduce 的應用場景：</strong><br>
+                        • 📊 <span class="highlight">資料統計</span>：字數統計、日誌分析<br>
+                        • 🔍 <span class="highlight">搜尋引擎</span>：建立倒排索引<br>
+                        • 📈 <span class="highlight">資料探勘</span>：關聯規則挖掘<br>
+                        • 🧮 <span class="highlight">機器學習</span>：分散式訓練<br><br>
+                        
+                        <strong>🚀 MapReduce 的優勢：</strong><br>
+                        • ⚡ <span class="highlight">可擴展性</span>：輕鬆處理 PB 級資料<br>
+                        • 🛡️ <span class="highlight">容錯性</span>：自動處理節點故障<br>
+                        • 🔧 <span class="highlight">簡單性</span>：開發者只需實作 Map 和 Reduce 函數<br>
+                        • 🌐 <span class="highlight">分散式</span>：充分利用叢集資源<br><br>
+                        
+                        <strong>🔧 相關技術生態：</strong><br>
+                        • <span class="english-term">Hadoop</span>：開源 MapReduce 實作<br>
+                        • <span class="english-term">Spark</span>：記憶體運算，比 MapReduce 快 10-100 倍<br>
+                        • <span class="english-term">Hive</span>：基於 MapReduce 的 SQL 查詢引擎
+                    </div>
+                </div>
+            </div>
+
+            <!-- L23 Question 2 -->
+            <div class="question-card" data-subject="subject3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L23-2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列何種<span class="chinese-term">卷積神經網路</span>（<span class="english-term">Convolutional Neural Networks</span>, <span class="acronym-term">CNN</span>）是將卷積層<span class="highlight">加寬</span>而非加深？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="acronym-term">R-CNN</span></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="highlight"><span class="english-term">Inception</span></span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="english-term">ResNet</span></div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="english-term">VGG19</span></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：B</strong><br><br>
+                        <span class="english-term">Inception</span> 網路（又稱 <span class="english-term">GoogLeNet</span>）的核心創新是<span class="highlight">加寬網路</span>而非加深，透過 <span class="english-term">Inception Module</span> 在<span class="highlight">同一層並行使用多種尺寸的卷積核</span>。<br><br>
+                        
+                        <strong>🏗️ CNN 架構設計策略：</strong><br>
+                        <table>
+                            <tr>
+                                <th>網路架構</th>
+                                <th>設計策略</th>
+                                <th>核心特點</th>
+                                <th>層數</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ Inception</strong></td>
+                                <td><span class="highlight">加寬</span></td>
+                                <td>並行多尺度卷積</td>
+                                <td>22 層</td>
+                            </tr>
+                            <tr>
+                                <td><strong>VGG19</strong></td>
+                                <td>加深</td>
+                                <td>堆疊 3×3 卷積</td>
+                                <td>19 層</td>
+                            </tr>
+                            <tr>
+                                <td><strong>ResNet</strong></td>
+                                <td>加深 + 殘差連接</td>
+                                <td>跳躍連接解決梯度消失</td>
+                                <td>50-152 層</td>
+                            </tr>
+                            <tr>
+                                <td><strong>R-CNN</strong></td>
+                                <td>物件偵測</td>
+                                <td>區域提議 + CNN</td>
+                                <td>-</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🔍 Inception Module 結構：</strong><br>
+                        <table>
+                            <tr>
+                                <th>並行分支</th>
+                                <th>卷積核大小</th>
+                                <th>作用</th>
+                            </tr>
+                            <tr>
+                                <td><strong>分支 1</strong></td>
+                                <td>1×1 卷積</td>
+                                <td>捕捉點特徵、降維</td>
+                            </tr>
+                            <tr>
+                                <td><strong>分支 2</strong></td>
+                                <td>1×1 → 3×3 卷積</td>
+                                <td>捕捉中等尺度特徵</td>
+                            </tr>
+                            <tr>
+                                <td><strong>分支 3</strong></td>
+                                <td>1×1 → 5×5 卷積</td>
+                                <td>捕捉大尺度特徵</td>
+                            </tr>
+                            <tr>
+                                <td><strong>分支 4</strong></td>
+                                <td>3×3 池化 → 1×1 卷積</td>
+                                <td>保留空間資訊</td>
+                            </tr>
+                        </table>
+                        最後將四個分支的輸出<span class="highlight">串接</span>（<span class="english-term">Concatenate</span>）在一起。<br><br>
+                        
+                        <strong>🎯 為什麼要「加寬」？</strong><br>
+                        • 🔍 <span class="highlight">多尺度特徵</span>：同時捕捉不同大小的物件<br>
+                        • 💡 <span class="highlight">增加表達能力</span>：不增加深度也能提升性能<br>
+                        • ⚡ <span class="highlight">計算效率</span>：1×1 卷積降維減少計算量<br>
+                        • 🎨 <span class="highlight">特徵豐富性</span>：多種卷積核提供多樣化特徵<br><br>
+                        
+                        <strong>📊 各架構的演進：</strong><br>
+                        <table>
+                            <tr>
+                                <th>年份</th>
+                                <th>架構</th>
+                                <th>ImageNet Top-5 錯誤率</th>
+                                <th>創新點</th>
+                            </tr>
+                            <tr>
+                                <td>2012</td>
+                                <td>AlexNet</td>
+                                <td>16.4%</td>
+                                <td>首個深度 CNN</td>
+                            </tr>
+                            <tr>
+                                <td>2014</td>
+                                <td>VGG</td>
+                                <td>7.3%</td>
+                                <td>小卷積核堆疊</td>
+                            </tr>
+                            <tr>
+                                <td>2014</td>
+                                <td><strong>Inception</strong></td>
+                                <td>6.7%</td>
+                                <td>✅ 多尺度並行</td>
+                            </tr>
+                            <tr>
+                                <td>2015</td>
+                                <td>ResNet</td>
+                                <td>3.6%</td>
+                                <td>殘差連接</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>💡 Inception 的版本演進：</strong><br>
+                        • <span class="english-term">Inception v1</span>（GoogLeNet）：基礎版本<br>
+                        • <span class="english-term">Inception v2/v3</span>：加入批次正規化、分解卷積<br>
+                        • <span class="english-term">Inception v4</span>：結合 ResNet 的殘差連接<br>
+                        • <span class="english-term">Inception-ResNet</span>：混合架構<br><br>
+                        
+                        <strong>🚀 實務應用：</strong><br>
+                        Inception 架構特別適合：<br>
+                        • 🖼️ 需要處理<span class="highlight">多尺度物件</span>的影像辨識<br>
+                        • ⚡ 對<span class="highlight">計算資源有限制</span>的場景<br>
+                        • 🎯 需要<span class="highlight">平衡準確性和效率</span>的應用
+                    </div>
+                </div>
+            </div>
+
+            <!-- L23 Question 3 -->
+            <div class="question-card" data-subject="subject3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L23-3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">當模型的<span class="chinese-term">訓練誤差</span>（<span class="english-term">Training Error</span>）低、但<span class="chinese-term">測試誤差</span>（<span class="english-term">Test Error</span>）很大時，這通常是在訓練過程中產生下列哪一種情況？</div>
+                <div class="options-container">
+                    <div class="option-item" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的<span class="chinese-term">泛化能力</span>強</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="highlight">模型出現<span class="chinese-term">過度擬合</span>（<span class="english-term">Overfitting</span>）</span></div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型出現<span class="chinese-term">欠擬合</span>（<span class="english-term">Underfitting</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">訓練資料和測試資料之間沒有相關性</div>
+                    </div>
+                </div>
+
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：B</strong><br><br>
+                        <span class="highlight">訓練誤差低、測試誤差高</span>是<span class="chinese-term">過度擬合</span>（<span class="english-term">Overfitting</span>）的典型特徵，表示模型<span class="highlight">記住了訓練資料的細節和雜訊</span>，但無法泛化到新資料。<br><br>
+                        
+                        <strong>📊 過度擬合 vs 欠擬合：</strong><br>
+                        <table>
+                            <tr>
+                                <th>情況</th>
+                                <th>訓練誤差</th>
+                                <th>測試誤差</th>
+                                <th>原因</th>
+                                <th>解決方法</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ 過度擬合</strong></td>
+                                <td>❌ 很低</td>
+                                <td>❌ 很高</td>
+                                <td>模型太複雜</td>
+                                <td>正規化、Dropout、更多資料</td>
+                            </tr>
+                            <tr>
+                                <td><strong>欠擬合</strong></td>
+                                <td>❌ 很高</td>
+                                <td>❌ 很高</td>
+                                <td>模型太簡單</td>
+                                <td>增加模型複雜度、更多特徵</td>
+                            </tr>
+                            <tr>
+                                <td><strong>理想狀態</strong></td>
+                                <td>✅ 低</td>
+                                <td>✅ 低</td>
+                                <td>模型適中</td>
+                                <td>-</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 過度擬合的成因：</strong><br>
+                        • 🧠 <span class="highlight">模型過於複雜</span>：參數太多，學習能力太強<br>
+                        • 📉 <span class="highlight">訓練資料太少</span>：無法代表真實分佈<br>
+                        • ⏰ <span class="highlight">訓練時間過長</span>：過度學習訓練集的雜訊<br>
+                        • 🎲 <span class="highlight">缺乏正規化</span>：沒有約束模型複雜度<br><br>
+                        
+                        <strong>🛡️ 防止過度擬合的方法：</strong><br>
+                        <table>
+                            <tr>
+                                <th>方法</th>
+                                <th>原理</th>
+                                <th>適用場景</th>
+                            </tr>
+                            <tr>
+                                <td><strong>正規化</strong></td>
+                                <td>L1/L2 懲罰大權重</td>
+                                <td>線性模型、神經網路</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dropout</strong></td>
+                                <td>隨機丟棄神經元</td>
+                                <td>深度神經網路</td>
+                            </tr>
+                            <tr>
+                                <td><strong>早停法</strong></td>
+                                <td>監控驗證誤差提前停止</td>
+                                <td>所有迭代訓練</td>
+                            </tr>
+                            <tr>
+                                <td><strong>資料增強</strong></td>
+                                <td>增加訓練資料多樣性</td>
+                                <td>影像、文本任務</td>
+                            </tr>
+                            <tr>
+                                <td><strong>集成學習</strong></td>
+                                <td>組合多個模型</td>
+                                <td>所有模型類型</td>
+                            </tr>
+                        </table><br>
+
+                        <strong>📈 訓練曲線診斷：</strong><br>
+                        <table>
+                            <tr>
+                                <th>曲線特徵</th>
+                                <th>診斷結果</th>
+                                <th>建議</th>
+                            </tr>
+                            <tr>
+                                <td>訓練誤差↓ 測試誤差↓</td>
+                                <td>✅ 正常學習</td>
+                                <td>繼續訓練</td>
+                            </tr>
+                            <tr>
+                                <td>訓練誤差↓ 測試誤差↑</td>
+                                <td>❌ 過度擬合</td>
+                                <td>停止訓練、加正規化</td>
+                            </tr>
+                            <tr>
+                                <td>訓練誤差高且平穩</td>
+                                <td>❌ 欠擬合</td>
+                                <td>增加模型複雜度</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>💡 實務建議：</strong><br>
+                        • 📊 使用<span class="highlight">驗證集</span>監控過度擬合<br>
+                        • 🔍 觀察<span class="highlight">學習曲線</span>及早發現問題<br>
+                        • ⚖️ 在<span class="highlight">模型複雜度和泛化能力</span>間取得平衡<br>
+                        • 🎯 優先考慮<span class="highlight">增加訓練資料</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- L23 Question 4 -->
+            <div class="question-card" data-subject="subject3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#L23-4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">下列哪一種指標通常用於評估<span class="chinese-term">迴歸模型</span>的性能？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight">R²</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><span class="acronym-term">F1</span>-分數</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><span class="chinese-term">曲線下面積</span>（<span class="acronym-term">AUC</span>）</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><span class="english-term">Precision</span></div>
+                    </div>
+                </div>
+
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="highlight">R²</span>（<span class="english-term">R-squared</span>，<span class="chinese-term">決定係數</span>）是評估<span class="highlight">迴歸模型</span>性能的核心指標，表示模型能解釋的變異比例。<br><br>
+                        
+                        <strong>📊 迴歸模型評估指標：</strong><br>
+                        <table>
+                            <tr>
+                                <th>指標</th>
+                                <th>全名</th>
+                                <th>公式</th>
+                                <th>範圍</th>
+                                <th>越好</th>
+                            </tr>
+                            <tr>
+                                <td><strong>✅ R²</strong></td>
+                                <td><span class="english-term">R-squared</span></td>
+                                <td>1 - (SSres / SStot)</td>
+                                <td>(-∞, 1]</td>
+                                <td>越接近 1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MAE</strong></td>
+                                <td><span class="english-term">Mean Absolute Error</span></td>
+                                <td>Σ|y - ŷ| / n</td>
+                                <td>[0, +∞)</td>
+                                <td>越小</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MSE</strong></td>
+                                <td><span class="english-term">Mean Squared Error</span></td>
+                                <td>Σ(y - ŷ)² / n</td>
+                                <td>[0, +∞)</td>
+                                <td>越小</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RMSE</strong></td>
+                                <td><span class="english-term">Root Mean Squared Error</span></td>
+                                <td>√MSE</td>
+                                <td>[0, +∞)</td>
+                                <td>越小</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🎯 R² 的解讀：</strong><br>
+                        • <span class="highlight">R² = 1.0</span>：完美預測，所有變異都被解釋<br>
+                        • <span class="highlight">R² = 0.8-0.9</span>：優秀，大部分變異被解釋<br>
+                        • <span class="highlight">R² = 0.5-0.8</span>：良好，一半以上變異被解釋<br>
+                        • <span class="highlight">R² = 0.0</span>：模型等同於預測平均值<br>
+                        • <span class="highlight">R² < 0</span>：模型比預測平均值還差<br><br>
+                        
+                        <strong>❌ 分類模型評估指標（不適用於迴歸）：</strong><br>
+                        <table>
+                            <tr>
+                                <th>指標</th>
+                                <th>用途</th>
+                                <th>適用任務</th>
+                            </tr>
+                            <tr>
+                                <td><strong>F1-分數</strong></td>
+                                <td>精確率和召回率的調和平均</td>
+                                <td>❌ 分類任務</td>
+                            </tr>
+                            <tr>
+                                <td><strong>AUC</strong></td>
+                                <td>ROC 曲線下面積</td>
+                                <td>❌ 分類任務</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precision</strong></td>
+                                <td>預測為正例中真正為正例的比例</td>
+                                <td>❌ 分類任務</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recall</strong></td>
+                                <td>實際正例中被正確預測的比例</td>
+                                <td>❌ 分類任務</td>
+                            </tr>
+                        </table><br>
+
+                        <strong>🔍 各指標的特點比較：</strong><br>
+                        <strong>MAE（平均絕對誤差）：</strong><br>
+                        • ✅ 容易理解，單位與目標變數相同<br>
+                        • ✅ 對離群值不敏感<br>
+                        • ❌ 不可微分（優化較困難）<br><br>
+                        
+                        <strong>MSE（均方誤差）：</strong><br>
+                        • ✅ 可微分，適合梯度下降<br>
+                        • ✅ 懲罰大誤差<br>
+                        • ❌ 對離群值敏感<br>
+                        • ❌ 單位是目標變數的平方<br><br>
+                        
+                        <strong>RMSE（均方根誤差）：</strong><br>
+                        • ✅ 單位與目標變數相同<br>
+                        • ✅ 懲罰大誤差<br>
+                        • ❌ 對離群值敏感<br><br>
+                        
+                        <strong>R²（決定係數）：</strong><br>
+                        • ✅ 標準化指標，易於比較不同模型<br>
+                        • ✅ 直觀表示解釋能力<br>
+                        • ❌ 可能被特徵數量影響（使用調整後 R² 改善）<br><br>
+                        
+                        <strong>💡 實務選擇建議：</strong><br>
+                        • 🎯 <span class="highlight">一般情況</span>：使用 R² 和 RMSE 組合<br>
+                        • 📊 <span class="highlight">有離群值</span>：優先使用 MAE<br>
+                        • 🔬 <span class="highlight">科學研究</span>：報告 R²、RMSE、MAE<br>
+                        • 💼 <span class="highlight">業務溝通</span>：使用 MAE（最直觀）
+                    </div>
+                </div>
+            </div>
+
+            <!-- L23 Question 5 -->
+            <div class="question-card" data-subject="subject3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#L23-5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">近年來，<span class="chinese-term">深度學習</span>研究與應用蓬勃發展，但數據本身可能存在什麼潛在問題？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><span class="highlight">數據標註品質鮮少被討論，但它卻直接影響模型性能</span></div>
+                    </div>
+                    <div class="option-item" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據品質是完美可信賴的</div>
+                    </div>
+                    <div class="option-item" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">大部分情況下，數據不存在類別不平衡問題</div>
+                    </div>
+                    <div class="option-item" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據不需要領域知識的輔助</div>
+                    </div>
+                </div>
+
+                <div class="explanation-container">
+                    <div class="explanation-header">💡 答案解析</div>
+                    <div class="explanation-content">
+                        <strong>正確答案：A</strong><br><br>
+                        <span class="highlight">數據標註品質</span>是深度學習中<span class="highlight">最容易被忽視但影響最大</span>的因素之一。業界有句名言：「<span class="highlight">Garbage In, Garbage Out</span>」（垃圾進，垃圾出）。<br><br>
+                        
+                        <strong>🎯 數據標註的常見問題：</strong><br>
+                        <table>
+                            <tr>
+                                <th>問題類型</th>
+                                <th>說明</th>
+                                <th>影響</th>
+                                <th>解決方案</th>
+                            </tr>
+                            <tr>
+                                <td><strong>標註錯誤</strong></td>
+                                <td>人為失誤導致標籤錯誤</td>
+                                <td>模型學到錯誤模式</td>
+                                <td>多人標註、交叉驗證</td>
+                            </tr>
+                            <tr>
+                                <td><strong>標註不一致</strong></td>
+                                <td>不同標註者標準不同</td>
+                                <td>模型混淆</td>
+                                <td>制定明確標註規範</td>
+                            </tr>
+                            <tr>
+                                <td><strong>標註偏見</strong></td>
+                                <td>標註者主觀偏好</td>
+                                <td>模型產生偏見</td>
+                                <td>多樣化標註團隊</td>
+                            </tr>
+                            <tr>
+                                <td><strong>標註不完整</strong></td>
+                                <td>遺漏重要資訊</td>
+                                <td>模型性能受限</td>
+                                <td>詳細標註指南</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>📊 數據品質的其他常見問題：</strong><br>
+                        <strong>1️⃣ 類別不平衡：</strong><br>
+                        • 問題：某些類別樣本數遠多於其他類別<br>
+                        • 影響：模型偏向多數類別<br>
+                        • 解決：過採樣、欠採樣、<span class="acronym-term">SMOTE</span>、類別權重調整<br><br>
+                        
+                        <strong>2️⃣ 數據偏見：</strong><br>
+                        • 問題：訓練數據不能代表真實世界分佈<br>
+                        • 影響：模型在特定群體表現差<br>
+                        • 解決：多樣化數據收集、公平性評估<br><br>
+                        
+                        <strong>3️⃣ 數據洩漏：</strong><br>
+                        • 問題：測試資訊洩漏到訓練集<br>
+                        • 影響：過度樂觀的性能評估<br>
+                        • 解決：嚴格分離訓練/測試集、時間序列切分<br><br>
+                        
+                        <strong>4️⃣ 缺失值：</strong><br>
+                        • 問題：資料不完整<br>
+                        • 影響：模型無法處理或性能下降<br>
+                        • 解決：填補、刪除、使用能處理缺失值的模型<br><br>
+
+                        <strong>💡 提升數據標註品質的方法：</strong><br>
+                        <table>
+                            <tr>
+                                <th>方法</th>
+                                <th>說明</th>
+                                <th>成本</th>
+                            </tr>
+                            <tr>
+                                <td><strong>多人標註</strong></td>
+                                <td>同一資料由多人標註，取共識</td>
+                                <td>高</td>
+                            </tr>
+                            <tr>
+                                <td><strong>專家審核</strong></td>
+                                <td>領域專家檢查標註結果</td>
+                                <td>高</td>
+                            </tr>
+                            <tr>
+                                <td><strong>標註指南</strong></td>
+                                <td>制定詳細的標註規範和範例</td>
+                                <td>中</td>
+                            </tr>
+                            <tr>
+                                <td><strong>標註工具</strong></td>
+                                <td>使用輔助工具提高效率和一致性</td>
+                                <td>中</td>
+                            </tr>
+                            <tr>
+                                <td><strong>主動學習</strong></td>
+                                <td>優先標註對模型最有價值的樣本</td>
+                                <td>低</td>
+                            </tr>
+                        </table><br>
+                        
+                        <strong>🔍 為什麼領域知識很重要？</strong><br>
+                        • 🏥 <span class="highlight">醫療影像</span>：需要醫生標註病灶<br>
+                        • ⚖️ <span class="highlight">法律文本</span>：需要律師理解法律條文<br>
+                        • 🏭 <span class="highlight">工業檢測</span>：需要工程師識別瑕疵<br>
+                        • 🌐 <span class="highlight">多語言 NLP</span>：需要母語者標註<br><br>
+                        
+                        <strong>📈 數據品質對模型性能的影響：</strong><br>
+                        研究顯示：<br>
+                        • 標註錯誤率 <span class="highlight">5%</span> 可能導致模型準確率下降 <span class="highlight">10-20%</span><br>
+                        • 提升數據品質的投資報酬率通常<span class="highlight">高於</span>改進模型架構<br>
+                        • <span class="highlight">高品質小數據集</span>往往優於<span class="highlight">低品質大數據集</span><br><br>
+                        
+                        <strong>🎯 實務建議：</strong><br>
+                        • 📊 定期<span class="highlight">審計數據品質</span><br>
+                        • 🔄 建立<span class="highlight">標註品質回饋機制</span><br>
+                        • 💰 在數據標註上<span class="highlight">投入足夠資源</span><br>
+                        • 🤝 與<span class="highlight">領域專家密切合作</span><br>
+                        • 📝 記錄<span class="highlight">標註過程和決策</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="noResultsMessage">
+            <h3>😕 找不到符合條件的題目</h3>
+            <p>請嘗試調整篩選條件或搜尋關鍵字</p>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // JavaScript functionality
+        let allQuestions = [];
+        let filteredQuestions = [];
+        let explanationsVisible = true;
+        let answersVisible = true;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            allQuestions = Array.from(document.querySelectorAll('.question-card'));
+            filteredQuestions = [...allQuestions];
+
+            // Add click handlers
+            document.getElementById('searchButton').addEventListener('click', performSearch);
+            document.getElementById('searchInput').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            document.getElementById('subjectFilter').addEventListener('change', applyFilters);
+            document.getElementById('starFilter').addEventListener('change', applyFilters);
+
+            document.getElementById('toggleExplanations').addEventListener('click', toggleAllExplanations);
+            document.getElementById('toggleAnswers').addEventListener('click', toggleAllAnswers);
+
+            // 初始化時標記所有正確答案
+            allQuestions.forEach(card => {
+                const correctOptions = card.querySelectorAll('.option-item.correct');
+                correctOptions.forEach(option => {
+                    option.setAttribute('data-correct', 'true');
+                });
+            });
+
+            // Add click handlers for question content to toggle explanations
+            allQuestions.forEach(card => {
+                const questionContent = card.querySelector('.question-content');
+                const explanationContainer = card.querySelector('.explanation-container');
+
+                if (questionContent && explanationContainer) {
+                    questionContent.addEventListener('click', function () {
+                        const isVisible = explanationContainer.style.display === 'block';
+                        explanationContainer.style.display = isVisible ? 'none' : 'block';
+                    });
+                }
+            });
+
+            // Back to top functionality
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'flex';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+
+                // Update progress bar
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+
+            backToTop.addEventListener('click', function (e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+
+            if (searchTerm === '') {
+                filteredQuestions = [...allQuestions];
+            } else {
+                filteredQuestions = allQuestions.filter(card => {
+                    const text = card.textContent.toLowerCase();
+                    return text.includes(searchTerm);
+                });
+            }
+
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const subjectFilter = document.getElementById('subjectFilter').value;
+            const starFilter = document.getElementById('starFilter').value;
+
+            let filtered = [...filteredQuestions];
+
+            // Apply subject filter
+            if (subjectFilter !== 'all') {
+                filtered = filtered.filter(card => card.dataset.subject === subjectFilter);
+            }
+
+            // Apply star filter
+            if (starFilter !== 'all') {
+                filtered = filtered.filter(card => card.dataset.stars === starFilter);
+            }
+
+            // Show/hide questions
+            allQuestions.forEach(card => {
+                if (filtered.includes(card)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            if (filtered.length === 0) {
+                noResultsMessage.style.display = 'block';
+            } else {
+                noResultsMessage.style.display = 'none';
+            }
+        }
+
+        function filterBySubject(subject) {
+            document.getElementById('subjectFilter').value = subject;
+            applyFilters();
+        }
+
+        function toggleAllExplanations() {
+            const button = document.getElementById('toggleExplanations');
+            explanationsVisible = !explanationsVisible;
+
+            allQuestions.forEach(card => {
+                const explanationContainer = card.querySelector('.explanation-container');
+                if (explanationContainer) {
+                    explanationContainer.style.display = explanationsVisible ? 'block' : 'none';
+                }
+            });
+
+            button.textContent = explanationsVisible ? '🔒 隱藏全部解析' : '💡 顯示全部解析';
+        }
+
+        function toggleAllAnswers() {
+            const button = document.getElementById('toggleAnswers');
+            answersVisible = !answersVisible;
+
+            allQuestions.forEach(card => {
+                // 找到所有標記為正確答案的選項
+                const correctOptions = card.querySelectorAll('.option-item[data-correct="true"]');
+
+                correctOptions.forEach(option => {
+                    if (answersVisible) {
+                        // 顯示答案：添加correct類
+                        option.classList.add('correct');
+                    } else {
+                        // 隱藏答案：移除correct類
+                        option.classList.remove('correct');
+                    }
+                });
+            });
+
+            button.textContent = answersVisible ? '👁️ 隱藏全部答案' : '👁️ 顯示全部答案';
+        }
+    </script>
+</body>
+
+</html>

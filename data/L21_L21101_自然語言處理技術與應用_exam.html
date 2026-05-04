@@ -1,0 +1,3223 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L21101 自然語言處理技術與應用</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L21101 自然語言處理技術與應用</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">NLP基本概念與範疇</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">文本前處理技術</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">文本表示方法 (Text Representation)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">核心NLP任務 (Core NLP Tasks)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">語言模型 (Language Models)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">NLP應用場景</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">NLP評估指標</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">進階NLP模型與趨勢</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">自然語言處理</strong> (<strong
+                        style="color: red;">Natural Language Processing</strong>, <strong
+                        style="color: purple;">NLP</strong>) 的主要目標是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">設計更快的電腦硬體</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使電腦能夠<strong style="background-color: #ffff0030;">理解、解釋和生成人類語言</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">開發新的程式語言</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">提高資料庫查詢效率</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">自然語言處理</strong> (<strong
+                            style="color: purple;">NLP</strong>) 是<strong style="color: blue;">人工智慧</strong> (<strong
+                            style="color: purple;">AI</strong>) 和<strong
+                            style="color: blue;">語言學</strong>領域的一個分支，專注於實現電腦與人類自然語言之間的有效互動。其核心目標是賦予電腦<strong
+                            style="background-color: #ffff0030;">處理和「理解」人類語言的能力</strong>，包括文本和語音，進而能夠執行如<strong
+                            style="color: blue;">翻譯</strong>、<strong style="color: blue;">情感分析</strong>、<strong
+                            style="color: blue;">問答</strong>、<strong
+                            style="color: blue;">摘要生成</strong>等任務。其他選項描述的是電腦科學的不同領域。</div>
+                    <br>
+                    <img src="../image/NLP_NLU_NLG.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">文本前處理</strong> (<strong
+                        style="color: red;">Text Preprocessing</strong>) 過程中，「<strong
+                        style="color: blue;">斷詞</strong>」(<strong style="color: red;">Tokenization</strong>) 指的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">移除文本中不具重要意義的<strong style="color: blue;">停用詞</strong>（<strong
+                                style="color: red;">Stop Words</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將詞語還原為其基本或詞根形式（如<strong style="color: blue;">詞幹提取</strong> <strong
+                                style="color: red;">Stemming</strong> 或<strong style="color: blue;">詞形還原</strong>
+                            <strong style="color: red;">Lemmatization</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將連續的文本<strong
+                                style="background-color: #ffff0030;">切分成有意義的單元</strong>（如單字、詞語）的過程</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算文本中每個詞語出現的頻率</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">斷詞</strong> (<strong
+                            style="color: red;">Tokenization</strong>) 是 <strong style="color: purple;">NLP</strong>
+                        中最基礎且重要的<strong style="color: blue;">前處理</strong>步驟之一。它的目的是將原始的、連續的文本流（如句子或段落）<strong
+                            style="background-color: #ffff0030;">分解成一系列獨立的、有意義的單元</strong>，稱為「<strong
+                            style="color: blue;">詞符</strong>」(<strong style="color: red;">Tokens</strong>)。這些<strong
+                            style="color: blue;">詞符</strong>通常是單字、標點符號或數字。<strong
+                            style="color: blue;">斷詞</strong>為後續的文本分析（如<strong
+                            style="color: blue;">特徵提取</strong>、模型訓練）奠定了基礎。選項 A、B 分別描述<strong
+                            style="color: blue;">停用詞移除</strong>和<strong style="color: blue;">詞形還原</strong>/<strong
+                            style="color: blue;">詞幹提取</strong>，選項 D 描述的是<strong style="color: blue;">詞頻</strong>計算，這些都是
+                        <strong style="color: purple;">NLP</strong> <strong style="color: blue;">前處理</strong>或分析的不同步驟。
+                    </div>
+                    <br>
+                    <img src="../image/token.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">TF-IDF</strong> (<strong
+                        style="color: red;">Term Frequency-Inverse Document Frequency</strong>) 是一種常用的<strong
+                        style="color: blue;">文本表示</strong>方法，其中 <strong style="color: purple;">IDF</strong> (<strong
+                        style="color: red;">Inverse Document Frequency</strong>) 的主要作用是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算一個詞語在單一文件中出現的頻率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">降低在許多文件中都普遍出現的詞語的權重</strong>，<strong
+                                style="background-color: #ffff0030;">提高在少數文件中出現的詞語的權重</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將詞語轉換成固定長度的向量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算文件之間的相似度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">TF-IDF</strong>
+                        是一種統計方法，用以評估一個詞語對於一個文件集或一個<strong style="color: blue;">語料庫</strong>中的一份文件的重要程度。<strong
+                            style="color: purple;">TF</strong> (<strong style="color: red;">Term Frequency</strong>)
+                        指的是詞語在文件中的出現頻率。<strong style="color: purple;">IDF</strong> (<strong style="color: red;">Inverse
+                            Document Frequency</strong>) 則衡量詞語的普遍性。如果一個詞語在很多文件中都出現，它的 <strong
+                            style="color: purple;">IDF</strong> 值會較低；反之，如果只在少數文件中出現，<strong
+                            style="color: purple;">IDF</strong> 值會較高。<strong style="color: purple;">TF</strong> 和
+                        <strong style="color: purple;">IDF</strong> 相乘得到 <strong style="color: purple;">TF-IDF</strong>
+                        值，這個值可以突顯那些在特定文件中頻繁出現但在整個<strong
+                            style="color: blue;">語料庫</strong>中相對罕見的詞語，這些詞語通常更能代表該文件的內容。因此，<strong
+                            style="color: purple;">IDF</strong> 的主要作用是<strong
+                            style="background-color: #ffff0030;">降低普遍詞（如停用詞）的影響力，提升具有區別性詞語的重要性</strong>。
+                    </div>
+                    <br>
+                    <img src="../image/TF-IDF.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">NLP</strong> 任務中，「<strong
+                        style="color: blue;">命名實體識別</strong>」(<strong style="color: red;">Named Entity
+                        Recognition</strong>, <strong style="color: purple;">NER</strong>) 的目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">判斷文本所表達的情感是正面、負面還是中性</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">標註文本中每個詞語的<strong style="color: blue;">詞性</strong>（如名詞、動詞、形容詞）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">從文本中<strong
+                                style="background-color: #ffff0030;">找出具有特定意義的實體</strong>（如人名、地名、組織名、日期）<strong
+                                style="background-color: #ffff0030;">並進行分類</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將一種語言的文本自動翻譯成另一種語言</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">命名實體識別</strong> (<strong
+                            style="color: purple;">NER</strong>) 是<strong style="color: blue;">資訊提取</strong> (<strong
+                            style="color: red;">Information Extraction</strong>) 的一個子任務，旨在<strong
+                            style="background-color: #ffff0030;">定位和分類文本中預先定義好的命名實體類別</strong>。常見的實體類別包括人名 (<strong
+                            style="color: purple;">PER</strong>)、組織名 (<strong style="color: purple;">ORG</strong>)、地名
+                        (<strong style="color: purple;">LOC</strong>/<strong style="color: purple;">GPE</strong>)、時間表達式
+                        (<strong style="color: purple;">TIME</strong>)、日期 (<strong
+                            style="color: purple;">DATE</strong>)、貨幣 (<strong style="color: purple;">MONEY</strong>)、百分比
+                        (<strong style="color: purple;">PERCENT</strong>) 等。<strong style="color: purple;">NER</strong>
+                        對於理解文本內容、建構<strong style="color: blue;">知識圖譜</strong>、<strong
+                            style="color: blue;">問答系統</strong>等應用至關重要。選項 A 是<strong
+                            style="color: blue;">情感分析</strong>，選項 B 是<strong style="color: blue;">詞性標註</strong> (<strong
+                            style="color: red;">Part-of-Speech Tagging</strong>)，選項 D 是<strong
+                            style="color: blue;">機器翻譯</strong>。</div>
+                    <br>
+                    <img src="../image/NER_Named Entity Recognition.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="5" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">近年來在 <strong style="color: purple;">NLP</strong> 領域取得巨大成功的 <strong
+                        style="color: blue;">Transformer</strong> 模型，其核心機制是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">卷積運算</strong> (<strong
+                                style="color: red;">Convolution Operation</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">循環連接</strong> (<strong
+                                style="color: red;">Recurrent Connection</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">自注意力機制</strong> (<strong
+                                style="color: red;">Self-Attention Mechanism</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">池化操作</strong> (<strong
+                                style="color: red;">Pooling Operation</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Transformer</strong> 模型（由 Google 在
+                        2017 年的論文 "Attention Is All You Need" 中提出）摒棄了傳統的<strong style="color: blue;">循環神經網路</strong>
+                        (<strong style="color: red;">Recurrent Neural Network</strong>, <strong
+                            style="color: purple;">RNN</strong>) 和<strong style="color: blue;">卷積神經網路</strong> (<strong
+                            style="color: red;">Convolutional Neural Network</strong>, <strong
+                            style="color: purple;">CNN</strong>) 架構，<strong
+                            style="background-color: #ffff0030;">完全基於自注意力機制</strong> (<strong
+                            style="color: red;">Self-Attention</strong>) 來捕捉輸入序列內部的依賴關係以及輸入和輸出序列之間的關係。<strong
+                            style="color: blue;">自注意力機制</strong>允許模型在處理序列中的某個詞語時，<strong
+                            style="background-color: #ffff0030;">直接計算該詞語與序列中所有其他詞語的關聯程度</strong>（<strong
+                            style="color: blue;">注意力權重</strong>），從而能夠<strong
+                            style="background-color: #ffff0030;">更好地捕捉長距離依賴關係</strong>，並且<strong
+                            style="background-color: #ffff0030;">易於平行化計算</strong>。<strong
+                            style="color: blue;">卷積</strong>和<strong style="color: blue;">池化</strong>主要用於 <strong
+                            style="color: purple;">CNN</strong>，<strong style="color: blue;">循環連接</strong>是 <strong
+                            style="color: purple;">RNN</strong> 的核心。</div>
+                    <img src="../image/Transformer.png" class="responsive-img">
+                    <br>
+                    <img src="../image/attention-mechanism-deep-learning.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">以下哪項是<strong style="color: blue;">自然語言處理</strong> (<strong
+                        style="color: purple;">NLP</strong>) 的典型應用場景？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像辨識</strong> (<strong
+                                style="color: red;">../image Recognition</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">情感分析</strong> (<strong
+                                style="color: red;">Sentiment Analysis</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">語音合成</strong> (<strong
+                                style="color: red;">Speech Synthesis</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">推薦系統</strong> (<strong
+                                style="color: red;">Recommender System</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">情感分析</strong>是 <strong
+                            style="color: purple;">NLP</strong> 的一個重要應用，旨在<strong
+                            style="background-color: #ffff0030;">分析文本（如評論、社群媒體貼文）中表達的情緒、觀點或態度</strong>，判斷其為正面、負面或中性。<strong
+                            style="color: blue;">圖像辨識</strong>屬於<strong style="color: blue;">電腦視覺</strong> (<strong
+                            style="color: red;">Computer Vision</strong>) 領域。<strong
+                            style="color: blue;">語音合成</strong>（<strong style="color: red;">Text-to-Speech</strong>,
+                        <strong style="color: purple;">TTS</strong>）雖然與語言相關，但通常被視為<strong
+                            style="color: blue;">語音處理</strong> (<strong style="color: red;">Speech Processing</strong>)
+                        的一部分，但與 <strong style="color: purple;">NLP</strong> 密切相關。<strong
+                            style="color: blue;">推薦系統</strong>雖然可能利用 <strong style="color: purple;">NLP</strong>
+                        技術來分析商品描述或使用者評論，但其本身是一個更廣泛的領域。<strong style="background-color: #ffff0030;">情感分析是直接以處理和理解文本內容為核心的
+                            NLP 應用</strong>。
+                    </div>
+                    <br>
+                    <img src="../image/Sentiment Analysis.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">文本前處理</strong>中，「<strong
+                        style="color: blue;">停用詞</strong>」(<strong style="color: red;">Stop Words</strong>) 通常指的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">在文本中<strong
+                                style="background-color: #ffff0030;">頻繁出現但通常不攜帶太多實際意義</strong>的詞語（如
+                            "的"、"是"、"在"、"a"、"the"）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">文本中拼寫錯誤的詞語</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">代表特定實體（如人名、地名）的詞語</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">具有強烈情感色彩的詞語</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">停用詞</strong>是指在自然語言文本中出現頻率非常高，但對於理解文本主要內容或執行特定 <strong
+                            style="color: purple;">NLP</strong> 任務（如<strong style="color: blue;">資訊檢索</strong>、<strong
+                            style="color: blue;">文本分類</strong>）<strong
+                            style="background-color: #ffff0030;">貢獻不大或甚至可能產生干擾的詞語</strong>。例如，在中文中的「的」、「了」、「是」，在英文中的
+                        "a"、"an"、"the"、"is"、"in" 等。在許多 <strong style="color: purple;">NLP</strong> 應用的<strong
+                            style="color: blue;">前處理</strong>階段，會將這些<strong
+                            style="color: blue;">停用詞</strong>移除，以減少數據維度、降低計算複雜度並可能提高模型效能。</div>
+                    <br>
+                    <img src="../image/Stop Words.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">詞嵌入</strong> (<strong
+                        style="color: red;">Word Embedding</strong>) 技術（如 <strong
+                        style="color: blue;">Word2Vec</strong>, <strong style="color: blue;">GloVe</strong>）的主要目的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算詞語在文本中出現的次數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將詞語<strong
+                                style="background-color: #ffff0030;">映射到一個低維度的連續向量空間</strong>，使得<strong
+                                style="background-color: #ffff0030;">語意相似的詞語在向量空間中距離較近</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將詞語還原為它們的詞根形式</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">識別文本中的<strong style="color: blue;">命名實體</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">傳統的 <strong style="color: blue;">one-hot encoding</strong>
+                        表示詞語會導致<strong style="color: blue;">維度災難</strong>且<strong
+                            style="background-color: #ffff0030;">無法捕捉詞語間的語意關係</strong>。<strong
+                            style="color: blue;">詞嵌入</strong>技術旨在學習詞語的<strong style="color: blue;">分布式表示</strong>
+                        (<strong style="color: red;">Distributed
+                            Representation</strong>)，將每個詞語表示為一個低維度（通常幾十到幾百維）的實數向量。這種表示方法的關鍵優勢在於它能夠<strong
+                            style="background-color: #ffff0030;">捕捉詞語之間的語意和語法關係</strong>。在訓練好的<strong
+                            style="color: blue;">詞嵌入</strong>空間中，<strong
+                            style="background-color: #ffff0030;">語意相近的詞語</strong>（如 "國王" 和
+                        "皇后"）或具有相似上下文的詞語，其對應的向量在空間中的<strong
+                            style="background-color: #ffff0030;">距離會比較接近</strong>。這使得模型能夠更好地理解和泛化語言模式。</div>
+                    <br>
+                    <img src="../image/Word Embedding.webp" class="responsive-img">
+                    <br>
+                    <img src="../image/Word2Vec.png" class="responsive-img">
+
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">詞性標註</strong> (<strong
+                        style="color: red;">Part-of-Speech Tagging</strong>, <strong style="color: purple;">POS
+                        Tagging</strong>) 是 <strong style="color: purple;">NLP</strong> 中的一項基礎任務，它的作用是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">為文本中的每個詞語<strong
+                                style="background-color: #ffff0030;">標註其對應的語法詞性</strong>（如名詞、動詞、形容詞等）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">分析句子的<strong style="color: blue;">語法結構</strong>（如主語、謂語、賓語）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">從文本中提取關鍵詞</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">判斷句子的情感傾向</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">詞性標註</strong> (<strong
+                            style="color: purple;">POS Tagging</strong>) 是根據詞語在句子中的上下文，為其分配一個預定義的語法類別（<strong
+                            style="color: blue;">詞性標籤</strong>）的過程。常見的<strong style="color: blue;">詞性標籤</strong>包括名詞
+                        (<strong style="color: red;">Noun</strong>, <strong style="color: purple;">NN</strong>)、動詞
+                        (<strong style="color: red;">Verb</strong>, <strong style="color: purple;">VB</strong>)、形容詞
+                        (<strong style="color: red;">Adjective</strong>, <strong style="color: purple;">JJ</strong>)、副詞
+                        (<strong style="color: red;">Adverb</strong>, <strong style="color: purple;">RB</strong>)、介詞
+                        (<strong style="color: red;">Preposition</strong>, <strong
+                            style="color: purple;">IN</strong>)、代名詞 (<strong style="color: red;">Pronoun</strong>,
+                        <strong style="color: purple;">PRP</strong>) 等。<strong style="color: purple;">POS</strong>
+                        標註是許多更高級 <strong style="color: purple;">NLP</strong> 任務（如<strong
+                            style="color: blue;">句法分析</strong>、<strong style="color: blue;">命名實體識別</strong>、<strong
+                            style="color: blue;">資訊提取</strong>）的<strong
+                            style="background-color: #ffff0030;">基礎步驟</strong>，有助於消除詞語歧義並理解句子結構。選項 B 描述的是<strong
+                            style="color: blue;">句法分析</strong> (<strong style="color: red;">Syntactic Parsing</strong>)。
+                    </div>
+                    <br>
+                    <img src="../image/Part-of-Speech Tagging.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">聊天機器人</strong> (<strong
+                        style="color: red;">Chatbot</strong>) 主要運用了 <strong style="color: purple;">NLP</strong>
+                    中的哪些技術來理解使用者意圖並生成回應？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">詞性標註</strong> (<strong
+                                style="color: purple;">POS Tagging</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅<strong style="color: blue;">命名實體識別</strong> (<strong
+                                style="color: purple;">NER</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">意圖識別</strong> (<strong
+                                style="color: red;">Intent Recognition</strong>)、<strong
+                                style="color: blue;">實體提取</strong> (<strong style="color: red;">Entity
+                                Extraction</strong>) 和<strong style="color: blue;">自然語言生成</strong> (<strong
+                                style="color: purple;">NLG</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅<strong style="color: blue;">機器翻譯</strong> (<strong
+                                style="color: red;">Machine Translation</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">現代<strong style="color: blue;">聊天機器人</strong>通常包含以下核心 <strong
+                            style="color: purple;">NLP</strong> 組件：1. <strong style="color: blue;">自然語言理解</strong>
+                        (<strong style="color: red;">Natural Language Understanding</strong>, <strong
+                            style="color: purple;">NLU</strong>)：負責理解使用者的輸入，主要包括 <strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">意圖識別</strong></strong>（判斷使用者想要做什麼，如查詢天氣、訂票）和 <strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">實體提取</strong></strong>（從使用者輸入中找出關鍵資訊，如地點、時間、人名，類似 <strong
+                            style="color: purple;">NER</strong>）。2. <strong style="color: blue;">對話管理</strong> (<strong
+                            style="color: red;">Dialogue Management</strong>)：追蹤對話狀態，決定下一步的回應策略。3. <strong
+                            style="color: blue;">自然語言生成</strong> (<strong style="color: red;">Natural Language
+                            Generation</strong>, <strong style="color: purple;">NLG</strong>)：根據<strong
+                            style="color: blue;">對話管理</strong>決定的回應內容，<strong
+                            style="background-color: #ffff0030;">生成自然、流暢的人類語言文本</strong>。因此，選項 C 涵蓋了理解使用者意圖和生成回應所需的關鍵技術。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">機器翻譯</strong> (<strong
+                        style="color: red;">Machine Translation</strong>) 系統的品質時，常用的自動評估指標 <strong
+                        style="color: purple;">BLEU</strong> (<strong style="color: red;">Bilingual Evaluation
+                        Understudy</strong>) 主要衡量的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong>輸出的 <strong
+                                style="color: blue;">N-gram</strong> 片段與<strong
+                                style="color: blue;">參考翻譯</strong>（人工翻譯）的 <strong style="color: blue;">N-gram</strong>
+                            片段的<strong style="background-color: #ffff0030;">重疊程度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong>輸出與<strong
+                                style="color: blue;">參考翻譯</strong>的語意相似度</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong>輸出的語法正確性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用者對<strong style="color: blue;">機器翻譯</strong>結果的滿意度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">BLEU</strong> 是一種基於<strong
+                            style="color: blue;">精確率</strong> (<strong style="color: red;">Precision</strong>)
+                        的評估指標，它通過比較<strong style="color: blue;">機器翻譯</strong>結果（candidate）和一個或多個人工<strong
+                            style="color: blue;">參考翻譯</strong>（references）之間 <strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">N-gram</strong>（通常是 1-gram
+                            到 4-gram）的匹配程度</strong>來計算得分。<strong style="color: purple;">BLEU</strong> 分數越高，表示<strong
+                            style="color: blue;">機器翻譯</strong>結果與人工翻譯越接近。它還引入了<strong
+                            style="color: blue;">簡潔懲罰因子</strong> (<strong style="color: red;">Brevity Penalty</strong>)
+                        來懲罰過短的翻譯。雖然 <strong style="color: purple;">BLEU</strong> 方便快速，但它<strong
+                            style="background-color: #ffff0030;">主要關注詞彙層面的匹配</strong>，不直接衡量語意相似度或語法流暢性，且與人類判斷有時存在差異。
+                    </div>
+                    <br>
+                    <img src="../image/BLEU.png" class="responsive-img">
+                    <br>
+                    <img src="../image/N_Gram.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="8" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大型語言模型</strong> (<strong
+                        style="color: red;">Large Language Models</strong>, <strong
+                        style="color: purple;">LLMs</strong>) 如 <strong style="color: purple;">GPT</strong> (<strong
+                        style="color: red;">Generative Pre-trained Transformer</strong>) 系列，其訓練通常採用什麼策略？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅在少量標註數據上進行<strong style="color: blue;">監督式學習</strong> (<strong
+                                style="color: red;">Supervised Learning</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在海量無標註文本數據上進行<strong style="color: blue;">自監督預訓練</strong> (<strong
+                                style="color: red;">Self-supervised Pre-training</strong>)，然後在特定任務上進行<strong
+                                style="color: blue;">微調</strong> (<strong style="color: red;">Fine-tuning</strong>)
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅使用<strong style="color: blue;">強化學習</strong> (<strong
+                                style="color: red;">Reinforcement Learning</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅使用<strong style="color: blue;">基於規則的方法</strong> (<strong
+                                style="color: red;">Rule-based Methods</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大型語言模型</strong>的成功很大程度上歸功於「<strong
+                            style="color: blue;">預訓練-微調</strong>」(<strong style="color: red;">Pre-training and
+                            Fine-tuning</strong>) 的範式。首先，模型在包含數十億甚至數萬億詞語的海量、多樣化的無標註文本數據上進行<strong
+                            style="background-color: #ffff0030;">預訓練</strong>。預訓練通常採用<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">自監督學習</strong></strong>目標，如<strong
+                            style="color: blue;">遮罩語言模型</strong> (<strong style="color: red;">Masked Language
+                            Modeling</strong>, <strong style="color: purple;">MLM</strong>, 如 <strong
+                            style="color: purple;">BERT</strong>) 或<strong style="color: blue;">下一個詞預測</strong> (<strong
+                            style="color: red;">Next Token Prediction</strong>, 如 <strong
+                            style="color: purple;">GPT</strong>)，讓模型從數據本身<strong
+                            style="background-color: #ffff0030;">學習語言的通用模式、語法和語意知識</strong>。然後，預訓練好的模型可以在相對較小的、針對特定下游任務（如<strong
+                            style="color: blue;">文本分類</strong>、<strong style="color: blue;">問答</strong>）的標註數據上進行<strong
+                            style="background-color: #ffff0030;">微調</strong>，使其適應該任務。這種策略有效地利用了大規模數據學習通用知識，並能快速適應新任務。
+                    </div>
+                    <br>
+                    <img src="../image/pre-training fine-tuning.png" class="responsive-img">
+
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">詞形還原</strong> (<strong
+                        style="color: red;">Lemmatization</strong>) 和<strong style="color: blue;">詞幹提取</strong> (<strong
+                        style="color: red;">Stemming</strong>) 的主要區別是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">詞形還原</strong>會將詞語轉換為其<strong
+                                style="background-color: #ffff0030;">字典中的基本形式</strong>（<strong
+                                style="color: blue;">詞元</strong> <strong style="color: red;">lemma</strong>），結果是<strong
+                                style="background-color: #ffff0030;">實際存在的詞語</strong>；<strong
+                                style="color: blue;">詞幹提取</strong>則通常通過<strong
+                                style="background-color: #ffff0030;">移除詞綴得到詞幹</strong>，結果<strong
+                                style="background-color: #ffff0030;">不一定是有效詞語</strong>。</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">詞幹提取</strong>速度較慢但更準確；<strong
+                                style="color: blue;">詞形還原</strong>速度較快但可能不準確。</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">詞形還原</strong>只適用於英文；<strong
+                                style="color: blue;">詞幹提取</strong>適用於所有語言。</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩者完全相同，只是名稱不同。</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">詞形還原</strong>和<strong
+                            style="color: blue;">詞幹提取</strong>都是將詞語的不同屈折形式（<strong style="color: red;">inflected
+                            forms</strong>）歸一化處理的技術。主要區別在於：<strong style="color: blue;">詞形還原</strong> (<strong
+                            style="color: red;">Lemmatization</strong>) <strong
+                            style="background-color: #ffff0030;">依賴詞彙庫和詞性信息</strong>，試圖將詞語還原為其<strong
+                            style="background-color: #ffff0030;">字典中的基本形式</strong>（<strong
+                            style="color: blue;">詞元</strong>，<strong style="color: red;">lemma</strong>），例如將 "am",
+                        "are", "is" 都還原為 "be"，將 "cars", "car's" 都還原為 "car"。結果<strong
+                            style="background-color: #ffff0030;">保證是有效的詞語</strong>。<strong
+                            style="color: blue;">詞幹提取</strong> (<strong style="color: red;">Stemming</strong>)
+                        通常使用一套<strong style="background-color: #ffff0030;">啟發式規則</strong>（如 <strong
+                            style="color: red;">Porter Stemmer</strong>）來<strong
+                            style="background-color: #ffff0030;">移除詞語的後綴</strong>（有時也包括前綴），以得到<strong
+                            style="color: blue;">詞幹</strong> (<strong style="color: red;">stem</strong>)。例如，可能將
+                        "studies", "studying" 都提取為 "studi"。詞幹提取速度通常更快，但結果<strong
+                            style="background-color: #ffff0030;">不保證是有效的詞語</strong>，且可能過度提取（如 "university" 變
+                        "univers"）或提取不足。</div>
+                    <br>
+                    <img src="../image/Stemming_and_lemmatization.avif" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">詞袋模型</strong> (<strong
+                        style="color: red;">Bag-of-Words</strong>, <strong style="color: purple;">BoW</strong>)
+                    是一種簡單的<strong style="color: blue;">文本表示</strong>方法，它的主要缺點是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算複雜度非常高</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">忽略了詞語的順序和語法結構</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">無法處理<strong style="color: blue;">未登錄詞</strong> (<strong
+                                style="color: red;">Out-of-Vocabulary</strong>, <strong
+                                style="color: purple;">OOV</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只能表示非常短的文本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">詞袋模型</strong>將文本表示為一個向量，其中每個維度對應詞彙表中的一個詞語，向量的值通常是該詞語在文本中的出現次數（或 <strong
+                            style="color: purple;">TF-IDF</strong> 值）。這種方法非常簡單直觀，但其核心假設是將文本視為<strong
+                            style="background-color: #ffff0030;">一堆無序的詞語集合</strong>（像袋子裡的詞），<strong
+                            style="background-color: #ffff0030;">完全忽略了詞語之間的順序關係和文本的語法結構</strong>。例如，"狗咬人" 和 "人咬狗" 在
+                        <strong style="color: purple;">BoW</strong> 表示下可能完全相同（如果詞彙表只包含 "狗", "咬", "人"），但它們的語意顯然不同。這是
+                        <strong style="color: purple;">BoW</strong> 模型的主要局限性。
+                    </div>
+                    <br>
+                    <img src="../image/Bag-of-Words.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">循環神經網路</strong> (<strong
+                        style="color: red;">Recurrent Neural Network</strong>, <strong
+                        style="color: purple;">RNN</strong>) 特別適合處理序列數據（如文本）的原因是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用了<strong style="color: blue;">卷積核</strong>來提取局部特徵</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">完全基於<strong style="color: blue;">注意力機制</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">其內部具有<strong
+                                style="background-color: #ffff0030;">循環結構</strong>，可以將<strong
+                                style="background-color: #ffff0030;">先前時間步的資訊傳遞到當前時間步</strong>，從而<strong
+                                style="background-color: #ffff0030;">捕捉序列中的時間依賴性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">每個時間步的計算是完全獨立的</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RNN</strong> 的核心特點是其神經元之間存在<strong
+                            style="background-color: #ffff0030;">循環連接</strong>。在處理序列數據時，<strong
+                            style="color: purple;">RNN</strong> 會在每個時間步接收一個輸入，並根據當前輸入和來自上一個時間步的<strong
+                            style="color: blue;">隱藏狀態</strong> (<strong style="color: red;">hidden state</strong>)
+                        計算出當前的輸出和新的<strong style="color: blue;">隱藏狀態</strong>。這個<strong
+                            style="color: blue;">隱藏狀態</strong>就像模型的「記憶」，包含了到目前為止處理過的序列資訊。這種<strong
+                            style="background-color: #ffff0030;">將歷史資訊不斷傳遞下去的機制</strong>，使得 <strong
+                            style="color: purple;">RNN</strong> 能夠有效地建模序列數據中元素之間的<strong
+                            style="background-color: #ffff0030;">順序關係和時間依賴性</strong>，這對於理解語言（詞語的順序很重要）至關重要。然而，標準 <strong
+                            style="color: purple;">RNN</strong> 在處理長序列時會遇到<strong
+                            style="color: blue;">梯度消失/爆炸</strong>問題，因此後續發展出了 <strong
+                            style="color: purple;">LSTM</strong>、<strong style="color: purple;">GRU</strong> 等改進結構。
+                    </div>
+                    <br>
+                    <img src="../image/RNN.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">文本摘要</strong> (<strong
+                        style="color: red;">Text Summarization</strong>) 任務旨在？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">從一篇或多篇文檔中自動<strong
+                                style="background-color: #ffff0030;">生成一段簡短、精煉的摘要</strong>，涵蓋原文的主要內容</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將文本劃分成不同的主題</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">判斷文本的真實性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">為文本中的詞語標註<strong style="color: blue;">詞性</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">文本摘要</strong>是 <strong
+                            style="color: purple;">NLP</strong> 的一個重要應用，目標是創建一個能夠<strong
+                            style="background-color: #ffff0030;">保留原始文檔核心資訊的縮減版本</strong>。摘要可以是<strong
+                            style="background-color: #ffff0030;">抽取式</strong> (<strong
+                            style="color: red;">Extractive</strong>)，即從原文中選擇重要的句子或短語組合而成；也可以是<strong
+                            style="background-color: #ffff0030;">生成式</strong> (<strong
+                            style="color: red;">Abstractive</strong>)，即模型理解原文內容後，用自己的話重新組織和生成摘要，可能包含原文中沒有的詞語。<strong
+                            style="color: blue;">文本摘要</strong>對於快速獲取大量資訊的核心內容非常有幫助。選項 B 是<strong
+                            style="color: blue;">主題模型</strong> (<strong style="color: red;">Topic Modeling</strong>)，選項
+                        C 是<strong style="color: blue;">事實查核</strong> (<strong style="color: red;">Fact
+                            Checking</strong>)，選項 D 是<strong style="color: blue;">詞性標註</strong>。</div>
+                    <br>
+                    <img src="../image/Text Summarization.png" class="responsive-img">
+                    <br>
+                    <img src="../image/Summarization.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">文本分類</strong> (<strong
+                        style="color: red;">Text Classification</strong>) 任務（如<strong
+                        style="color: blue;">情感分析</strong>）的模型效能時，<strong style="color: blue;">精確率</strong> (<strong
+                        style="color: red;">Precision</strong>) 和<strong style="color: blue;">召回率</strong> (<strong
+                        style="color: red;">Recall</strong>) 是常用的指標。請問<strong style="color: blue;">召回率</strong>衡量的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">在所有被模型預測為正類的樣本中，實際為正類的比例</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在所有<strong
+                                style="background-color: #ffff0030;">實際為正類的樣本</strong>中，<strong
+                                style="background-color: #ffff0030;">被模型成功預測為正類的比例</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型預測正確的樣本數佔總樣本數的比例</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">精確率</strong>和<strong
+                                style="color: blue;">召回率</strong>的調和平均數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在二元分類問題中（假設有正類 <strong style="color: red;">Positive</strong> 和負類
+                        <strong style="color: red;">Negative</strong>）：
+                        <ul>
+                            <li><strong style="color: blue;">精確率</strong> (<strong
+                                    style="color: red;">Precision</strong>) = <strong style="color: purple;">TP</strong>
+                                / (<strong style="color: purple;">TP</strong> + <strong
+                                    style="color: purple;">FP</strong>)，衡量的是<strong
+                                    style="background-color: #ffff0030;">模型預測為正類的結果中有多少是真正確的</strong>（預測的準不準）。</li>
+                            <li><strong style="color: blue;">召回率</strong> (<strong style="color: red;">Recall</strong>)
+                                = <strong style="color: purple;">TP</strong> / (<strong
+                                    style="color: purple;">TP</strong> + <strong
+                                    style="color: purple;">FN</strong>)，衡量的是<strong
+                                    style="background-color: #ffff0030;">所有實際為正類的樣本中有多少被模型找出來了</strong>（找的全不全）。</li>
+                        </ul>
+                        其中 <strong style="color: purple;">TP</strong> (<strong style="color: red;">True
+                            Positive</strong>) 是真正類被預測為正類，<strong style="color: purple;">FP</strong> (<strong
+                            style="color: red;">False Positive</strong>) 是假負類被預測為正類，<strong
+                            style="color: purple;">FN</strong> (<strong style="color: red;">False Negative</strong>)
+                        是真正類被預測為負類。
+                        選項 A 描述的是<strong style="color: blue;">精確率</strong>。選項 C 描述的是<strong
+                            style="color: blue;">準確率</strong> (<strong style="color: red;">Accuracy</strong>)。選項 D 描述的是
+                        <strong style="color: blue;">F1-score</strong>。
+                    </div>
+                    <br>
+                    <img src="../image/Confusion-matrix-Precision-Recall-Accuracy-and-F1-score.png"
+                        classs="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">BERT</strong> (<strong
+                        style="color: red;">Bidirectional Encoder Representations from Transformers</strong>)
+                    模型與傳統的單向<strong style="color: blue;">語言模型</strong>（如 <strong style="color: purple;">GPT-1/2</strong>
+                    的預訓練）相比，其主要創新點在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用了更深層的神經網路</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通過<strong style="color: blue;">遮罩語言模型</strong> (<strong
+                                style="color: red;">Masked Language Model</strong>, <strong
+                                style="color: purple;">MLM</strong>) 實現了<strong
+                                style="background-color: #ffff0030;">真正的雙向上下文表示學習</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">引入了<strong style="color: blue;">注意力機制</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用了<strong style="color: blue;">遷移學習</strong> (<strong
+                                style="color: red;">Transfer Learning</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">傳統的<strong style="color: blue;">語言模型</strong>（如 <strong
+                            style="color: purple;">GPT</strong>）通常是單向的，即在預測一個詞時只能考慮其左側（前面）的上下文。而 <strong
+                            style="color: purple;">BERT</strong> 的核心創新在於其預訓練任務之一——<strong
+                            style="color: blue;">遮罩語言模型</strong> (<strong style="color: purple;">MLM</strong>)。<strong
+                            style="color: purple;">MLM</strong> 隨機地<strong
+                            style="background-color: #ffff0030;">遮蓋掉輸入句子中的一部分詞語</strong> (tokens)，然後讓模型根據該詞語<strong
+                            style="background-color: #ffff0030;">左右兩側的上下文</strong>來預測被遮蓋掉的原始詞語。這種方式使得 <strong
+                            style="color: purple;">BERT</strong> 在預訓練階段就能夠<strong
+                            style="background-color: #ffff0030;">同時利用左右兩邊的上下文資訊來學習每個詞語的表示</strong>，從而獲得更深層次、更豐富的<strong
+                            style="background-color: #ffff0030;">雙向語意表示</strong>。雖然 <strong
+                            style="color: purple;">BERT</strong> 也使用了 <strong style="color: blue;">Transformer</strong>
+                        的<strong style="color: blue;">注意力機制</strong>和<strong
+                            style="color: blue;">遷移學習</strong>，但其真正的突破在於通過 <strong style="color: purple;">MLM</strong>
+                        實現的雙向性。</div>
+                    <br>
+                    <img src="../image/BERT_MLM.webp" class="responsive-img">
+                    <br>
+                    <img src="../image/BERT.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">自然語言處理</strong> (<strong
+                        style="color: purple;">NLP</strong>) 通常涉及處理哪種類型的資料？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">非結構化的文本和語音資料</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">結構化的表格資料 (<strong style="color: red;">Tabular data</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">圖像和影像資料</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">時間序列資料 (<strong style="color: red;">Time series data</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">NLP</strong>
+                        主要關注的是人類用來交流的自然語言，其表現形式主要是文本（如文章、郵件、聊天記錄）和語音。這些資料通常是<strong
+                            style="background-color: #ffff0030;">非結構化</strong>的，意味著它們沒有預先定義好的格式或組織方式（不像資料庫中的表格）。<strong
+                            style="background-color: #ffff0030;">處理和理解這種非結構化的語言資料是 NLP 的核心挑戰</strong>。選項 B
+                        是傳統數據分析或<strong style="color: blue;">機器學習</strong>常處理的對象。選項 C 屬於<strong
+                            style="color: blue;">電腦視覺</strong>。選項 D 也是<strong
+                            style="color: blue;">機器學習</strong>的一個重要領域，但與 <strong style="color: purple;">NLP</strong> 不同。
+                    </div>
+                    <br>
+                    <img src="../image/NLP.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">依存句法分析</strong> (<strong
+                        style="color: red;">Dependency Parsing</strong>) 的主要目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">標註每個詞的<strong style="color: blue;">詞性</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">分析句子中詞語之間的<strong
+                                style="background-color: #ffff0030;">語法依賴關係</strong>（如哪個詞修飾哪個詞，哪個詞是哪個詞的主語或賓語）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">識別句子中的<strong style="color: blue;">命名實體</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將句子切分成詞語</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">依存句法分析</strong>是<strong
+                            style="color: blue;">句法分析</strong> (<strong style="color: red;">Syntactic Parsing</strong>)
+                        的一種方法，它不生成完整的<strong style="color: blue;">句法樹</strong>結構（像<strong
+                            style="color: blue;">成分句法分析</strong> <strong style="color: red;">Constituency
+                            Parsing</strong> 那樣），而是專注於揭示句子中<strong
+                            style="background-color: #ffff0030;">詞語之間一對一的修飾或依賴關係</strong>。分析結果通常表示為一個有向圖，其中節點是詞語，邊表示詞語間的依賴關係（如主謂關係、動賓關係、定中關係等），並標註依賴關係的類型。<strong
+                            style="color: blue;">依存句法分析</strong>對於理解句子的深層結構和語意關係非常有幫助。選項 A 是<strong
+                            style="color: blue;">詞性標註</strong>，C 是 <strong style="color: purple;">NER</strong>，D
+                        是<strong style="color: blue;">斷詞</strong>。</div>
+                    <br>
+                    <img src="../image/Dependency Parsing.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">Word2Vec</strong> 模型包含兩種主要的訓練架構：<strong
+                        style="color: purple;">CBOW</strong> (<strong style="color: red;">Continuous
+                        Bag-of-Words</strong>) 和 <strong style="color: blue;">Skip-gram</strong>。 <strong
+                        style="color: blue;">Skip-gram</strong> 架構的訓練目標是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">根據<strong style="background-color: #ffff0030;">中心詞預測其周圍的上下文詞語</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據上下文詞語預測中心詞</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">預測句子中的下一個詞</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">判斷兩個詞是否語意相關</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Word2Vec</strong> 的兩種架構目標相反：
+                        <ul>
+                            <li><strong style="color: purple;">CBOW</strong> (<strong style="color: red;">Continuous
+                                    Bag-of-Words</strong>): 輸入是某個目標詞（中心詞）周圍的上下文詞語，目標是<strong
+                                    style="background-color: #ffff0030;">預測這個中心詞</strong>。它試圖從上下文"推斷"中心詞。</li>
+                            <li><strong style="color: blue;">Skip-gram</strong>: 輸入是某個中心詞，目標是<strong
+                                    style="background-color: #ffff0030;">預測其周圍一定範圍內的上下文詞語</strong>。它試圖從中心詞"發散"到上下文。</li>
+                        </ul>
+                        一般認為，<strong style="color: blue;">Skip-gram</strong> 對於低頻詞的處理效果更好，但在大型數據集上訓練速度較慢；<strong
+                            style="color: purple;">CBOW</strong> 訓練速度較快。
+                    </div>
+                    <br>
+                    <img src="../image/CBOW Skip-gram.png" class="responsive-img">
+                    <br>
+                    <img src="../image/Word2Vec.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">N-gram 語言模型</strong>是一種基於統計的<strong
+                        style="color: blue;">語言模型</strong>，它的核心假設是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">每個詞的出現是完全獨立的</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">句子中所有詞語共享同一個向量表示</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一個詞的出現機率僅取決於其<strong style="background-color: #ffff0030;">前面有限的 N-1
+                                個詞</strong> (<strong style="color: blue;">馬可夫假設</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">必須使用神經網路來計算詞語機率</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">N-gram</strong> 模型試圖計算一個詞序列（句子）出現的機率
+                        P(W) = P(w1, w2, ..., wn)。直接計算這個聯合機率非常困難，<strong style="color: blue;">N-gram</strong>
+                        模型引入了<strong style="color: blue;">馬可夫假設</strong> (<strong style="color: red;">Markov
+                            Assumption</strong>)，即假設<strong style="background-color: #ffff0030;">一個詞 wi 的出現機率主要由其前面的 N-1
+                            個詞決定</strong>，而與更早的詞無關。例如，在 <strong style="color: blue;">Bigram</strong> (N=2) 模型中，P(wi |
+                        w1, ..., wi-1) ≈ P(wi | wi-1)；在 <strong style="color: blue;">Trigram</strong> (N=3) 模型中，P(wi |
+                        w1, ..., wi-1) ≈ P(wi | wi-2, wi-1)。這個假設大大簡化了機率計算，使得模型可以通過統計<strong
+                            style="color: blue;">語料庫</strong>中 <strong style="color: blue;">N-gram</strong>
+                        的出現頻率來估計條件機率。</div>
+                    <br>
+                    <img src="../image/N-gram.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">相較於 <strong style="color: purple;">RNN</strong>/<strong
+                        style="color: purple;">LSTM</strong>，<strong style="color: blue;">Transformer</strong>
+                    模型在處理長序列時的主要優勢是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型參數更少</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">訓練所需的數據量更少</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">更容易進行<strong
+                                style="background-color: #ffff0030;">平行化計算</strong>，且能<strong
+                                style="background-color: #ffff0030;">更好地捕捉長距離依賴關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">不需要使用<strong style="color: blue;">詞嵌入</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RNN</strong>/<strong
+                            style="color: purple;">LSTM</strong> 由於其<strong
+                            style="color: blue;">循環結構</strong>，計算必須按時間步順序進行，難以進行大規模<strong
+                            style="color: blue;">平行化</strong>。此外，儘管 <strong style="color: purple;">LSTM</strong>/<strong
+                            style="color: purple;">GRU</strong> 緩解了<strong
+                            style="color: blue;">梯度消失</strong>問題，但在處理非常長的序列時，捕捉遙遠的依賴關係仍然困難。<strong
+                            style="color: blue;">Transformer</strong> 完全基於<strong
+                            style="color: blue;">自注意力機制</strong>，每個位置的計算可以同時參考序列中的所有其他位置，這使得：1. <strong
+                            style="background-color: #ffff0030;">平行化</strong>：不同位置的計算可以高度平行化，大大加快了訓練速度。2. <strong
+                            style="background-color: #ffff0030;">長距離依賴</strong>：任意兩個位置之間的資訊傳遞路徑長度都是常數 O(1)（直接通過注意力計算），相比
+                        <strong style="color: purple;">RNN</strong> 的 O(n)，更容易捕捉長距離依賴關係。雖然 <strong
+                            style="color: blue;">Transformer</strong> 參數通常更多，需要大量數據訓練，但其架構上的優勢使其在處理長序列和大規模訓練方面表現更優。
+                    </div>
+                    <br>
+                    <img src="../image/Transformer.png" class="responsive-img">
+                    <br>
+                    <img src="../image/RNN.webp" class="responsive-img">
+                    <br>
+                    <img src="../image/LSTM_gate.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">問答系統</strong> (<strong
+                        style="color: red;">Question Answering</strong>, <strong style="color: purple;">QA</strong>)
+                    根據其回答方式，可以分為哪幾種類型？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">基於規則的</strong>和僅<strong
+                                style="color: blue;">基於機器學習的</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">抽取式問答</strong> (<strong
+                                style="color: red;">Extractive QA</strong>) 和<strong style="color: blue;">生成式問答</strong>
+                            (<strong style="color: red;">Generative QA</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">單輪問答</strong>和<strong
+                                style="color: blue;">多輪問答</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">開放領域問答</strong>和<strong
+                                style="color: blue;">封閉領域問答</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">問答系統</strong>可以從多個維度分類：
+                        <ul>
+                            <li>按回答方式：<strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">抽取式問答</strong></strong> (<strong
+                                    style="color: red;">Extractive QA</strong>) 從提供的上下文（如一篇文章）中直接抽取一段連續的文本作為答案；<strong
+                                    style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">生成式問答</strong></strong> (<strong
+                                    style="color: red;">Generative QA</strong>)
+                                則像人類一樣，理解問題和上下文後，生成一個新的、自然的回答，答案可能不直接出現在原文中。</li>
+                            <li>按對話輪數：<strong style="color: blue;">單輪問答</strong> 處理獨立的問題；<strong
+                                    style="color: blue;">多輪問答</strong> 需要考慮對話歷史。</li>
+                            <li>按知識範圍：<strong style="color: blue;">封閉領域問答</strong> 針對特定領域（如產品手冊）；<strong
+                                    style="color: blue;">開放領域問答</strong> 可以回答關於任何主題的問題，通常需要大規模知識庫或網路搜索。</li>
+                        </ul>
+                        選項 B 是根據回答的產生方式進行的分類。
+                    </div>
+                </div>
+                <img src="../image/Summarization.png" class="responsive-img">
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">F1-score</strong> 是評估分類模型常用的指標，它是什麼的調和平均數？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">準確率</strong> (<strong
+                                style="color: red;">Accuracy</strong>) 和<strong style="color: blue;">召回率</strong>
+                            (<strong style="color: red;">Recall</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">精確率</strong> (<strong
+                                style="color: red;">Precision</strong>) 和<strong style="color: blue;">召回率</strong>
+                            (<strong style="color: red;">Recall</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">真陽性率 (<strong style="color: red;">True Positive Rate</strong>) 和假陽性率
+                            (<strong style="color: red;">False Positive Rate</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">精確率</strong> (<strong
+                                style="color: red;">Precision</strong>) 和<strong style="color: blue;">準確率</strong>
+                            (<strong style="color: red;">Accuracy</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">F1-score</strong>（或 F1
+                        measure）是<strong style="background-color: #ffff0030;"><strong style="color: blue;">精確率</strong>
+                            (<strong style="color: red;">Precision</strong>) 和<strong style="color: blue;">召回率</strong>
+                            (<strong style="color: red;">Recall</strong>) 的調和平均數</strong> (<strong
+                            style="color: red;">Harmonic Mean</strong>)。計算公式為：F1 = 2 * (Precision * Recall) / (Precision
+                        + Recall)。使用<strong style="color: blue;">調和平均數</strong>是因為它會給予較低值更大的權重，只有當 Precision 和 Recall
+                        都比較高時，F1-score 才會高。這使得 F1-score 在需要平衡 Precision 和 Recall
+                        的場景下（例如，不希望漏掉太多正例，也不希望誤判太多負例為正例）是一個比<strong
+                            style="color: blue;">準確率</strong>更可靠的指標，尤其是在數據不平衡的情況下。</div>
+                    <br>
+                    <img src="../image/Confusion-matrix-Precision-Recall-Accuracy-and-F1-score.png"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q26 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為什麼在進行 <strong style="color: purple;">NLP</strong> 任務前通常需要將文本轉換為小寫
+                    (<strong style="color: red;">Lowercasing</strong>)？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高模型的可解釋性</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將相同詞語的不同寫法（如 "Apple" 和 "apple"）<strong
+                                style="background-color: #ffff0030;">視為同一個詞符</strong>，<strong
+                                style="background-color: #ffff0030;">減少詞彙量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">增加文本的長度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">保留詞語的大小寫資訊以區分專有名詞</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">將文本全部轉換為小寫是一種常見的<strong style="color: blue;">文本正規化</strong>
+                        (<strong style="color: red;">Normalization</strong>) 手段。主要目的是為了<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">詞彙歸一化</strong></strong>。如果不轉換，模型可能會將句首大寫的 "Apple" 和句中小寫的 "apple"
+                        視為兩個不同的<strong style="color: blue;">詞符</strong>
+                        (tokens)，這會不必要地增加詞彙表的大小，並可能導致數據稀疏問題（某些形式出現次數很少）。轉換為小寫可以確保同一個詞語的不同大小寫形式被映射到同一個<strong
+                            style="color: blue;">詞符</strong>，有助於模型更好地學習詞語的統計特性。然而，需要注意的是，在某些任務中（如<strong
+                            style="color: blue;">命名實體識別</strong>），大小寫資訊可能是有用的，此時可能不進行小寫轉換或採用更複雜的處理方式。</div>
+                </div>
+                <br>
+                <img src="../image/Lowercasing.png" class="responsive-img">
+            </div>
+
+            <!-- Q27 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">One-hot encoding</strong> 在表示詞語時的主要問題是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">無法表示詞語在句子中的位置</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算速度非常慢</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">向量維度等於詞彙表大小，導致<strong
+                                style="background-color: #ffff0030;">維度過高</strong>且<strong
+                                style="background-color: #ffff0030;">無法捕捉詞語間的語意關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只能用於表示數字</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">One-hot encoding</strong>
+                        將詞彙表中的每個詞語表示為一個長度等於詞彙表大小的向量，其中該詞語對應的索引位置為 1，其餘位置為 0。這種表示方法存在兩個主要問題：1. <strong
+                            style="background-color: #ffff0030;">高維稀疏</strong>：如果詞彙表很大（例如幾萬或幾十萬），每個詞的向量維度就會非常高，而且向量中絕大多數元素都是
+                        0，非常稀疏。2. <strong style="background-color: #ffff0030;">無法表示語意關係</strong>：任意兩個不同詞語的 one-hot
+                        向量都是正交的（它們的點積為 0），這意味著模型無法從這種表示中學習到詞語之間的相似性或關聯性（例如 "貓" 和 "狗" 的關係與 "貓" 和 "桌子" 的關係在向量層面沒有區別）。
+                    </div>
+                </div>
+                <br>
+                <img src="../image/One-Hot Encoding.png" class="responsive-img">
+            </div>
+
+            <!-- Q28 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">情感分析</strong> (<strong
+                        style="color: red;">Sentiment Analysis</strong>) 的主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">識別和提取文本中表達的主觀意見、情感、評價或態度的過程</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將文本翻譯成不同的語言</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">自動生成<strong style="color: blue;">文本摘要</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">標註文本中詞語的語法功能</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">情感分析</strong>，也稱為<strong
+                            style="color: blue;">意見探勘</strong> (<strong style="color: red;">Opinion Mining</strong>)，是
+                        <strong style="color: purple;">NLP</strong> 中一個非常活躍的研究領域和應用方向。其核心目標是利用計算機技術自動分析文本，<strong
+                            style="background-color: #ffff0030;">判斷其中所蘊含的情感色彩或主觀傾向</strong>。最常見的任務是將情感分類為<strong
+                            style="background-color: #ffff0030;">正面</strong> (<strong
+                            style="color: red;">Positive</strong>)、<strong
+                            style="background-color: #ffff0030;">負面</strong> (<strong
+                            style="color: red;">Negative</strong>) 或 <strong
+                            style="background-color: #ffff0030;">中性</strong> (<strong
+                            style="color: red;">Neutral</strong>)。更細粒度的分析還可能涉及情感強度、特定方面（如產品的價格、服務）的情感以及情感的來源等。<strong
+                            style="color: blue;">情感分析</strong>在輿情監控、產品評論分析、市場調查等領域有廣泛應用。
+                    </div>
+                </div>
+                <br>
+                <img src="../image/Sentiment Analysis2.jpg" class="responsive-img">
+            </div>
+
+            <!-- Q29 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">LSTM</strong> (<strong
+                        style="color: red;">Long Short-Term Memory</strong>) 和 <strong
+                        style="color: purple;">GRU</strong> (<strong style="color: red;">Gated Recurrent Unit</strong>)
+                    是對標準 <strong style="color: purple;">RNN</strong> 的改進，它們主要解決了 <strong
+                        style="color: purple;">RNN</strong> 的哪個問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">無法處理變長序列</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算成本過高</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">梯度消失/爆炸問題</strong> (<strong
+                                style="color: red;">Vanishing/Exploding Gradient Problem</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">無法進行平行計算</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">標準 <strong style="color: purple;">RNN</strong> 在通過<strong
+                            style="color: blue;">時間反向傳播</strong> (<strong style="color: red;">Backpropagation Through
+                            Time</strong>, <strong style="color: purple;">BPTT</strong>) 訓練時，由於梯度在時間步上連乘，很容易出現<strong
+                            style="background-color: #ffff0030;">梯度消失</strong>（梯度值趨近於 0，導致模型無法學習長期依賴）或<strong
+                            style="background-color: #ffff0030;">梯度爆炸</strong>（梯度值指數級增長，導致訓練不穩定）的問題。<strong
+                            style="color: purple;">LSTM</strong> 和 <strong style="color: purple;">GRU</strong>
+                        引入了<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">門控機制</strong></strong> (<strong style="color: red;">Gating
+                            Mechanism</strong>)，如<strong style="color: blue;">遺忘門</strong> (<strong
+                            style="color: red;">Forget Gate</strong>)、<strong style="color: blue;">輸入門</strong> (<strong
+                            style="color: red;">Input Gate</strong>)、<strong style="color: blue;">輸出門</strong> (<strong
+                            style="color: red;">Output Gate</strong>)（<strong
+                            style="color: purple;">LSTM</strong>）或<strong style="color: blue;">重置門</strong> (<strong
+                            style="color: red;">Reset Gate</strong>)、<strong style="color: blue;">更新門</strong> (<strong
+                            style="color: red;">Update Gate</strong>)（<strong
+                            style="color: purple;">GRU</strong>）。這些<strong style="color: blue;">門控單元</strong>可以<strong
+                            style="background-color: #ffff0030;">有選擇地控制資訊的流動、記憶和遺忘</strong>，使得梯度能夠在更長的時間步上有效傳播，從而顯著緩解了<strong
+                            style="color: blue;">梯度消失/爆炸</strong>問題，使模型能夠<strong
+                            style="background-color: #ffff0030;">更好地捕捉序列中的長期依賴關係</strong>。</div>
+                </div>
+                <img src="../image/vanishing-and-exploding-gradient-1.webp" class="responsive-img">
+                <br>
+                <img src="../image/LSTM_gate.png" class="responsive-img">
+                <br>
+                <img src="../image/GRU.png" class="responsive-img">
+            </div>
+
+            <!-- Q30 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">機器翻譯</strong> (<strong
+                        style="color: red;">Machine Translation</strong>, <strong style="color: purple;">MT</strong>)
+                    按照技術發展階段，主要經歷了哪些範式？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">基於規則的機器翻譯</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅<strong style="color: blue;">統計機器翻譯</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅<strong style="color: blue;">神經機器翻譯</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">基於規則的機器翻譯</strong> (<strong
+                                style="color: purple;">RBMT</strong>)、<strong style="color: blue;">統計機器翻譯</strong>
+                            (<strong style="color: purple;">SMT</strong>)、<strong style="color: blue;">神經機器翻譯</strong>
+                            (<strong style="color: purple;">NMT</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">機器翻譯</strong>的發展歷程主要可以劃分為三個階段：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">基於規則的機器翻譯</strong></strong> (<strong
+                                    style="color: red;">Rule-Based Machine Translation</strong>, <strong
+                                    style="color: purple;">RBMT</strong>):
+                                早期的方法，依賴語言學家手動編寫大量的雙語詞典和語法規則來進行翻譯。優點是語法相對準確，缺點是規則覆蓋有限、構建成本高、難以處理歧義和口語。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">統計機器翻譯</strong></strong> (<strong
+                                    style="color: red;">Statistical Machine Translation</strong>, <strong
+                                    style="color: purple;">SMT</strong>): 20 世紀 90 年代興起，利用大規模<strong
+                                    style="color: blue;">平行語料庫</strong>（成對的原文和譯文句子）學習翻譯模型（如詞對齊、短語翻譯機率）和<strong
+                                    style="color: blue;">語言模型</strong>。相比 <strong style="color: purple;">RBMT</strong>
+                                效果有顯著提升，但模型複雜，且難以處理長距離依賴。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">神經機器翻譯</strong></strong> (<strong
+                                    style="color: red;">Neural Machine Translation</strong>, <strong
+                                    style="color: purple;">NMT</strong>): 2014 年左右開始發展，使用深度神經網路（主要是基於 <strong
+                                    style="color: purple;">RNN</strong> 的 <strong
+                                    style="color: blue;">Encoder-Decoder</strong> 架構，後來被 <strong
+                                    style="color: blue;">Transformer</strong> 取代）直接學習從源語言到目標語言的端到端映射。<strong
+                                    style="color: purple;">NMT</strong> 在翻譯流暢度和準確度上取得了突破性進展，成為當前主流的<strong
+                                    style="color: blue;">機器翻譯</strong>範式。</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q31 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">困惑度</strong> (<strong
+                        style="color: red;">Perplexity</strong>) 是評估<strong
+                        style="color: blue;">語言模型</strong>常用的指標，較低的<strong style="color: blue;">困惑度</strong>通常表示什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型預測的文本更加隨機</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型對於測試文本的<strong
+                                style="background-color: #ffff0030;">預測能力較好</strong>，能夠以<strong
+                                style="background-color: #ffff0030;">較高的機率生成該文本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型包含的參數數量較少</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型訓練所需的時間較短</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">困惑度</strong> (<strong
+                            style="color: red;">Perplexity</strong>, <strong style="color: purple;">PPL</strong>)
+                        是<strong style="color: blue;">語言模型</strong>評估指標，它基於模型在測試集上分配的機率。具體來說，<strong
+                            style="color: purple;">PPL</strong> 是測試集反向機率的幾何平均值的 2 的指數次方（或自然指數 e
+                        的指數次方，取決於對數底）。直觀上，<strong style="color: blue;">困惑度</strong>可以理解為模型在預測下一個詞時平均有多少種可能的選擇。<strong
+                            style="background-color: #ffff0030;">困惑度越低，表示模型對測試集數據的擬合越好</strong>，也就是說模型賦予測試集中實際出現的詞序列更高的機率，表明模型學習到的語言模式更接近真實數據分佈，預測能力更強。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q32 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">遷移學習</strong> (<strong
+                        style="color: red;">Transfer Learning</strong>) 在 <strong style="color: purple;">NLP</strong>
+                    領域的應用，例如使用<strong style="color: blue;">預訓練語言模型</strong> (<strong style="color: red;">Pre-trained
+                        Language Models</strong>)，主要帶來的好處是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全消除了對標註數據的需求</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">利用在大型通用數據集上學到的知識</strong>，<strong
+                                style="background-color: #ffff0030;">提高在數據量較少的特定任務上的表現</strong>，並<strong
+                                style="background-color: #ffff0030;">加速模型收斂</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使得模型變得更小、更快</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">保證模型在所有任務上都能達到最佳效果</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">遷移學習</strong>的核心思想是將在一個任務（源任務，<strong
+                            style="color: red;">Source Task</strong>）上學到的知識應用到另一個相關的任務（目標任務，<strong
+                            style="color: red;">Target Task</strong>）上。在 <strong style="color: purple;">NLP</strong>
+                        中，<strong style="color: blue;">預訓練語言模型</strong>（如 <strong style="color: purple;">BERT</strong>,
+                        <strong style="color: purple;">GPT</strong>）就是在海量文本數據（源任務：學習通用語言表示）上進行<strong
+                            style="color: blue;">預訓練</strong>，然後將學到的模型參數作為基礎，在特定的下游任務（目標任務：如<strong
+                            style="color: blue;">文本分類</strong>、<strong
+                            style="color: blue;">問答</strong>，通常標註數據較少）上進行<strong style="color: blue;">微調</strong>
+                        (<strong style="color: red;">Fine-tuning</strong>)。這樣做的好處包括：1. <strong
+                            style="background-color: #ffff0030;">利用通用知識</strong>：模型已經從大規模數據中學到了豐富的語法和語意知識。2. <strong
+                            style="background-color: #ffff0030;">改善少數據任務效能</strong>：即使目標任務的標註數據很少，也能取得較好的效果。3. <strong
+                            style="background-color: #ffff0030;">加速收斂</strong>：<strong
+                            style="color: blue;">微調</strong>通常比從頭開始訓練更快收斂。雖然<strong
+                            style="color: blue;">預訓練模型</strong>通常很大，但<strong
+                            style="color: blue;">遷移學習</strong>本身旨在提高效能和效率，尤其是在目標任務數據有限的情況下。
+                    </div>
+                </div>
+                <br>
+                <img src="../image/Transfer Learning.webp" class="responsive-img">
+            </div>
+
+            <!-- Q33 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">歧義</strong> (<strong
+                        style="color: red;">Ambiguity</strong>) 是<strong
+                        style="color: blue;">自然語言處理</strong>中的一個主要挑戰，以下哪項是<strong style="color: blue;">詞彙歧義</strong>
+                    (<strong style="color: red;">Lexical Ambiguity</strong>) 的例子？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單字 "bank" <strong
+                                style="background-color: #ffff0030;">可以指銀行，也可以指河岸</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">句子 "I saw a man with a telescope" 可以理解為「我用望遠鏡看到一個男人」或「我看到一個拿著望遠鏡的男人」
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">代名詞 "it" 指代不明</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">文本中出現拼寫錯誤</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">自然語言充滿<strong style="color: blue;">歧義</strong>，主要分為：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">詞彙歧義</strong></strong> (<strong style="color: red;">Lexical
+                                    Ambiguity</strong>): <strong
+                                    style="background-color: #ffff0030;">同一個詞語有多種不同的含義</strong>。例如
+                                "bank"（銀行/河岸）、"bat"（蝙蝠/球棒）、中文的「意思」。選項 A 是典型的<strong style="color: blue;">詞彙歧義</strong>。
+                            </li>
+                            <li><strong style="color: blue;">句法歧義</strong> (<strong style="color: red;">Syntactic
+                                    Ambiguity</strong>): 同一個句子可以有多種不同的語法結構。例如選項 B，介詞短語 "with a telescope" 可以修飾動詞
+                                "saw"，也可以修飾名詞 "man"。</li>
+                            <li><strong style="color: blue;">語意歧義</strong> (<strong style="color: red;">Semantic
+                                    Ambiguity</strong>): 句子結構清晰，但語意理解可以有多種。John and Mary are married"John 和 Mary
+                                彼此結婚（他們是夫妻）John 和 Mary 各自都已婚（但不一定是彼此的配偶）</li>
+                            <li><strong style="color: blue;">語用歧義</strong> (<strong style="color: red;">Pragmatic
+                                    Ambiguity</strong>): 語言的理解依賴於上下文或說話者的意圖。例如，反諷。</li>
+                        </ul>
+                        選項 C 是<strong style="color: blue;">指代消解</strong> (<strong style="color: red;">Anaphora
+                            Resolution</strong>) 問題，也與語用或上下文相關。選項 D 是拼寫錯誤，不屬於<strong style="color: blue;">歧義</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q34 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">移除 <strong style="color: purple;">HTML</strong> 標籤是<strong
+                        style="color: blue;">文本前處理</strong>中的哪個步驟？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">斷詞</strong> (<strong
+                                style="color: red;">Tokenization</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">文本清洗</strong> (<strong
+                                style="color: red;">Text Cleaning</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">詞形還原</strong> (<strong
+                                style="color: red;">Lemmatization</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">停用詞移除</strong> (<strong
+                                style="color: red;">Stop Word Removal</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">文本清洗</strong>是<strong
+                            style="color: blue;">文本前處理</strong>的一個重要環節，旨在<strong
+                            style="background-color: #ffff0030;">移除文本中與分析目標無關或可能產生干擾的「雜訊」</strong>。這些雜訊可能包括 <strong
+                            style="color: purple;">HTML</strong> 標籤（如 `<p>`, `<a>`）、特殊字元、網址 (<strong
+                                    style="color: purple;">URLs</strong>)、表情符號、多餘的空格或換行符等。移除 <strong
+                                    style="color: purple;">HTML</strong> 標籤通常在處理從網頁爬取的文本時非常必要，以提取純淨的文本內容進行後續分析。</div>
+                </div>
+            </div>
+
+            <!-- Q35 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">共指消解</strong> (<strong
+                        style="color: red;">Coreference Resolution</strong>) 的任務目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">判斷文本的情感極性</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">分析句子中詞語的依賴關係</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">識別文本中<strong
+                                style="background-color: #ffff0030;">指向同一個真實世界實體</strong>的所有表述（如代名詞、名詞短語）並將它們<strong
+                                style="background-color: #ffff0030;">連結起來</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將文本劃分為句子</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">共指消解</strong>旨在找出文本中所有<strong
+                            style="background-color: #ffff0030;">指代同一個實體</strong> (<strong
+                            style="color: red;">entity</strong>) 的詞語或短語（稱為 <strong
+                            style="color: red;">mentions</strong>），並將它們歸類到同一個集合（稱為 <strong
+                            style="color: red;">coreference chain</strong>）。例如，在句子 "張三是一位工程師。他很喜歡寫程式。" 中，"張三" 和 "他"
+                        都指向同一個人物。<strong style="color: blue;">共指消解</strong>對於理解文本連貫性、<strong
+                            style="color: blue;">資訊提取</strong>、<strong
+                            style="color: blue;">問答系統</strong>等至關重要，因為它能幫助系統追蹤文本中實體的提及情況。指代消解 (Anaphora Resolution)
+                        範圍較窄：專門處理前指關係，即後面的詞語指向前面已出現的實體。特點：方向性：只處理「向前指」的關係. 典型例子：代名詞指向前文的名詞
+                        共指消解 (Coreference Resolution)
+                        範圍較廣：處理文本中所有指向同一實體的詞語，不限方向。特點：無方向性：可以是前指、後指、或並列關係, 包含指代消解：Anaphora Resolution 是其子集</div>
+                </div>
+                <br>
+                <img src="../image/Coreference Resolution.png" class="responsive-img">
+            </div>
+
+            <!-- Q36 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">語言模型</strong>的主要用途之一是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖像分類</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">評估一個句子或詞序列的自然程度</strong>（可能性）或<strong
+                                style="background-color: #ffff0030;">生成新的文本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">資料庫管理</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">異常偵測</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">語言模型</strong> (<strong
+                            style="color: red;">Language Model</strong>, <strong style="color: purple;">LM</strong>)
+                        的核心是學習自然語言中詞語序列的機率分佈 P(w1, w2, ..., wn)。基於這個機率分佈，<strong
+                            style="color: blue;">語言模型</strong>可以有兩大主要應用：1. <strong
+                            style="background-color: #ffff0030;">評估序列機率</strong>：給定一個句子，模型可以計算出該句子出現的可能性。機率越高的句子通常被認為越自然、越符合語法。這可用於拼寫檢查、語音辨識的後處理等。2.
+                        <strong
+                            style="background-color: #ffff0030;">生成文本</strong>：根據已有的詞語序列，預測下一個最可能出現的詞語，從而可以逐詞生成新的文本。這是<strong
+                            style="color: blue;">機器翻譯</strong>、<strong style="color: blue;">對話系統</strong>、<strong
+                            style="color: blue;">文本摘要</strong>等生成式任務的基礎。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q37 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">資訊檢索</strong> (<strong
+                        style="color: red;">Information Retrieval</strong>, <strong style="color: purple;">IR</strong>)
+                    系統（如搜尋引擎）如何利用 <strong style="color: purple;">NLP</strong> 技術？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅用於顯示搜尋結果頁面</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅用於計算網頁的載入速度</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">理解使用者查詢的意圖</strong>、處理<strong
+                                style="color: blue;">查詢擴展</strong>、對文檔進行<strong
+                                style="background-color: #ffff0030;">索引和排序</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅用於過濾垃圾郵件</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">NLP</strong> 技術在現代<strong
+                            style="color: blue;">資訊檢索</strong>系統中扮演著關鍵角色：
+                        <ul>
+                            <li><strong style="color: blue;">查詢理解</strong> (<strong style="color: red;">Query
+                                    Understanding</strong>): 分析使用者輸入的查詢，識別關鍵詞、實體、意圖，處理<strong
+                                    style="color: blue;">歧義</strong>（如 "apple" 是指水果還是公司？）。</li>
+                            <li><strong style="color: blue;">查詢擴展</strong> (<strong style="color: red;">Query
+                                    Expansion</strong>): 將原始查詢擴展為相關的詞語或同義詞，以召回更多相關文檔（如搜 "筆記型電腦" 時也返回包含 "laptop" 的結果）。
+                            </li>
+                            <li><strong style="color: blue;">文檔處理與索引</strong> (<strong style="color: red;">Document
+                                    Processing & Indexing</strong>): 對網頁或文檔進行<strong
+                                    style="color: blue;">斷詞</strong>、<strong style="color: blue;">詞幹提取</strong>/<strong
+                                    style="color: blue;">詞形還原</strong>、去除<strong
+                                    style="color: blue;">停用詞</strong>等<strong style="color: blue;">前處理</strong>，並使用
+                                <strong style="color: purple;">TF-IDF</strong> 或更先進的向量表示（如 <strong
+                                    style="color: blue;">BM25</strong>, <strong
+                                    style="color: blue;">詞嵌入</strong>）建立索引，以便快速查找。
+                            </li>
+                            <li><strong style="color: blue;">相關性排序</strong> (<strong style="color: red;">Relevance
+                                    Ranking</strong>): 計算查詢和文檔之間的相關性分數，並根據相關性對搜尋結果進行排序。現代搜尋引擎常使用基於深度學習的排序模型（<strong
+                                    style="color: red;">Learning to Rank</strong>, <strong
+                                    style="color: purple;">LTR</strong>），這些模型深度融合了 <strong
+                                    style="color: purple;">NLP</strong> 特徵。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q38 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">提示工程</strong> (<strong
+                        style="color: red;">Prompt Engineering</strong>) 在與<strong style="color: blue;">大型語言模型</strong>
+                    (<strong style="color: purple;">LLM</strong>) 互動時的作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">修改模型的內部參數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">設計和優化輸入給模型的指令或問題</strong>（<strong
+                                style="color: blue;">提示</strong>, <strong style="color: red;">Prompt</strong>），以<strong
+                                style="background-color: #ffff0030;">引導模型產生期望的輸出</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">加速模型的訓練過程</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">壓縮模型的大小</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大型語言模型</strong>（如 <strong
+                            style="color: purple;">GPT-3</strong>, <strong
+                            style="color: blue;">ChatGPT</strong>）通常是通過<strong
+                            style="background-color: #ffff0030;">提示</strong> (<strong
+                            style="color: red;">Prompt</strong>) 來進行互動和控制的。<strong
+                            style="color: blue;">提示工程</strong>是指研究如何設計有效的<strong style="color: blue;">提示</strong>，以更好地引導
+                        <strong style="color: purple;">LLM</strong> 完成特定任務或生成符合要求的內容。一個好的<strong
+                            style="color: blue;">提示</strong>應該清晰、具體，可能包含任務描述、上下文資訊、範例（<strong
+                            style="color: blue;">Few-shot Learning</strong>）、輸出格式要求等。通過精心設計<strong
+                            style="color: blue;">提示</strong>，使用者可以在不修改模型本身的情況下，顯著影響模型的輸出品質和行為。<strong
+                            style="color: blue;">提示工程</strong>已成為有效利用 <strong style="color: purple;">LLM</strong>
+                        的一項關鍵技能。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q39 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">NLP</strong> 與<strong
+                        style="color: blue;">計算語言學</strong> (<strong style="color: red;">Computational
+                        Linguistics</strong>) 的關係通常被描述為？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩者完全無關</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">兩者密切相關，<strong style="color: purple;">NLP</strong> <strong
+                                style="background-color: #ffff0030;">更側重於工程應用</strong>，<strong
+                                style="color: blue;">計算語言學</strong> <strong
+                                style="background-color: #ffff0030;">更側重於語言本身的計算模型和理論</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">NLP</strong> 是<strong
+                                style="color: blue;">計算語言學</strong>的一個過時名稱</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">計算語言學</strong>是 <strong
+                                style="color: purple;">NLP</strong> 的一個子領域</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">自然語言處理</strong> (<strong
+                            style="color: purple;">NLP</strong>) 和<strong style="color: blue;">計算語言學</strong> (<strong
+                            style="color: red;">Computational Linguistics</strong>, <strong
+                            style="color: purple;">CL</strong>) 是兩個緊密交叉的領域，有時甚至被替換使用。但一般認為它們的側重點略有不同：
+                        <ul>
+                            <li><strong style="color: blue;">計算語言學</strong> (<strong
+                                    style="color: purple;">CL</strong>): 更偏向<strong
+                                    style="background-color: #ffff0030;">理論和科學研究</strong>，關注用計算的方法來研究和理解人類語言本身的結構、規律和認知過程。目標是建立語言的計算模型。
+                            </li>
+                            <li><strong style="color: blue;">自然語言處理</strong> (<strong
+                                    style="color: purple;">NLP</strong>): 更偏向<strong
+                                    style="background-color: #ffff0030;">工程和應用</strong>，目標是開發能夠處理、理解和生成人類語言的計算機系統，以解決實際問題。
+                            </li>
+                        </ul>
+                        可以說，<strong style="color: purple;">CL</strong> 為 <strong style="color: purple;">NLP</strong>
+                        提供了理論基礎和方法，而 <strong style="color: purple;">NLP</strong> 將 <strong
+                            style="color: purple;">CL</strong> 的成果應用於實際系統。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q40 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">相較於 <strong style="color: purple;">TF-IDF</strong>，使用<strong
+                        style="color: blue;">詞嵌入</strong> (<strong style="color: red;">Word Embedding</strong>)
+                    作為<strong style="color: blue;">文本表示</strong>的主要優勢是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">向量維度更高</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算速度更快</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">能夠<strong style="background-color: #ffff0030;">捕捉詞語之間的語意相似性</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">不需要進行<strong style="color: blue;">斷詞</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">TF-IDF</strong>
+                        主要基於詞頻統計，它能反映詞語在文檔中的重要性，但<strong style="background-color: #ffff0030;">無法表示詞語本身的語意</strong>。不同詞語的
+                        <strong style="color: purple;">TF-IDF</strong> 向量之間通常是稀疏且正交的（或者說相似度計算意義不大）。而<strong
+                            style="color: blue;">詞嵌入</strong>（如 <strong style="color: blue;">Word2Vec</strong>, <strong
+                            style="color: blue;">GloVe</strong>）學習的是詞語的<strong
+                            style="background-color: #ffff0030;">分布式表示</strong>，將詞語映射到一個低維的、稠密的向量空間。在這個空間中，<strong
+                            style="background-color: #ffff0030;">語意相近的詞語其向量表示也相近</strong>（例如，通過餘弦相似度計算）。這使得模型能夠利用詞語間的語意關係，具有更好的泛化能力。例如，模型看到
+                        "蘋果" 的數據，也能一定程度上理解 "香蕉"，因為它們的詞向量可能比較接近。
+                    </div>
+                    <img src="../image/Word Embedding.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q41 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">主題模型</strong> (<strong
+                        style="color: red;">Topic Modeling</strong>)，例如 <strong style="color: purple;">LDA</strong>
+                    (<strong style="color: red;">Latent Dirichlet Allocation</strong>)，其主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">對文本進行情感分類</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從大量文檔集合中自動<strong
+                                style="background-color: #ffff0030;">發現隱藏的、抽象的主題結構</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將文本翻譯成摘要</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">識別文本中的人名和地名</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">主題模型</strong>是一種<strong
+                            style="color: blue;">無監督學習</strong>技術，用於分析大規模文檔集合（<strong
+                            style="color: blue;">語料庫</strong>）並從中<strong
+                            style="background-color: #ffff0030;">挖掘潛在的主題資訊</strong>。它假設每篇文檔是由多個主題混合而成，而每個主題又是由一系列相關的詞語機率分佈來定義的。例如，對於一個新聞<strong
+                            style="color: blue;">語料庫</strong>，<strong
+                            style="color: blue;">主題模型</strong>可能會發現像「財經」（包含詞語：股票、市場、經濟、公司）、「體育」（包含詞語：籃球、比賽、球員、得分）這樣的主題。<strong
+                            style="color: purple;">LDA</strong> 是最常用的<strong
+                            style="color: blue;">主題模型</strong>之一。<strong
+                            style="color: blue;">主題模型</strong>有助於理解和組織大型文本數據。</div>
+                    <br>
+                    <img src="../image/Topic Modeling_LDA.png" class="responsive-img">
+                    <br>
+                    <img src="../image/Latent Dirichlet Allocation.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q42 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">序列到序列</strong> (<strong
+                        style="color: red;">Sequence-to-Sequence</strong>, <strong
+                        style="color: purple;">Seq2Seq</strong>) 模型常用於處理哪些 <strong style="color: purple;">NLP</strong>
+                    任務？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">文本分類</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅<strong style="color: blue;">命名實體識別</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong>、<strong
+                                style="color: blue;">文本摘要</strong>、<strong style="color: blue;">對話生成</strong>等<strong
+                                style="background-color: #ffff0030;">輸入和輸出都是序列</strong>的任務</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅<strong style="color: blue;">詞性標註</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">Seq2Seq</strong>
+                        模型是一種深度學習架構，特別擅長處理<strong
+                            style="background-color: #ffff0030;">輸入和輸出都是可變長度序列</strong>的問題。它通常由兩部分組成：一個<strong
+                            style="color: blue;">編碼器</strong> (<strong style="color: red;">Encoder</strong>)
+                        負責讀取輸入序列並將其壓縮成一個固定長度的<strong style="color: blue;">上下文向量</strong> (<strong
+                            style="color: red;">context vector</strong>) 或一系列<strong
+                            style="color: blue;">隱藏狀態</strong>；一個<strong style="color: blue;">解碼器</strong> (<strong
+                            style="color: red;">Decoder</strong>) 則根據編碼器的輸出（上下文）逐步生成目標序列。這種架構非常適合那些需要<strong
+                            style="background-color: #ffff0030;">將一種序列轉換為另一種序列</strong>的任務，例如：
+                        <ul>
+                            <li><strong style="color: blue;">機器翻譯</strong>：輸入是源語言句子，輸出是目標語言句子。</li>
+                            <li><strong style="color: blue;">文本摘要</strong>：輸入是長文檔，輸出是短摘要。</li>
+                            <li><strong style="color: blue;">對話生成</strong>：輸入是使用者的話語，輸出是系統的回應。</li>
+                            <li><strong style="color: blue;">語音辨識</strong>：輸入是語音信號序列，輸出是文字序列。</li>
+                        </ul>
+                    </div>
+                </div>
+                <img src="../image/Seq2Seq.png" class="responsive-img">
+            </div>
+
+            <!-- Q43 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">資訊檢索</strong>或<strong
+                        style="color: blue;">推薦系統</strong>時，<strong style="color: purple;">MAP</strong> (<strong
+                        style="color: red;">Mean Average Precision</strong>) 指標主要考量了什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅考量找到的相關文檔數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">同時考量了檢索結果的<strong
+                                style="background-color: #ffff0030;">相關性</strong>和<strong
+                                style="background-color: #ffff0030;">排名順序</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅考量返回結果的總數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">系統回應查詢的速度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">平均精確率均值</strong> (<strong
+                            style="color: red;">Mean Average Precision</strong>, <strong
+                            style="color: purple;">MAP</strong>) 是評估排序結果品質的常用指標。對於單個查詢，<strong
+                            style="color: blue;">平均精確率</strong> (<strong style="color: red;">Average Precision</strong>,
+                        <strong style="color: purple;">AP</strong>) 計算的是在每個相關文檔被檢索到的位置上的<strong
+                            style="color: blue;">精確率</strong> (<strong style="color: red;">Precision</strong>)
+                        的平均值。這樣做的好處是，<strong style="background-color: #ffff0030;">相關文檔排名越靠前，對 AP 的貢獻越大</strong>。<strong
+                            style="color: purple;">MAP</strong> 則是對多個查詢的 <strong style="color: purple;">AP</strong>
+                        值再取平均。因此，<strong style="color: purple;">MAP</strong>
+                        不僅考慮了模型找回了多少相關項（召回率相關），更重要的是考慮了這些相關項是否排在前面（<strong
+                            style="background-color: #ffff0030;">排序品質</strong>），是一個對<strong
+                            style="background-color: #ffff0030;">相關性和排名都敏感</strong>的指標。
+                    </div>
+                </div>
+                <img src="../image/map_mean Average Precision.webp" class="responsive-img">
+            </div>
+
+
+            <!-- Q44 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">上下文相關詞嵌入</strong>」(<strong
+                        style="color: red;">Contextualized Word Embeddings</strong>)，如 <strong
+                        style="color: blue;">ELMo</strong> 和 <strong style="color: purple;">BERT</strong>
+                    提供的嵌入，與傳統的靜態<strong style="color: blue;">詞嵌入</strong>（如 <strong
+                        style="color: blue;">Word2Vec</strong>）的主要區別是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">向量維度固定為 100</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">同一個詞語在<strong
+                                style="background-color: #ffff0030;">不同的上下文中會具有不同的向量表示</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只能用於英文</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">訓練速度更快</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">傳統的<strong style="color: blue;">詞嵌入</strong>（如 <strong
+                            style="color: blue;">Word2Vec</strong>, <strong style="color: blue;">GloVe</strong>）是<strong
+                            style="background-color: #ffff0030;">靜態的</strong>，即一個詞語（不論它出現在哪個句子或上下文中）<strong
+                            style="background-color: #ffff0030;">只有一個固定的向量表示</strong>。這無法解決一詞多義的問題（如 "bank"）。而<strong
+                            style="color: blue;">上下文相關詞嵌入</strong>是<strong
+                            style="background-color: #ffff0030;">動態的</strong>，一個詞語的向量表示會<strong
+                            style="background-color: #ffff0030;">根據它所在的具體上下文而變化</strong>。這是通過使用深度模型（如雙向 <strong
+                            style="color: purple;">LSTM</strong> 或 <strong
+                            style="color: blue;">Transformer</strong>）來計算得到的，模型會考慮詞語周圍的整個句子（甚至更長）的資訊。因此，在句子 "I went to
+                        the bank to deposit money." 和 "He sat on the river bank." 中，"bank"
+                        這個詞會得到兩個不同的向量表示，更能捕捉其在特定語境下的含義。</div>
+                </div>
+            </div>
+
+            <!-- Q45 -->
+            <div class="question-card" data-direction="2" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">正規表示式</strong> (<strong
+                        style="color: red;">Regular Expression</strong>) 在 <strong style="color: purple;">NLP</strong>
+                    前處理中常用於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">訓練深度學習模型</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">模式匹配</strong>和<strong
+                                style="color: blue;">文本清洗</strong>（如<strong
+                                style="background-color: #ffff0030;">移除標點符號、數字、特定格式的字串</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">計算詞語的 <strong style="color: purple;">TF-IDF</strong> 值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">生成<strong style="color: blue;">詞嵌入</strong>向量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">正規表示式</strong>是一種強大的文本<strong
+                            style="background-color: #ffff0030;">模式匹配</strong>工具。在 <strong
+                            style="color: purple;">NLP</strong> 的<strong
+                            style="color: blue;">文本清洗</strong>階段，經常使用<strong
+                            style="color: blue;">正規表示式</strong>來查找和處理符合特定模式的字串。例如，可以用它來：
+                        <ul>
+                            <li>移除所有標點符號。</li>
+                            <li>移除數字。</li>
+                            <li>查找和替換特定格式的日期或時間。</li>
+                            <li>提取網址 (<strong style="color: purple;">URLs</strong>) 或電子郵件地址。</li>
+                            <li>移除 <strong style="color: purple;">HTML</strong> 標籤（雖然可能有更健壯的庫）。</li>
+                        </ul>
+                        雖然它的能力有限，無法處理複雜的語法和語意，但在處理結構相對簡單的模式時非常有效和便捷。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q46 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">光學字元辨識</strong> (<strong
+                        style="color: red;">Optical Character Recognition</strong>, <strong
+                        style="color: purple;">OCR</strong>) 與 <strong style="color: purple;">NLP</strong> 的關係是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">OCR</strong> 是 <strong
+                                style="color: purple;">NLP</strong> 的一種核心演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">OCR</strong> 通常作為 <strong
+                                style="color: purple;">NLP</strong> 處理流程的<strong
+                                style="background-color: #ffff0030;">前端</strong>，將<strong
+                                style="background-color: #ffff0030;">圖像中的文字轉換為可供 NLP 模型處理的文本格式</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">NLP</strong> 技術用於改進 <strong
+                                style="color: purple;">OCR</strong> 的準確率</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩者處理完全不同的資料類型，沒有關聯</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">OCR</strong>
+                        的任務是將包含文字的圖像（例如掃描的文件、照片中的路牌）<strong style="background-color: #ffff0030;">轉換為機器可讀的文本格式</strong>。而
+                        <strong style="color: purple;">NLP</strong>
+                        的輸入通常是文本。因此，當需要分析圖像中的文字內容時（例如，分析掃描合約的條款、理解圖片中的招牌文字），<strong style="color: purple;">OCR</strong>
+                        往往是第一步，它負責從圖像中提取出文字，然後再將提取出的文本交給後續的 <strong style="color: purple;">NLP</strong>
+                        模型進行理解、分析或處理。所以，<strong style="color: purple;">OCR</strong> 可以看作是<strong
+                            style="background-color: #ffff0030;">連接圖像和 NLP 的橋樑</strong>之一。雖然 <strong
+                            style="color: purple;">NLP</strong> 技術（如<strong style="color: blue;">語言模型</strong>）有時也能輔助提高
+                        <strong style="color: purple;">OCR</strong> 的識別準確率（例如，判斷識別結果是否構成合理的單詞或句子），但其主要關係是前者為後者提供輸入。
+                    </div>
+                </div>
+                <img src="../image/OCR_Optical Character Recognition.png" class="responsive-img">
+            </div>
+
+            <!-- Q47 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">語料庫</strong> (<strong
+                        style="color: red;">Corpus</strong>) 在 <strong style="color: purple;">NLP</strong> 中指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">一種特定的 <strong style="color: purple;">NLP</strong> 演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">用於訓練或評估 <strong style="color: purple;">NLP</strong> 模型的<strong
+                                style="background-color: #ffff0030;">大量結構化或非結構化的文本（或語音）數據集合</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">儲存<strong style="color: blue;">詞嵌入</strong>向量的資料庫</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">定義<strong style="color: blue;">詞性標籤</strong>的標準</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">語料庫</strong>是 <strong
+                            style="color: purple;">NLP</strong> 研究和應用的基礎。它指的是為了特定目的（如<strong
+                            style="color: blue;">語言學</strong>研究、模型訓練、評估）而收集和整理的<strong
+                            style="background-color: #ffff0030;">大量真實世界語言材料的集合</strong>。<strong
+                            style="color: blue;">語料庫</strong>可以是純文本（如新聞文章、小說、網頁），也可以是語音數據。根據是否帶有標註資訊，可以分為<strong
+                            style="color: blue;">無標註語料庫</strong> (<strong style="color: red;">Unannotated
+                            Corpus</strong>) 和 <strong style="color: blue;">標註語料庫</strong> (<strong
+                            style="color: red;">Annotated Corpus)（例如，帶有<strong
+                                style="color: blue;">詞性標註</strong>、<strong style="color: blue;">句法樹</strong>、<strong
+                                style="color: blue;">命名實體</strong>標註的<strong style="color: blue;">語料庫</strong>）。<strong
+                                style="color: blue;">語料庫</strong>的規模、多樣性和品質對 <strong style="color: purple;">NLP</strong>
+                            模型的效能有著至關重要的影響。</div>
+                    <br>
+                    <img src="../image/corpus.webp" class="responsive-img">
+                    <br>
+                    <img src="../image/Corpus1.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q48 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">零樣本學習</strong> (<strong
+                        style="color: red;">Zero-shot Learning</strong>) 和<strong style="color: blue;">少樣本學習</strong>
+                    (<strong style="color: red;">Few-shot Learning</strong>) 在<strong
+                        style="color: blue;">大型語言模型</strong>中的應用，讓模型能夠？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只能處理訓練時見過的任務</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在<strong
+                                style="background-color: #ffff0030;">沒有或只有極少量目標任務範例</strong>的情況下<strong
+                                style="background-color: #ffff0030;">執行新任務</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">忽略輸入的<strong style="color: blue;">提示</strong> (<strong
+                                style="color: red;">Prompt</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">生成完全隨機的文本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大型語言模型</strong>由於在海量數據上進行了<strong
+                            style="color: blue;">預訓練</strong>，學到了廣泛的語言知識和一定的推理能力，展現出了驚人的泛化能力：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">零樣本學習</strong></strong> (<strong
+                                    style="color: red;">Zero-shot Learning</strong>): 模型在<strong
+                                    style="background-color: #ffff0030;">完全沒有看過目標任務的任何範例</strong>的情況下，僅通過任務描述（包含在<strong
+                                    style="color: blue;">提示</strong>中）就能執行該任務。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">少樣本學習</strong></strong> (<strong
+                                    style="color: red;">Few-shot Learning</strong>): 在<strong
+                                    style="color: blue;">提示</strong>中提供<strong
+                                    style="background-color: #ffff0030;">少量</strong>（通常是 1 到幾十個）目標任務的<strong
+                                    style="background-color: #ffff0030;">範例</strong> (<strong
+                                    style="color: red;">demonstrations</strong>)，模型就能夠理解任務要求並執行。</li>
+                        </ul>
+                        這些能力使得 <strong style="color: purple;">LLM</strong> 能夠快速適應新任務，而不需要為每個任務都收集大量標註數據並重新訓練或<strong
+                            style="color: blue;">微調</strong>，大大降低了 <strong style="color: purple;">NLP</strong> 應用的門檻。
+                    </div>
+                    <br>
+                    <img src="../image/Zero-shot Learning.png" class="responsive-img">
+                    <br>
+                    <img src="../image/Few-Shot Learning.jpg" class="responsive-img">
+                    <br>
+                    <img src="../image/Zero-shot Prompting.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q49 -->
+            <div class="question-card" data-direction="3" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">將一個文檔表示為其包含的所有詞語的 <strong style="color: purple;">TF-IDF</strong>
+                    向量的平均值，這種方法屬於哪種文檔表示層級？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">字元級表示</strong> (<strong
+                                style="color: red;">Character-level</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">詞語級表示</strong> (<strong
+                                style="color: red;">Word-level</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">文檔級表示</strong> (<strong
+                                style="color: red;">Document-level</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">句子級表示</strong> (<strong
+                                style="color: red;">Sentence-level</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">NLP</strong> 中的<strong
+                            style="color: blue;">文本表示</strong>可以在不同粒度上進行：
+                        <ul>
+                            <li><strong style="color: blue;">字元級</strong>：將文本視為字元序列。</li>
+                            <li><strong style="color: blue;">詞語級</strong>：為每個詞語生成表示（如 <strong
+                                    style="color: blue;">one-hot</strong>, <strong
+                                    style="color: purple;">TF-IDF</strong>, <strong style="color: blue;">詞嵌入</strong>）。
+                            </li>
+                            <li><strong style="color: blue;">句子級</strong>：為整個句子生成一個向量表示（如 <strong
+                                    style="color: blue;">SBERT</strong>）。</li>
+                            <li><strong style="color: blue;">文檔級</strong>：為整個文檔生成一個向量表示。</li>
+                        </ul>
+                        將文檔中所有詞語的向量（無論是 <strong style="color: purple;">TF-IDF</strong> 還是<strong
+                            style="color: blue;">詞嵌入</strong>）進行平均（或加總、max-pooling 等）是一種簡單的、從<strong
+                            style="color: blue;">詞語級表示</strong>合成<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">文檔級表示</strong></strong>的方法。這種方法雖然損失了詞序資訊，但計算簡單，常用於<strong
+                            style="color: blue;">文檔分類</strong>、聚類等任務的基線方法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q50 -->
+            <div class="question-card" data-direction="7" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">ROUGE</strong> (<strong
+                        style="color: red;">Recall-Oriented Understudy for Gisting Evaluation</strong>) 指標常用於評估哪個
+                    <strong style="color: purple;">NLP</strong> 任務？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">機器翻譯</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">文本摘要</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">情感分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">命名實體識別</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">ROUGE</strong> (<strong style="color: red;">Recall-Oriented
+                            Understudy for Gisting Evaluation</strong>)
+                        是一系列主要用於評估<strong
+                            style="background-color: #ffff0030; color: blue;">文本摘要</strong>品質的指標，雖然它有時也被應用於<strong
+                            style="color: blue;">機器翻譯</strong>的評估。
+                        <br><br>
+                        <strong>核心區別與選擇原因：</strong>
+                        <br>
+                        1. <strong>設計理念不同</strong>：<strong style="color: purple;">ROUGE</strong> 的核心是<strong
+                            style="background-color: #ffff0030; color: blue;">召回率</strong> (<strong
+                            style="color: red;">Recall</strong>)。它主要衡量「<strong>參考摘要中的關鍵資訊，有多少被系統生成的摘要所涵蓋了？</strong>」。這個理念完美對應了<strong
+                            style="color: blue;">文本摘要</strong>任務的目標——確保資訊的完整性，不遺漏要點。
+                        <br><br>
+                        2. <strong>與 BLEU 的對比</strong>：<strong style="color: blue;">機器翻譯</strong>任務最常用、最經典的指標是 <strong
+                            style="color: purple;">BLEU</strong>，它基於<strong style="color: blue;">精確率</strong> (<strong
+                            style="color: red;">Precision</strong>)。BLEU
+                        關心的是「<strong>系統翻譯出的內容是否準確且流暢？</strong>」，更側重於懲罰錯誤的翻譯。因此，在單選題中，ROUGE 對應文本摘要，BLEU
+                        對應機器翻譯，是學術界和業界的慣例。
+                        <br><br>
+                        3. <strong>從名稱看本質</strong>：ROUGE 的全名中「<strong style="color: red;">Gisting
+                            Evaluation</strong>」意為「<strong>要點/大意評估</strong>」，這直接點明了其設計初衷就是為了評估摘要任務。
+                        <br><br>
+                        常見的 <strong style="color: purple;">ROUGE</strong> 指標包括基於 <strong
+                            style="color: blue;">N-gram</strong> 的 <strong style="color: purple;">ROUGE-N</strong> (如
+                        ROUGE-1, ROUGE-2) 和基於<strong style="color: blue;">最長公共子序列</strong> (<strong
+                            style="color: red;">LCS</strong>) 的 <strong style="color: purple;">ROUGE-L</strong>。
+                        <br><br>
+                        <strong>結論</strong>：儘管 ROUGE 具備多功能性，但它在設計理念、核心指標和學術慣例上，都是為<strong
+                            style="background-color: #ffff0030; color: blue;">文本摘要</strong>任務量身打造的最核心、最常用的自動評估指標。
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions(); // Call the main filter function
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterQuestions); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterQuestions(); // Trigger filter on Enter key
+            }
+            // Optional: live search/filtering as user types
+            // filterQuestions();
+        });
+
+
+        // Combined filter and search function
+        function filterQuestions() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false; // Track if any questions match
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Optional: Display a message if no questions match
+            const noResultsContainer = document.getElementById('noResultsContainer'); // Add a container for the message
+            if (!noResultsContainer) {
+                const container = document.getElementById('questionsContainer');
+                const messageDiv = document.createElement('div');
+                messageDiv.id = 'noResultsContainer';
+                messageDiv.style.textAlign = 'center';
+                messageDiv.style.padding = '20px';
+                messageDiv.style.fontSize = '1.1rem';
+                messageDiv.style.display = 'none'; // Hidden by default
+                container.parentNode.insertBefore(messageDiv, container.nextSibling); // Insert after questions container
+            }
+
+            const messageElement = document.getElementById('noResultsContainer');
+            if (!anyVisible) {
+                messageElement.style.display = 'block';
+                messageElement.textContent = '沒有找到符合條件的題目。';
+            } else {
+                messageElement.style.display = 'none';
+            }
+        }
+
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (for visual feedback, if desired)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Example: Temporarily highlight clicked option
+                // Remove highlight from siblings first
+                const parentOptions = option.closest('.options-container');
+                if (parentOptions) {
+                    parentOptions.querySelectorAll('.option-item').forEach(sib => sib.style.border = 'none');
+                }
+                // Add a temporary border to clicked option
+                // option.style.border = '2px solid #9ec5fe'; // Example highlight
+                // Note: This is just visual, doesn't affect correctness logic shown by .correct class
+            });
+        });
+
+        // Initial setup
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply initial filter/search state on load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+
+    </script>
+</body>
+
+</html>

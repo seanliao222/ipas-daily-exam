@@ -1,0 +1,3113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22102 機率分佈與資料分佈模型</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        .explanation-content ul,
+        .explanation-content ol {
+            /* Add padding to lists */
+            padding-left: 20px;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* No results message style */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #000000;
+            /* Ensure message text is black */
+            display: none;
+            /* Hidden by default */
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22102 機率分佈與資料分佈模型</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">基本機率概念與公理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">隨機變數、期望值與變異數</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">常用離散機率分佈</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">常用連續機率分佈</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">常態分佈特性與應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">抽樣分佈與中央極限定理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">資料分佈的視覺化與擬合</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">機率模型於 AI/ML 之應用</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">根據<strong style="color: blue;">機率</strong>的<strong
+                        style="color: blue;">公理化定義</strong>，下列關於事件 A 的<strong style="color: blue;">機率</strong> P(A)
+                    的敘述何者恆為真？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">P(A) 可以是負數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">0 ≤ P(A) ≤ 1</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">P(A) 必定大於 1</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">P(A) 必定等於 0.5</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">機率公理</strong>（<strong
+                            style="color: red;">Axioms of
+                            Probability</strong>）是機率論的基礎，由科摩哥洛夫（Kolmogorov）提出。主要包含三條<strong
+                            style="color: blue;">公理</strong>：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">非負性</strong>（<strong
+                                    style="color: red;">Non-negativity</strong>）：對於任何事件 A，其機率 P(A) ≥ 0。</li>
+                            <li><strong style="background-color: #ffff0030;">歸一性</strong>（<strong
+                                    style="color: red;">Normalization</strong>）：<strong
+                                    style="color: blue;">樣本空間</strong> S（包含所有可能結果的集合）的機率 P(S) = 1。</li>
+                            <li><strong style="background-color: #ffff0030;">可加性</strong>（<strong
+                                    style="color: red;">Additivity</strong>）：對於一系列<strong
+                                    style="color: blue;">互斥</strong>（<strong style="color: red;">Mutually
+                                    Exclusive</strong>）事件 A1, A2, ...，這些事件聯集的機率等於它們各自機率的總和。</li>
+                        </ol>
+                        根據<strong style="color: blue;">公理</strong> 1 和<strong style="color: blue;">公理</strong> 2（以及事件 A
+                        是<strong style="color: blue;">樣本空間</strong> S 的子集），可以推導出任何事件 A 的<strong
+                            style="color: blue;">機率</strong>必定介於 0 和 1 之間，即 0 ≤ P(A) ≤ 1。選項 B 正確。選項 A 和 C 違反<strong
+                            style="color: blue;">公理</strong>。選項 D 僅在特定情況下成立。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">一個<strong style="color: blue;">離散隨機變數</strong> X 的<strong
+                        style="color: blue;">期望值</strong>（<strong style="color: red;">Expected Value</strong>）<strong
+                        style="color: purple;">E[X]</strong> 代表什麼意義？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">X 最常出現的數值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">X 所有可能數值根據其發生<strong style="color: blue;">機率</strong><strong
+                                style="background-color: #ffff0030;">加權的平均值</strong>，代表 X 的<strong
+                                style="background-color: #ffff0030;">長期平均表現</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">X 的最大可能數值減去最小可能數值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">X 的數值偏離其平均值的平均程度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">期望值</strong>是<strong
+                            style="color: blue;">隨機變數</strong>的「中心」或「平均」的量度。對於一個<strong
+                            style="color: blue;">離散隨機變數</strong> X，其可能取值為 x1, x2, ..., xn，對應的<strong
+                            style="color: blue;">機率</strong>為 P(X=x1), P(X=x2), ..., P(X=xn)。<strong
+                            style="color: blue;">期望值</strong> <strong style="color: purple;">E[X]</strong>
+                        的計算公式為：<strong style="color: purple;">E[X]</strong> = Σ [xi * P(X=xi)]，即將每個可能值乘以其發生的<strong
+                            style="color: blue;">機率</strong>，然後加總。它代表了如果我們重複進行這個隨機試驗很多次，觀察到的 X 值的<strong
+                            style="background-color: #ffff0030;">長期平均結果</strong>會趨近於<strong
+                            style="color: blue;">期望值</strong>。選項 A 是<strong style="color: blue;">眾數</strong>（<strong
+                            style="color: red;">Mode</strong>）。選項 C 是<strong style="color: blue;">全距</strong>（<strong
+                            style="color: red;">Range</strong>）。選項 D 描述的是<strong
+                            style="color: blue;">變異數</strong>或<strong style="color: blue;">標準差</strong>的概念。</div>
+                    <img src="../image/expectedValue.gif" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">二項分佈</strong>（<strong
+                        style="color: red;">Binomial Distribution</strong>）描述的是下列哪種情境的<strong
+                        style="color: blue;">機率</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">在<strong style="color: blue;">固定時間間隔</strong>或空間區域內，某事件發生的次數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">進行 <strong style="background-color: #ffff0030;">n 次獨立</strong>的<strong
+                                style="color: blue;">伯努利試驗</strong>（<strong style="color: red;">Bernoulli
+                                Trial</strong>），每次試驗<strong style="background-color: #ffff0030;">成功機率為
+                                p</strong>，觀察到<strong style="background-color: #ffff0030;">恰好 k 次成功</strong>的<strong
+                                style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">連續型隨機變數</strong>落在某個特定區間的<strong
+                                style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">直到<strong style="color: blue;">第一次成功</strong>發生所需的試驗次數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">二項分佈</strong>用於模擬滿足以下條件的隨機試驗：
+                        <ol>
+                            <li>試驗由<strong style="background-color: #ffff0030;">固定次數 n</strong> 的重複試驗組成。</li>
+                            <li>每次試驗都是<strong style="background-color: #ffff0030;">獨立</strong>的。</li>
+                            <li>每次試驗只有<strong style="background-color: #ffff0030;">兩種可能結果</strong>，通常稱為「成功」和「失敗」。</li>
+                            <li>每次試驗<strong style="background-color: #ffff0030;">成功的機率 p 保持不變</strong>（失敗機率則為 1-p）。</li>
+                        </ol>
+                        <strong style="color: blue;">二項分佈</strong>計算的是在這 n 次試驗中，觀察到<strong
+                            style="background-color: #ffff0030;">恰好 k 次成功</strong>的<strong
+                            style="color: blue;">機率</strong>。選項 A 描述的是<strong
+                            style="color: blue;">卜瓦松分佈</strong>（<strong style="color: red;">Poisson
+                            Distribution</strong>）的典型情境。選項 C 涉及<strong style="color: blue;">連續分佈</strong>。選項 D
+                        描述的是<strong style="color: blue;">幾何分佈</strong>（<strong style="color: red;">Geometric
+                            Distribution</strong>）。
+                    </div>
+                    <img src="../image/Binomial Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="4" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">常態分佈</strong>（<strong
+                        style="color: red;">Normal Distribution</strong>）的<strong
+                        style="color: blue;">機率密度函數</strong>（<strong style="color: red;">Probability Density
+                        Function</strong>, <strong style="color: purple;">PDF</strong>）曲線形狀主要由哪兩個參數決定？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">試驗次數 n 和成功機率 p</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>, μ）和<strong style="color: blue;">標準差</strong>（<strong
+                                style="color: red;">Standard Deviation</strong>, σ）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">事件發生率 λ</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">自由度</strong>（<strong
+                                style="color: red;">Degrees of Freedom</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">常態分佈</strong>是最重要的<strong
+                            style="color: blue;">連續機率分佈</strong>之一，其<strong
+                            style="color: blue;">機率密度函數</strong>呈現對稱的鐘形曲線。這個曲線的位置和形狀完全由<strong
+                            style="background-color: #ffff0030;">兩個參數決定</strong>：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">平均數 (μ)</strong>：決定了分佈的<strong
+                                    style="background-color: #ffff0030;">中心位置</strong>，即鐘形曲線對稱軸的位置。</li>
+                            <li><strong style="background-color: #ffff0030;">標準差 (σ)</strong>：決定了分佈的<strong
+                                    style="background-color: #ffff0030;">離散程度</strong>或寬度。<strong
+                                    style="color: blue;">標準差</strong>越大，曲線越矮胖（數據越分散）；<strong
+                                    style="color: blue;">標準差</strong>越小，曲線越高瘦（數據越集中）。</li>
+                        </ul>
+                        選項 A 是<strong style="color: blue;">二項分佈</strong>的參數。選項 C 是<strong
+                            style="color: blue;">卜瓦松分佈</strong>或<strong style="color: blue;">指數分佈</strong>的參數。選項 D 是 t
+                        分佈或卡方分佈的參數。
+                    </div>
+                    <img src="../image/Probability-Density-for-Normal-Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="5" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">根據<strong style="color: blue;">常態分佈</strong>的<strong
+                        style="color: blue;">經驗法則</strong>（<strong style="color: red;">Empirical
+                        Rule</strong>），約有多少比例的數據會落在距離<strong style="color: blue;">平均數</strong> μ <strong
+                        style="font-weight: normal;">正負一個標準差</strong> σ 的範圍內（即 [μ - σ, μ + σ]）？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">約 50%</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">約 68%</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">約 95%</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">約 99.7%</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">經驗法則</strong>（也稱為 <strong
+                            style="color: red;">68-95-99.7</strong> <strong style="color: blue;">法則</strong>）是對<strong
+                            style="color: blue;">常態分佈</strong>數據散佈情況的近似描述：
+                        <ul>
+                            <li>約 <strong style="background-color: #ffff0030;">68%</strong> 的數據落在<strong
+                                    style="color: blue;">平均數</strong>正負<strong
+                                    style="background-color: #ffff0030;">一個標準差</strong>的範圍內 [μ - σ, μ + σ]。</li>
+                            <li>約 <strong style="background-color: #ffff0030;">95%</strong> 的數據落在<strong
+                                    style="color: blue;">平均數</strong>正負<strong
+                                    style="background-color: #ffff0030;">兩個標準差</strong>的範圍內 [μ - 2σ, μ + 2σ]。</li>
+                            <li>約 <strong style="background-color: #ffff0030;">99.7%</strong> 的數據落在<strong
+                                    style="color: blue;">平均數</strong>正負<strong
+                                    style="background-color: #ffff0030;">三個標準差</strong>的範圍内 [μ - 3σ, μ + 3σ]。</li>
+                        </ul>
+                        這個法則對於理解<strong style="color: blue;">常態分佈</strong>數據的集中和離散情況非常有用。因此，落在 [μ - σ, μ + σ] 範圍內的數據約佔
+                        68%。
+                    </div>
+                    <img src="../image/Normal Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="6" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">中央極限定理</strong>（<strong
+                        style="color: red;">Central Limit Theorem</strong>, <strong
+                        style="color: purple;">CLT</strong>）的主要內容是關於什麼的分佈？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單個隨機<strong style="color: blue;">樣本</strong>的分佈</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從<strong
+                                style="background-color: #ffff0030;">任何母體</strong>（無論其分佈如何）中抽取的<strong
+                                style="background-color: #ffff0030;">大量獨立隨機樣本</strong>的<strong
+                                style="color: blue;">樣本平均數</strong>（<strong style="color: red;">Sample
+                                Mean</strong>）的<strong style="background-color: #ffff0030;">分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">母體變異數</strong>（<strong
+                                style="color: red;">Population Variance</strong>）的分佈</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">單次<strong style="color: blue;">伯努利試驗</strong>成功<strong
+                                style="color: blue;">機率</strong>的分佈</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">中央極限定理</strong>是統計學中一個非常重要的定理。它指出，如果從一個<strong
+                            style="background-color: #ffff0030;">任何分佈</strong>（不一定需要是<strong
+                            style="color: blue;">常態分佈</strong>）的<strong style="color: blue;">母體</strong>中，重複抽取<strong
+                            style="background-color: #ffff0030;">足夠大的獨立隨機樣本</strong>（通常認為<strong
+                            style="color: blue;">樣本大小</strong> n ≥ 30 即可），那麼這些<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">樣本平均數</strong></strong>的<strong
+                            style="background-color: #ffff0030;">分佈</strong>將會近似於<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">常態分佈</strong></strong>。這個近似<strong
+                            style="color: blue;">常態分佈</strong>的<strong style="color: blue;">平均數</strong>等於<strong
+                            style="color: blue;">母體平均數</strong> μ，<strong style="color: blue;">標準差</strong>（稱為<strong
+                            style="color: blue;">標準誤</strong> <strong style="color: red;">Standard Error</strong>,
+                        <strong style="color: purple;">SE</strong>）等於<strong style="color: blue;">母體標準差</strong> σ
+                        除以<strong style="color: blue;">樣本大小</strong>的平方根（σ/√n）。<strong
+                            style="color: purple;">CLT</strong> 的重要性在於它允許我們在不知道<strong
+                            style="color: blue;">母體</strong>分佈的情況下，利用<strong style="color: blue;">常態分佈</strong>來對<strong
+                            style="color: blue;">樣本平均數</strong>進行統計推斷（如建立信賴區間、進行假設檢定）。
+                    </div>
+                    <img src="../image/Central Limit Theorem.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">Q-Q</strong> <strong
+                        style="color: blue;">圖</strong>（<strong style="color: red;">Quantile-Quantile
+                        Plot</strong>）常用於檢查什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個<strong style="color: blue;">類別變數</strong>之間是否存在關聯</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一組<strong style="color: blue;">樣本數據</strong>的<strong
+                                style="background-color: #ffff0030;">分佈</strong>是否<strong
+                                style="background-color: #ffff0030;">接近於某個理論分佈</strong>（例如<strong
+                                style="color: blue;">常態分佈</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據中是否存在<strong style="color: blue;">異常值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩個<strong style="color: blue;">數值變數</strong>之間的<strong
+                                style="color: blue;">線性相關</strong>強度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">Q-Q</strong> <strong
+                            style="color: blue;">圖</strong>是一種視覺化比較兩組數據分佈或一組數據與<strong
+                            style="color: blue;">理論分佈</strong>（最常用的是<strong
+                            style="color: blue;">常態分佈</strong>）的圖形方法。它繪製的是兩組數據（或<strong
+                            style="color: blue;">樣本數據</strong>與<strong style="color: blue;">理論分佈</strong>）相對應的<strong
+                            style="background-color: #ffff0030;">分位數</strong>（<strong
+                            style="color: red;">Quantiles</strong>）的散佈圖。如果<strong
+                            style="color: blue;">樣本數據</strong>的分佈與比較的<strong style="color: blue;">理論分佈</strong>非常吻合，那麼
+                        <strong style="color: purple;">Q-Q</strong> <strong
+                            style="color: blue;">圖</strong>上的點應該大致落在<strong
+                            style="background-color: #ffff0030;">一條直線</strong>上（通常是 y=x 的對角線）。如果點明顯偏離直線，則表明<strong
+                            style="color: blue;">樣本數據</strong>的分佈與<strong style="color: blue;">理論分佈</strong>存在差異。<strong
+                            style="color: purple;">Q-Q</strong> <strong style="color: blue;">圖</strong>是判斷數據是否服從<strong
+                            style="color: blue;">常態分佈</strong>假設的常用視覺化工具。
+                    </div>
+                    <img src="../image/Quantile-Quantile Plot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">機器學習</strong>的<strong
+                        style="color: blue;">貝氏分類器</strong>（<strong style="color: red;">Naive Bayes
+                        Classifier</strong>）中，通常假設<strong style="color: blue;">特徵</strong>之間是什麼關係，以簡化<strong
+                        style="color: blue;">機率</strong>計算？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全線性相關</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在給定類別的條件下，<strong style="color: blue;">特徵</strong>之間<strong
+                                style="background-color: #ffff0030;">相互獨立</strong>（<strong
+                                style="color: blue;">條件獨立性假設</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">特徵</strong>之間存在複雜的非線性關係</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">所有<strong style="color: blue;">特徵</strong>都服從<strong
+                                style="color: blue;">常態分佈</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">貝氏分類器</strong>是基於<strong
+                            style="color: blue;">貝氏定理</strong>（<strong style="color: red;">Bayes'
+                            Theorem</strong>）的一類分類演算法。它計算給定<strong style="color: blue;">特徵</strong>條件下，樣本屬於每個類別的<strong
+                            style="color: blue;">後驗機率</strong>（<strong style="color: red;">Posterior
+                            Probability</strong>），並將樣本歸類到<strong style="color: blue;">後驗機率</strong>最大的那個類別。「<strong
+                            style="color: blue;">單純</strong>」（<strong style="color: red;">Naive</strong>）<strong
+                            style="color: blue;">貝氏分類器</strong>的「單純」之處在於它做了一個很強的假設：<strong
+                            style="background-color: #ffff0030;">假設所有特徵在給定類別的條件下是相互獨立的</strong>。這個<strong
+                            style="color: blue;">條件獨立性假設</strong>大大簡化了聯合<strong
+                            style="color: blue;">機率</strong>的計算，使得模型易於實現且計算效率高。儘管這個假設在現實中往往不成立，但<strong
+                            style="color: blue;">單純貝氏分類器</strong>在許多應用（如文本分類）中仍然表現得相當不錯。</div>
+                    <div
+                        style="background-color: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.1rem;">📊 貝氏定理的核心概念</h4>
+
+                        <div style="display: grid; gap: 12px; margin-bottom: 15px;">
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #e74c3c;">
+                                <strong style="color: #e74c3c;">事前機率 (Prior Probability) P(A)：</strong><br>
+                                這是您還沒有看到新證據時，對某事（事件 A）發生的機率。這是您最初的信念。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #f39c12;">
+                                <strong style="color: #f39c12;">概度 (Likelihood) P(B|A)：</strong><br>
+                                這是假設某事（事件 A）已經發生的情況下，您看到這個新證據 (B) 的可能性有多大。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #9b59b6;">
+                                <strong style="color: #9b59b6;">邊際機率 P(B)：</strong><br>
+                                這是看到新證據 (B) 本身發生的總機率。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #27ae60;">
+                                <strong style="color: #27ae60;">後驗機率 (Posterior Probability) P(A|B)：</strong><br>
+                                這是您看到新證據 (B) 之後，某事（事件 A）發生的修正後機率。這是您更新後的信念。
+                            </div>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 6px; text-align: center;">
+                            <strong>💡 總結</strong><br>
+                            貝氏定理就是教導我們：新的證據必須結合舊有的事實基礎（事物發生的普遍機率）來綜合判斷，才能得出最理性的結論。
+                        </div>
+                    </div>
+
+                    <img src="../image/Naive Bayes.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">卜瓦松分佈</strong>（<strong
+                        style="color: red;">Poisson Distribution</strong>）通常用於模擬什麼類型的事件？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">連續</strong>測量值（如身高、溫度）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在一個<strong
+                                style="background-color: #ffff0030;">固定的時間間隔或空間區域</strong>內，<strong
+                                style="background-color: #ffff0030;">獨立且隨機發生</strong>的事件的<strong
+                                style="background-color: #ffff0030;">次數</strong>（例如，一小時內到達客服中心的電話數量）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一系列試驗中成功的比例</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">從有限<strong style="color: blue;">母體</strong>中不放回抽樣得到的特定項目數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">卜瓦松分佈</strong>是一種<strong
+                            style="color: blue;">離散機率分佈</strong>，描述的是在<strong
+                            style="background-color: #ffff0030;">固定單位時間、空間或體積</strong>內，某種<strong
+                            style="background-color: #ffff0030;">稀有事件</strong>（事件之間相互獨立，且<strong
+                            style="color: blue;">發生率</strong> λ 在該單位內是常數）發生的<strong
+                            style="background-color: #ffff0030;">次數 k</strong> 的<strong
+                            style="color: blue;">機率</strong>。其應用場景包括：
+                        <ul>
+                            <li>單位時間內到達某服務點的顧客數。</li>
+                            <li>單位長度內某材料的瑕疵數。</li>
+                            <li>單位面積內某種植物的數量。</li>
+                            <li>單位時間內網站收到的點擊數。</li>
+                        </ul>
+                        選項 B 正確描述了卜瓦松過程的特徵。選項 A 是連續變數。選項 C 可能涉及<strong style="color: blue;">二項分佈</strong>。選項 D
+                        描述的是<strong style="color: blue;">超幾何分佈</strong>（<strong style="color: red;">Hypergeometric
+                            Distribution</strong>）。
+                    </div>
+                    <img src="../image/poisson-distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">指數分佈</strong>（<strong
+                        style="color: red;">Exponential Distribution</strong>）通常用於模擬什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">固定次數試驗中成功的次數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">獨立且隨機發生的事件之間的<strong
+                                style="background-color: #ffff0030;">時間間隔</strong>，或者直到<strong
+                                style="background-color: #ffff0030;">下一個事件發生的等待時間</strong>（假設事件發生率恆定）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">對稱分佈</strong>的連續測量值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">多個類別的比例</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">指數分佈</strong>是一種<strong
+                            style="color: blue;">連續機率分佈</strong>，它與<strong
+                            style="color: blue;">卜瓦松過程</strong>密切相關。如果事件的發生遵循<strong
+                            style="color: blue;">卜瓦松過程</strong>（即事件在單位時間內發生的平均次數 λ 是常數），那麼兩次連續事件之間的<strong
+                            style="background-color: #ffff0030;">時間間隔</strong>，或者從任意時間點開始直到<strong
+                            style="background-color: #ffff0030;">下一個事件發生的等待時間</strong>，就服從<strong
+                            style="color: blue;">指數分佈</strong>。其應用場景包括：
+                        <ul>
+                            <li>顧客到達服務點的時間間隔。</li>
+                            <li>電子元件的<strong style="color: blue;">壽命</strong>（假設故障率恆定）。</li>
+                            <li>放射性粒子衰變的時間間隔。</li>
+                        </ul>
+                        <strong style="color: blue;">指數分佈</strong>具有「<strong style="color: blue;">無記憶性</strong>」（<strong
+                            style="color: red;">Memoryless Property</strong>），即過去等待了多久不影響未來還需要等待多久。選項 A 是<strong
+                            style="color: blue;">二項分佈</strong>。選項 C 常為<strong style="color: blue;">常態分佈</strong>。選項 D
+                        可能用多項分佈。
+                    </div>
+                    <img src="../image/Exponential Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">標準常態分佈</strong>（<strong
+                        style="color: red;">Standard Normal Distribution</strong>）是指<strong
+                        style="color: blue;">平均數</strong> μ 和<strong style="color: blue;">標準差</strong> σ 分別為多少的<strong
+                        style="color: blue;">常態分佈</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">μ=1, σ=1</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">μ=0, σ=1</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">μ=0, σ=0</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">μ 由數據決定, σ=1</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準常態分佈</strong>是<strong
+                            style="color: blue;">常態分佈</strong>家族中的一個特例，其<strong style="background-color: #ffff0030;">平均數
+                            μ 固定為 0</strong>，<strong style="background-color: #ffff0030;">標準差 σ 固定為
+                            1</strong>。任何一個服從<strong style="color: blue;">平均數</strong>為 μ、<strong
+                            style="color: blue;">標準差</strong>為 σ 的<strong style="color: blue;">常態分佈</strong>的<strong
+                            style="color: blue;">隨機變數</strong> X，都可以通過 Z = (X - μ) / σ 的轉換（即計算 <strong
+                            style="color: blue;">Z 分數</strong>），將其標準化為服從<strong
+                            style="color: blue;">標準常態分佈</strong>的<strong style="color: blue;">隨機變數</strong> Z。<strong
+                            style="color: blue;">標準常態分佈</strong>的<strong style="color: blue;">機率</strong>值有標準化的表格（Z
+                        表）或函數可供查詢，因此在統計計算中非常重要。</div>
+                    <img src="../image/Standard-Normal-Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">根據<strong style="color: blue;">中央極限定理</strong>，當<strong
+                        style="color: blue;">樣本大小</strong> n 增大時，<strong style="color: blue;">樣本平均數</strong>的分佈會發生什麼變化？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">分佈的<strong style="color: blue;">平均數</strong>會偏離<strong
+                                style="color: blue;">母體平均數</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">分佈會<strong
+                                style="background-color: #ffff0030;">越來越接近常態分佈</strong>，且分佈的<strong
+                                style="color: blue;">標準差</strong>（<strong style="color: blue;">標準誤</strong>）會<strong
+                                style="background-color: #ffff0030;">減小</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分佈會越來越偏離<strong style="color: blue;">常態分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">分佈的<strong style="color: blue;">標準差</strong>會增大</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">中央極限定理</strong>（<strong
+                            style="color: purple;">CLT</strong>）說明了<strong style="color: blue;">樣本平均數</strong><strong
+                            style="color: blue;">抽樣分佈</strong>的兩個重要特性隨<strong style="color: blue;">樣本大小</strong> n 的變化：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">趨近常態</strong>：無論<strong
+                                    style="color: blue;">母體</strong>分佈如何，只要 n 足夠大，<strong
+                                    style="color: blue;">樣本平均數</strong>的分佈就會近似於<strong
+                                    style="color: blue;">常態分佈</strong>。</li>
+                            <li><strong style="background-color: #ffff0030;">標準誤減小</strong>：<strong
+                                    style="color: blue;">樣本平均數</strong>分佈的<strong
+                                    style="color: blue;">標準差</strong>，即<strong style="color: blue;">標準誤</strong>
+                                (<strong style="color: purple;">SE</strong>)，等於 σ/√n。當<strong
+                                    style="color: blue;">樣本大小</strong> n 增大時，<strong style="color: blue;">標準誤</strong>
+                                σ/√n 會減小。這意味著隨著樣本量的增加，<strong style="color: blue;">樣本平均數</strong>會更緊密地圍繞在<strong
+                                    style="color: blue;">母體平均數</strong> μ 周圍，即<strong
+                                    style="color: blue;">樣本平均數</strong>作為<strong
+                                    style="color: blue;">母體平均數</strong>估計量的精度會提高。</li>
+                        </ol>
+                        因此，選項 B 正確描述了這兩個變化。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">機率密度函數</strong>（<strong
+                        style="color: red;">Probability Density Function</strong>, <strong
+                        style="color: purple;">PDF</strong>）<strong style="color: red;">f(x)</strong> 對於<strong
+                        style="color: blue;">連續隨機變數</strong> X 的主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">直接給出 X 取某個特定值 x 的<strong style="color: blue;">機率</strong> P(X=x)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">描述 X 在不同數值點附近的<strong
+                                style="background-color: #ffff0030;">相對可能性</strong>，其在某個區間 [a, b] 上的<strong
+                                style="background-color: #ffff0030;">積分</strong>等於 X 落在該區間的<strong
+                                style="color: blue;">機率</strong> P(a ≤ X ≤ b)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">計算 X 的<strong style="color: blue;">期望值</strong> E[X]</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算 X 的<strong style="color: blue;">變異數</strong> Var(X)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">對於<strong style="color: blue;">連續隨機變數</strong>，其取任何一個特定單點值的<strong
+                            style="color: blue;">機率</strong>理論上為 0（A 錯誤）。我們關心的是變數落在某個區間內的<strong
+                            style="color: blue;">機率</strong>。<strong style="color: blue;">機率密度函數</strong> <strong
+                            style="color: purple;">PDF</strong> <strong style="color: red;">f(x)</strong> 本身並非<strong
+                            style="color: blue;">機率</strong>值，但它描述了變數在數值 x 附近單位寬度內的<strong
+                            style="background-color: #ffff0030;">機率密度</strong>（相對可能性）。要計算變數 X 落在區間 [a, b] 內的<strong
+                            style="color: blue;">機率</strong> P(a ≤ X ≤ b)，需要計算 <strong
+                            style="color: purple;">PDF</strong> 曲線在該區間下方的面積，即對 <strong style="color: red;">f(x)</strong>
+                        從 a 到 b 進行<strong style="background-color: #ffff0030;">積分</strong>（∫[a,b] f(x) dx）（B 正確）。雖然
+                        <strong style="color: purple;">PDF</strong> 可以用來計算<strong style="color: blue;">期望值</strong>（∫
+                        x*f(x) dx）和<strong style="color: blue;">變異數</strong>（∫ (x-μ)^2*f(x) dx），但其主要作用是定義和計算區間<strong
+                            style="color: blue;">機率</strong>。
+                    </div>
+                    <img src="../image/Probability Density Function (PDF) Probability Mass Function (PMF) Cumulative Distribution Function (CDF).jpg"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">機器學習</strong>中，<strong
+                        style="color: blue;">高斯混合模型</strong>（<strong style="color: red;">Gaussian Mixture
+                        Model</strong>, <strong style="color: purple;">GMM</strong>）是一種基於<strong
+                        style="color: blue;">機率模型</strong>的什麼演算法？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">監督式分類</strong>演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">無監督式聚類</strong>演算法</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">強化學習</strong>演算法</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">降維</strong>演算法</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">高斯混合模型</strong>（<strong
+                            style="color: purple;">GMM</strong>）假設數據是由 K 個不同的<strong
+                            style="color: blue;">常態</strong>（<strong style="color: blue;">高斯</strong>）<strong
+                            style="color: blue;">分佈</strong>所混合生成的。它是一種基於<strong
+                            style="color: blue;">機率</strong>的<strong
+                            style="background-color: #ffff0030;">聚類</strong>演算法，屬於<strong
+                            style="background-color: #ffff0030;">無監督學習</strong>。<strong
+                            style="color: purple;">GMM</strong> 的目標是找出這 K 個<strong
+                            style="color: blue;">高斯分佈</strong>的參數（每個分佈的<strong
+                            style="color: blue;">平均數</strong>、共<strong
+                            style="color: blue;">變異數</strong>矩陣以及它們在混合中的權重），使得模型能夠最好地擬合觀測到的數據。每個數據點可以被指派到它最可能隸屬的那個<strong
+                            style="color: blue;">高斯分佈</strong>（群集），並且 <strong style="color: purple;">GMM</strong>
+                        可以提供每個數據點屬於每個群集的<strong style="color: blue;">機率</strong>（<strong
+                            style="color: blue;">軟聚類</strong> <strong style="color: red;">Soft Clustering</strong>）。相較於
+                        <strong style="color: blue;">K-means</strong>（假設群集是球狀的），<strong
+                            style="color: purple;">GMM</strong> 可以擬合更複雜的橢球狀群集。
+                    </div>
+                    <img src="../image/gaussian-mixture-model.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果事件 A 和事件 B 是<strong style="color: blue;">相互獨立</strong>（<strong
+                        style="color: red;">Independent</strong>）的，那麼 P(A and B) 等於多少？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">P(A) + P(B)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">P(A) * P(B)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">P(A) / P(B)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">兩個事件 A 和 B <strong
+                            style="color: blue;">相互獨立</strong>的定義是，一個事件的發生不影響另一個事件發生的<strong
+                            style="color: blue;">機率</strong>，即 P(A|B) = P(A) 且 P(B|A) = P(B)。根據<strong
+                            style="color: blue;">條件機率</strong>的<strong style="color: blue;">乘法法則</strong> P(A and B) =
+                        P(A|B) * P(B) 或 P(A and B) = P(B|A) * P(A)，當 A 和 B <strong
+                            style="color: blue;">獨立</strong>時，可以直接推導出 <strong style="background-color: #ffff0030;">P(A
+                            and B) = P(A) * P(B)</strong>。這是<strong style="color: blue;">獨立事件聯合機率</strong>的計算公式。選項 A
+                        是<strong style="color: blue;">互斥事件聯集機率</strong>的公式（且需 P(A and B)=0）。</div>
+                    <img src="../image/probability of independent events.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Continue with Questions 16-50 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">隨機變數</strong> X 的<strong
+                        style="color: blue;">變異數</strong>（<strong style="color: red;">Variance</strong>）<strong
+                        style="color: purple;">Var(X)</strong> 的計算公式是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">E[X]</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">E[X^2]</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">E[(X - E[X])^2]</strong> 或
+                            <strong style="background-color: #ffff0030;">E[X^2] - (E[X])^2</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">(E[X])^2</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">變異數</strong>衡量<strong
+                            style="color: blue;">隨機變數</strong>取值相對於其<strong style="color: blue;">期望值</strong>（<strong
+                            style="color: blue;">平均數</strong>）的離散程度。其定義是<strong
+                            style="background-color: #ffff0030;">離差平方的期望值</strong>，即 <strong
+                            style="color: purple;">Var(X) = E[(X - μ)^2]</strong>，其中 μ = <strong
+                            style="color: purple;">E[X]</strong>。這個公式直觀地表示了變數偏離其<strong
+                            style="color: blue;">平均數</strong>的平均平方距離。另一個常用的計算公式是 <strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">Var(X) = E[X^2] -
+                                (E[X])^2</strong></strong>，即<strong
+                            style="background-color: #ffff0030;">平方的期望值減去期望值的平方</strong>。這兩個公式是等價的。<strong
+                            style="color: blue;">標準差</strong>則是<strong style="color: blue;">變異數</strong>的平方根。</div>
+                    <img src="../image/var(x).svg" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">伯努利試驗</strong>（<strong
+                        style="color: red;">Bernoulli Trial</strong>）指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">進行無限多次的隨機試驗</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">只有兩種可能結果</strong>（如成功/失敗、是/否、正面/反面）的<strong
+                                style="background-color: #ffff0030;">單次隨機試驗</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">結果可以是任何連續數值的試驗</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">至少有三種可能結果的試驗</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">伯努利試驗</strong>是最簡單的隨機試驗模型，它描述的是<strong
+                            style="background-color: #ffff0030;">只進行一次、且只有兩種互斥結果</strong>的試驗。通常將這兩種結果標記為「成功」（<strong
+                            style="color: blue;">機率</strong>為 p）和「失敗」（<strong style="color: blue;">機率</strong>為
+                        1-p）。例如，投擲一次硬幣（正面/反面）、檢查一個產品是否合格（合格/不合格）、進行一次射門（進球/未進球）都可以視為<strong
+                            style="color: blue;">伯努利試驗</strong>。多次<strong style="color: blue;">獨立</strong>重複的<strong
+                            style="color: blue;">伯努利試驗</strong>是構成<strong style="color: blue;">二項分佈</strong>、<strong
+                            style="color: blue;">幾何分佈</strong>等<strong style="color: blue;">離散分佈</strong>的基礎。</div>
+                    <img src="../image/Bernoulli Trial.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">均勻分佈</strong>（<strong
+                        style="color: red;">Uniform Distribution</strong>）的主要特徵是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">機率密度</strong>集中在<strong
+                                style="color: blue;">平均數</strong>附近</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在一個指定的區間 [a, b] 內，所有數值的<strong
+                                style="color: blue;">機率密度</strong>（對於<strong style="color: blue;">連續型</strong>）或<strong
+                                style="color: blue;">機率</strong>（對於<strong style="color: blue;">離散型</strong>）都是<strong
+                                style="background-color: #ffff0030;">相等的</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分佈呈現明顯的向右偏斜</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只可能取 0 或 1 兩個值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">均勻分佈</strong>描述的是「<strong
+                            style="background-color: #ffff0030;">等可能性</strong>」。對於<strong
+                            style="color: blue;">連續均勻分佈</strong>，在一個有限區間 [a, b] 內，任何長度相同的子區間具有相同的<strong
+                            style="color: blue;">機率</strong>，其<strong style="color: blue;">機率密度函數</strong>在區間 [a, b]
+                        內是一個常數（1/(b-a)），在區間外為 0，圖形呈矩形。對於<strong style="color: blue;">離散均勻分佈</strong>，如果一個變數有 n
+                        個可能的結果，則每個結果發生的<strong style="color: blue;">機率</strong>都是 1/n。選項 B 正確描述了這種等可能性的特徵。<strong
+                            style="color: blue;">常態分佈</strong>集中在<strong style="color: blue;">平均數</strong>附近（A）。<strong
+                            style="color: blue;">指數分佈</strong>是右偏的（C）。<strong
+                            style="color: blue;">伯努利分佈</strong>只取兩個值（D）。</div>
+                    <img src="../image/types-of-probability-distribution.webp" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">將一個<strong style="color: blue;">常態分佈</strong>的<strong
+                        style="color: blue;">隨機變數</strong> X 轉換為<strong style="color: blue;">標準常態分佈</strong>的<strong
+                        style="color: blue;">隨機變數</strong> Z，使用的公式是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">Z = (X + μ) / σ</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">Z = (X - μ) * σ</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">Z = (X - μ) / σ</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">Z = X / μ</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準化</strong>（<strong
+                            style="color: red;">Standardization</strong>）是將服從任意<strong
+                            style="color: blue;">常態分佈</strong> N(μ, σ^2) 的<strong style="color: blue;">隨機變數</strong> X
+                        轉換為服從<strong style="color: blue;">標準常態分佈</strong> N(0, 1) 的<strong
+                            style="color: blue;">隨機變數</strong> Z 的過程。這個轉換公式就是計算 X 的 <strong style="color: blue;">Z
+                            分數</strong>：先將 X <strong style="background-color: #ffff0030;">減去其平均數 μ</strong>（使新的平均數為
+                        0），然後再<strong style="background-color: #ffff0030;">除以其標準差 σ</strong>（使新的標準差為 1）。即 <strong
+                            style="background-color: #ffff0030;">Z = (X - μ) / σ</strong>。這個轉換使得不同<strong
+                            style="color: blue;">常態分佈</strong>的數值可以在同一個標準尺度上進行比較和查表計算<strong
+                            style="color: blue;">機率</strong>。</div>
+                    <img src="../image/z-score.jpg" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在探索資料分佈時，<strong style="color: blue;">密度圖</strong>（<strong
+                        style="color: red;">Density Plot</strong> 或 <strong style="color: blue;">Kernel Density
+                        Estimate</strong>, <strong style="color: purple;">KDE</strong>）相比於<strong
+                        style="color: blue;">直方圖</strong>的主要優勢是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">可以顯示每個數據點的精確值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">提供一個<strong
+                                style="background-color: #ffff0030;">更平滑的連續曲線</strong>來估計數據的<strong
+                                style="color: blue;">機率密度函數</strong>，<strong
+                                style="background-color: #ffff0030;">不受組距</strong>（<strong
+                                style="color: red;">bin</strong>）<strong
+                                style="background-color: #ffff0030;">寬度選擇的影響</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只能用於<strong style="color: blue;">離散數據</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算速度遠快於<strong style="color: blue;">直方圖</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">直方圖</strong>的形狀會受到組距（<strong
+                            style="color: red;">bin</strong>）數量和寬度選擇的影響，不同的選擇可能呈現出不同的分佈樣貌。<strong
+                            style="color: blue;">密度圖</strong>（特別是<strong style="color: blue;">核密度估計</strong> <strong
+                            style="color: purple;">KDE</strong>）透過在每個數據點放置一個平滑的核函數（如高斯核），然後將這些核函數疊加起來，得到一個<strong
+                            style="background-color: #ffff0030;">連續、平滑的曲線</strong>來估計數據的潛在<strong
+                            style="color: blue;">機率密度函數</strong>。它<strong style="background-color: #ffff0030;">不受 bin
+                            選擇的影響</strong>，能更好地呈現分佈的形狀（如峰值、<strong
+                            style="color: blue;">偏態</strong>），尤其是在樣本量較大時。然而，<strong style="color: purple;">KDE</strong>
+                        也有其參數（如核函數的帶寬 <strong style="color: red;">bandwidth</strong>）需要選擇。選項 A 錯誤。選項 C 錯誤，主要用於連續數據。選項 D
+                        不一定，<strong style="color: purple;">KDE</strong> 計算可能更複雜。</div>
+                    <img src="../image/Bar-chart-versus-histogram-chart.png" class="responsive-img">
+                    <img src="../image/density_plot.svg" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">貝氏定理</strong>（<strong
+                        style="color: red;">Bayes' Theorem</strong>）提供了一種更新<strong
+                        style="color: blue;">機率</strong>的方法，它描述了哪個<strong style="color: blue;">機率</strong>與哪個<strong
+                        style="color: blue;">機率</strong>之間的關係？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">邊際機率</strong>（<strong
+                                style="color: red;">Marginal Probability</strong>）和<strong
+                                style="color: blue;">聯合機率</strong>（<strong style="color: red;">Joint
+                                Probability</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">後驗機率</strong>（<strong
+                                style="color: red;">Posterior Probability</strong>）與<strong
+                                style="color: blue;">事前機率</strong>（<strong style="color: red;">Prior
+                                Probability</strong>）、<strong style="color: blue;">概度</strong>（<strong
+                                style="color: red;">Likelihood</strong>）和<strong
+                                style="color: blue;">證據</strong>（<strong style="color: red;">Evidence</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">條件機率</strong>（<strong
+                                style="color: red;">Conditional Probability</strong>）和<strong
+                                style="color: blue;">互斥事件</strong>的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">獨立事件</strong>的<strong
+                                style="color: blue;">機率</strong>和相依事件的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">貝氏定理</strong>的公式通常寫為：P(A|B) = [P(B|A)
+                        * P(A)] / P(B)。它描述了在觀察到<strong style="color: blue;">證據</strong> B 之後，事件 A 發生的<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">後驗機率</strong>
+                            P(A|B)</strong> 如何從事件 A 的<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">事前機率</strong> P(A)</strong>（在觀察到 B 之前的信念）透過<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">概度</strong>
+                            P(B|A)</strong>（假設 A 發生時，觀察到 B 的<strong style="color: blue;">機率</strong>）和<strong
+                            style="color: blue;">證據</strong> B 的<strong style="color: blue;">邊際機率</strong> P(B)（觀察到 B
+                        的總<strong style="color: blue;">機率</strong>）來更新。即：<strong style="color: blue;">後驗機率</strong> ∝
+                        <strong style="color: blue;">概度</strong> × <strong style="color: blue;">事前機率</strong>。<strong
+                            style="color: blue;">貝氏定理</strong>是貝氏統計推斷和許多<strong
+                            style="color: blue;">機器學習</strong>演算法（如<strong style="color: blue;">貝氏分類器</strong>）的基礎。
+                    </div>
+                    <div
+                        style="background-color: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <h4 style="color: #2c3e50; margin-bottom: 15px; font-size: 1.1rem;">📊 貝氏定理的核心概念</h4>
+
+                        <div style="display: grid; gap: 12px; margin-bottom: 15px;">
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #e74c3c;">
+                                <strong style="color: #e74c3c;">事前機率 (Prior Probability) P(A)：</strong><br>
+                                這是您還沒有看到新證據時，對某事（事件 A）發生的機率。這是您最初的信念。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #f39c12;">
+                                <strong style="color: #f39c12;">概度 (Likelihood) P(B|A)：</strong><br>
+                                這是假設某事（事件 A）已經發生的情況下，您看到這個新證據 (B) 的可能性有多大。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #9b59b6;">
+                                <strong style="color: #9b59b6;">邊際機率 P(B)：</strong><br>
+                                這是看到新證據 (B) 本身發生的總機率。
+                            </div>
+
+                            <div
+                                style="background: white; padding: 12px; border-radius: 6px; border-left: 3px solid #27ae60;">
+                                <strong style="color: #27ae60;">後驗機率 (Posterior Probability) P(A|B)：</strong><br>
+                                這是您看到新證據 (B) 之後，某事（事件 A）發生的修正後機率。這是您更新後的信念。
+                            </div>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 6px; text-align: center;">
+                            <strong>💡 總結</strong><br>
+                            貝氏定理就是教導我們：新的證據必須結合舊有的事實基礎（事物發生的普遍機率）來綜合判斷，才能得出最理性的結論。
+                        </div>
+                    </div>
+                    <img src="../image/Naive Bayes.webp" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">隨機變數</strong> X 的<strong
+                        style="color: blue;">累積分布函數</strong>（<strong style="color: red;">Cumulative Distribution
+                        Function</strong>, <strong style="color: purple;">CDF</strong>）F(x) 定義為？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">P(X = x)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">P(X ≤ x)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">P(X > x)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">f(x)，即<strong style="color: blue;">機率密度函數</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">累積分布函數</strong>（<strong
+                            style="color: purple;">CDF</strong>）F(x) 給出的是<strong style="color: blue;">隨機變數</strong> X
+                        的取值<strong style="background-color: #ffff0030;">小於或等於</strong>某個特定值 x 的<strong
+                            style="color: blue;">機率</strong>，即 F(x) = P(X ≤ x)。無論是<strong
+                            style="color: blue;">離散</strong>還是<strong style="color: blue;">連續隨機變數</strong>，<strong
+                            style="color: purple;">CDF</strong> 都是一個非遞減函數，其值域為 [0, 1]。對於<strong
+                            style="color: blue;">連續變數</strong>，<strong style="color: purple;">CDF</strong> 是其 <strong
+                            style="color: purple;">PDF</strong> 的積分；對於<strong style="color: blue;">離散變數</strong>，<strong
+                            style="color: purple;">CDF</strong> 是其<strong style="color: blue;">機率質量函數</strong>（<strong
+                            style="color: red;">Probability Mass Function</strong>, <strong
+                            style="color: purple;">PMF</strong>）的累加和。<strong style="color: purple;">CDF</strong>
+                        完整地描述了一個<strong style="color: blue;">隨機變數</strong>的<strong style="color: blue;">機率分佈</strong>。
+                    </div>
+                    <img src="../image/CDF_Cumulative Distribution Function.jpg" class="responsive-img">
+                    <img src="../image/CDF_Cumulative Distribution Function.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">幾何分佈</strong>（<strong
+                        style="color: red;">Geometric Distribution</strong>）描述的是在重複<strong
+                        style="color: blue;">獨立</strong>的<strong style="color: blue;">伯努利試驗</strong>中，什麼事件發生的<strong
+                        style="color: blue;">機率</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">恰好觀察到 k 次成功</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">直到<strong
+                                style="background-color: #ffff0030;">第一次成功</strong>出現時，所需要進行的<strong
+                                style="background-color: #ffff0030;">試驗次數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">在固定時間內成功的次數</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">試驗成功的比例</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">幾何分佈</strong>也是基於一系列<strong
+                            style="color: blue;">獨立</strong>的<strong style="color: blue;">伯努利試驗</strong>（每次<strong
+                            style="color: blue;">成功機率</strong>為 p）。它關注的是<strong
+                            style="background-color: #ffff0030;">第一次成功</strong>發生前的失敗次數，或者<strong
+                            style="background-color: #ffff0030;">直到第一次成功發生</strong>所需的總<strong
+                            style="background-color: #ffff0030;">試驗次數</strong>（這兩種定義略有不同，但都屬於<strong
+                            style="color: blue;">幾何分佈</strong>）。例如，不斷投擲一枚硬幣直到第一次出現正面，投擲的次數就服從<strong
+                            style="color: blue;">幾何分佈</strong>。選項 A 是<strong style="color: blue;">二項分佈</strong>。選項 C
+                        是<strong style="color: blue;">卜瓦松分佈</strong>。選項 D 是一個比例。</div>
+                    <img src="../image/Geometric-Distribution-Formula.jpg" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">常態分佈</strong>的<strong
+                        style="color: blue;">機率密度曲線</strong>下方的總面積等於多少？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">0</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">1</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong> μ</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">標準差</strong> σ</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">對於任何有效的<strong style="color: blue;">機率密度函數</strong>（<strong
+                            style="color: purple;">PDF</strong>），其定義域內（通常是負無窮到正無窮）曲線下方的<strong
+                            style="background-color: #ffff0030;">總面積必須等於 1</strong>。這代表了<strong
+                            style="color: blue;">隨機變數</strong>取所有可能值的總<strong style="color: blue;">機率</strong>為
+                        1（即必然事件的<strong style="color: blue;">機率</strong>）。<strong
+                            style="color: blue;">常態分佈</strong>作為一種<strong style="color: blue;">連續機率分佈</strong>，其 <strong
+                            style="color: purple;">PDF</strong> 曲線下方的總面積也必須等於 1。</div>
+                    <img src="../image/probability distribution functions_area.webp" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">中央極限定理</strong>（<strong
+                        style="color: purple;">CLT</strong>）成立的一個重要前提條件（或要求）是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">母體</strong>分佈必須是<strong
+                                style="color: blue;">常態分佈</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">抽取的<strong style="color: blue;">樣本</strong>必須是<strong
+                                style="background-color: #ffff0030;">獨立且來自相同分佈</strong>（<strong
+                                style="color: red;">Independent and Identically Distributed</strong>, <strong
+                                style="color: purple;">i.i.d.</strong>），且<strong style="color: blue;">樣本數</strong> n
+                            <strong style="background-color: #ffff0030;">足夠大</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">樣本大小</strong> n 必須小於 30</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">母體標準差</strong>必須已知</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">中央極限定理</strong>的應用有幾個關鍵條件：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">獨立同分佈</strong> (<strong
+                                    style="color: purple;">i.i.d.</strong>)：從<strong
+                                    style="color: blue;">母體</strong>中抽取的<strong
+                                    style="color: blue;">樣本</strong>觀測值之間必須相互<strong
+                                    style="color: blue;">獨立</strong>，並且都來自同一個<strong
+                                    style="color: blue;">母體</strong>分佈。（這是許多統計推斷的基礎假設）</li>
+                            <li><strong style="background-color: #ffff0030;">樣本數足夠大</strong> (n is large enough)：通常認為 n
+                                ≥ 30 是一個經驗法則，但對於接近<strong style="color: blue;">常態</strong>的<strong
+                                    style="color: blue;">母體</strong>，較小的 n 可能就足夠；對於偏度很大的<strong
+                                    style="color: blue;">母體</strong>，則需要更大的 n。</li>
+                            <li><strong style="color: blue;">母體變異數有限</strong> (<strong style="color: red;">Finite
+                                    Variance</strong>)：<strong style="color: blue;">母體</strong>分佈需要有有限的<strong
+                                    style="color: blue;">變異數</strong> σ^2。</li>
+                        </ol>
+                        <strong style="color: purple;">CLT</strong> 最強大的地方在於它對<strong
+                            style="color: blue;">母體</strong>分佈的<strong
+                            style="background-color: #ffff0030;">形狀沒有嚴格要求</strong>（A 錯誤），只要滿足 <strong
+                            style="color: purple;">i.i.d.</strong>、n 足夠大和<strong
+                            style="color: blue;">變異數</strong>有限，<strong
+                            style="color: blue;">樣本平均數</strong>的分佈就會趨近<strong style="color: blue;">常態</strong>。選項 C
+                        錯誤。母體<strong style="color: blue;">標準差</strong>是否已知（D）會影響後續推斷方法的選擇（Z 檢定 vs. t 檢定），但不是 <strong
+                            style="color: purple;">CLT</strong> 成立的前提。
+                    </div>
+                    <img src="../image/Central Limit Theorem.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">卡方適合度檢定</strong>（<strong
+                        style="color: red;">Chi-squared Goodness-of-Fit Test</strong>）通常用於檢定什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個<strong style="color: blue;">數值變數</strong>的<strong
+                                style="color: blue;">平均數</strong>是否相等</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">觀測到的樣本頻率分佈</strong>是否符合某個<strong
+                                style="background-color: #ffff0030;">預期的理論分佈</strong>（例如，骰子各點數出現的頻率是否符合<strong
+                                style="color: blue;">均勻分佈</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩個<strong style="color: blue;">數值變數</strong>之間是否存在線性相關</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">樣本數據是否服從<strong style="color: blue;">常態分佈</strong></div>
+
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">卡方適合度檢定</strong>是一種非參數檢定方法，用於比較一組<strong
+                            style="background-color: #ffff0030;">類別數據的觀測頻數</strong>（<strong style="color: red;">Observed
+                            Frequencies</strong>）與基於某個理論假設或預期<strong style="color: blue;">機率分佈</strong>計算出的<strong
+                            style="background-color: #ffff0030;">期望頻數</strong>（<strong style="color: red;">Expected
+                            Frequencies</strong>）之間是否存在顯著差異。<strong style="color: blue;">虛無假設</strong>（<strong
+                            style="color: red;">Null Hypothesis</strong>）通常是觀測分佈與理論分佈沒有差異。如果計算出的卡方統計量大於臨界值（或 p
+                        值小於顯著水準），則拒絕<strong
+                            style="color: blue;">虛無假設</strong>，認為觀測分佈與理論分佈存在顯著差異。它常用於檢定骰子是否公平、孟德爾遺傳定律的比例是否符合預期等。選項 A 可用
+                        t 檢定或 <strong style="color: purple;">ANOVA</strong>。選項 C 可用相關係數檢定。選項 D 有專門的常態性檢定方法（如 <strong
+                            style="color: red;">Shapiro-Wilk test</strong>, <strong style="color: red;">K-S
+                            test</strong>）或透過 <strong style="color: purple;">Q-Q</strong> <strong
+                            style="color: blue;">圖</strong>判斷。</div>
+                    <img src="../image/chi-square-goodness-of-fit-test.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">推薦系統</strong>中，可以使用<strong
+                        style="color: blue;">機率模型</strong>來估計一個使用者對一個物品評分的<strong
+                        style="color: blue;">機率分佈</strong>，這屬於哪種<strong style="color: blue;">機器學習</strong>任務？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">聚類</strong>（<strong
+                                style="color: red;">Clustering</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">機率預測</strong>（<strong
+                                style="color: red;">Probabilistic Prediction</strong>）或<strong
+                                style="color: blue;">回歸</strong>（<strong
+                                style="color: red;">Regression</strong>，如果評分視為連續）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">降維</strong>（<strong
+                                style="color: red;">Dimensionality Reduction</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">異常檢測</strong>（<strong
+                                style="color: red;">Anomaly Detection</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">推薦系統</strong>的目標是預測使用者對他們尚未接觸過的物品的偏好或評分。當使用<strong
+                            style="color: blue;">機率模型</strong>（例如基於矩陣分解的<strong
+                            style="color: blue;">機率模型</strong>或<strong style="color: blue;">貝氏個人化排序</strong> <strong
+                            style="color: purple;">BPR</strong>）來估計使用者給予物品特定評分（或評分區間）的<strong
+                            style="color: blue;">機率</strong>時，這本質上是在進行一個<strong
+                            style="background-color: #ffff0030;">機率預測</strong>任務。如果將評分視為一個連續的數值（即使可能是有限範圍的，如 1-5
+                        星），也可以看作是一個<strong
+                            style="background-color: #ffff0030;">回歸</strong>問題，只是模型輸出的是一個預測分佈而非單一點估計。這與<strong
+                            style="color: blue;">無監督</strong>的<strong style="color: blue;">聚類</strong>、<strong
+                            style="color: blue;">降維</strong>或<strong style="color: blue;">異常檢測</strong>任務不同。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">事件 A 的<strong style="color: blue;">補集</strong>（<strong
+                        style="color: red;">Complement</strong>）A' 的<strong style="color: blue;">機率</strong> P(A') 與
+                    P(A) 的關係是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">P(A') = P(A)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">P(A') = 1 / P(A)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">P(A') = 1 - P(A)</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">P(A') = 0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">事件 A 的<strong style="color: blue;">補集</strong> A'（或寫作
+                        A^c）是指在<strong style="color: blue;">樣本空間</strong> S 中，所有不屬於事件 A 的結果所構成的事件。事件 A 和其<strong
+                            style="color: blue;">補集</strong> A' 是<strong
+                            style="color: blue;">互斥</strong>的（它們不可能同時發生），並且它們的聯集構成了整個<strong
+                            style="color: blue;">樣本空間</strong>（A ∪ A' = S）。根據<strong style="color: blue;">機率公理</strong>
+                        P(S) = 1 和<strong style="color: blue;">互斥事件</strong>的<strong style="color: blue;">可加性</strong>
+                        P(A ∪ A') = P(A) + P(A')，我們可以得到 P(A) + P(A') = 1。因此，<strong
+                            style="color: blue;">補集</strong>的<strong style="color: blue;">機率</strong> P(A') = 1 - P(A)。
+                        <img src="../image/probability-complement.svg" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果<strong style="color: blue;">隨機變數</strong> X 的所有可能取值都乘以一個常數 c，其<strong
+                        style="color: blue;">期望值</strong> <strong style="color: purple;">E[cX]</strong> 會如何變化？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">變為 E[X] / c</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">變為 c * E[X]</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">變為 E[X] + c</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">保持不變</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">期望值</strong>具有<strong
+                            style="color: blue;">線性性質</strong>。根據<strong style="color: blue;">期望值</strong>的定義 <strong
+                            style="color: purple;">E[cX]</strong> = Σ [(c * xi) * P(X=xi)]。由於常數 c 可以提出求和符號外，得到 <strong
+                            style="color: purple;">E[cX] = c * Σ [xi * P(X=xi)] = c * E[X]</strong>。也就是說，一個常數乘以一個<strong
+                            style="color: blue;">隨機變數</strong>的<strong style="color: blue;">期望值</strong>，等於該常數乘以該<strong
+                            style="color: blue;">隨機變數</strong>的<strong style="color: blue;">期望值</strong>。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">二項分佈</strong> <strong
+                        style="color: red;">B(n, p)</strong> 的<strong style="color: blue;">平均數</strong>（<strong
+                        style="color: blue;">期望值</strong>）和<strong style="color: blue;">變異數</strong>分別是多少？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>=np, <strong
+                                style="color: blue;">變異數</strong>=np</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>=<strong
+                                style="background-color: #ffff0030;">np</strong>, <strong
+                                style="color: blue;">變異數</strong>=<strong
+                                style="background-color: #ffff0030;">np(1-p)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>=n/p, <strong
+                                style="color: blue;">變異數</strong>=n(1-p)/p^2</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>=p, <strong
+                                style="color: blue;">變異數</strong>=p(1-p)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">對於一個服從<strong style="color: blue;">二項分佈</strong> <strong
+                            style="color: red;">B(n, p)</strong> 的<strong style="color: blue;">隨機變數</strong>（代表 n
+                        次<strong style="color: blue;">獨立</strong><strong
+                            style="color: blue;">伯努利試驗</strong>中成功的次數，每次<strong style="color: blue;">成功機率</strong>為
+                        p），其<strong style="color: blue;">期望值</strong>（平均成功次數）為 <strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">E[X] =
+                                np</strong></strong>，其<strong style="color: blue;">變異數</strong>為 <strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">Var(X) =
+                                np(1-p)</strong></strong>。選項 D 是單次<strong style="color: blue;">伯努利試驗</strong>的<strong
+                            style="color: blue;">期望值</strong>和<strong style="color: blue;">變異數</strong>。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">指數分佈</strong>的<strong
+                        style="color: blue;">機率密度函數</strong>（<strong style="color: purple;">PDF</strong>）具有什麼特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">對稱</strong>的鐘形</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">單調遞減</strong>且恆為正（對於 x >
+                            0）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">U 形</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">在某個區間內為常數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">指數分佈</strong>的<strong
+                            style="color: blue;">機率密度函數</strong>為 f(x) = λ * exp(-λx)，其中 x ≥ 0 且 λ > 0（λ 是事件<strong
+                            style="color: blue;">發生率</strong>）。這個函數在 x=0 時取得最大值 λ，然後隨著 x 的增加而指數級地<strong
+                            style="background-color: #ffff0030;">單調遞減</strong>，趨近於 0。因此，它是一個典型的<strong
+                            style="color: blue;">右偏</strong>分佈，表示短時間間隔發生的<strong
+                            style="color: blue;">機率</strong>較高，長時間間隔發生的<strong style="color: blue;">機率</strong>較低。選項 A
+                        是<strong style="color: blue;">常態分佈</strong>。選項 D 是<strong style="color: blue;">均勻分佈</strong>。
+                    </div>
+                    <img src="../image/types-of-probability-distribution.webp" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">常態分佈</strong>在哪個值達到其峰值（即<strong
+                        style="color: blue;">眾數</strong>）？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（μ）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong> + 一個<strong
+                                style="color: blue;">標準差</strong>（μ + σ）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong> - 一個<strong
+                                style="color: blue;">標準差</strong>（μ - σ）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">常態分佈</strong>的<strong
+                            style="color: blue;">機率密度函數</strong>曲線是<strong
+                            style="color: blue;">對稱</strong>的鐘形，其對稱軸位於<strong style="color: blue;">平均數</strong> μ
+                        處。曲線的最高點（峰值），也就是<strong style="color: blue;">隨機變數</strong>最可能取值（或取值密度最大）的地方，正好就是<strong
+                            style="background-color: #ffff0030;">平均數 μ</strong>。同時，由於<strong
+                            style="color: blue;">對稱性</strong>，<strong style="color: blue;">常態分佈</strong>的<strong
+                            style="color: blue;">平均數</strong>、<strong style="color: blue;">中位數</strong>和<strong
+                            style="color: blue;">眾數</strong>是相等的，都等於 μ。</div>
+                    <img src="../image/Normal Distribution.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">抽樣分佈</strong>（<strong
+                        style="color: red;">Sampling Distribution</strong>）指的是什麼的<strong
+                        style="color: blue;">分佈</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">原始<strong style="color: blue;">母體</strong>數據的<strong
+                                style="color: blue;">分佈</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從同一<strong style="color: blue;">母體</strong>中抽取的所有可能<strong
+                                style="color: blue;">樣本</strong>（或大量<strong style="color: blue;">樣本</strong>）的某個<strong
+                                style="color: blue;">統計量</strong>（如<strong style="color: blue;">樣本平均數</strong>、<strong
+                                style="color: blue;">樣本比例</strong>）的<strong style="color: blue;">分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">單個<strong style="color: blue;">樣本</strong>內數據點的<strong
+                                style="color: blue;">分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">理論<strong style="color: blue;">機率分佈</strong>（如<strong
+                                style="color: blue;">常態分佈</strong>）</div>
+                    </div>
+                    <img src="../image/Sampling Distribution.gif" class="responsive-img">
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">抽樣分佈</strong>不是指單個<strong
+                            style="color: blue;">樣本</strong>的<strong style="color: blue;">分佈</strong>，也不是指<strong
+                            style="color: blue;">母體</strong>的<strong style="color: blue;">分佈</strong>。它是指<strong
+                            style="background-color: #ffff0030;">樣本統計量</strong>（例如<strong
+                            style="color: blue;">樣本平均數</strong>、<strong style="color: blue;">樣本變異數</strong>、<strong
+                            style="color: blue;">樣本比例</strong>等）的<strong
+                            style="color: blue;">機率分佈</strong>。想像一下，我們從同一個<strong
+                            style="color: blue;">母體</strong>中反覆抽取大小為 n 的<strong
+                            style="color: blue;">樣本</strong>，每次都計算一個<strong style="color: blue;">統計量</strong>（如<strong
+                            style="color: blue;">樣本平均數</strong>）。將所有這些計算出的<strong
+                            style="color: blue;">樣本統計量</strong>收集起來，它們自身會形成一個<strong
+                            style="color: blue;">分佈</strong>，這個<strong style="color: blue;">分佈</strong>就叫做該<strong
+                            style="color: blue;">統計量</strong>的<strong style="color: blue;">抽樣分佈</strong>。理解<strong
+                            style="color: blue;">抽樣分佈</strong>對於進行統計推斷（估計<strong
+                            style="color: blue;">母體參數</strong>、進行假設檢定）至關重要，例如<strong
+                            style="color: blue;">中央極限定理</strong>描述的就是<strong style="color: blue;">樣本平均數</strong>的<strong
+                            style="color: blue;">抽樣分佈</strong>。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">最大概度估計</strong>（<strong
+                        style="color: red;">Maximum Likelihood Estimation</strong>, <strong
+                        style="color: purple;">MLE</strong>）是一種常用的參數估計方法，其基本思想是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">選擇使得<strong style="color: blue;">事前機率</strong>最大的參數值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">選擇一組參數值，使得在這些參數下觀測到當前<strong style="color: blue;">樣本數據</strong>的<strong
+                                style="color: blue;">聯合機率</strong>（<strong style="color: blue;">概度</strong>）<strong
+                                style="background-color: #ffff0030;">最大化</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">選擇使得模型誤差平方和最小的參數值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">選擇使得<strong style="color: blue;">後驗機率</strong>最大的參數值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">最大概度估計</strong>（<strong
+                            style="color: purple;">MLE</strong>）是頻率學派統計中一種常用的點估計方法。假設我們有一個<strong
+                            style="color: blue;">機率模型</strong>（其形式已知，但包含未知參數 θ），並且觀察到了一組<strong
+                            style="color: blue;">樣本數據</strong> D。<strong style="color: purple;">MLE</strong> 的目標是找到一組參數值
+                        θ^，使得在參數為 θ^ 的條件下，觀察到數據 D 的<strong style="color: blue;">機率</strong>（稱為<strong
+                            style="color: blue;">概度函數</strong> L(θ|D) = P(D|θ)）達到<strong
+                            style="background-color: #ffff0030;">最大</strong>。直觀地說，就是<strong
+                            style="background-color: #ffff0030;">找到最可能產生我們所觀察到的數據的那組參數值</strong>。選項 C 描述的是<strong
+                            style="color: blue;">最小平方法</strong>（<strong style="color: red;">Least Squares
+                            Estimation</strong>），常用於<strong style="color: blue;">回歸</strong>。選項 D 描述的是<strong
+                            style="color: blue;">最大後驗機率估計</strong>（<strong style="color: red;">Maximum A
+                            Posteriori</strong>, <strong style="color: purple;">MAP</strong>），屬於<strong
+                            style="color: blue;">貝氏推斷</strong>。</div>
+                    <img src="../image/Maximum Likelihood Estimation vs. Expectation Maximization.jpg"
+                        class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">隱馬可夫模型</strong>（<strong
+                        style="color: red;">Hidden Markov Model</strong>, <strong
+                        style="color: purple;">HMM</strong>）中，「隱藏」（<strong style="color: red;">Hidden</strong>）指的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的<strong style="color: blue;">轉移機率</strong>是隱藏的</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型內部的<strong style="color: blue;">狀態</strong>（<strong
+                                style="color: red;">States</strong>）序列是<strong
+                                style="background-color: #ffff0030;">無法直接觀測到</strong>的，只能透過可觀測的輸出序列來推斷</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的輸出<strong style="color: blue;">機率</strong>是隱藏的</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型的初始狀態分佈是隱藏的</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">隱馬可夫模型</strong>（<strong
+                            style="color: purple;">HMM</strong>）是一種用於描述含有隱藏狀態的<strong
+                            style="color: blue;">馬可夫過程</strong>的統計模型。它包含兩個序列：一個是<strong
+                            style="background-color: #ffff0030;">無法直接觀察到的隱藏狀態序列</strong>（遵循<strong
+                            style="color: blue;">馬可夫鏈</strong>，即當前狀態只依賴於前一個狀態），另一個是可以觀察到的<strong
+                            style="background-color: #ffff0030;">輸出符號序列</strong>。模型的假設是，每個輸出符號的生成<strong
+                            style="color: blue;">機率</strong>僅僅依賴於當前的隱藏狀態。由於我們只能觀察到輸出序列，而無法直接知道系統處於哪個隱藏狀態，因此這些狀態被稱為「<strong
+                            style="background-color: #ffff0030;">隱藏</strong>」的。<strong
+                            style="color: purple;">HMM</strong> 的典型任務包括：給定模型和觀測序列，計算該序列出現的<strong
+                            style="color: blue;">機率</strong>；給定模型和觀測序列，找出最可能的隱藏狀態序列（<strong
+                            style="color: blue;">解碼問題</strong>）；給定觀測序列，學習模型的參數（<strong
+                            style="color: blue;">轉移機率</strong>、輸出<strong
+                            style="color: blue;">機率</strong>、初始狀態分佈）。<strong style="color: purple;">HMM</strong>
+                        廣泛應用於<strong style="color: blue;">語音識別</strong>、<strong
+                            style="color: blue;">自然語言處理</strong>（如<strong style="color: blue;">詞性標註</strong>）、生物資訊學等領域。
+                    </div>
+                    <img src="../image/HMM_Hidden Markov Model.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">條件機率</strong> <strong
+                        style="color: purple;">P(A|B)</strong> 指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">事件 A 和事件 B 同時發生的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在事件 B <strong style="background-color: #ffff0030;">已經發生</strong>的條件下，事件
+                            A 發生的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">事件 A 或事件 B 發生的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">事件 A 不發生的<strong style="color: blue;">機率</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">條件機率</strong> <strong
+                            style="color: purple;">P(A|B)</strong> 衡量的是當我們知道事件 B 已經發生（或者說，將<strong
+                            style="color: blue;">樣本空間</strong>限制在 B 發生的結果中）時，事件 A 也會發生的<strong
+                            style="color: blue;">機率</strong>。其計算公式為 P(A|B) = P(A and B) / P(B)，前提是 P(B) > 0。<strong
+                            style="color: blue;">條件機率</strong>是理解事件間依賴關係和進行統計推斷的基礎概念。選項 A 是<strong
+                            style="color: blue;">聯合機率</strong> P(A and B)。選項 C 是<strong
+                            style="color: blue;">聯集機率</strong> P(A or B)。選項 D 是<strong
+                            style="color: blue;">補集機率</strong> P(A')。</div>
+                    <img src="../image/conditional-probability-pa-b.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果<strong style="color: blue;">隨機變數</strong> X 和 Y <strong
+                        style="color: blue;">相互獨立</strong>，則它們的<strong style="color: blue;">共變異數</strong>（<strong
+                        style="color: red;">Covariance</strong>）<strong style="color: purple;">Cov(X, Y)</strong> 等於多少？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">0</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">1</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">-1</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">Var(X) * Var(Y)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">共變異數</strong> <strong
+                            style="color: purple;">Cov(X, Y)</strong> = E[(X - E[X])(Y - E[Y])] 衡量兩個<strong
+                            style="color: blue;">隨機變數</strong>之間<strong style="color: blue;">線性關係</strong>的強度和方向。如果 X 和
+                        Y <strong style="color: blue;">相互獨立</strong>，那麼 E[XY] = E[X]E[Y]。根據<strong
+                            style="color: blue;">共變異數</strong>的另一個計算公式 <strong style="color: purple;">Cov(X, Y) = E[XY]
+                            - E[X]E[Y]</strong>，當 X 和 Y <strong style="color: blue;">獨立</strong>時，<strong
+                            style="color: purple;">Cov(X, Y) = E[X]E[Y] - E[X]E[Y] = 0</strong>。因此，<strong
+                            style="color: blue;">獨立</strong>的<strong style="color: blue;">隨機變數</strong>其<strong
+                            style="color: blue;">共變異數</strong>必定為 0。需要注意的是，反之不一定成立：<strong
+                            style="color: blue;">共變異數</strong>為 0 僅表示兩者沒有<strong
+                            style="color: blue;">線性關係</strong>，但可能存在非線性關係，因此不一定<strong
+                            style="color: blue;">相互獨立</strong>（除非它們服從多元<strong style="color: blue;">常態分佈</strong>）。
+                    </div>
+                    <img src="../image/covariance independent.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">下列哪個<strong style="color: blue;">機率分佈</strong>通常用於模擬<strong
+                        style="color: blue;">壽命</strong>、<strong style="color: blue;">等待時間</strong>等非負<strong
+                        style="color: blue;">連續變數</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">常態分佈</strong>（<strong
+                                style="color: red;">Normal Distribution</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">二項分佈</strong>（<strong
+                                style="color: red;">Binomial Distribution</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">指數分佈</strong>（<strong
+                                style="color: red;">Exponential Distribution</strong>）或<strong
+                                style="color: blue;">韋伯分佈</strong>（<strong style="color: red;">Weibull
+                                Distribution</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">卜瓦松分佈</strong>（<strong
+                                style="color: red;">Poisson Distribution</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">壽命</strong>、<strong
+                            style="color: blue;">等待時間</strong>等變數具有<strong
+                            style="background-color: #ffff0030;">非負</strong>（必然大於等於零）且<strong
+                            style="background-color: #ffff0030;">連續</strong>的特性。<strong
+                            style="color: blue;">指數分佈</strong>是模擬這類變數的常用模型，特別是當事件<strong
+                            style="color: blue;">發生率</strong>（或故障率）被假設為常數時。<strong
+                            style="color: blue;">韋伯分佈</strong>是更廣義的模型，可以模擬故障率隨時間增加、減少或恆定的情況，也常用於可靠性工程和生存分析。<strong
+                            style="color: blue;">常態分佈</strong>的取值範圍是負無窮到正無窮，不適合直接模擬非負變數（儘管在某些情況下可用作近似）。<strong
+                            style="color: blue;">二項分佈</strong>和<strong style="color: blue;">卜瓦松分佈</strong>是<strong
+                            style="color: blue;">離散分佈</strong>。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">標準常態分佈</strong>的<strong
+                        style="color: blue;">累積分布函數</strong>（<strong style="color: purple;">CDF</strong>）通常用哪個符號表示？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">Φ(z)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">φ(z)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">Γ(z)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">B(n, p)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準常態分佈</strong>的<strong
+                            style="color: blue;">累積分布函數</strong>（<strong style="color: purple;">CDF</strong>），即 P(Z ≤
+                        z)，在統計學中通常用大寫的希臘字母 <strong style="background-color: #ffff0030;">Phi（Φ）</strong>來表示，寫作
+                        Φ(z)。它表示<strong style="color: blue;">標準常態變數</strong> Z 的取值小於或等於某個值 z 的<strong
+                            style="color: blue;">機率</strong>。而<strong style="color: blue;">標準常態分佈</strong>的<strong
+                            style="color: blue;">機率密度函數</strong>（<strong style="color: purple;">PDF</strong>）通常用小寫的希臘字母
+                        phi（φ）表示，φ(z) = (1/√(2π)) * exp(-z^2/2)。Γ(z) 是 <strong style="color: red;">Gamma</strong>
+                        函數。B(n, p) 是<strong style="color: blue;">二項分佈</strong>的表示法。</div>
+                    <img src="../image/Phi（Φ）.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大數法則</strong>（<strong style="color: red;">Law
+                        of Large Numbers</strong>, <strong style="color: purple;">LLN</strong>）主要說明了什麼現象？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">樣本平均數</strong>的<strong
+                                style="color: blue;">分佈</strong>趨近<strong style="color: blue;">常態分佈</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">當<strong style="color: blue;">獨立</strong>重複試驗的次數趨近無窮大時，<strong
+                                style="color: blue;">樣本平均數</strong>會<strong
+                                style="background-color: #ffff0030;">收斂到母體期望值</strong>（<strong
+                                style="color: blue;">平均數</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">樣本變異數</strong>總是等於<strong
+                                style="color: blue;">母體變異數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">機率</strong>值必定介於 0 和 1 之間</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大數法則</strong>是機率論中的另一個基本定理。它描述了<strong
+                            style="background-color: #ffff0030;">樣本平均數的穩定性</strong>。簡單來說，當我們對一個隨機現象進行越來越多次的<strong
+                            style="color: blue;">獨立</strong>重複觀測時，觀測結果的<strong
+                            style="color: blue;">算術平均值</strong>（<strong
+                            style="color: blue;">樣本平均數</strong>）會越來越接近該現象的真實<strong
+                            style="color: blue;">期望值</strong>（<strong
+                            style="color: blue;">母體平均數</strong>）。例如，重複投擲一枚公正硬幣，出現正面的比例會隨著投擲次數的增加而越來越接近 0.5。<strong
+                            style="color: blue;">大數法則</strong>為使用<strong style="color: blue;">樣本平均數</strong>來估計<strong
+                            style="color: blue;">母體平均數</strong>提供了理論基礎。選項 A 描述的是<strong
+                            style="color: blue;">中央極限定理</strong>。</div>
+                    <img src="../image/Law of Large Numbers.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">P-P</strong> <strong
+                        style="color: blue;">圖</strong>（<strong style="color: red;">Probability-Probability
+                        Plot</strong>）與 <strong style="color: purple;">Q-Q</strong> <strong
+                        style="color: blue;">圖</strong>類似，也用於比較<strong style="color: blue;">分佈</strong>，但它的座標軸繪製的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">機率密度函數</strong>值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">累積機率</strong>（<strong
+                                style="color: red;">Cumulative Probabilities</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">期望值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">變異數</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">P-P</strong> <strong
+                            style="color: blue;">圖</strong>也是一種比較兩個<strong
+                            style="color: blue;">機率分佈</strong>（通常是一個<strong style="color: blue;">樣本分佈</strong>和一個<strong
+                            style="color: blue;">理論分佈</strong>）的圖形方法。與 <strong style="color: purple;">Q-Q</strong>
+                        <strong style="color: blue;">圖</strong>繪製<strong style="color: blue;">分位數</strong>不同，<strong
+                            style="color: purple;">P-P</strong> <strong style="color: blue;">圖</strong>繪製的是兩個<strong
+                            style="color: blue;">分佈</strong>對應的<strong
+                            style="background-color: #ffff0030;">累積機率</strong>。對於一系列的數值點，計算其在<strong
+                            style="color: blue;">樣本分佈</strong>中的<strong style="color: blue;">經驗累積機率</strong>（<strong
+                            style="color: red;">Empirical CDF value</strong>）和在<strong
+                            style="color: blue;">理論分佈</strong>中的<strong style="color: blue;">理論累積機率</strong>（<strong
+                            style="color: red;">Theoretical CDF value</strong>），然後將這兩組<strong
+                            style="color: blue;">累積機率</strong>值作為 (X, Y) 座標繪製<strong
+                            style="color: blue;">散佈圖</strong>。如果兩個<strong style="color: blue;">分佈</strong>吻合，點應該落在 y=x
+                        的對角線上。<strong style="color: purple;">P-P</strong> <strong
+                            style="color: blue;">圖</strong>對<strong style="color: blue;">分佈</strong>中心部分的差異比 <strong
+                            style="color: purple;">Q-Q</strong> <strong style="color: blue;">圖</strong>更敏感，而 <strong
+                            style="color: purple;">Q-Q</strong> <strong style="color: blue;">圖</strong>對<strong
+                            style="color: blue;">分佈</strong>尾部的差異更敏感。
+                    </div>
+                    <img src="../image/Probability-Probability Plot.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">生成對抗網路</strong>（<strong
+                        style="color: red;">Generative Adversarial Network</strong>, <strong
+                        style="color: purple;">GAN</strong>）中，<strong style="color: blue;">生成器</strong>（<strong
+                        style="color: red;">Generator</strong>）試圖學習什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">判斷輸入數據是真實的還是生成的</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">學習真實數據的潛在<strong style="color: blue;">機率分佈</strong>，並<strong
+                                style="background-color: #ffff0030;">生成與真實數據相似的新樣本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將高維數據映射到低維空間</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">最大化分類任務的<strong style="color: blue;">準確率</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">GAN</strong> 包含兩個相互競爭的神經網路：<strong
+                            style="color: blue;">生成器</strong>（G）和<strong style="color: blue;">判別器</strong>（D）。<strong
+                            style="color: blue;">生成器</strong>的目標是<strong
+                            style="background-color: #ffff0030;">學習訓練數據（如真實圖像）的潛在機率分佈</strong>。它接收隨機噪聲作為輸入，並嘗試生成看起來像真實數據的假樣本。<strong
+                            style="color: blue;">判別器</strong>（A）則學習如何區分真實樣本和<strong
+                            style="color: blue;">生成器</strong>生成的假樣本。兩者透過<strong
+                            style="color: blue;">對抗訓練</strong>過程相互改進：<strong
+                            style="color: blue;">生成器</strong>努力生成更逼真的樣本來欺騙<strong
+                            style="color: blue;">判別器</strong>，<strong
+                            style="color: blue;">判別器</strong>則努力提高辨別真偽的能力。最終目標是讓<strong
+                            style="color: blue;">生成器</strong>能夠生成與真實數據分佈非常相似、難以被<strong
+                            style="color: blue;">判別器</strong>區分的新樣本。</div>
+                    <img src="../image/GAN.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果一系列事件的發生遵循<strong style="color: blue;">卜瓦松過程</strong>，且平均每小時發生 3
+                    次，那麼在接下來的 2 小時內恰好發生 5 次事件的<strong style="color: blue;">機率</strong>，應該使用哪個<strong
+                        style="color: blue;">分佈</strong>來計算？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">二項分佈</strong> B(5, 3/5)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">卜瓦松分佈</strong>，其參數 λ = 3 * 2 = 6</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">指數分佈</strong>，其參數 λ = 6</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">常態分佈</strong> N(6, 6)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">卜瓦松分佈</strong>描述在<strong
+                            style="color: blue;">固定區間</strong>內事件發生的<strong
+                            style="background-color: #ffff0030;">次數</strong>。如果事件<strong
+                            style="color: blue;">發生率</strong>是恆定的，那麼在一個長度為 t 的區間內，事件發生的平均次數（即<strong
+                            style="color: blue;">卜瓦松分佈</strong>的參數 λ'）等於單位區間內的平均<strong
+                            style="color: blue;">發生率</strong> λ 乘以區間長度 t。本題中，單位時間（1 小時）內的平均<strong
+                            style="color: blue;">發生率</strong> λ = 3。我們關心的是在 2 小時這個區間內發生的次數，因此這個新區間對應的<strong
+                            style="color: blue;">卜瓦松</strong>參數 <strong style="background-color: #ffff0030;">λ' = λ * t
+                            = 3 * 2 = 6</strong>。我們需要計算的是服從參數為 6 的<strong style="color: blue;">卜瓦松分佈</strong>的<strong
+                            style="color: blue;">隨機變數</strong>取值為 5 的<strong style="color: blue;">機率</strong> P(X=5 |
+                        λ'=6)。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為何<strong style="color: blue;">常態分佈</strong>在統計推斷中如此重要？主要原因之一是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">所有真實世界的數據都完美服從<strong style="color: blue;">常態分佈</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據<strong style="color: blue;">中央極限定理</strong>，許多<strong
+                                style="color: blue;">樣本統計量</strong>（如<strong
+                                style="color: blue;">樣本平均數</strong>）的<strong style="color: blue;">分佈</strong>在<strong
+                                style="color: blue;">大樣本</strong>下會<strong
+                                style="background-color: #ffff0030;">趨近常態分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">常態分佈</strong>的計算最為簡單</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">常態分佈</strong>可以用來模擬任何類型的數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">常態分佈</strong>之所以重要，並非因為所有數據都服從它（A
+                        錯誤），也不是因為它能模擬所有數據（D 錯誤）或計算最簡單（C 不一定）。其核心重要性很大程度上源於<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">中央極限定理</strong>（<strong
+                                style="color: purple;">CLT</strong>）</strong>。<strong
+                            style="color: purple;">CLT</strong> 告訴我們，即使原始<strong
+                            style="color: blue;">母體</strong>數據不是<strong style="color: blue;">常態分佈</strong>，只要<strong
+                            style="color: blue;">樣本量</strong>足夠大，<strong style="color: blue;">樣本平均數</strong>的<strong
+                            style="color: blue;">抽樣分佈</strong>也會近似<strong
+                            style="color: blue;">常態分佈</strong>。這使得我們可以利用<strong
+                            style="color: blue;">常態分佈</strong>的良好數學性質來對<strong
+                            style="color: blue;">樣本平均數</strong>進行假設檢定和信賴區間估計，即使我們不知道<strong
+                            style="color: blue;">母體</strong>的確切分佈。此外，許多自然和社會現象的測量誤差也傾向於服從<strong
+                            style="color: blue;">常態分佈</strong>。</div>
+                    <img src="../image/Central Limit Theorem.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">下列哪種圖表<strong style="font-weight: normal;">最不適合</strong>用於視覺化<strong
+                        style="color: blue;">單一連續變數</strong>的<strong style="color: blue;">分佈</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong>（<strong
+                                style="color: red;">Histogram</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">箱型圖</strong>（<strong
+                                style="color: red;">Box Plot</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">密度圖</strong>（<strong
+                                style="color: red;">Density Plot</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong>（<strong
+                                style="color: red;">Scatter Plot</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">直方圖</strong>、<strong
+                            style="color: blue;">箱型圖</strong>和<strong style="color: blue;">密度圖</strong>都是常用於視覺化<strong
+                            style="background-color: #ffff0030;">單一連續變數</strong><strong
+                            style="color: blue;">分佈</strong>的工具，它們各自從不同角度展示數據的<strong
+                            style="color: blue;">集中趨勢</strong>、<strong style="color: blue;">離散程度</strong>、<strong
+                            style="color: blue;">分佈形狀</strong>和<strong style="color: blue;">異常值</strong>。<strong
+                            style="color: blue;">散佈圖</strong>則是用於展示<strong
+                            style="background-color: #ffff0030;">兩個</strong>連續變數之間的關係，需要 X 軸和 Y 軸兩個變數，因此不適合用於視覺化單一變數的分佈。
+                    </div>
+                    <img src="../image/Scatter Plot.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">自然語言處理</strong>中，<strong
+                        style="color: blue;">語言模型</strong>（<strong style="color: red;">Language
+                        Model</strong>）通常是基於什麼來預測下一個詞彙？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">整個文檔的主題</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">給定<strong
+                                style="background-color: #ffff0030;">前面詞彙序列</strong>的條件下，下一個詞彙出現的<strong
+                                style="background-color: #ffff0030;">機率分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">詞彙的詞性標籤</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">句子的語法結構</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">語言模型</strong>的核心任務是學習詞彙序列的<strong
+                            style="color: blue;">機率分佈</strong>。給定一個詞彙序列（即前面出現的詞彙），<strong
+                            style="color: blue;">語言模型</strong>會計算詞彙表中每個詞彙作為下一個詞彙出現的<strong
+                            style="background-color: #ffff0030;">條件機率 P(下一個詞 | 前面詞彙序列)</strong>。基於這個<strong
+                            style="color: blue;">機率分佈</strong>，模型可以預測最可能出現的下一個詞彙，或者從這個<strong
+                            style="color: blue;">分佈</strong>中進行抽樣來生成文本。這是許多 <strong style="color: purple;">NLP</strong>
+                        應用（如<strong style="color: blue;">機器翻譯</strong>、<strong
+                            style="color: blue;">文本生成</strong>、<strong style="color: blue;">語音識別</strong>）的基礎。</div>
+                </div>
+            </div>
+            <div class="question-card" data-direction="1" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">互斥</strong>（<strong
+                        style="color: red;">Mutually Exclusive</strong>）事件是指？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個或多個事件<strong style="background-color: #ffff0030;">不能同時發生</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一個事件的發生不影響另一個事件的發生<strong style="color: blue;">機率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩個事件必定同時發生</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩個事件的聯集是整個<strong style="color: blue;">樣本空間</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">如果兩個事件 A 和 B 是<strong style="color: blue;">互斥</strong>的（或稱互不相容
+                        <strong style="color: red;">Disjoint</strong>），則意味著它們<strong
+                            style="background-color: #ffff0030;">不可能在同一次試驗中同時發生</strong>。換句話說，它們的<strong
+                            style="color: blue;">交集</strong>是空集合（A ∩ B = ∅），因此它們同時發生的<strong
+                            style="color: blue;">機率</strong> P(A and B) = 0。例如，投擲一次骰子，得到點數 1 和得到點數 2 就是<strong
+                            style="color: blue;">互斥事件</strong>。選項 B 描述的是<strong style="color: blue;">獨立事件</strong>。
+                    </div>
+                    <img src="../image/probability-mutually-exclusive.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">如果<strong style="color: blue;">隨機變數</strong> X 的<strong
+                        style="color: blue;">變異數</strong> <strong style="color: purple;">Var(X) = 9</strong>，那麼它的<strong
+                        style="color: blue;">標準差</strong>（<strong style="color: red;">Standard Deviation</strong>）是多少？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">81</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">3</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">9</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">1.5</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準差</strong>定義為<strong
+                            style="color: blue;">變異數</strong>的<strong
+                            style="background-color: #ffff0030;">正平方根</strong>。因此，如果<strong
+                            style="color: blue;">變異數</strong> <strong style="color: purple;">Var(X) =
+                            9</strong>，那麼<strong style="color: blue;">標準差</strong> σ = √Var(X) = √9 = <strong
+                            style="background-color: #ffff0030;">3</strong>。<strong
+                            style="color: blue;">標準差</strong>的單位與原始<strong style="color: blue;">隨機變數</strong>相同，而<strong
+                            style="color: blue;">變異數</strong>的單位是原始變數單位的平方。</div>
+                    <img src="../image/Standard-Deviation-Formula.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="4" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">連續型均勻分佈</strong> <strong
+                        style="color: red;">U(a, b)</strong> 的<strong style="color: blue;">機率密度函數</strong>（<strong
+                        style="color: purple;">PDF</strong>）在區間 [a, b] 內的值是多少？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">1</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">1 / (b - a)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">b - a</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">連續型均勻分佈</strong> <strong
+                            style="color: red;">U(a, b)</strong> 的 <strong style="color: purple;">PDF</strong>
+                        圖形是一個矩形，其底寬為 (b - a)。為了使 <strong style="color: purple;">PDF</strong> 曲線下方的總面積等於 1（<strong
+                            style="color: blue;">機率公理</strong>），矩形的高度（即 <strong style="color: purple;">PDF</strong> 在區間
+                        [a, b] 內的值）必須是 <strong style="background-color: #ffff0030;">1 / (b - a)</strong>。在區間 [a, b]
+                        之外，<strong style="color: purple;">PDF</strong> 的值為 0。</div>
+                    <img src="../image/Uniform Distribution2.png" class="responsive-img">
+                </div>
+            </div>
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">蒙地卡羅方法</strong>（<strong
+                        style="color: red;">Monte Carlo methods</strong>）利用什麼來模擬和估計複雜問題的結果？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">精確的數學公式推導</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">重複進行<strong style="background-color: #ffff0030;">隨機抽樣</strong>（<strong
+                                style="color: red;">Random Sampling</strong>）並利用統計結果</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">邏輯規則推理</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">專家系統知識庫</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">蒙地卡羅方法</strong>是一大類計算演算法的總稱，它們依賴於<strong
+                            style="background-color: #ffff0030;">重複的隨機抽樣</strong>來獲得數值結果。當一個問題難以透過解析方法（精確公式推導）求解時，<strong
+                            style="color: blue;">蒙地卡羅方法</strong>提供了一種基於模擬的近似求解途徑。其基本思想是：對問題涉及的隨機過程進行大量模擬（每次模擬都是一次隨機抽樣），然後根據這些模擬結果的統計特性（如平均值、比例）來估計問題的解。它廣泛應用於物理模擬、金融定價、計算機圖形學、<strong
+                            style="color: blue;">機器學習</strong>（如 <strong style="color: purple;">MCMC</strong> - <strong
+                            style="color: red;">Markov Chain Monte Carlo</strong>）等領域。</div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterAndSearch(); // Call the main filter function
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterAndSearch);
+        document.getElementById("starFilter").addEventListener("change", filterAndSearch); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterAndSearch); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterAndSearch(); // Trigger filter on Enter key
+            }
+        });
+
+
+        // Combined filter and search function
+        function filterAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            let anyVisible = false; // Track if any questions match
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Display or hide the 'no results' message
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    // Generate a more informative message based on active filters/search
+                    let filterMessage = '沒有找到符合條件的題目。'; // Default message
+                    let filtersActive = [];
+                    if (direction !== 'all') filtersActive.push('方向 ' + direction);
+                    if (stars !== 'all') filtersActive.push(stars + ' 星');
+                    if (searchText !== '') filtersActive.push('關鍵字 "' + searchText + '"');
+
+                    if (filtersActive.length > 0) {
+                        filterMessage = '沒有找到符合 ' + filtersActive.join('、') + ' 的題目。';
+                    }
+                    noResultsMessage.textContent = filterMessage;
+                }
+            }
+            updateProgressBar(); // Recalculate progress after filtering/searching changes layout
+        }
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+            updateProgressBar(); // Recalculate progress as layout changes
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (no functional change, just basic setup)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Basic interaction, no grading logic implemented here
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterAndSearch(); // Apply default filters ('all', no search) on load
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+
+        // Ensure the noResultsMessage div exists after questionsContainer (or create if needed)
+        const questionsContainer = document.getElementById('questionsContainer');
+        if (questionsContainer && !document.getElementById('noResultsMessage')) {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'noResultsMessage';
+            messageDiv.style.display = 'none';
+            messageDiv.style.textAlign = 'center';
+            messageDiv.style.padding = '20px'; // Added padding for visibility
+            messageDiv.style.color = '#000000'; // Black text as requested
+            messageDiv.style.fontSize = '1.1rem';
+            questionsContainer.insertAdjacentElement('afterend', messageDiv);
+        } else if (document.getElementById('noResultsMessage')) {
+            // Ensure existing message div style is correct
+            document.getElementById('noResultsMessage').style.color = '#000000';
+            document.getElementById('noResultsMessage').style.padding = '20px';
+        }
+
+    </script>
+</body>
+
+</html>

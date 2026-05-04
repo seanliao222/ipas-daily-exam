@@ -1,0 +1,3008 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22303 數據可視化工具</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Changed default text color to black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-items: flex-start;
+            /* Align items to the start */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .option-text {
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.7;
+            /* Increased further */
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* Message for no results */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            display: none;
+            /* Hidden by default */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22303 數據可視化工具</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一：數據視覺化基本概念與原則</option>
+                    <option value="2">方向二：常見視覺化圖表類型與適用場景</option>
+                    <option value="3">方向三：主流數據視覺化工具介紹</option>
+                    <option value="4">方向四：Tableau 操作與應用</option>
+                    <option value="5">方向五：Power BI 操作與應用</option>
+                    <option value="6">方向六：Python 視覺化函式庫</option>
+                    <option value="7">方向七：互動式視覺化與儀表板設計</option>
+                    <option value="8">方向八：視覺化最佳實踐與常見錯誤</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">數據視覺化基本概念與原則</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">常見視覺化圖表類型與適用場景</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">主流數據視覺化工具介紹</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">Tableau 操作與應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">Power BI 操作與應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">Python 視覺化函式庫</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">互動式視覺化與儀表板設計</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">視覺化最佳實踐與常見錯誤</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據視覺化</strong>的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">讓報表看起來更美觀</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">幫助人們更容易地<strong
+                                style="background-color: #ffff0030;">理解數據中的模式、趨勢和洞察</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">取代所有的文字報告</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">自動執行<strong style="color: blue;">數據分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據視覺化</strong>是將數據轉換成圖形或圖像形式的過程。其核心目標是利用人類視覺系統的強大<strong
+                            style="background-color: #ffff0030;">模式識別</strong>能力，使複雜的數據更容易被<strong
+                            style="background-color: #ffff0030;">理解、分析和溝通</strong>。透過<strong
+                            style="color: blue;">視覺化</strong>，可以快速發現數據中的<strong
+                            style="background-color: #ffff0030;">模式、趨勢、關聯性、異常值</strong>等，從而獲得有價值的<strong
+                            style="background-color: #ffff0030;">洞察</strong>，輔助決策。雖然美觀也很重要，但並非主要目的。<strong
+                            style="color: blue;">視覺化</strong>是溝通工具，通常輔助而非取代文字報告，也不能自動執行分析，而是呈現分析結果。
+                    </div>
+                    <img src="../image/Data Visualization.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">若要<strong
+                        style="background-color: #ffff0030;">比較不同產品類別</strong>在某一季度的銷售額，哪種圖表類型最為適合？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">長條圖</strong> (<strong
+                                style="color: red;">Bar Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">折線圖</strong> (<strong
+                                style="color: red;">Line Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong
+                                style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">長條圖</strong>非常適合用來<strong
+                            style="background-color: #ffff0030;">比較不同類別</strong>（產品類別）之間的<strong
+                            style="background-color: #ffff0030;">數值大小</strong>（銷售額）。每個長條代表一個類別，長條的高度或長度對應其數值，便於直觀比較。<strong
+                            style="color: blue;">折線圖</strong>常用於展示數據隨時間變化的趨勢。<strong
+                            style="color: blue;">散佈圖</strong>用於觀察兩個連續<strong
+                            style="color: blue;">變數</strong>之間的關係。<strong
+                            style="color: blue;">圓餅圖</strong>雖然也能展示各類別佔比，但在比較精確數值大小方面不如<strong
+                            style="color: blue;">長條圖</strong>清晰，尤其當類別較多或佔比接近時。
+                    </div>
+                    <img src="../image/Bar-chart-versus-histogram-chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Tableau</strong> 和 <strong
+                        style="color: red;">Power BI</strong> 是市面上常見的兩種<strong
+                        style="color: blue;">數據視覺化工具</strong>，它們主要屬於哪種類型的工具？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">程式設計函式庫</strong> (<strong
+                                style="color: red;">Programming Libraries</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">試算表軟體</strong> (<strong
+                                style="color: red;">Spreadsheet Software</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">商業智慧與視覺化平台</strong> (<strong
+                                style="color: red;">Business Intelligence & Visualization Platforms</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據庫管理系統</strong> (<strong
+                                style="color: red;">Database Management Systems</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Tableau</strong> 和 <strong style="color: red;">Microsoft Power
+                            BI</strong> 是領先的<strong style="color: blue;">商業智慧</strong> (<strong
+                            style="color: red;">Business Intelligence</strong>, <strong
+                            style="color: purple;">BI</strong>) 和<strong
+                            style="color: blue;">數據視覺化平台</strong>。它們提供了強大的功能，讓使用者可以連接多種數據源，進行數據清理、轉換、分析，並創建<strong
+                            style="background-color: #ffff0030;">互動式</strong>的<strong
+                            style="color: blue;">視覺化圖表</strong>和<strong
+                            style="color: blue;">儀表板</strong>，以探索數據和分享<strong
+                            style="color: blue;">洞察</strong>。它們通常具有<strong style="color: blue;">圖形化使用者介面</strong>
+                        (<strong style="color: red;">Graphical User Interface</strong>, <strong
+                            style="color: purple;">GUI</strong>)，降低了使用的技術門檻。選項 A 指的是像 <strong
+                            style="color: red;">Python</strong> 的 <strong style="color: red;">Matplotlib</strong> 或
+                        <strong style="color: red;">JavaScript</strong> 的 <strong style="color: red;">D3.js</strong>。選項
+                        B 指的是 <strong style="color: red;">Excel</strong> 或 <strong style="color: red;">Google
+                            Sheets</strong>。選項 D 指的是 <strong style="color: red;">SQL Server</strong> 或 <strong
+                            style="color: red;">MySQL</strong> 等。
+                    </div>
+                    <img src="../image/BI_Business-Intelligence.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">想要展示某公司產品銷售額<strong
+                        style="background-color: #ffff0030;">隨時間</strong>（例如，按月）<strong
+                        style="background-color: #ffff0030;">變化的趨勢</strong>，應優先選擇哪種圖表？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">盒鬚圖</strong> (<strong
+                                style="color: red;">Box Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">長條圖</strong> (<strong
+                                style="color: red;">Bar Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">折線圖</strong> (<strong
+                                style="color: red;">Line Chart</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">折線圖</strong>特別適合用來展示<strong
+                            style="background-color: #ffff0030;">連續數據隨時間或其他有序變數變化的趨勢</strong>。將時間（月份）放在橫軸，銷售額放在縱軸，用線條連接各個時間點的數據，可以清晰地看出銷售額的上升、下降、季節性波動等趨勢。<strong
+                            style="color: blue;">盒鬚圖</strong>展示數據分佈。<strong
+                            style="color: blue;">長條圖</strong>比較類別。<strong style="color: blue;">散佈圖</strong>看<strong
+                            style="color: blue;">變數</strong>關係。
+                    </div>
+                    <img src="../image/Line Chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據墨水比</strong> (<strong
+                        style="color: red;">Data-Ink Ratio</strong>) 是由 <strong style="color: red;">Edward
+                        Tufte</strong> 提出的概念，其核心思想是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">最大化</strong>圖表中用於<strong
+                                style="background-color: #ffff0030;">呈現數據</strong>本身的「墨水」，<strong
+                                style="background-color: #ffff0030;">最小化</strong>非數據相關的<strong
+                                style="background-color: #ffff0030;">裝飾性</strong>「墨水」</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">圖表使用的顏色越多越好，以吸引注意力</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">圖表必須包含 <strong style="color: purple;">3D</strong> 效果才能有效傳達資訊</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">圖表中的文字標籤越少越好</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據墨水比</strong> (<strong style="color: red;">Data-Ink
+                            Ratio</strong>) 強調<strong style="color: blue;">視覺化</strong>設計應聚焦於數據本身。其計算方式是：(用於顯示數據的墨水量) /
+                        (圖表總墨水量)。<strong style="color: red;">Tufte</strong> 主張應<strong
+                            style="background-color: #ffff0030;">最大化這個比例</strong>，意味著圖表中大部分的「墨水」（或像素）都應該直接用於呈現數據資訊，而應盡量去除或減少不必要的圖形元素，如過多的格線、邊框、背景、裝飾性圖片、陰影、非必要的顏色變化等，這些被稱為「<strong
+                            style="color: blue;">圖表垃圾</strong>」(<strong
+                            style="color: red;">Chartjunk</strong>)。目標是讓圖表簡潔、清晰、高效地傳達數據。
+                    </div>
+                    <img src="../image/Data-Ink Ratio.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Tableau</strong> 中，通常將需要進行<strong
+                        style="color: blue;">聚合</strong>計算的<strong style="color: blue;">數值欄位</strong>（例如銷售額、利潤）歸類為什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">維度</strong> (<strong
+                                style="color: red;">Dimension</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">度量</strong> (<strong
+                                style="color: red;">Measure</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">參數</strong> (<strong
+                                style="color: red;">Parameter</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">集</strong> (<strong
+                                style="color: red;">Set</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Tableau</strong> 將數據欄位分為兩大類：<br>
+                        <strong style="color: blue;">維度 (<strong style="color: red;">Dimensions</strong>):</strong>
+                        通常是<strong
+                            style="background-color: #ffff0030;">定性的、分類的</strong>欄位，用來定義數據的粒度或進行分組，例如產品類別、地區、日期。拖曳到工作表中時，通常會產生標頭或標籤。<br>
+                        <strong style="color: blue;">度量 (<strong style="color: red;">Measures</strong>):</strong>
+                        通常是<strong style="background-color: #ffff0030;">定量的、數值的</strong>欄位，可以進行<strong
+                            style="background-color: #ffff0030;">數學運算</strong>（如求和、平均、計數），例如銷售額、利潤、數量。拖曳到工作表中時，通常會產生軸或數值標記。<br>
+                        因此，銷售額、利潤等可<strong style="color: blue;">聚合</strong>的<strong
+                            style="color: blue;">數值欄位</strong>屬於<strong style="color: blue;">度量</strong>。
+                    </div>
+                    <img src="../image/Tableau Measure Dimensions.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Power BI</strong> 中的 <strong
+                        style="color: purple;">DAX</strong> (<strong style="color: red;">Data Analysis
+                        Expressions</strong>) 主要用途是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">連接不同的數據源</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">設計報表的視覺外觀</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">建立自訂計算欄位、量值和表格</strong>，進行複雜的<strong
+                                style="color: blue;">數據分析</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">管理用戶權限和報表分享</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">DAX</strong> (<strong style="color: red;">Data Analysis
+                            Expressions</strong>) 是 <strong style="color: red;">Power BI</strong> (以及 <strong
+                            style="color: red;">SQL Server Analysis Services</strong> 和 <strong
+                            style="color: red;">Excel Power Pivot</strong>) 中使用的一種<strong
+                            style="background-color: #ffff0030;">公式語言</strong>。它包含一系列函數、運算子和常數，可以用來在數據模型中執行<strong
+                            style="background-color: #ffff0030;">進階計算和查詢</strong>。使用者可以利用 <strong
+                            style="color: purple;">DAX</strong> 創建新的資訊（如<strong style="color: blue;">計算欄位</strong>
+                        <strong style="color: red;">Calculated Columns</strong>、<strong style="color: blue;">量值</strong>
+                        <strong style="color: red;">Measures</strong>），這些新資訊基於模型中已有的數據，從而實現更複雜的分析邏輯，例如計算<strong
+                            style="color: blue;">年同比增長率</strong> (<strong style="color: red;">Year-over-Year
+                            Growth</strong>)、<strong style="color: blue;">移動平均</strong> (<strong
+                            style="color: red;">Moving Average</strong>) 等。
+                    </div>
+                    <img src="../image/Power BI_DAX (Data Analysis Expressions).jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">若要視覺化<strong
+                        style="background-color: #ffff0030;">兩個連續變數之間的關係</strong>，並觀察是否存在線性相關、群集或異常值，哪種圖表最適合？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong> (<strong
+                                style="color: red;">Histogram</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong
+                                style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">堆疊長條圖</strong> (<strong
+                                style="color: red;">Stacked Bar Chart</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">散佈圖</strong>是視覺化<strong
+                            style="background-color: #ffff0030;">兩個連續變數關係</strong>的標準方法。每個數據點在圖上對應一個 (x, y) 座標，x
+                        值來自一個<strong style="color: blue;">變數</strong>，y 值來自另一個<strong
+                            style="color: blue;">變數</strong>。通過觀察點的分佈模式，可以判斷<strong
+                            style="color: blue;">變數</strong>間是否存在正<strong style="color: blue;">相關</strong>、負<strong
+                            style="color: blue;">相關</strong>、非線性關係，或者是否存在明顯的<strong
+                            style="color: blue;">群集</strong>或遠離主要群體的<strong style="color: blue;">異常值</strong>。
+                    </div>
+                    <img src="../image/Scatter Plot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Python</strong> 中，哪個<strong
+                        style="color: blue;">函式庫</strong>是<strong style="color: blue;">數據視覺化</strong>的基礎，提供了類似 <strong
+                        style="color: red;">MATLAB</strong> 的繪圖介面，且被許多其他高階<strong
+                        style="color: blue;">視覺化</strong><strong style="color: blue;">函式庫</strong>（如 <strong
+                        style="color: red;">Seaborn</strong>）所依賴？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">Pandas</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">NumPy</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">Matplotlib</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Scikit-learn</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Matplotlib</strong> 是 <strong style="color: red;">Python</strong>
+                        生態系統中<strong style="background-color: #ffff0030;">最基礎、最廣泛使用</strong>的繪圖<strong
+                            style="color: blue;">函式庫</strong>。其名稱源自「<strong style="color: red;">MATLAB</strong>-style
+                        <strong style="color: red;">Plot</strong>ting <strong style="color: red;">Lib</strong>rary」，意在為
+                        <strong style="color: red;">Python</strong> 提供類似 <strong style="color: red;">MATLAB</strong>
+                        的繪圖功能。它提供了一個靈活的<strong style="color: blue;">物件導向</strong> <strong
+                            style="color: purple;">API</strong>，可以創建各種類型的靜態、動態和<strong
+                            style="color: blue;">互動式</strong><strong style="color: blue;">視覺化</strong>圖表。許多其他 <strong
+                            style="color: red;">Python</strong> <strong style="color: blue;">視覺化</strong><strong
+                            style="color: blue;">函式庫</strong>，例如 <strong
+                            style="color: red;">Seaborn</strong>（提供更美觀、更高級的<strong style="color: blue;">統計圖形</strong>）和
+                        <strong style="color: red;">Pandas</strong> 內建的繪圖功能，<strong
+                            style="background-color: #ffff0030;">底層都是基於 Matplotlib 構建</strong>的。<strong
+                            style="color: red;">NumPy</strong> 是數值計算的基礎<strong style="color: blue;">函式庫</strong>。<strong
+                            style="color: red;">Pandas</strong> 是<strong style="color: blue;">數據處理</strong>和分析的<strong
+                            style="color: blue;">函式庫</strong>。<strong style="color: red;">Scikit-learn</strong> 是<strong
+                            style="color: blue;">機器學習</strong>的<strong style="color: blue;">函式庫</strong>。
+                    </div>
+                    <img src="../image/Matplotlib.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">設計<strong style="color: blue;">數據儀表板</strong> (<strong
+                        style="color: red;">Dashboard</strong>) 時，最重要的原則之一是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">盡可能包含最多的圖表和指標</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用最複雜、最新穎的圖表類型</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">清晰地呈現關鍵資訊</strong>，並根據<strong
+                                style="background-color: #ffff0030;">目標受眾的需求</strong>進行設計</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">每隔幾分鐘自動刷新一次數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        有效的<strong style="color: blue;">儀表板</strong>設計應該以<strong
+                            style="background-color: #ffff0030;">清晰傳達關鍵資訊</strong>為首要目標。這意味著：<br>
+                        1.了解受眾：<strong style="color: blue;">儀表板</strong>是為誰設計的？他們關心哪些指標？他們的數據素養如何？<br>
+                        2.聚焦<strong style="color: blue;">關鍵指標</strong> (<strong
+                            style="color: purple;">KPIs</strong>)：不應堆砌過多資訊，而應突出最重要的指標，避免資訊過載。<br>
+                        3.選擇合適的圖表：根據要傳達的資訊選擇最有效的圖表類型。<br>
+                        4.保持簡潔與一致：版面配置清晰，視覺風格一致，易於理解。<br>
+                        5.提供上下文：僅有數字是不夠的，需要比較（例如與目標、與上期比較）和趨勢來賦予數字意義。<br>
+                        包含過多圖表、使用不必要的複雜圖表，或僅僅頻繁刷新數據都可能降低<strong style="color: blue;">儀表板</strong>的有效性。
+                        <img src="../image/kpi_dashboard_main.png" class="responsive-img">>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">視覺化</strong>中使用 <strong
+                        style="color: purple;">3D</strong> 圖表（例如 <strong style="color: purple;">3D</strong> <strong
+                        style="color: blue;">長條圖</strong>、<strong style="color: purple;">3D</strong> <strong
+                        style="color: blue;">圓餅圖</strong>）通常會帶來什麼問題？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">透視失真</strong>導致難以準確比較數值大小或比例</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">無法展示超過三個<strong style="color: blue;">變數</strong>的關係</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">需要特殊的軟體才能創建</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只能用於呈現<strong style="color: blue;">地理空間數據</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        雖然 <strong style="color: purple;">3D</strong> 圖表看起來可能比較酷炫，但在<strong
+                            style="color: blue;">數據視覺化</strong>中通常不被推薦，因為它們引入的<strong
+                            style="background-color: #ffff0030;">透視效果</strong>會導致<strong
+                            style="background-color: #ffff0030;">視覺失真</strong>。例如，在 <strong
+                            style="color: purple;">3D</strong> <strong
+                            style="color: blue;">圓餅圖</strong>中，靠近觀察者的扇區會顯得比實際佔比更大；在 <strong
+                            style="color: purple;">3D</strong> <strong
+                            style="color: blue;">長條圖</strong>中，比較不同長條的高度會變得很困難。這違反了清晰準確傳達數據的原則。大多數情況下，對應的 <strong
+                            style="color: purple;">2D</strong> 圖表是更好的選擇。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">熱力圖</strong> (<strong
+                        style="color: red;">Heatmap</strong>) 主要用於視覺化哪種數據？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列數據</strong>的趨勢</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">矩陣數據中的數值大小</strong>，透過<strong
+                                style="background-color: #ffff0030;">顏色深淺</strong>表示</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">地理空間數據</strong>的分佈</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">不同類別的佔比關係</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">熱力圖</strong>是一種將<strong
+                            style="background-color: #ffff0030;">矩陣數據視覺化</strong>的方法。它使用<strong
+                            style="background-color: #ffff0030;">顏色的變化</strong>（例如，從淺到深或冷色到暖色）來表示矩陣中每個單元格的<strong
+                            style="background-color: #ffff0030;">數值大小</strong>。顏色越深或越暖通常代表數值越大。<strong
+                            style="color: blue;">熱力圖</strong>常用於顯示<strong style="color: blue;">相關係數矩陣</strong>、<strong
+                            style="color: blue;">基因表達數據</strong>、<strong
+                            style="color: blue;">網站點擊熱區分析</strong>等，可以快速識別矩陣中的模式和高低值區域。
+                    </div>
+                    <img src="../image/Heatmap.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Tableau</strong> 中，"<strong
+                        style="color: blue;">儀表板</strong>" (<strong style="color: red;">Dashboard</strong>) 的主要功能是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅用於建立單一的<strong style="color: blue;">視覺化</strong>圖表</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將<strong style="background-color: #ffff0030;">多個相關的工作表</strong>
+                            (<strong style="color: red;">Worksheets</strong>) 組合在一個畫面上，提供數據的<strong
+                                style="background-color: #ffff0030;">整合視圖</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">直接編輯原始數據源</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">撰寫複雜的數據查詢語句</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Tableau</strong> 的<strong
+                            style="color: blue;">儀表板</strong>是一個可以容納和排列多個<strong
+                            style="color: blue;">視覺化</strong>（來自不同的<strong
+                            style="color: blue;">工作表</strong>）、文字、圖像和網頁等物件的畫布。它的主要目的是將相關的數據<strong
+                            style="color: blue;">洞察</strong>整合在一起，提供一個全面的、<strong
+                            style="color: blue;">互動式</strong>的視圖，讓使用者可以快速概覽關鍵資訊，並深入探索細節。使用者可以在<strong
+                            style="color: blue;">儀表板</strong>上添加<strong style="color: blue;">篩選器</strong>、<strong
+                            style="color: blue;">參數</strong>等互動元素，讓多個<strong style="color: blue;">視覺化</strong>連動。
+                    </div>
+                    <img src="../image/Tableau Dashboard.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Power BI Desktop</strong> 中，哪個視圖主要用於<strong
+                        style="background-color: #ffff0030;">建立視覺效果和報表頁面佈局</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">資料檢視</strong> (<strong
+                                style="color: red;">Data view</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">模型檢視</strong> (<strong
+                                style="color: red;">Model view</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">報表檢視</strong> (<strong
+                                style="color: red;">Report view</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">查詢編輯器</strong> (<strong
+                                style="color: red;">Power Query Editor</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Power BI Desktop</strong> 主要有三個核心視圖：<br>
+                        <strong style="color: blue;">報表檢視 (<strong style="color: red;">Report view</strong>):</strong>
+                        這是創建<strong style="color: blue;">視覺效果</strong>（圖表、地圖、卡片等）和設計<strong
+                            style="color: blue;">報表頁面佈局</strong>的主要工作區域。<br>
+                        <strong style="color: blue;">資料檢視 (<strong style="color: red;">Data view</strong>):</strong>
+                        用於查看、排序、篩選和檢查模型中的數據表格。<br>
+                        <strong style="color: blue;">模型檢視 (<strong style="color: red;">Model view</strong>):</strong>
+                        用於查看和管理數據模型中的資料表之間的<strong style="color: blue;">關聯性</strong>。<br>
+                        <strong style="color: blue;">查詢編輯器</strong> (<strong style="color: red;">Power Query
+                            Editor</strong>) 是用於數據導入、清理和轉換的獨立視窗。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Python</strong> 的 <strong
+                        style="color: red;">Seaborn</strong> <strong style="color: blue;">函式庫</strong>相較於 <strong
+                        style="color: red;">Matplotlib</strong>，其主要優勢通常在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提供更多底層的繪圖控制選項</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">提供<strong
+                                style="background-color: #ffff0030;">更美觀的預設樣式</strong>和<strong
+                                style="background-color: #ffff0030;">更方便的高階統計圖形繪製</strong>功能</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">執行速度遠超 <strong style="color: red;">Matplotlib</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">專門用於創建 <strong style="color: purple;">3D</strong> 圖形</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Seaborn</strong> 是基於 <strong style="color: red;">Matplotlib</strong>
+                        的 <strong style="color: red;">Python</strong> <strong style="color: blue;">數據視覺化</strong><strong
+                            style="color: blue;">函式庫</strong>。它提供了更高級的介面，專注於繪製有吸引力且資訊豐富的<strong
+                            style="color: blue;">統計圖形</strong>。相較於 <strong
+                            style="color: red;">Matplotlib</strong>，<strong style="color: red;">Seaborn</strong>
+                        的主要優勢包括：<br>
+                        更美觀的預設主題和調色盤。<br>
+                        簡化了許多常見<strong style="color: blue;">統計圖形</strong>（如<strong
+                            style="color: blue;">散佈圖</strong>、<strong style="color: blue;">盒鬚圖</strong>、<strong
+                            style="color: blue;">小提琴圖</strong>、<strong style="color: blue;">熱力圖</strong>等）的繪製過程。<br>
+                        與 <strong style="color: red;">Pandas</strong> 的 <strong style="color: red;">DataFrame</strong>
+                        整合良好。<br>
+                        雖然 <strong style="color: red;">Seaborn</strong> 底層依賴 <strong
+                            style="color: red;">Matplotlib</strong>，但它封裝了許多細節，讓使用者可以用更少的程式碼創建更複雜、更專業的<strong
+                            style="color: blue;">統計視覺化</strong>。<strong style="color: red;">Matplotlib</strong>
+                        則提供了更多底層控制的靈活性。
+                    </div>
+                    <img src="../image/Seaborn.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">儀表板</strong>設計中，使用「<strong
+                        style="color: blue;">交叉篩選</strong>」(<strong style="color: red;">Cross-filtering</strong>)
+                    或「<strong style="color: blue;">高亮</strong>」(<strong style="color: red;">Highlighting</strong>)
+                    功能的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">讓使用者可以透過與一個圖表的<strong
+                                style="background-color: #ffff0030;">互動</strong>來<strong
+                                style="background-color: #ffff0030;">影響或突顯其他相關圖表</strong>的數據</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">改變<strong style="color: blue;">儀表板</strong>的整體配色方案</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將<strong style="color: blue;">儀表板</strong>匯出為 <strong
+                                style="color: purple;">PDF</strong> 檔案</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加<strong style="color: blue;">儀表板</strong>的數據載入速度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">交叉篩選</strong>和<strong style="color: blue;">高亮</strong>是提升<strong
+                            style="color: blue;">儀表板</strong><strong
+                            style="background-color: #ffff0030;">互動性</strong>的重要功能。當使用者在<strong
+                            style="color: blue;">儀表板</strong>上點擊某個圖表中的數據點或類別時（例如，點擊<strong
+                            style="color: blue;">長條圖</strong>中的某個區域），啟用了<strong
+                            style="color: blue;">交叉篩選</strong>或<strong style="color: blue;">高亮</strong>的<strong
+                            style="color: blue;">儀表板</strong>會自動更新其他相關的圖表，只顯示或突顯與所選項目相關的數據。這使得使用者能夠更方便地探索不同<strong
+                            style="color: blue;">維度</strong>之間的關係，深入了解數據。
+                    </div>
+                    <img src="../image/Power-BI-Example-of-cross-filtering.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在設計<strong style="color: blue;">視覺化</strong>圖表時，為了避免誤導觀眾，應該<strong
+                        style="background-color: #ffff0030;">避免</strong>下列哪種做法？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提供清晰的標題和軸標籤</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一致地使用顏色來代表特定類別</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">截斷 Y 軸</strong>（例如，<strong
+                                style="color: blue;">長條圖</strong>的 Y 軸不從 0 開始），以<strong
+                                style="background-color: #ffff0030;">誇大差異</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">選擇最能反映數據真實情況的圖表類型</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">視覺化</strong>的目標是誠實、清晰地呈現數據。<strong
+                            style="background-color: #ffff0030;">截斷 Y 軸</strong>（尤其是在比較數值的<strong
+                            style="color: blue;">長條圖</strong>中，不從 0 開始）是一種常見的<strong
+                            style="background-color: #ffff0030;">誤導性</strong>做法，因為它會不成比例地<strong
+                            style="background-color: #ffff0030;">放大</strong>數據之間的視覺差異，讓小的差異看起來很大，從而扭曲觀眾對數據的感知。最佳實踐通常要求表示數量的<strong
+                            style="color: blue;">長條圖</strong>或其他基線圖表的數值軸應<strong style="background-color: #ffff0030;">從
+                            0 開始</strong>，以確保視覺比例與實際數值比例一致。清晰標籤、一致用色和選擇合適圖表都是良好的實踐。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">格式塔原則</strong> (<strong
+                        style="color: red;">Gestalt Principles</strong>) 在<strong
+                        style="color: blue;">數據視覺化</strong>中的應用，主要是利用人類視覺感知的哪些傾向來組織資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">對顏色的敏感度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將視覺元素感知為<strong
+                                style="background-color: #ffff0030;">統一、有組織的整體</strong>，而非零散部分的傾向（如<strong
+                                style="color: blue;">鄰近性</strong>、<strong style="color: blue;">相似性</strong>、<strong
+                                style="color: blue;">連續性</strong>、<strong style="color: blue;">閉合性</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對運動物體的追蹤能力</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">閱讀文字的習慣</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">格式塔心理學</strong>提出了一系列關於人類如何感知視覺元素的原則。在<strong
+                            style="color: blue;">數據視覺化</strong>中應用這些原則，可以幫助設計者創建更容易被理解和解釋的圖表。例如：<br>
+                        <strong style="color: blue;">鄰近性</strong> (<strong style="color: red;">Proximity</strong>):
+                        彼此靠近的物體會被視為一組。<br>
+                        <strong style="color: blue;">相似性</strong> (<strong style="color: red;">Similarity</strong>):
+                        外觀相似（如顏色、形狀、大小相同）的物體會被視為一組。<br>
+                        <strong style="color: blue;">連續性</strong> (<strong style="color: red;">Continuity</strong>):
+                        視覺傾向於感知連續的線條或模式，而不是斷裂的。<br>
+                        <strong style="color: blue;">閉合性</strong> (<strong style="color: red;">Closure</strong>):
+                        視覺傾向于將不完整的圖形感知為完整的。<br>
+                        <strong style="color: blue;">共同命運</strong> (<strong style="color: red;">Common Fate</strong>):
+                        朝同一方向移動的物體會被視為一組。<br>
+                        利用這些原則可以有效地對視覺元素進行分組和組織，引導觀眾的注意力。
+                    </div>
+                    <img src="../image/Gestalt Principles.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">哪種圖表類型適合用來視覺化<strong style="color: blue;">數值數據</strong>的<strong
+                        style="background-color: #ffff0030;">分佈情況</strong>，例如數據的集中趨勢、分散程度和是否存在偏態？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong> (<strong
+                                style="color: red;">Histogram</strong>) 或 <strong style="color: blue;">盒鬚圖</strong>
+                            (<strong style="color: red;">Box Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong
+                                style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                                style="color: red;">Scatter Plot</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">折線圖</strong> (<strong
+                                style="color: red;">Line Chart</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">直方圖</strong>和<strong style="color: blue;">盒鬚圖</strong>都是視覺化<strong
+                            style="background-color: #ffff0030;">單一數值變數分佈</strong>的常用工具。<br>
+                        <strong style="color: blue;">直方圖 (<strong style="color: red;">Histogram</strong>):</strong>
+                        將數值範圍劃分成若干個區間（<strong style="color: red;">bins</strong>），然後計算落入每個區間的數據點數量，並以<strong
+                            style="color: blue;">長條圖</strong>形式展示。它可以顯示數據的峰值、分佈形狀（對稱、左偏、右偏）和大致範圍。<br>
+                        <strong style="color: blue;">盒鬚圖 (<strong style="color: red;">Box Plot</strong>):</strong>
+                        展示數據的<strong style="color: blue;">五數摘要</strong>（最小值、<strong style="color: blue;">第一四分位數 <strong
+                                style="color: red;">Q1</strong></strong>、<strong style="color: blue;">中位數 <strong
+                                style="color: red;">Q2</strong></strong>、<strong style="color: blue;">第三四分位數 <strong
+                                style="color: red;">Q3</strong></strong>、最大值）以及可能的<strong
+                            style="color: blue;">異常值</strong>。<br>
+                        <strong style="color: blue;">圓餅圖</strong>用於部分佔比。<strong
+                            style="color: blue;">散佈圖</strong>用於雙<strong style="color: blue;">變數</strong>關係。<strong
+                            style="color: blue;">折線圖</strong>用於時間趨勢。
+                    </div>
+                    <img src="../image/Bar-chart-versus-histogram-chart.png" class="responsive-img">
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Google Data Studio</strong> (現已更名為 <strong
+                        style="color: red;">Looker Studio</strong>) 是 <strong style="color: red;">Google</strong>
+                    提供的一項什麼服務？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">雲端數據庫</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">機器學習</strong>平台</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">免費的<strong style="color: blue;">數據視覺化</strong>和<strong
+                                style="color: blue;">報表工具</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">線上<strong style="color: blue;">試算表</strong>應用</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Looker Studio</strong> (原 <strong style="color: red;">Google Data
+                            Studio</strong>) 是 <strong style="color: red;">Google</strong> 提供的一個<strong
+                            style="background-color: #ffff0030;">免費的線上工具</strong>，允許使用者連接各種數據源（包括 <strong
+                            style="color: red;">Google Analytics</strong>, <strong style="color: red;">Google
+                            Sheets</strong>, <strong style="color: red;">Google Ads</strong>, <strong
+                            style="color: red;">BigQuery</strong> 等以及其他數據庫和平台），創建可自訂的、<strong
+                            style="color: blue;">互動式</strong>的<strong style="color: blue;">數據視覺化</strong>報表和<strong
+                            style="color: blue;">儀表板</strong>，並方便地進行分享和協作。
+                    </div>
+                    <img src="../image/Looker Studio.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Tableau</strong>
+                    中，若想創建一個顯示各區域銷售額佔總銷售額<strong style="background-color: #ffff0030;">百分比</strong>的圖表，哪種類型的<strong
+                        style="color: blue;">計算欄位</strong>或<strong style="color: blue;">表計算</strong>會很有用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">排名</strong> (<strong
+                                style="color: red;">Rank</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">總額百分比</strong> (<strong
+                                style="color: red;">Percent of Total</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">移動平均</strong> (<strong
+                                style="color: red;">Moving Average</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">差異</strong> (<strong
+                                style="color: red;">Difference</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Tableau</strong> 提供了許多<strong style="color: blue;">快速表計算</strong>
+                        (<strong style="color: red;">Quick Table Calculations</strong>) 功能，可以方便地對已有的<strong
+                            style="color: blue;">度量</strong>進行二次計算。要計算每個部分（如區域銷售額）佔整體的<strong
+                            style="background-color: #ffff0030;">百分比</strong>，可以使用「<strong
+                            style="color: blue;">總額百分比</strong>」的<strong
+                            style="color: blue;">表計算</strong>。這會自動計算每個標記的值除以視圖中所有標記的總和。
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Power BI</strong> 中的 <strong
+                        style="color: red;">Power Query</strong> 主要用於執行哪些任務？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據連接、清理、轉換和塑形</strong> (<strong
+                                style="color: red;">Data Connection, Cleaning, Transformation, Shaping</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">建立數據模型中的<strong style="color: blue;">關聯性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">設計<strong style="color: blue;">視覺化報表</strong>和<strong
+                                style="color: blue;">儀表板</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">編寫 <strong style="color: purple;">DAX</strong> <strong
+                                style="color: blue;">量值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Power Query</strong> (在 <strong style="color: red;">Power BI
+                            Desktop</strong> 中稱為 <strong style="color: red;">Power Query</strong> 編輯器) 是一個強大的<strong
+                            style="color: blue;">數據提取、轉換和載入</strong> (<strong style="color: red;">Extract, Transform,
+                            Load</strong> - <strong style="color: purple;">ETL</strong>) 工具。它提供了一個<strong
+                            style="color: blue;">圖形化介面</strong>，讓使用者可以輕鬆地連接到各種數據源，然後執行各種<strong
+                            style="background-color: #ffff0030;">數據清理和轉換</strong>操作，例如移除列/欄、更改數據類型、分割欄、合併查詢、添加自訂欄等，最終將整理好的數據載入到
+                        <strong style="color: red;">Power BI</strong> 數據模型中。
+                    </div>
+                    <img src="../image/power query power bi.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">若想在 <strong style="color: red;">Python</strong> 中創建<strong
+                        style="background-color: #ffff0030;">互動式</strong>、可在網頁瀏覽器中展示的<strong
+                        style="color: blue;">視覺化</strong>圖表（例如，滑鼠懸停顯示資訊、縮放、平移），哪個<strong
+                        style="color: blue;">函式庫</strong>是常見的選擇？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">Matplotlib</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">Seaborn</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">Plotly</strong> 或 <strong
+                                style="color: red;">Bokeh</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">Pillow</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        雖然 <strong style="color: red;">Matplotlib</strong> 和 <strong
+                            style="color: red;">Seaborn</strong> 很常用，但它們主要生成靜態圖表。若要創建<strong
+                            style="background-color: #ffff0030;">互動式</strong>的、基於網頁的<strong
+                            style="color: blue;">視覺化</strong>，<strong style="color: red;">Plotly</strong> 和 <strong
+                            style="color: red;">Bokeh</strong> 是 <strong style="color: red;">Python</strong>
+                        中兩個流行的選擇。它們利用 <strong style="color: red;">JavaScript</strong> 技術 (如 <strong
+                            style="color: red;">Plotly.js</strong>, <strong style="color: red;">BokehJS</strong>)
+                        在後端生成圖表，可以在 <strong style="color: red;">Jupyter Notebook</strong>、網頁應用或獨立的 <strong
+                            style="color: purple;">HTML</strong> 檔案中實現縮放、平移、懸停提示、點擊事件等互動功能。<strong
+                            style="color: red;">Pillow</strong> 是圖像處理<strong style="color: blue;">函式庫</strong>。
+                    </div>
+                    <img src="../image/Plotly.png" class="responsive-img">
+                    <img src="../image/Bokeh python.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在設計<strong style="color: blue;">儀表板</strong>佈局時，將<strong
+                        style="background-color: #ffff0030;">最重要的資訊或 KPI</strong> 放置在哪個位置通常最能吸引觀眾的注意力？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">左上角</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">右下角</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">正中央</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">底部中央</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        根據西方閱讀習慣（從左到右，從上到下），以及許多使用者介面設計的研究，觀眾的視線通常<strong
+                            style="background-color: #ffff0030;">首先落在畫面的左上角區域</strong>。因此，在設計<strong
+                            style="color: blue;">儀表板</strong>時，將最關鍵的指標 (<strong style="color: purple;">KPIs</strong>)
+                        或最重要的摘要資訊放置在<strong style="background-color: #ffff0030;">左上角</strong>，可以確保它們最先被看到，最能吸引注意力。
+                    </div>
+                    <img src="../image/kpi_dashboard_main.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">使用<strong
+                        style="background-color: #ffff0030;">過多飽和度過高的顏色</strong>或不和諧的顏色組合，會違反<strong
+                        style="color: blue;">數據視覺化</strong>的哪個基本原則？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據準確性原則</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">視覺清晰度與舒適度</strong>原則</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據完整性原則</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">互動性原則</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        顏色是<strong style="color: blue;">數據視覺化</strong>中強大的工具，但使用不當會適得其反。<strong
+                            style="background-color: #ffff0030;">過於鮮豔、飽和度過高的顏色組合</strong>容易造成<strong
+                            style="background-color: #ffff0030;">視覺疲勞</strong>，而不和諧的顏色搭配（例如，紅綠色對<strong
+                            style="color: blue;">色盲</strong>人士不友好，或缺乏對比度）會使得圖表<strong
+                            style="background-color: #ffff0030;">難以閱讀和區分</strong>。選擇恰當、和諧且具有良好對比度的配色方案，對於確保視覺的清晰度和觀眾的閱讀舒適度至關重要。同時，顏色的使用應具有意義，例如用不同顏色區分類別，或用顏色深淺表示數值大小。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">當需要同時展示<strong
+                        style="background-color: #ffff0030;">三個數值變數</strong>之間的關係時（例如，產品的成本、價格和銷售量），哪種圖表可能是一種選擇？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">氣泡圖</strong> (<strong
+                                style="color: red;">Bubble Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">折線圖</strong> (<strong
+                                style="color: red;">Line Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong
+                                style="color: red;">Pie Chart</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong> (<strong
+                                style="color: red;">Histogram</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">氣泡圖</strong>是<strong
+                            style="color: blue;">散佈圖</strong>的一種變體，它可以在二維平面上表示<strong
+                            style="background-color: #ffff0030;">三個變數</strong>。其中兩個<strong
+                            style="color: blue;">變數</strong>由點的 <strong style="color: purple;">X</strong> 軸和 <strong
+                            style="color: purple;">Y</strong> 軸位置表示（如同<strong
+                            style="color: blue;">散佈圖</strong>），而第三個<strong style="color: blue;">變數</strong>則由<strong
+                            style="background-color: #ffff0030;">點的大小</strong>（氣泡的大小）來表示。例如，可以用 <strong
+                            style="color: purple;">X</strong> 軸表示成本，<strong style="color: purple;">Y</strong>
+                        軸表示價格，氣泡大小表示銷售量，從而同時觀察這三個<strong style="color: blue;">變數</strong>之間的關係。
+                    </div>
+                    <img src="../image/Bubble Chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Tableau</strong> 中，可以使用「<strong
+                        style="color: blue;">故事</strong>」(<strong style="color: red;">Story</strong>) 功能來做什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">建立複雜的<strong style="color: blue;">計算欄位</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將一系列的<strong style="color: blue;">工作表</strong>或<strong
+                                style="color: blue;">儀表板</strong>按照順序組織起來，<strong
+                                style="background-color: #ffff0030;">引導觀眾逐步了解數據分析的過程或結論</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">設定數據源的自動刷新排程</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">管理使用者權限</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Tableau</strong> 的<strong
+                            style="color: blue;">故事</strong>功能允許使用者創建一個包含一系列「<strong
+                            style="color: blue;">故事點</strong>」(<strong style="color: red;">Story Points</strong>)
+                        的<strong style="background-color: #ffff0030;">敘事流程</strong>。每個<strong
+                            style="color: blue;">故事點</strong>可以是一個<strong style="color: blue;">工作表</strong>、一個<strong
+                            style="color: blue;">儀表板</strong>或一段文字描述。使用者可以按順序排列這些<strong
+                            style="color: blue;">故事點</strong>，並添加註解或標題，像<strong
+                            style="background-color: #ffff0030;">講故事</strong>一樣引導觀眾瀏覽數據發現的過程、分析的步驟或最終的結論。這是一種有效的<strong
+                            style="color: blue;">數據溝通</strong>方式。
+                    </div>
+                    <img src="../image/Tableau story.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Power BI Service</strong> 是 <strong
+                        style="color: red;">Power BI</strong> 的哪個組成部分？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">用於建立報表的桌面應用程式</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">基於雲端的服務</strong>，用於發佈、分享報表和<strong
+                                style="color: blue;">儀表板</strong>，以及進行協作</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">用於行動裝置查看報表的應用程式</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據閘道器</strong>，用於連接內部部署數據源</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Power BI</strong> 主要包含幾個組件：<br>
+                        <strong style="color: red;">Power BI Desktop:</strong> 免費的 <strong
+                            style="color: red;">Windows</strong> 桌面應用程式，用於連接數據、建立數據模型和設計報表。 (選項 A)<br>
+                        <strong style="color: red;">Power BI Service:</strong> 基於<strong
+                            style="background-color: #ffff0030;">雲端</strong>的 <strong
+                            style="color: purple;">SaaS</strong> (<strong style="color: red;">Software as a
+                            Service</strong>) 服務 (app.powerbi.com)，用於發佈來自 <strong style="color: red;">Desktop</strong>
+                        的報表、創建<strong style="color: blue;">儀表板</strong>、與他人分享和協作。 (選項 B)<br>
+                        <strong style="color: red;">Power BI Mobile:</strong> 用於在 <strong
+                            style="color: red;">iOS</strong> 和 <strong style="color: red;">Android</strong>
+                        裝置上查看和互動報表與<strong style="color: blue;">儀表板</strong>的行動應用程式。 (選項 C)<br>
+                        <strong style="color: red;">Power BI Gateway:</strong> 用於讓 <strong style="color: red;">Power BI
+                            Service</strong> 安全地連接到位於內部網路的數據源。 (選項 D)
+                    </div>
+                    <img src="../image/5-power-bi-architecture-diagram Power BI Service.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Python</strong> 中使用 <strong
+                        style="color: red;">Matplotlib</strong> 繪圖時，通常使用哪個子模組來進行快速繪圖或取得目前的圖形與座標軸？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">pyplot</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: red;">numpy</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">pandas</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">style</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        `<strong style="color: red;">matplotlib.pyplot</strong>` 是 <strong
+                            style="color: red;">Matplotlib</strong> 提供的一個<strong
+                            style="background-color: #ffff0030;">狀態機介面</strong> (<strong style="color: red;">state-based
+                            interface</strong>)，它模仿了 <strong style="color: red;">MATLAB</strong>
+                        的繪圖方式。它包含了一系列方便的函數，用於快速創建圖形 (<strong style="color: red;">figure</strong>)、座標軸 (<strong
+                            style="color: red;">axes</strong>) 以及繪製各種圖表，並會自動管理當前的圖形和座標軸。開發者通常會 `import matplotlib.pyplot
+                        as plt` 來使用它。
+                    </div>
+                    <img src="../image/pyplot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">視覺化</strong>設計中的「<strong
+                        style="color: blue;">視覺層次</strong>」(<strong style="color: red;">Visual Hierarchy</strong>) 是指什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖表中使用的顏色數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">透過<strong
+                                style="background-color: #ffff0030;">大小、顏色、位置、對比度</strong>等視覺元素來<strong
+                                style="background-color: #ffff0030;">組織資訊</strong>，<strong
+                                style="background-color: #ffff0030;">引導觀眾首先關注最重要的內容</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">圖表在<strong style="color: blue;">儀表板</strong>中的排列順序</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據更新的頻率</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">視覺層次</strong>是指在設計中有意識地安排視覺元素，以<strong
+                            style="background-color: #ffff0030;">突顯某些元素的重要性</strong>，並<strong
+                            style="background-color: #ffff0030;">引導觀眾的閱讀順序</strong>。設計師可以利用<strong
+                            style="background-color: #ffff0030;">大小</strong>（更大的元素更醒目）、<strong
+                            style="background-color: #ffff0030;">顏色</strong>（更亮或對比更強的顏色更醒目）、<strong
+                            style="background-color: #ffff0030;">位置</strong>（頂部或左上角通常先被看到）、<strong
+                            style="background-color: #ffff0030;">對比度</strong>、<strong
+                            style="background-color: #ffff0030;">留白</strong>等技巧來建立<strong
+                            style="color: blue;">視覺層次</strong>。一個具有良好<strong
+                            style="color: blue;">視覺層次</strong>的設計能讓觀眾快速抓住重點，並更容易地理解資訊結構。
+                    </div>
+                    <img src="../image/Golden-Rules-of-Visual-Hierarchy.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">哪種類型的<strong style="color: blue;">視覺編碼</strong>（將數據值映射到視覺屬性）對於表示<strong
+                        style="color: blue;">定量數據</strong>（數值大小）通常<strong
+                        style="background-color: #ffff0030;">最不精確</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">位置</strong> (<strong
+                                style="color: red;">Position on a common scale</strong>) - 例如<strong
+                                style="color: blue;">長條圖</strong>的高度</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">長度</strong> (<strong
+                                style="color: red;">Length</strong>) - 例如<strong style="color: blue;">長條圖</strong>的長度
+                        </div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">顏色飽和度/亮度</strong> (<strong
+                                style="color: red;">Color Saturation/Luminance</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">角度/斜率</strong> (<strong
+                                style="color: red;">Angle/Slope</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        根據 <strong style="color: red;">Cleveland</strong> 和 <strong style="color: red;">McGill</strong>
+                        等人的研究，人類視覺系統對不同<strong style="color: blue;">視覺編碼</strong>的感知精確度不同。一般認為，判斷基於共同標尺的<strong
+                            style="color: blue;">位置</strong>（如<strong style="color: blue;">長條圖</strong>、<strong
+                            style="color: blue;">散佈圖</strong>）是最精確的，其次是<strong style="color: blue;">長度</strong>、<strong
+                            style="color: blue;">角度/斜率</strong>、面積、體積，而<strong
+                            style="background-color: #ffff0030;">顏色飽和度/亮度</strong>（常用於<strong
+                            style="color: blue;">熱力圖</strong>）和<strong style="color: blue;">色調</strong> (<strong
+                            style="color: red;">Hue</strong>) 對於精確判斷數值大小來說，其感知精確度相對較低。因此，應優先使用<strong
+                            style="color: blue;">位置</strong>和<strong style="color: blue;">長度</strong>來編碼最重要的<strong
+                            style="color: blue;">定量</strong>資訊。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">瀑布圖</strong> (<strong
+                        style="color: red;">Waterfall Chart</strong>) 通常用於視覺化什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據點在<strong style="color: blue;">地理空間</strong>上的分佈</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一個<strong
+                                style="background-color: #ffff0030;">初始值</strong>如何受到一系列<strong
+                                style="background-color: #ffff0030;">正面和負面變化</strong>的影響，最終達到一個<strong
+                                style="background-color: #ffff0030;">結束值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">多個類別在不同時間點的佔比變化</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩個<strong style="color: blue;">變數</strong>之間的<strong
+                                style="color: blue;">相關性</strong>強度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">瀑布圖</strong>（也稱<strong style="color: blue;">橋樑圖</strong> <strong
+                            style="color: red;">Bridge
+                            Chart</strong>）非常適合用來展示一個數值如何從一個起始點，經過一系列正向（增加）和負向（減少）的變動，最終達到一個終點。它常被用於財務分析，例如顯示淨收入如何從總收入開始，減去各種成本和費用得到；或者分析某項指標（如銷售額、客戶數）隨時間的增減變化及其構成因素。
+                    </div>
+                    <img src="../image/Waterfall Chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Tableau</strong> 中，將<strong
+                        style="color: blue;">地理資訊</strong>欄位（如國家、城市、郵遞區號）用於創建<strong
+                        style="color: blue;">地圖視覺化</strong>時，這些欄位通常需要被賦予什麼「<strong
+                        style="color: blue;">地理角色</strong>」(<strong style="color: red;">Geographic Role</strong>)？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">度量</strong> (<strong
+                                style="color: red;">Measure</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">參數</strong> (<strong
+                                style="color: red;">Parameter</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對應的<strong style="color: blue;">地理角色</strong>（例如 <strong
+                                style="color: red;">Country/Region</strong>, <strong style="color: red;">City</strong>,
+                            <strong style="color: red;">Zip Code/Postcode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">連續</strong> (<strong
+                                style="color: red;">Continuous</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        為了讓 <strong style="color: red;">Tableau</strong> 能夠識別數據中的地理位置並在<strong
+                            style="color: blue;">地圖</strong>上繪製出來，需要為包含<strong
+                            style="color: blue;">地理資訊</strong>的欄位（通常是<strong
+                            style="color: blue;">維度</strong>）指定正確的<strong
+                            style="background-color: #ffff0030;">地理角色</strong>。<strong
+                            style="color: red;">Tableau</strong> 內建了許多<strong
+                            style="color: blue;">地理角色</strong>，如國家/地區、州/省、城市、郵遞區號、機場等。當欄位被賦予<strong
+                            style="color: blue;">地理角色</strong>後，<strong style="color: red;">Tableau</strong>
+                        會自動生成對應的經緯度資訊（如果能識別），並允許使用者將其拖放到<strong style="color: blue;">工作表</strong>中以創建<strong
+                            style="color: blue;">地圖視覺效果</strong>。
+                    </div>
+                    <img src="../image/Tableau Geographic Role.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: red;">Power BI</strong> 中，建立「<strong
+                        style="color: blue;">量值</strong>」(<strong style="color: red;">Measure</strong>) 和「<strong
+                        style="color: blue;">計算結果資料行</strong>」(<strong style="color: red;">Calculated Column</strong>)
+                    的主要區別是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">量值</strong>只能使用 <strong
+                                style="color: purple;">DAX</strong> 函數，<strong style="color: blue;">計算結果資料行</strong>只能使用
+                            <strong style="color: blue;">M 語言</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">量值</strong>用於篩選數據，<strong
+                                style="color: blue;">計算結果資料行</strong>用於<strong style="color: blue;">聚合</strong>數據</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">計算結果資料行</strong>的值是<strong
+                                style="background-color: #ffff0030;">逐行計算並儲存</strong>在模型中；<strong
+                                style="color: blue;">量值</strong>的值是在報表互動時<strong
+                                style="background-color: #ffff0030;">動態計算</strong>的，不儲存實際值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">計算結果資料行</strong>只能引用同一行的數據，<strong
+                                style="color: blue;">量值</strong>可以引用整個資料表</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">量值</strong> (<strong style="color: red;">Measure</strong>) 和<strong
+                            style="color: blue;">計算結果資料行</strong> (<strong style="color: red;">Calculated
+                            Column</strong>) 都是使用 <strong style="color: purple;">DAX</strong> 公式創建的，但它們的計算方式和儲存方式不同：<br>
+                        <strong style="color: blue;">計算結果資料行</strong>:其值在數據加載或刷新時，針對資料表的<strong
+                            style="background-color: #ffff0030;">每一行進行計算</strong>，並像普通資料行一樣<strong
+                            style="background-color: #ffff0030;">物理儲存</strong>在模型中，佔用記憶體。它可以使用當前行的上下文進行計算。<br>
+                        <strong style="color: blue;">量值</strong>:其值<strong
+                            style="background-color: #ffff0030;">不會預先計算並儲存</strong>。它是在報表進行互動（例如，使用者應用<strong
+                            style="color: blue;">篩選器</strong>、選擇圖表元素）時，根據當前的<strong style="color: blue;">篩選上下文</strong>
+                        (<strong style="color: red;">Filter Context</strong>) <strong
+                            style="background-color: #ffff0030;">動態計算</strong>出來的<strong
+                            style="color: blue;">聚合</strong>結果（如總和、平均值、計數）。<strong
+                            style="color: blue;">量值</strong>通常用於<strong style="color: blue;">視覺效果</strong>的值區域。<br>
+                        理解這個區別對於高效能的 <strong style="color: red;">Power BI</strong> 模型設計至關重要。
+                    </div>
+                    <img src="../image/Measure Calculated Column.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">儀表板</strong>中的 <strong
+                        style="color: purple;">KPI</strong> (<strong style="color: red;">Key Performance
+                        Indicator</strong>，<strong style="color: blue;">關鍵績效指標</strong>) 卡片通常用於顯示什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">詳細的數據表格</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">單一的、重要的匯總數值</strong>，可能帶有目標比較或趨勢指示</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">複雜的網絡關係圖</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用者的互動說明</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">KPI</strong> 卡片（或稱指標卡、大數字卡）是<strong
+                            style="color: blue;">儀表板</strong>中常見的視覺元素，用於<strong
+                            style="background-color: #ffff0030;">突出顯示最重要的績效指標</strong>。它通常只顯示一個關鍵的<strong
+                            style="color: blue;">匯總</strong>數值（例如，總銷售額、平均訂單價值、網站<strong
+                            style="color: blue;">轉換率</strong>），並可能包含與目標值的比較、與上一期的變化百分比、或一個小的趨勢指示符（如<strong
+                            style="color: blue;">迷你圖</strong> <strong
+                            style="color: red;">Sparkline</strong>），讓使用者能夠一目了然地掌握核心業務狀況。
+                    </div>
+                    <img src="../image/kpi_dashboard_main.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在比較不同大小群體（例如，不同規模的部門）的某項比率（例如，員工滿意度得分）時，直接比較原始得分可能會產生誤導。為了更公平地比較，<strong
+                        style="color: blue;">視覺化</strong>時可以考慮加入哪個元素？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">每個群體的總人數或樣本大小資訊</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">更多的顏色區分</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">3D</strong> 效果</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">信賴區間</strong> (<strong
+                                style="color: red;">Confidence Intervals</strong>) 或 <strong
+                                style="color: blue;">誤差線</strong> (<strong style="color: red;">Error Bars</strong>)
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"></div>
+                    當比較基於<strong style="background-color: #ffff0030;">不同樣本大小</strong>計算出的比率或<strong
+                        style="color: blue;">平均值</strong>時，較小樣本的結果通常具有更大的隨機波動性或<strong
+                        style="background-color: #ffff0030;">不確定性</strong>。直接比較點估計值（如平均分）可能忽略了這一點。在<strong
+                        style="color: blue;">視覺化</strong>中加入<strong style="color: blue;">信賴區間</strong>或<strong
+                        style="color: blue;">誤差線</strong>，可以表示每個估計值的<strong
+                        style="background-color: #ffff0030;">不確定性範圍</strong>。如果兩個群體的<strong
+                        style="color: blue;">誤差線</strong>有很大重疊，則它們之間的差異可能不是<strong
+                        style="color: blue;">統計顯著</strong>的。這有助於更謹慎地解釋比較結果。雖然顯示樣本大小也有幫助，但<strong
+                        style="color: blue;">誤差線</strong>更直接地體現了<strong style="color: blue;">統計</strong>不確定性。
+                </div>
+                <img src="../image/Confidence Interval.png" class="responsive-img">
+                <img src="../image/Error bars.png" class="responsive-img">
+            </div>
+        </div>
+
+
+        <!-- Question 37 -->
+        <div class="question-card" data-direction="1" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#37</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content">「<strong style="color: blue;">數據說故事</strong>」(<strong style="color: red;">Data
+                    Storytelling</strong>) 是指將<strong style="color: blue;">數據</strong>、<strong
+                    style="color: blue;">視覺化</strong>與什麼結合，以更有效地傳達<strong style="color: blue;">洞察</strong>並影響決策？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">複雜的數學公式</div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">敘事</strong> (<strong style="color: red;">Narrative</strong>) 和
+                            <strong style="color: blue;">背景脈絡</strong> (<strong
+                                style="color: red;">Context</strong>)</strong></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">大量的原始數據表格</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">程式碼和演算法細節</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: blue;">數據說故事</strong>不僅僅是展示圖表，而是將<strong
+                        style="background-color: #ffff0030;">數據 (<strong style="color: red;">Data</strong>)、視覺化 (<strong
+                            style="color: red;">Visuals</strong>) 和敘事 (<strong style="color: red;">Narrative</strong>)
+                        結合</strong>起來的過程。它需要理解觀眾、設定清晰的<strong style="background-color: #ffff0030;">背景脈絡 (<strong
+                            style="color: red;">Context</strong>)</strong>、構建引人入勝的<strong
+                        style="background-color: #ffff0030;">敘事結構</strong>（例如，提出問題、展示發現、得出結論、提出建議），並使用有效的<strong
+                        style="color: blue;">視覺化</strong>來支持故事情節。目標是將冰冷的數據轉化為有意義、易於理解且具有說服力的故事，從而驅動行動或改變看法。
+                </div>
+                <img src="../image/The_Three_Elements_of_Data_Storytelling.png" class="responsive-img">
+            </div>
+        </div>
+        <div class="question-card" data-direction="2" data-stars="2">
+            <div class="question-header">
+                <div class="question-id">#38</div>
+                <div class="question-frequency">★★</div>
+            </div>
+            <div class="question-content"><strong style="color: blue;">樹狀圖</strong> (<strong
+                    style="color: red;">Treemap</strong>) 適合用來視覺化哪種數據結構？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><strong style="color: blue;">時間序列數據</strong></div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">具有<strong
+                            style="background-color: #ffff0030;">層次結構</strong>的數據，並顯示各部分佔整體的<strong
+                            style="background-color: #ffff0030;">比例</strong></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text"><strong style="color: blue;">地理空間數據</strong></div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text"><strong style="color: blue;">網絡關係</strong>數據</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: blue;">樹狀圖</strong>使用<strong
+                        style="background-color: #ffff0030;">嵌套的矩形</strong>來表示具有<strong
+                        style="background-color: #ffff0030;">層次結構</strong>的數據。每個矩形的<strong
+                        style="background-color: #ffff0030;">面積</strong>通常代表一個數值（例如，銷售額、文件大小），而矩形的嵌套關係則反映了數據的<strong
+                        style="background-color: #ffff0030;">層次結構</strong>（例如，產品大類 -> 子類 ->
+                    單品）。它可以在有限的空間內有效地展示大量層級數據的相對大小和結構。
+                </div>
+                <img src="../image/stock-price-treemap.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 39 -->
+        <div class="question-card" data-direction="6" data-stars="1">
+            <div class="question-header">
+                <div class="question-id">#39</div>
+                <div class="question-frequency">★</div>
+            </div>
+            <div class="question-content">在 <strong style="color: red;">Python</strong> 的 <strong
+                    style="color: red;">Pandas</strong> <strong style="color: blue;">函式庫</strong>中，可以直接在 <strong
+                    style="color: red;">DataFrame</strong> 或 <strong style="color: red;">Series</strong>
+                物件上呼叫哪個方法來快速生成基本的圖表（底層通常使用 <strong style="color: red;">Matplotlib</strong>）？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><code style="color: purple;">.plot()</code></div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><code style="color: purple;">.show()</code></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text"><code style="color: purple;">.visualize()</code></div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text"><code style="color: purple;">.draw()</code></div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: red;">Pandas</strong> 提供了內建的繪圖功能，可以方便地對 <strong
+                        style="color: red;">DataFrame</strong> 或 <strong style="color: red;">Series</strong>
+                    中的數據進行快速<strong style="color: blue;">視覺化</strong>。通過在物件後面加上 <code
+                        style="color: purple;">.plot()</code> 方法，並可以指定 <code style="color: purple;">kind</code> 參數（如
+                    <code style="color: purple;">'line'</code>, <code style="color: purple;">'bar'</code>, <code
+                        style="color: purple;">'hist'</code>, <code style="color: purple;">'scatter'</code>, <code
+                        style="color: purple;">'box'</code> 等）來選擇圖表類型，即可快速生成圖表。例如，<code
+                        style="color: purple;">df['column'].plot(kind='hist')</code> 會繪製該欄位的<strong
+                        style="color: blue;">直方圖</strong>。
+                </div>
+                <img src="../image/Pandas DataFrame plot.svg" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 40 -->
+        <div class="question-card" data-direction="7" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#40</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content">在<strong style="color: blue;">互動式視覺化</strong>中，提供「<strong
+                    style="color: blue;">工具提示</strong>」(<strong style="color: red;">Tooltip</strong>) 的主要作用是什麼？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">當使用者<strong
+                            style="background-color: #ffff0030;">滑鼠懸停</strong>在圖表的某個元素上時，<strong
+                            style="background-color: #ffff0030;">顯示該元素的詳細資訊</strong>或數值</div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">讓使用者可以下載圖表的數據</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">改變圖表的顏色主題</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">放大或縮小圖表的顯示比例</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: blue;">工具提示</strong>是一種常見的<strong
+                        style="color: blue;">互動式視覺化</strong>功能。當使用者將滑鼠指標移動到圖表上的某個數據點、長條、扇區或其他元素上時，會彈出一個小視窗或標籤，<strong
+                        style="background-color: #ffff0030;">顯示與該元素相關的更詳細的資訊</strong>，例如確切的數值、類別名稱、日期等。這使得圖表可以在保持整體簡潔的同時，提供使用者<strong
+                        style="background-color: #ffff0030;">按需查看細節</strong>的能力。
+                </div>
+                <img src="../image/Tooltip.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 41 -->
+        <div class="question-card" data-direction="3" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#41</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content"><strong style="color: red;">Qlik Sense</strong> 是另一個知名的<strong
+                    style="color: blue;">商業智慧</strong>與<strong style="color: blue;">視覺化工具</strong>，它以其哪種技術或特性而聞名？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><strong style="color: blue;">關聯引擎</strong> (<strong
+                            style="color: red;">Associative Engine</strong>)，允許使用者<strong
+                            style="background-color: #ffff0030;">自由探索數據間的所有關聯</strong></div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">僅能連接 <strong style="color: red;">Excel</strong> 檔案</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">完全基於 <strong style="color: red;">Python</strong> 程式碼</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">主要用於<strong style="color: blue;">地理空間分析</strong></div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: red;">Qlik Sense</strong> (以及其前身 <strong
+                        style="color: red;">QlikView</strong>) 的核心技術是其「<strong
+                        style="color: blue;">關聯引擎</strong>」。與傳統基於查詢 (<strong style="color: red;">query-based</strong>) 的
+                    <strong style="color: purple;">BI</strong> 工具不同，<strong style="color: red;">Qlik</strong> 的<strong
+                        style="color: blue;">關聯引擎</strong>會將所有載入的數據關聯起來。當使用者在<strong
+                        style="color: blue;">儀表板</strong>上進行選擇或篩選時，引擎會即時計算並顯示所有欄位中與該選擇相關（綠色）、不相關（灰色）和可能相關（淺灰色）的值。這種「<strong
+                        style="background-color: #ffff0030;">關聯體驗</strong>」讓使用者可以像人腦一樣<strong
+                        style="background-color: #ffff0030;">自由地探索數據</strong>，不受預設路徑或查詢的限制，更容易發現意想不到的<strong
+                        style="color: blue;">洞察</strong>。
+                </div>
+                <img src="../image/Qlik Sense.gif" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 42 -->
+        <div class="question-card" data-direction="8" data-stars="2">
+            <div class="question-header">
+                <div class="question-id">#42</div>
+                <div class="question-frequency">★★</div>
+            </div>
+            <div class="question-content">在<strong style="color: blue;">視覺化</strong>中使用過多的「<strong
+                    style="color: blue;">圖表垃圾</strong>」(<strong style="color: red;">Chartjunk</strong>) 會導致什麼主要問題？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><strong
+                            style="background-color: #ffff0030;">分散觀眾對數據本身的注意力</strong>，降低資訊傳達效率</div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">讓圖表看起來過於單調</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">無法顯示數據的趨勢</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">導致數據計算錯誤</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: blue;">圖表垃圾</strong>是指圖表中與數據資訊傳達無關或干擾資訊傳達的裝飾性元素，例如不必要的背景圖案、過多的格線、陰影效果、<strong
+                        style="color: purple;">3D</strong>效果、冗餘的標籤等。這些元素會增加<strong
+                        style="background-color: #ffff0030;">視覺噪音</strong>，<strong
+                        style="background-color: #ffff0030;">分散觀眾的注意力</strong>，使得他們更難以快速準確地讀取和理解數據本身，從而降低了<strong
+                        style="color: blue;">視覺化</strong>的溝通效率。根據<strong
+                        style="color: blue;">數據墨水比</strong>原則，應盡量減少<strong style="color: blue;">圖表垃圾</strong>。
+                </div>
+                <img src="../image/Chartjunk.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 43 -->
+        <div class="question-card" data-direction="4" data-stars="2">
+            <div class="question-header">
+                <div class="question-id">#43</div>
+                <div class="question-frequency">★★</div>
+            </div>
+            <div class="question-content">在 <strong style="color: red;">Tableau</strong> 中，可以將<strong
+                    style="color: blue;">度量</strong>從「<strong style="color: blue;">連續</strong>」(<strong
+                    style="color: red;">Continuous</strong>) 轉換為「<strong style="color: blue;">離散</strong>」(<strong
+                    style="color: red;">Discrete</strong>) 以達到什麼效果？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">進行更複雜的數學計算</div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">將數值視為<strong style="background-color: #ffff0030;">獨立的標籤或標頭</strong>，而不是連續的軸
+                    </div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">改變數據的原始值</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">啟動<strong style="color: blue;">地圖視覺化</strong>功能</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    在 <strong style="color: red;">Tableau</strong> 中，欄位可以是<strong
+                        style="color: blue;">連續的</strong>（綠色藥丸）或<strong style="color: blue;">離散的</strong>（藍色藥丸）。<strong
+                        style="color: blue;">連續</strong>欄位在拖放到<strong style="color: blue;">工作表</strong>時會創建連續的軸，而<strong
+                        style="color: blue;">離散</strong>欄位會創建<strong
+                        style="background-color: #ffff0030;">獨立的標籤或標頭</strong>。將一個<strong
+                        style="color: blue;">度量</strong>（通常預設為<strong style="color: blue;">連續</strong>）轉換為<strong
+                        style="color: blue;">離散</strong>，可以將其數值視為單獨的類別。例如，如果想將年份（一個數值<strong
+                        style="color: blue;">度量</strong>）作為表格的列標頭，而不是作為連續的時間軸，就可以將其轉換為<strong
+                        style="color: blue;">離散</strong><strong style="color: blue;">維度</strong>。
+                </div>
+                <img src="../image/Tableau Discrete Continuous.jpg" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 44 -->
+        <div class="question-card" data-direction="5" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#44</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content"><strong style="color: red;">Power BI</strong> 中的「<strong
+                    style="color: blue;">書籤</strong>」(<strong style="color: red;">Bookmarks</strong>) 功能允許使用者做什麼？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">標記 <strong style="color: purple;">DAX</strong> 公式中的重要部分</div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><strong style="background-color: #ffff0030;">儲存報表頁面的特定狀態</strong>（包括<strong
+                            style="color: blue;">篩選器</strong>、<strong style="color: blue;">交叉分析篩選器</strong>、<strong
+                            style="color: blue;">視覺效果</strong>的可見性等），以便快速返回或用於建立導覽</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">收藏常用的<strong style="color: blue;">視覺效果</strong>類型</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">標記數據模型中的關鍵資料表</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: red;">Power BI</strong> 的<strong
+                        style="color: blue;">書籤</strong>功能非常實用，它允許報表設計者或使用者捕捉並<strong
+                        style="background-color: #ffff0030;">儲存報表頁面的當前檢視狀態</strong>。這個狀態可以包括已應用的<strong
+                        style="color: blue;">篩選器</strong>、<strong style="color: blue;">交叉分析篩選器</strong> (<strong
+                        style="color: red;">Slicers</strong>) 的選擇、<strong
+                        style="color: blue;">視覺效果</strong>的排序、鑽取狀態，甚至特定<strong
+                        style="color: blue;">視覺效果</strong>的顯示或隱藏。儲存的<strong
+                        style="color: blue;">書籤</strong>可以讓使用者快速跳轉回特定的分析視圖，或者被用來創建類似應用程式的導覽體驗（例如，透過按鈕切換不同的<strong
+                        style="color: blue;">書籤</strong>狀態）和<strong style="color: blue;">數據故事</strong>。
+                </div>
+                <img src="../image/Power BI Bookmarks.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 45 -->
+        <div class="question-card" data-direction="1" data-stars="2">
+            <div class="question-header">
+                <div class="question-id">#45</div>
+                <div class="question-frequency">★★</div>
+            </div>
+            <div class="question-content">在選擇<strong style="color: blue;">視覺化</strong>圖表時，考量「<strong
+                    style="color: blue;">數據類型</strong>」（例如，<strong style="color: blue;">類別</strong>、<strong
+                    style="color: blue;">數值</strong>、<strong style="color: blue;">時間序列</strong>、<strong
+                    style="color: blue;">地理空間</strong>）為何重要？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">因為<strong
+                            style="background-color: #ffff0030;">不同的圖表類型適合展示不同類型的數據</strong>和它們之間的關係</div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">因為<strong style="color: blue;">數據類型</strong>決定了圖表的顏色</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">因為<strong style="color: blue;">數據類型</strong>決定了圖表是否可以互動</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">因為<strong style="color: blue;">數據類型</strong>決定了圖表的大小</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    選擇合適的圖表類型是有效<strong style="color: blue;">數據視覺化</strong>的基礎。不同的圖表有其特定的設計目的和適用場景，通常取決於你想要展示的<strong
+                        style="color: blue;">數據類型</strong>以及你想要傳達的訊息類型（例如，比較、分佈、組成、關係、趨勢）。例如，<strong
+                        style="color: blue;">長條圖</strong>適合比較<strong style="color: blue;">類別</strong>數據，<strong
+                        style="color: blue;">折線圖</strong>適合展示時間趨勢，<strong style="color: blue;">散佈圖</strong>適合觀察兩個<strong
+                        style="color: blue;">數值</strong><strong style="color: blue;">變數</strong>的關係，地圖適合展示<strong
+                        style="color: blue;">地理空間</strong>數據。錯誤地使用圖表類型會導致資訊難以理解甚至被誤解。
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 46 -->
+        <div class="question-card" data-direction="2" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#46</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content">哪種圖表適合用來比較<strong
+                    style="background-color: #ffff0030;">多個類別在兩個不同時間點的數值變化</strong>？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><strong style="color: blue;">雷達圖</strong> (<strong
+                            style="color: red;">Radar Chart</strong>)</div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><strong style="color: blue;">分組長條圖</strong> (<strong
+                            style="color: red;">Grouped Bar Chart</strong>) 或 <strong style="color: blue;">斜率圖</strong>
+                        (<strong style="color: red;">Slope Chart</strong>)</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text"><strong style="color: blue;">圓餅圖</strong> (<strong style="color: red;">Pie
+                            Chart</strong>)</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text"><strong style="color: blue;">散佈圖</strong> (<strong
+                            style="color: red;">Scatter Plot</strong>)</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    要比較多個類別在兩個時間點的變化：<br>
+                    <strong style="color: blue;">分組長條圖 (<strong style="color: red;">Grouped Bar
+                            Chart</strong>):</strong> 可以在每個類別下並列顯示兩個時間點的長條，方便直接比較每個類別的數值變化。<br>
+                    <strong style="color: blue;">斜率圖 (<strong style="color: red;">Slope Chart</strong>):</strong>
+                    用線條連接每個類別在兩個時間點的數值點，線條的斜率直觀地顯示了變化的方向和幅度，特別適合比較多個類別的變化趨勢。<br>
+                    <strong style="color: blue;">雷達圖</strong>用於比較多個<strong style="color: blue;">變數</strong>的數值。<strong
+                        style="color: blue;">圓餅圖</strong>不適合比較變化。<strong style="color: blue;">散佈圖</strong>用於兩個連續<strong
+                        style="color: blue;">變數</strong>關係。
+                </div>
+                <img src="../image/grouped-bar-chart.png" class="responsive-img">
+                <img src="../image/Slope Chart.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 47 -->
+        <div class="question-card" data-direction="7" data-stars="4">
+            <div class="question-header">
+                <div class="question-id">#47</div>
+                <div class="question-frequency">★★★★</div>
+            </div>
+            <div class="question-content">設計有效的<strong style="color: blue;">數據儀表板</strong>時，應該<strong
+                    style="background-color: #ffff0030;">優先考慮</strong>？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">使用最新、最炫的<strong style="color: blue;">視覺效果</strong></div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><strong style="color: blue;">儀表板</strong>的<strong
+                            style="background-color: #ffff0030;">目標、受眾</strong>以及他們需要回答的<strong
+                            style="background-color: #ffff0030;">關鍵問題</strong></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">將所有可用的數據欄位都包含進來</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">確保<strong style="color: blue;">儀表板</strong>可以在所有尺寸的螢幕上完美顯示</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    設計任何有效的溝通工具（包括<strong style="color: blue;">儀表板</strong>）的第一步都應該是明確其<strong
+                        style="background-color: #ffff0030;">目的和受眾</strong>。你需要了解這個<strong
+                        style="color: blue;">儀表板</strong>是為了達成什麼目標？誰會使用它？他們需要透過這個<strong
+                        style="color: blue;">儀表板</strong>了解哪些資訊、回答哪些問題、做出哪些決策？只有明確了這些，才能選擇合適的指標、設計有效的<strong
+                        style="color: blue;">視覺化</strong>、組織合理的佈局，從而創建一個真正有價值的<strong
+                        style="color: blue;">儀表板</strong>。技術或美觀是次要的考量，響應式設計（選項D）也很重要，但不是最優先的。包含所有數據（選項C）通常會導致資訊過載。
+                </div>
+                <img src="../image/kpi_dashboard_main.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 48 -->
+        <div class="question-card" data-direction="8" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#48</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content">在為<strong style="color: blue;">視覺化</strong>選擇顏色時，需要注意<strong
+                    style="background-color: #ffff0030;">色盲</strong>用戶的<strong style="color: blue;">可及性</strong>
+                (<strong style="color: red;">Accessibility</strong>)。最常見的<strong
+                    style="color: blue;">色盲</strong>類型（<strong
+                    style="background-color: #ffff0030;">紅綠色盲</strong>）會對哪兩種顏色的區分造成困難？</div>
+            <div class="options-container">
+                <div class="option-item correct" data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">紅色和綠色</div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">藍色和黃色</div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">黑色和白色</div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">橙色和紫色</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="background-color: #ffff0030;">紅綠色盲</strong>是最常見的色覺辨認障礙類型。對於<strong
+                        style="background-color: #ffff0030;">紅綠色盲</strong>的人來說，區分<strong
+                        style="background-color: #ffff0030;">紅色和綠色</strong>非常困難，它們看起來可能很相似。因此，在<strong
+                        style="color: blue;">數據視覺化</strong>中，應<strong
+                        style="background-color: #ffff0030;">避免僅使用紅色和綠色來區分</strong>重要的資訊（例如，用紅色表示差，綠色表示好），因為這會讓部分觀眾無法有效接收訊息。建議使用對<strong
+                        style="color: blue;">色盲</strong>友好的調色盤，或者除了顏色之外，也使用其他視覺線索（如形狀、圖案、標籤）來區分數據。藍黃色盲較少見。
+                </div>
+                <img src="../image/zeiss-colour-blindness.png" class="responsive-img">
+            </div>
+        </div>
+
+        <!-- Question 49 -->
+        <div class="question-card" data-direction="3" data-stars="2">
+            <div class="question-header">
+                <div class="question-id">#49</div>
+                <div class="question-frequency">★★</div>
+            </div>
+            <div class="question-content">下列哪項工具更側重於透過<strong style="color: blue;">程式設計</strong>（例如 <strong
+                    style="color: red;">Python</strong>）來創建自訂和複雜的<strong style="color: blue;">數據視覺化</strong>？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text"><strong style="color: red;">Microsoft Excel</strong></div>
+                </div>
+                <div class="option-item " data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text"><strong style="color: red;">Tableau Desktop</strong></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text"><strong style="color: red;">Power BI Desktop</strong></div>
+                </div>
+                <div class="option-item correct" data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text"><strong style="color: red;">Matplotlib</strong> / <strong
+                            style="color: red;">Seaborn</strong> / <strong style="color: red;">Plotly</strong> (<strong
+                            style="color: red;">Python Libraries</strong>)</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: red;">Excel</strong>, <strong style="color: red;">Tableau</strong>, <strong
+                        style="color: red;">Power BI</strong> 主要提供<strong style="color: blue;">圖形化使用者介面</strong>
+                    (<strong style="color: purple;">GUI</strong>) 來創建<strong
+                        style="color: blue;">視覺化</strong>，雖然它們也提供一定的自訂性，但對於高度自訂或非標準的<strong
+                        style="color: blue;">視覺化</strong>需求，其能力可能受限。而 <strong style="color: red;">Python</strong>
+                    的<strong style="color: blue;">視覺化</strong><strong style="color: blue;">函式庫</strong>（如 <strong
+                        style="color: red;">Matplotlib</strong>, <strong style="color: red;">Seaborn</strong>, <strong
+                        style="color: red;">Plotly</strong>, <strong style="color: red;">Bokeh</strong> 等）提供了透過<strong
+                        style="background-color: #ffff0030;">程式碼控制圖表各個細節</strong>的能力，給予開發者極大的<strong
+                        style="background-color: #ffff0030;">靈活性</strong>來創建各種標準或非標準的、靜態或<strong
+                        style="color: blue;">互動式</strong>的<strong
+                        style="color: blue;">視覺化</strong>圖形，更適合需要深度自訂和整合到<strong
+                        style="color: blue;">數據分析</strong>流程中的場景。
+                </div>
+            </div>
+        </div>
+
+        <!-- Question 50 -->
+        <div class="question-card" data-direction="1" data-stars="3">
+            <div class="question-header">
+                <div class="question-id">#50</div>
+                <div class="question-frequency">★★★</div>
+            </div>
+            <div class="question-content"><strong style="color: blue;">探索性數據分析</strong> (<strong
+                    style="color: red;">Exploratory Data Analysis</strong>, <strong style="color: purple;">EDA</strong>)
+                中，<strong style="color: blue;">視覺化</strong>扮演什麼重要角色？</div>
+            <div class="options-container">
+                <div class="option-item " data-option="A">
+                    <div class="option-label">A</div>
+                    <div class="option-text">僅用於最終報告的呈現</div>
+                </div>
+                <div class="option-item correct" data-option="B">
+                    <div class="option-label">B</div>
+                    <div class="option-text">幫助分析師<strong
+                            style="background-color: #ffff0030;">快速理解數據分佈、發現模式、檢驗假設、找出異常值和變數間關係</strong></div>
+                </div>
+                <div class="option-item " data-option="C">
+                    <div class="option-label">C</div>
+                    <div class="option-text">自動選擇最佳的<strong style="color: blue;">預測模型</strong></div>
+                </div>
+                <div class="option-item " data-option="D">
+                    <div class="option-label">D</div>
+                    <div class="option-text">取代所有的<strong style="color: blue;">統計</strong>摘要計算</div>
+                </div>
+            </div>
+            <div class="explanation-container">
+                <div class="explanation-header">答案解析</div>
+                <div class="explanation-content">
+                    <strong style="color: blue;">探索性數據分析</strong> (<strong style="color: purple;">EDA</strong>)
+                    是在正式<strong style="color: blue;">建模</strong>之前，對數據進行初步探索和理解的過程。<strong
+                        style="color: blue;">視覺化</strong>在 <strong style="color: purple;">EDA</strong>
+                    中是不可或缺的工具，因為它能：<br>
+                    直觀展示數據分佈：使用<strong style="color: blue;">直方圖</strong>、<strong
+                        style="color: blue;">密度圖</strong>、<strong style="color: blue;">盒鬚圖</strong>等了解單一<strong
+                        style="color: blue;">變數</strong>的特性。<br>
+                    發現<strong style="color: blue;">變數</strong>間關係：使用<strong style="color: blue;">散佈圖</strong>、<strong
+                        style="color: blue;">熱力圖</strong>等觀察<strong style="color: blue;">變數</strong>間的<strong
+                        style="color: blue;">相關性</strong>或模式。<br>
+                    識別<strong style="color: blue;">異常值</strong>或錯誤：<strong
+                        style="color: blue;">視覺化</strong>能更容易地發現偏離常規的數據點。<br>
+                    引導後續分析方向：探索性的發現可以幫助形成假設或選擇合適的分析方法。<br>
+                    <strong style="color: blue;">視覺化</strong>與<strong
+                        style="color: blue;">統計</strong>摘要相輔相成，不能完全取代，也不能自動選擇模型，它在分析的早期探索階段尤為重要。
+                </div>
+                <img src="../image/EDA.jpeg" class="responsive-img">
+            </div>
+        </div>
+
+
+    </div>
+    <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+
+    <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions();
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", searchQuestions);
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                searchQuestions();
+            } else {
+                // Optional: Trigger search as user types after a small delay
+                // clearTimeout(searchTimeout);
+                // searchTimeout = setTimeout(searchQuestions, 300);
+                // Or search on empty input to reset filters
+                if (document.getElementById("searchInput").value.trim() === '') {
+                    searchQuestions(); // Will call filterQuestions inside if empty
+                }
+            }
+        });
+        // let searchTimeout; // For delayed search on keyup
+
+
+        // Combined filter and visibility function
+        function applyFiltersAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false;
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) {
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    if (searchText !== '') {
+                        noResultsMessage.textContent = '沒有找到符合搜尋條件的題目。';
+                    } else if (direction !== 'all' || stars !== 'all') {
+                        noResultsMessage.textContent = '沒有找到符合篩選條件的題目。';
+                    } else {
+                        // Should not happen if there are questions, maybe hide it
+                        noResultsMessage.style.display = 'none';
+                    }
+                }
+            }
+        }
+
+
+        // Trigger combined function for filters and search
+        function filterQuestions() {
+            applyFiltersAndSearch();
+        }
+
+        function searchQuestions() {
+            applyFiltersAndSearch();
+        }
+
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (no change needed from example, just for interaction feedback)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Optional: Add visual feedback on click
+                // Example: temporarily change background
+                // option.style.backgroundColor = '#d1e7ff';
+                // setTimeout(() => {
+                //    option.style.backgroundColor = ''; // Reset after a short time
+                // }, 200);
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply filters (and potentially empty search) on load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        // Ensure explanations start visible as per initial state
+        let initialExplanations = document.querySelectorAll(".explanation-container");
+        initialExplanations.forEach(exp => exp.style.display = "block");
+
+    </script>
+</body>
+
+</html>

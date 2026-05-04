@@ -1,0 +1,2916 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L21103 生成式AI技術與應用</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        .explanation-content ul,
+        .explanation-content ol {
+            /* Add padding to lists */
+            padding-left: 20px;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L21103 生成式AI技術與應用</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">生成式AI基本概念與原理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">常見生成式模型架構</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">Transformer與大型語言模型</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">文本生成技術與應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">圖像/視覺生成技術與應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">其他模態生成 (音訊/影片/程式碼等)</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">提示工程與模型微調</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">生成式AI的倫理、風險與未來</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式人工智慧</strong>（<strong
+                        style="color: red;">Generative AI</strong>）最主要的目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">對現有數據進行<strong style="color: blue;">分類</strong>（<strong
+                                style="color: red;">Classification</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從數據中提取有意義的<strong style="color: blue;">特徵</strong>（<strong
+                                style="color: red;">Feature Extraction</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">學習現有數據的模式並<strong
+                                style="background-color: #ffff0030;">生成新的、原創的內容</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">預測未來的數值或趨勢（<strong style="color: red;">Prediction/Forecasting</strong>）
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">生成式AI</strong>的核心能力在於「<strong
+                            style="background-color: #ffff0030;">生成</strong>」。它透過學習大量現有數據（如文字、圖像、音樂）的潛在模式和分佈，然後利用這些學習到的知識來<strong
+                            style="background-color: #ffff0030;">創造出全新的、與原始數據相似但不完全相同的新內容</strong>。選項A、B、D描述的是<strong
+                            style="color: blue;">判別式AI</strong>（<strong style="color: red;">Discriminative
+                            AI</strong>）或其他<strong style="color: blue;">機器學習</strong>任務的主要目標，它們側重於理解和區分現有數據，而非創造新數據。
+                    </div>
+                    <img src="../image/Generative AI.png" alt="生成式AI示意圖" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成對抗網路</strong>（<strong
+                        style="color: red;">Generative Adversarial Network</strong>, <strong
+                        style="color: purple;">GAN</strong>）是由哪兩個主要部分組成的？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">編碼器</strong>（<strong
+                                style="color: red;">Encoder</strong>）和<strong style="color: blue;">解碼器</strong>（<strong
+                                style="color: red;">Decoder</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">生成器</strong>（<strong
+                                style="color: red;">Generator</strong>）和<strong
+                                style="color: blue;">判別器</strong>（<strong style="color: red;">Discriminator</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">代理（<strong style="color: red;">Agent</strong>）和環境（<strong
+                                style="color: red;">Environment</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">查詢（<strong style="color: red;">Query</strong>）和鍵（<strong
+                                style="color: red;">Key</strong>）/值（<strong style="color: red;">Value</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">GAN</strong>是<strong
+                            style="color: blue;">生成式AI</strong>中一種重要的模型架構。它包含兩個相互競爭的神經網路：<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">生成器</strong>負責從隨機雜訊中生成「假」數據</strong>，試圖模仿真實數據；<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">判別器</strong>則負責判斷輸入的數據是「真」（來自真實數據集）還是「假」（由生成器生成）</strong>。兩者透過<strong
+                            style="color: blue;">對抗訓練</strong>，生成器努力生成更逼真的數據來欺騙判別器，而判別器則努力提高辨別真偽的能力，最終促使生成器產生高品質的生成內容。選項A是<strong
+                            style="color: blue;">自編碼器</strong>（<strong style="color: red;">Autoencoder</strong>）或<strong
+                            style="color: purple;">VAE</strong>的組成。選項C是<strong
+                            style="color: blue;">強化學習</strong>的概念。選項D是<strong
+                            style="color: blue;">Transformer</strong>中<strong style="color: blue;">注意力機制</strong>的組成部分。
+                    </div>
+                    <img src="../image/GAN.png" alt="生成對抗網路示意圖" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">變分自編碼器</strong>（<strong
+                        style="color: red;">Variational Autoencoder</strong>, <strong
+                        style="color: purple;">VAE</strong>）的主要優勢之一是能夠生成具有什麼特性的<strong
+                        style="color: blue;">潛在空間</strong>（<strong style="color: red;">Latent Space</strong>）？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全離散且無結構</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">平滑且連續</strong>，有利於<strong
+                                style="background-color: #ffff0030;">插值生成</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">維度極高且難以解釋</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">與輸入數據完全相同</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">VAE</strong>是一種生成模型，它透過<strong
+                            style="color: blue;">編碼器</strong>將輸入數據映射到一個<strong
+                            style="color: blue;">潛在空間分佈</strong>（通常是高斯分佈），然後從該分佈中採樣一個潛在向量，再由<strong
+                            style="color: blue;">解碼器</strong>生成新的數據。<strong
+                            style="color: purple;">VAE</strong>的一個關鍵特性是它學習到的<strong
+                            style="color: blue;">潛在空間</strong>是<strong
+                            style="background-color: #ffff0030;">連續且平滑</strong>的。這意味著在<strong
+                            style="color: blue;">潛在空間</strong>中相近的點，其解碼後生成的數據也相似。這使得我們可以在<strong
+                            style="color: blue;">潛在空間</strong>中進行<strong
+                            style="background-color: #ffff0030;">插值</strong>（<strong
+                            style="color: red;">Interpolation</strong>），從而生成介於兩個已知數據之間的新數據，實現平滑的內容過渡。</div>
+                    <img src="../image/VAE.png" alt="變分自編碼器示意圖" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">擴散模型</strong>（<strong
+                        style="color: red;">Diffusion Models</strong>）生成數據的基本原理涉及哪個過程？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">在<strong style="color: blue;">生成器</strong>和<strong
+                                style="color: blue;">判別器</strong>之間進行對抗遊戲</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將數據編碼為潛在分佈再解碼</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">逐步從純雜訊中去除雜訊以恢復數據結構</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">預測序列中的下一個元素</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">擴散模型</strong>是近年來非常成功的生成模型，尤其在圖像生成領域。其核心思想包含兩個過程：<strong
+                            style="color: blue;">前向過程</strong>（<strong style="color: red;">Forward
+                            Process</strong>）和<strong style="color: blue;">反向過程</strong>（<strong
+                            style="color: red;">Reverse Process</strong>）。<strong
+                            style="color: blue;">前向過程</strong>逐步向真實數據中添加高斯雜訊，直到數據變成純雜訊。<strong
+                            style="color: blue;">反向過程</strong>則是學習如何<strong
+                            style="background-color: #ffff0030;">從純雜訊開始，逐步地、迭代地去除雜訊</strong>，最終恢復（生成）出符合原始數據分佈的清晰數據。選項A是<strong
+                            style="color: purple;">GAN</strong>的原理。選項B是<strong
+                            style="color: purple;">VAE</strong>的原理。選項D是<strong
+                            style="color: blue;">自回歸模型</strong>（<strong style="color: red;">Autoregressive
+                            Models</strong>）如<strong style="color: purple;">GPT</strong>的原理。</div>
+                </div>
+                <img src="../image/Diffusion Model.png" class="responsive-img">
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大型語言模型</strong>（<strong
+                        style="color: red;">Large Language Model</strong>, <strong
+                        style="color: purple;">LLM</strong>）如<strong style="color: purple;">GPT</strong>系列，其基礎架構主要是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">卷積神經網路</strong>（<strong
+                                style="color: red;">Convolutional Neural Network</strong>, <strong
+                                style="color: purple;">CNN</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">循環神經網路</strong>（<strong
+                                style="color: red;">Recurrent Neural Network</strong>, <strong
+                                style="color: purple;">RNN</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">Transformer</strong> 架構</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">支持向量機</strong>（<strong
+                                style="color: red;">Support Vector Machine</strong>, <strong
+                                style="color: purple;">SVM</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">自2017年Google提出<strong
+                            style="color: blue;">Transformer</strong>架構以來，它已成為<strong
+                            style="color: blue;">自然語言處理</strong>（<strong style="color: red;">Natural Language
+                            Processing</strong>, <strong style="color: purple;">NLP</strong>）領域的主流架構，特別是<strong
+                            style="color: blue;">大型語言模型</strong>的基石。<strong
+                            style="color: blue;">Transformer</strong>利用<strong
+                            style="color: blue;">自注意力機制</strong>（<strong style="color: red;">Self-Attention
+                            Mechanism</strong>）來捕捉輸入序列中不同位置之間的長距離依賴關係，並且具有良好的<strong
+                            style="color: blue;">平行計算</strong>能力，使其能夠有效地處理長文本並擴展到巨大的模型規模。<strong
+                            style="color: purple;">GPT</strong>（<strong style="color: red;">Generative Pre-trained
+                            Transformer</strong>）、<strong style="color: purple;">BERT</strong>等著名<strong
+                            style="color: purple;">LLM</strong>均基於<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">Transformer</strong>架構</strong>。</div>
+                    <img src="../image/Transformer.png" alt="Transformer架構示意圖" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">文本生成</strong>任務中，「<strong
+                        style="color: blue;">自回歸</strong>」（<strong
+                        style="color: red;">Autoregressive</strong>）模型是指模型如何生成文本？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">一次性生成所有文本內容</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據<strong
+                                style="background-color: #ffff0030;">之前已生成的詞語</strong>，<strong
+                                style="background-color: #ffff0030;">逐步預測並生成下一個詞語</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將輸入文本翻譯成另一種語言</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">判斷文本的情感是正面還是負面</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">自回歸模型</strong>是<strong
+                            style="color: blue;">文本生成</strong>中常用的一種方式。它生成文本的過程是<strong
+                            style="background-color: #ffff0030;">序列性</strong>的、<strong
+                            style="background-color: #ffff0030;">一步一步</strong>的。在生成第 N 個詞語時，模型會<strong
+                            style="background-color: #ffff0030;">考慮前面已經生成的 N-1
+                            個詞語作為上下文</strong>，來預測最可能的下一個詞語。這個過程不斷重複，直到生成結束符號或達到預定長度。例如，<strong
+                            style="color: purple;">GPT</strong> 模型就是典型的<strong
+                            style="color: blue;">自回歸模型</strong>。選項A描述的是<strong
+                            style="color: blue;">非自回歸</strong>（<strong
+                            style="color: red;">Non-Autoregressive</strong>）模型。選項C是<strong
+                            style="color: blue;">機器翻譯</strong>任務。選項D是<strong style="color: blue;">情感分析</strong>任務。</div>
+                </div>
+                <img src="../image/autoregressive.png" class="responsive-img">
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">StyleGAN</strong>
+                    是哪一類生成模型的著名代表，特別擅長生成高解析度、風格可控的人臉圖像？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">變分自編碼器</strong>（<strong
+                                style="color: purple;">VAE</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">生成對抗網路</strong>（<strong
+                                style="color: purple;">GAN</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">擴散模型</strong>（<strong
+                                style="color: red;">Diffusion Model</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">Transformer</strong> 模型</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">StyleGAN</strong>及其後續版本（<strong
+                            style="color: blue;">StyleGAN2</strong>, <strong
+                            style="color: blue;">StyleGAN3</strong>）是由<strong
+                            style="color: red;">NVIDIA</strong>開發的一系列<strong
+                            style="background-color: #ffff0030;">基於GAN的模型</strong>，它們在生成<strong
+                            style="background-color: #ffff0030;">逼真、高解析度的人臉圖像</strong>方面取得了驚人的效果。<strong
+                            style="color: blue;">StyleGAN</strong>的創新之處在於引入了<strong
+                            style="color: blue;">風格轉換</strong>（<strong style="color: red;">Style
+                            Transfer</strong>）的概念，允許對生成圖像的不同層次（如粗糙特徵、細節紋理）的風格進行精細控制。</div>
+                    <img src="../image/StyleGAN.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="7" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">提示工程</strong>」（<strong
+                        style="color: red;">Prompt Engineering</strong>）在與<strong
+                        style="color: blue;">大型語言模型</strong>互動時，指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">修改模型的內部權重參數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">設計和優化輸入給模型的指令</strong>（<strong
+                                style="color: blue;">提示</strong>），以<strong
+                                style="background-color: #ffff0030;">引導模型產生期望的輸出</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">選擇模型訓練所使用的硬體設備</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">開發新的模型架構</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">提示工程</strong>是使用<strong
+                            style="color: blue;">大型語言模型</strong>（<strong style="color: purple;">LLM</strong>）或其他<strong
+                            style="color: blue;">生成式AI</strong>模型時的一項關鍵技能。由於這些模型通常是透過輸入<strong
+                            style="color: blue;">提示</strong>（<strong style="color: red;">Prompt</strong>）來觸發回應的，<strong
+                            style="background-color: #ffff0030;">提示的設計方式</strong>（措辭、結構、範例等）會<strong
+                            style="background-color: #ffff0030;">極大地影響輸出的品質和相關性</strong>。<strong
+                            style="color: blue;">提示工程</strong>就是研究如何設計出最有效的<strong
+                            style="color: blue;">提示</strong>，來引導模型理解任務意圖並生成符合要求的結果，而不需要重新訓練或修改模型本身。</div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI</strong>可能產生的「<strong
+                        style="color: blue;">幻覺</strong>」（<strong style="color: red;">Hallucination</strong>）問題，指的是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型生成了具有極高藝術價值的圖像</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型生成了看似合理但實際上是<strong
+                                style="background-color: #ffff0030;">虛假的、不準確的或無意義的內容</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型拒絕回答某些敏感問題</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型輸出的內容帶有明顯的偏見</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">AI幻覺</strong>是<strong
+                            style="color: blue;">生成式模型</strong>（特別是<strong
+                            style="color: purple;">LLM</strong>）中常見的問題。它指模型<strong
+                            style="background-color: #ffff0030;">自信地生成了一些聽起來很有道理，但實際上與事實不符、缺乏現實依據或邏輯矛盾的資訊</strong>。這可能是因為模型在訓練數據中學習到了錯誤的關聯，或者在生成過程中「編造」了不存在的細節。識別和減少<strong
+                            style="color: blue;">幻覺</strong>是提升<strong
+                            style="color: blue;">生成式AI</strong>可靠性的重要挑戰。<strong
+                            style="color: blue;">偏見</strong>（選項D）也是問題，但與<strong style="color: blue;">幻覺</strong>的概念不同。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">以下哪項是<strong style="color: blue;">大型語言模型</strong>在<strong
+                        style="color: blue;">文本生成</strong>中常見的應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像辨識</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">語音合成</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">自動摘要、聊天機器人、程式碼生成</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">人臉辨識</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大型語言模型</strong>（<strong
+                            style="color: purple;">LLM</strong>）在處理和生成自然語言方面表現出色。常見的<strong
+                            style="color: blue;">文本生成</strong>應用包括：<strong
+                            style="background-color: #ffff0030;">自動生成長篇文章的摘要</strong>、開發能夠進行自然對話的<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">聊天機器人</strong></strong>（<strong
+                            style="color: red;">Chatbots</strong>）、根據需求描述<strong
+                            style="background-color: #ffff0030;">自動生成程式碼</strong>、內容創作（如寫詩、故事、行銷文案）、<strong
+                            style="color: blue;">機器翻譯</strong>等。選項A、D是<strong
+                            style="color: blue;">電腦視覺</strong>任務。選項B是語音處理任務，雖然也可能用到生成模型，但核心是語音模態。</div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">Midjourney</strong> 和 <strong
+                        style="color: blue;">Stable Diffusion</strong> 主要應用於哪個領域？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">自然語言理解</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">語音辨識</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">文本到圖像生成</strong>（<strong
+                                style="color: red;">Text-to-Image Generation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">強化學習</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Midjourney</strong> 和 <strong
+                            style="color: blue;">Stable Diffusion</strong> 都是當前非常流行的<strong
+                            style="color: blue;">生成式AI</strong>工具/模型，它們的核心功能是<strong
+                            style="background-color: #ffff0030;">根據使用者輸入的文字提示（Prompt）來生成對應的圖像</strong>。這屬於<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">文本到圖像生成</strong></strong>（<strong style="color: red;">Text-to-Image
+                            Generation</strong>）的範疇，是<strong style="color: blue;">生成式AI</strong>在視覺領域的重要應用。</div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">提示工程</strong>中，"<strong
+                        style="color: blue;">Few-shot Prompting</strong>" 是指什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全不提供範例，只給出任務描述</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在提示中<strong
+                                style="background-color: #ffff0030;">提供少量</strong>（例如1到5個）的<strong
+                                style="background-color: #ffff0030;">輸入輸出範例</strong>，來幫助模型理解任務</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提供大量的範例來<strong style="color: blue;">微調</strong>模型</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只提供一個範例（<strong style="color: blue;">One-shot Prompting</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Few-shot Prompting</strong>
+                        是一種提示技巧，旨在透過在提示中包含幾個（通常很少，如1-5個）完整的任務範例（包含輸入和期望的輸出），來向<strong
+                            style="color: blue;">大型語言模型</strong>展示如何執行特定任務。這有助於模型更好地理解任務要求和輸出格式，而無需進行模型<strong
+                            style="color: blue;">微調</strong>。相對的，"<strong style="color: blue;">Zero-shot
+                            Prompting</strong>" 是指不提供任何範例，只給任務描述；"<strong style="color: blue;">One-shot
+                            Prompting</strong>" 是指只提供一個範例。選項C描述的是模型<strong style="color: blue;">微調</strong>（<strong
+                            style="color: red;">Fine-tuning</strong>），而不是<strong style="color: blue;">提示工程</strong>的範疇。
+                    </div>
+                </div>
+                <img src="../image/Few-Shot Learning.jpg" class="responsive-img">
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI</strong>在應用中可能引發的主要倫理風險<strong
+                        style="font-weight: normal;">不包含</strong>以下哪項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成<strong style="color: blue;">虛假資訊</strong>（<strong
+                                style="color: red;">Misinformation/Disinformation</strong>）和<strong
+                                style="color: blue;">深度偽造</strong>（<strong style="color: red;">Deepfakes</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">侵犯<strong style="color: blue;">版權</strong>和<strong
+                                style="color: blue;">智慧財產權</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">加劇現有數據中的<strong style="color: blue;">偏見</strong>（<strong
+                                style="color: red;">Bias Amplification</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型訓練過程<strong style="background-color: #ffff0030;">消耗過少的電力資源</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">生成式AI</strong>的強大能力也帶來了倫理風險。選項A、B、C都是<strong
+                            style="color: blue;">生成式AI</strong>應用中廣泛關注的倫理問題：它可以被用來製造逼真的虛假新聞、偽造影音內容；其訓練數據可能包含受版權保護的內容，導致生成的內容侵權；模型可能學習並放大訓練數據中的社會偏見。選項D則與現實相反，<strong
+                            style="background-color: #ffff0030;">訓練大型生成式模型通常需要消耗大量的計算資源和電力</strong>，引發的是環境影響的擔憂，而非消耗過少。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">Transformer</strong> 模型中的「<strong
+                        style="color: blue;">自注意力機制</strong>」（<strong style="color: red;">Self-Attention
+                        Mechanism</strong>）主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">降低模型的參數數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算輸入序列中<strong
+                                style="background-color: #ffff0030;">不同位置之間的相關性權重</strong>，以<strong
+                                style="background-color: #ffff0030;">捕捉上下文依賴關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將圖像數據轉換為一維向量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">進行數據的降維處理</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">自注意力機制</strong>是<strong
+                            style="color: blue;">Transformer</strong>模型的核心。它允許模型在處理輸入序列（如一個句子）中的某個元素（如一個詞語）時，<strong
+                            style="background-color: #ffff0030;">動態地計算該元素與序列中所有其他元素的相關性得分</strong>（<strong
+                            style="color: blue;">注意力權重</strong>），然後根據這些權重對其他元素的表示進行加權求和，從而得到該元素考慮了全局上下文的新表示。這使得模型能夠有效地<strong
+                            style="background-color: #ffff0030;">捕捉長距離依賴關係</strong>，優於傳統<strong
+                            style="color: purple;">RNN</strong>的序列處理方式。</div>
+                    <img src="../image/attention-mechanism-deep-learning.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">除了文本和圖像，<strong style="color: blue;">生成式AI</strong>還可以應用於生成以下哪種內容？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只有分類標籤</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">只有數值預測結果</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">音樂、語音、影片、3D模型、程式碼</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只有靜態的網頁佈局</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">生成式AI</strong>的應用範圍非常廣泛，不限於文本和圖像。它可以學習各種數據模態的模式並生成新的內容，包括：<strong
+                            style="background-color: #ffff0030;">生成新的音樂片段或歌曲</strong>（如<strong
+                            style="color: blue;">MusicLM</strong>, <strong
+                            style="color: blue;">Jukebox</strong>）、<strong
+                            style="background-color: #ffff0030;">合成逼真的人類語音</strong>（如<strong
+                            style="color: blue;">WaveNet</strong>, <strong
+                            style="color: blue;">Tacotron</strong>）、<strong
+                            style="background-color: #ffff0030;">生成影片內容</strong>（如<strong
+                            style="color: blue;">Sora</strong>, <strong style="color: blue;">Gen-2</strong>）、<strong
+                            style="background-color: #ffff0030;">創建3D模型</strong>、<strong
+                            style="background-color: #ffff0030;">自動生成程式碼</strong>（如<strong style="color: blue;">GitHub
+                            Copilot</strong>）、生成分子結構、設計遊戲關卡等。</div>
+                    <img src="../image/Generative AI.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">與<strong style="color: blue;">判別式模型</strong>（<strong
+                        style="color: red;">Discriminative Models</strong>）相比，<strong
+                        style="color: blue;">生成式模型</strong>（<strong style="color: red;">Generative
+                        Models</strong>）主要學習的是數據的什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">不同類別之間的決策邊界 P(y|x)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據的<strong style="background-color: #ffff0030;">聯合機率分佈 P(x, y)</strong>
+                            或<strong style="background-color: #ffff0030;">邊緣分佈 P(x)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">特定輸入對應的單一輸出標籤</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據降維後的低維表示</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">機器學習模型可大致分為<strong style="color: blue;">生成式</strong>和<strong
+                            style="color: blue;">判別式</strong>。<strong style="color: blue;">判別式模型</strong>（如<strong
+                            style="color: blue;">邏輯回歸</strong>、<strong
+                            style="color: purple;">SVM</strong>、多數分類神經網路）<strong
+                            style="background-color: #ffff0030;">直接學習輸入 x 到輸出 y 的條件機率 P(y|x)</strong>
+                        或學習它們之間的決策邊界，目標是區分不同類別。<strong style="color: blue;">生成式模型</strong>（如<strong
+                            style="color: blue;">樸素貝葉斯</strong>、<strong style="color: purple;">GAN</strong>、<strong
+                            style="color: purple;">VAE</strong>、<strong style="color: blue;">擴散模型</strong>）則<strong
+                            style="background-color: #ffff0030;">學習數據本身的整體分佈</strong>，例如輸入 x 和輸出 y 的<strong
+                            style="background-color: #ffff0030;">聯合機率分佈 P(x, y)</strong>（如果是有標籤數據），或者<strong
+                            style="background-color: #ffff0030;">僅學習輸入數據的分佈 P(x)</strong>。學習了數據的生成機制後，模型就能夠生成新的數據樣本。
+                    </div>
+                    <img src="../image/Generative Discriminative.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">檢索增強生成</strong>（<strong
+                        style="color: red;">Retrieval-Augmented Generation</strong>, <strong
+                        style="color: purple;">RAG</strong>）技術主要是為了解決<strong style="color: blue;">大型語言模型</strong>的哪個問題？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型訓練速度慢</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型無法理解圖像輸入</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型<strong
+                                style="background-color: #ffff0030;">知識停留在訓練數據截止日期</strong>，以及容易<strong
+                                style="background-color: #ffff0030;">產生幻覺</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型參數數量過少</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RAG</strong> 是一種結合了<strong
+                            style="color: blue;">資訊檢索</strong>（<strong style="color: red;">Information
+                            Retrieval</strong>）和生成模型（<strong style="color: red;">Generation</strong>）的技術。<strong
+                            style="color: blue;">大型語言模型</strong>（<strong
+                            style="color: purple;">LLM</strong>）雖然能力強大，但其<strong
+                            style="background-color: #ffff0030;">知識受限於訓練數據</strong>，無法獲取最新資訊，且有時會產生不準確的<strong
+                            style="background-color: #ffff0030;">幻覺</strong>。<strong style="color: purple;">RAG</strong>
+                        試圖解決這個問題：當收到一個提問時，它首先從一個<strong
+                            style="background-color: #ffff0030;">外部的、可即時更新的知識庫</strong>（如文件、資料庫）中<strong
+                            style="background-color: #ffff0030;">檢索相關的資訊片段</strong>，然後將這些檢索到的資訊連同原始提問一起作為上下文（<strong
+                            style="color: red;">Context</strong>）提供給<strong style="color: purple;">LLM</strong>，讓<strong
+                            style="color: purple;">LLM</strong> 在生成答案時能夠<strong
+                            style="background-color: #ffff0030;">參考這些外部知識</strong>，從而提高答案的<strong
+                            style="background-color: #ffff0030;">時效性、準確性和可信度</strong>。</div>
+                    <img src="../image/RAG_Retrieval-Augmented-Generation.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">與 <strong style="color: purple;">GAN</strong> 相比，<strong
+                        style="color: blue;">擴散模型</strong>（<strong style="color: red;">Diffusion
+                        Models</strong>）在訓練穩定性方面通常表現如何？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">極不穩定，經常發生<strong style="color: blue;">模式崩潰</strong>（<strong
+                                style="color: red;">Mode Collapse</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">相對更穩定</strong>，較不容易出現訓練困難
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩者訓練穩定性完全相同</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">穩定性取決於<strong style="color: blue;">判別器</strong>的設計</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">GAN</strong> 的訓練過程涉及<strong
+                            style="color: blue;">生成器</strong>和<strong
+                            style="color: blue;">判別器</strong>之間的零和博弈，這常常導致<strong
+                            style="background-color: #ffff0030;">訓練不穩定</strong>、<strong
+                            style="color: blue;">模式崩潰</strong>（生成器只生成少數幾種樣本）或<strong
+                            style="color: blue;">梯度消失/爆炸</strong>等問題，需要仔細調整超參數和架構。相比之下，<strong
+                            style="color: blue;">擴散模型</strong>的訓練目標（預測每一步添加的雜訊或去噪後的數據）通常更穩定，優化過程相對更容易收斂，不容易出現<strong
+                            style="color: blue;">模式崩潰</strong>。但<strong
+                            style="color: blue;">擴散模型</strong>的缺點是生成過程通常需要多步迭代，速度較慢（儘管已有改進方法）。</div>
+                    <img src="../image/Diffusion Model.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">圖像修復</strong>」（<strong
+                        style="color: red;">Image Inpainting</strong>）任務是指利用<strong
+                        style="color: blue;">生成式AI</strong>做什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高圖像的整體解析度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據圖像周圍的內容，<strong
+                                style="background-color: #ffff0030;">填補圖像中缺失或損壞的區域</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將圖像轉換為不同的藝術風格</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">為圖像生成文字描述</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圖像修復</strong>是<strong
+                            style="color: blue;">生成式AI</strong>在圖像處理中的一個應用。其目標是對於輸入圖像中被遮擋、損壞或人為移除的部分（通常用遮罩標出），利用圖像中其他已知區域的上下文資訊，<strong
+                            style="background-color: #ffff0030;">生成合理且視覺上連續的內容來填補這些缺失區域</strong>，使得修復後的圖像看起來自然完整。這在照片編輯、文物修復等場景中有應用價值。選項A是<strong
+                            style="color: blue;">超解析度</strong>（<strong
+                            style="color: red;">Super-Resolution</strong>）。選項C是<strong
+                            style="color: blue;">風格轉換</strong>（<strong style="color: red;">Style
+                            Transfer</strong>）。選項D是<strong style="color: blue;">圖像描述生成</strong>（<strong
+                            style="color: red;">Image Captioning</strong>）。</div>
+                    <img src="../image/image inpainting.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">目前評估<strong style="color: blue;">生成式AI</strong>模型（特別是<strong
+                        style="color: purple;">LLM</strong>）能力時，常用的<strong style="color: blue;">基準測試</strong>（<strong
+                        style="color: red;">Benchmark</strong>）集包括？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: red;">ImageNet</strong>, <strong
+                                style="color: red;">COCO</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">MMLU</strong>, <strong
+                                style="color: purple;">HellaSwag</strong>, <strong style="color: purple;">GSM8K</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: red;">MNIST</strong>, <strong
+                                style="color: red;">CIFAR-10</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: red;">LibriSpeech</strong>, <strong
+                                style="color: red;">TIMIT</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估<strong style="color: blue;">大型語言模型</strong>的綜合能力需要多樣化的<strong
+                            style="color: blue;">基準測試</strong>。<strong style="background-color: #ffff0030;"><strong
+                                style="color: purple;">MMLU</strong> (<strong style="color: red;">Massive Multitask
+                                Language Understanding</strong>) 涵蓋了57個不同學科的知識問答</strong>。<strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">HellaSwag</strong>
+                            測試常識推理能力</strong>，要求模型選擇最合理的句子結尾。<strong style="background-color: #ffff0030;"><strong
+                                style="color: purple;">GSM8K</strong> 包含小學數學應用題</strong>，測試模型的數學推理和解題能力。這些都是衡量<strong
+                            style="color: purple;">LLM</strong>知識、推理、常識等方面能力的常用基準。選項A和C是<strong
+                            style="color: blue;">電腦視覺</strong>領域常用的圖像分類/檢測數據集。選項D是<strong
+                            style="color: blue;">語音辨識</strong>領域的數據集。</div>
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">大型語言模型</strong>（<strong
+                        style="color: purple;">LLM</strong>）中的「<strong style="color: blue;">上下文長度</strong>」（<strong
+                        style="color: red;">Context Length/Window</strong>）限制指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型能夠生成的最大字數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型在進行預測時能夠<strong style="background-color: #ffff0030;">同時考慮的輸入
+                                token</strong> (詞語或子詞) 的<strong style="background-color: #ffff0030;">最大數量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型訓練所需的最短時間</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型能夠理解的語言種類數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Transformer</strong> 架構的 <strong
+                            style="color: purple;">LLM</strong> 在處理輸入時，並非能無限地回看所有之前的內容。存在一個「<strong
+                            style="color: blue;">上下文長度</strong>」或「<strong style="color: blue;">上下文視窗</strong>」的限制，通常以
+                        <strong style="color: blue;">token</strong> 數量來衡量（如 2048, 4096, 8192, 甚至更高）。這代表模型在生成下一個 <strong
+                            style="color: blue;">token</strong> 或進行理解時，<strong
+                            style="background-color: #ffff0030;">最多只能參考輸入序列中最近的這麼多個
+                            token</strong>。超過這個長度的更早內容將被忽略，這可能導致模型在處理非常長的文本或需要長期記憶的任務時表現下降。突破<strong
+                            style="color: blue;">上下文長度</strong>限制是 <strong style="color: purple;">LLM</strong>
+                        研究的一個重要方向。</div>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">對預訓練好的<strong style="color: blue;">大型語言模型</strong>進行「<strong
+                        style="color: blue;">微調</strong>」（<strong style="color: red;">Fine-tuning</strong>）的主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">大幅增加模型的參數數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用<strong
+                                style="background-color: #ffff0030;">特定任務或領域的小型數據集</strong>，讓模型<strong
+                                style="background-color: #ffff0030;">更好地適應該特定應用場景</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">從頭開始訓練一個全新的模型</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">壓縮模型大小以便部署</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">大型語言模型</strong>通常先在海量的通用數據上進行<strong
+                            style="color: blue;">預訓練</strong>（<strong
+                            style="color: red;">Pre-training</strong>），學習廣泛的語言知識。然而，為了讓模型在某個<strong
+                            style="background-color: #ffff0030;">特定任務</strong>（如特定行業的客服、特定風格的寫作）或<strong
+                            style="background-color: #ffff0030;">特定領域</strong>（如法律、醫療）表現更好，可以進行<strong
+                            style="color: blue;">微調</strong>。<strong
+                            style="color: blue;">微調</strong>使用與目標任務/領域相關的、規模相對較小的標註數據集，在<strong
+                            style="color: blue;">預訓練模型</strong>的基礎上繼續進行短時間的訓練，<strong
+                            style="background-color: #ffff0030;">調整模型參數以適應特定需求</strong>。這比從頭訓練高效得多，是<strong
+                            style="color: blue;">遷移學習</strong>（<strong style="color: red;">Transfer
+                            Learning</strong>）的一種應用。選項D描述的是<strong style="color: blue;">模型壓縮</strong>（<strong
+                            style="color: red;">Model Compression</strong>）。</div>
+                    <img src="../image/pre-training fine-tuning.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">文本生成</strong>品質時，除了人工評估外，常用的<strong
+                        style="color: blue;">自動評估指標</strong>（<strong style="color: red;">Automatic Metric</strong>）可能包括？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的訓練時間和記憶體消耗</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">BLEU</strong>, <strong
+                                style="color: purple;">ROUGE</strong>, <strong style="color: blue;">Perplexity</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的參數數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型部署的伺服器成本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估生成文本的品質很困難，人工評估最可靠但成本高。<strong
+                            style="color: blue;">自動評估指標</strong>試圖量化生成文本與參考文本（人工撰寫的標準答案）的相似度或流暢度。<strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">BLEU</strong> (<strong
+                                style="color: red;">Bilingual Evaluation Understudy</strong>) 常用於<strong
+                                style="color: blue;">機器翻譯</strong>，衡量 N-gram 的精確率</strong>。<strong
+                            style="background-color: #ffff0030;"><strong style="color: purple;">ROUGE</strong> (<strong
+                                style="color: red;">Recall-Oriented Understudy for Gisting Evaluation</strong>)
+                            常用於<strong style="color: blue;">自動摘要</strong>，衡量 N-gram 的召回率</strong>。<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">Perplexity</strong> (困惑度)
+                            衡量<strong
+                                style="color: blue;">語言模型</strong>的預測不確定性，值越低通常表示模型對序列的擬合越好，生成的文本可能更流暢</strong>。但這些自動指標與人類判斷之間往往存在差距。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">GitHub Copilot</strong> 這類工具主要是利用<strong
+                        style="color: blue;">生成式AI</strong>來輔助哪個任務？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成藝術圖像</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">編寫和建議程式碼</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">創作音樂樂譜</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">進行股票市場預測</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">GitHub Copilot</strong> 是基於<strong
+                            style="color: blue;">大型語言模型</strong>（如<strong style="color: blue;">OpenAI
+                            Codex</strong>）開發的<strong style="color: blue;">AI程式設計助手</strong>。它能夠理解開發者的程式碼上下文和註解，<strong
+                            style="background-color: #ffff0030;">自動建議、補全甚至生成整個函數或程式碼區塊</strong>，支援多種程式語言，旨在提高開發者的編程效率。這屬於<strong
+                            style="color: blue;">程式碼生成</strong>（<strong style="color: red;">Code
+                            Generation</strong>）的應用範疇。</div>
+                    <img src="../image/GitHub Copilot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">負責任的AI</strong>」（<strong
+                        style="color: red;">Responsible AI</strong>）原則在<strong
+                        style="color: blue;">生成式AI</strong>的開發與應用中，強調需要關注哪些面向？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅關注模型的預測準確率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">公平性、可靠性、安全性、隱私保護、可解釋性、問責制</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">最大化模型的商業利潤</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">加快模型推論速度，忽略其他因素</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">負責任的AI</strong>是一個框架，旨在確保AI系統的開發和部署是以安全、合乎道德和符合社會價值觀的方式進行的。對於<strong
+                            style="color: blue;">生成式AI</strong>，這尤其重要，因為它可能產生影響深遠的內容。關鍵原則包括：<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">公平性</strong></strong>（避免偏見）、<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">可靠性</strong></strong>（減少幻覺，穩定運行）、<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">安全性</strong></strong>（防止惡意使用，如生成有害內容）、<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">隱私保護</strong></strong>（保護訓練數據和使用者數據）、<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">可解釋性</strong></strong>（理解模型決策過程）以及<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">問責制</strong></strong>（明確責任歸屬）。</div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">目前主流的<strong style="color: blue;">生成式AI</strong>模型，其能力很大程度上依賴於什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的規則庫設計</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">符號邏輯推理引擎</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">大規模的訓練數據</strong>和<strong
+                                style="background-color: #ffff0030;">龐大的模型參數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">精確的物理模擬</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">現代<strong style="color: blue;">生成式AI</strong>，特別是大型模型如<strong
+                            style="color: purple;">LLM</strong>、<strong
+                            style="color: blue;">擴散模型</strong>等，其令人印象深刻的能力主要來自於兩個方面：一是使用了<strong
+                            style="background-color: #ffff0030;">海量的、多樣化的數據進行訓練</strong>（涵蓋網頁文本、書籍、程式碼、圖像等），使模型能夠學習到廣泛的知識和模式；二是模型本身具有<strong
+                            style="background-color: #ffff0030;">巨大的規模</strong>，包含數十億甚至數兆的參數，使其有足夠的容量來擬合複雜的數據分佈。這種「<strong
+                            style="background-color: #ffff0030;">大數據+大模型</strong>」的範式是當前取得突破的關鍵。選項A、B代表的是早期的<strong
+                            style="color: blue;">符號AI</strong>或<strong
+                            style="color: blue;">專家系統</strong>。選項D與物理模擬相關，不是<strong
+                            style="color: blue;">生成式AI</strong>的核心依賴。</div>
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: purple;">GAN</strong>的訓練過程中，如果<strong
+                        style="color: blue;">判別器</strong>（<strong
+                        style="color: red;">Discriminator</strong>）過於強大，總是能輕易區分真假樣本，可能會導致什麼問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">生成器</strong>（<strong
+                                style="color: red;">Generator</strong>）能快速生成完美的樣本</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">生成器梯度消失</strong>，難以學習和改進</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">判別器</strong>停止更新</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型訓練自動提前結束</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">GAN</strong> 的訓練需要<strong
+                            style="color: blue;">生成器</strong>和<strong
+                            style="color: blue;">判別器</strong>之間達到一種平衡。如果<strong
+                            style="color: blue;">判別器</strong>訓練得太好，能夠輕易地將<strong
+                            style="color: blue;">生成器</strong>產生的所有假樣本都辨識出來（給予極低的概率），那麼<strong
+                            style="color: blue;">生成器</strong>在更新時，從<strong
+                            style="color: blue;">判別器</strong>獲得的梯度信號就會非常微弱甚至趨近於零（<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">梯度消失</strong></strong>）。這使得<strong
+                            style="color: blue;">生成器</strong>無法有效地學習如何改進自己以生成更逼真的樣本，導致訓練停滯。因此，維持兩者的相對平衡是<strong
+                            style="color: purple;">GAN</strong>訓練成功的關鍵。</div>
+                    <img src="../image/Vanishing_Gradient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">DALL-E 2</strong> 和 <strong
+                        style="color: blue;">Imagen</strong> 是主要用於哪種跨模態生成任務的模型？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖像生成文字描述 (<strong style="color: red;">Image-to-Text</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">文字生成圖像</strong> (<strong
+                                style="color: red;">Text-to-Image</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">語音生成文字 (<strong style="color: red;">Speech-to-Text</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">文字生成語音 (<strong style="color: red;">Text-to-Speech</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">DALL-E 2</strong> (由 <strong
+                            style="color: blue;">OpenAI</strong> 開發) 和 <strong style="color: blue;">Imagen</strong> (由
+                        <strong style="color: blue;">Google</strong> 開發) 都是著名的<strong
+                            style="background-color: #ffff0030;">文本到圖像生成</strong>模型。它們能夠根據使用者輸入的自然語言描述，生成高質量、富有創意且符合描述內容的圖像。這類模型的出現極大地推動了<strong
+                            style="color: purple;">AI</strong>在創意設計、藝術生成等領域的應用。</div>
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在使用<strong style="color: blue;">檢索增強生成</strong>（<strong
+                        style="color: purple;">RAG</strong>）時，選擇合適的「<strong style="color: blue;">檢索器</strong>」（<strong
+                        style="color: red;">Retriever</strong>）模型至關重要，其主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成最終的答案文本</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據使用者提問，<strong
+                                style="background-color: #ffff0030;">從外部知識庫中找出最相關的資訊片段</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">評估生成答案的流暢度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將使用者提問翻譯成英文</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RAG</strong>系統包含<strong
+                            style="color: blue;">檢索器</strong>和<strong style="color: blue;">生成器</strong>兩部分。<strong
+                            style="color: blue;">檢索器</strong>的任務是理解使用者的查詢（提問），然後在龐大的外部知識庫（如向量資料庫中存儲的文件嵌入）中<strong
+                            style="background-color: #ffff0030;">快速、準確地找到與查詢最相關的文檔或段落</strong>。檢索到的內容的品質直接影響最終生成答案的品質。常用的檢索方法包括基於向量相似度（如餘弦相似度）的<strong
+                            style="color: blue;">稠密檢索</strong>（<strong style="color: red;">Dense
+                            Retrieval</strong>）。生成最終答案是<strong style="color: blue;">生成器</strong>（通常是<strong
+                            style="color: purple;">LLM</strong>）的工作。</div>
+                    <img src="../image/RAG_Retrieval-Augmented-Generation.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">相較於基於 <strong style="color: purple;">RNN</strong> 的模型，<strong
+                        style="color: blue;">Transformer</strong> 在處理長序列時的主要優勢是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型參數數量一定更少</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">更好地捕捉長距離依賴關係</strong>，且<strong
+                                style="background-color: #ffff0030;">易於平行計算</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">訓練過程不需要<strong style="color: blue;">梯度下降</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只能處理固定長度的輸入</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RNN</strong>（<strong
+                            style="color: blue;">循環神經網路</strong>）及其變體（如<strong style="color: purple;">LSTM</strong>,
+                        <strong style="color: purple;">GRU</strong>）在處理序列時是逐步進行的，對於非常長的序列，容易出現<strong
+                            style="color: blue;">梯度消失</strong>或爆炸問題，難以捕捉相距很遠的元素之間的依賴關係。<strong
+                            style="color: blue;">Transformer</strong> 使用<strong
+                            style="color: blue;">自注意力機制</strong>，可以<strong
+                            style="background-color: #ffff0030;">直接計算序列中任意兩個位置之間的關聯</strong>，無論它們相距多遠，因此能<strong
+                            style="background-color: #ffff0030;">更好地捕捉長距離依賴關係</strong>。同時，由於其非序列性的計算方式（對於輸入序列中的所有位置可以同時計算注意力），<strong
+                            style="color: blue;">Transformer</strong> 非常適合利用現代<strong
+                            style="color: purple;">GPU</strong>進行<strong
+                            style="background-color: #ffff0030;">大規模平行計算</strong>，訓練效率更高。</div>
+                    <img src="../image/Transformer.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在文本生成中，"<strong style="color: blue;">Beam Search</strong>" 是一種什麼技術？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">用於選擇訓練數據的演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一種<strong style="color: blue;">解碼策略</strong>，用於在生成序列時<strong
+                                style="background-color: #ffff0030;">保留多個候選路徑</strong>以尋找較優結果</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一種<strong style="color: blue;">模型壓縮</strong>技術</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">一種計算<strong style="color: blue;">注意力權重</strong>的方法</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在<strong
+                            style="color: blue;">自回歸模型</strong>生成文本時，每一步都需要從可能的下一個詞語中進行選擇。最簡單的策略是<strong
+                            style="color: blue;">貪婪搜索</strong>（<strong style="color: red;">Greedy
+                            Search</strong>），即每一步都選擇概率最高的詞語。但這可能導致局部最優而非全局最優。<strong style="color: blue;">Beam
+                            Search</strong> 是一種改進策略，它在<strong style="background-color: #ffff0030;">每一步保留 K 個</strong>（K
+                        稱為 <strong style="color: red;">Beam Width</strong>）<strong
+                            style="background-color: #ffff0030;">概率最高的候選序列</strong>，然後在下一步基於這 K 個序列擴展，再選出新的 K
+                        個最佳序列。這樣可以在計算效率和生成品質之間取得較好的平衡，找到概率更高的完整序列。</div>
+                    <img src="../image/beam search vs. greedy search vs. best first search.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">風格轉換</strong>」（<strong
+                        style="color: red;">Style Transfer</strong>）在圖像生成中的目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成與輸入圖像完全相同的副本</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將一張圖像的<strong style="background-color: #ffff0030;">內容</strong>（<strong
+                                style="color: red;">Content</strong>）與另一張圖像的<strong
+                                style="background-color: #ffff0030;">風格</strong>（<strong
+                                style="color: red;">Style</strong>）結合起來，生成新的圖像</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">移除圖像中的所有風格元素</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算兩張圖像風格的相似度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">神經風格轉換</strong>是一種利用深度學習（特別是<strong
+                            style="color: purple;">CNN</strong>）進行圖像處理的技術。它通常需要兩張輸入圖像：一張<strong
+                            style="color: blue;">內容圖像</strong>（提供主要的物體和結構）和一張<strong
+                            style="color: blue;">風格圖像</strong>（提供紋理、顏色、筆觸等藝術風格）。模型的目標是生成一張新的圖像，該圖像<strong
+                            style="background-color: #ffff0030;">保留了內容圖像的主要結構，同時又呈現出風格圖像的藝術風格</strong>。</div>
+                    <img src="../image/style-transfer-example.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">WaveNet</strong> 模型主要被設計用來生成哪種類型的數據？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖像</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">文字</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">原始音訊波形</strong> (<strong
+                                style="color: red;">Raw Audio Waveforms</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">3D 點雲</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">WaveNet</strong> 是由 <strong
+                            style="color: blue;">DeepMind</strong> 開發的一種深度生成模型，專門用於<strong
+                            style="background-color: #ffff0030;">生成原始音訊波形</strong>。它採用了類似於<strong
+                            style="color: blue;">卷積神經網路</strong>的架構（特別是<strong
+                            style="color: blue;">因果卷積</strong>和<strong
+                            style="color: blue;">擴張卷積</strong>），能夠捕捉音訊信號中的長期依賴關係，生成非常逼真和自然的語音（用於<strong
+                            style="color: blue;">語音合成</strong>）和音樂。</div>
+                    <img src="../image/Overview-of-Wavenet.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">提示工程</strong>中，「<strong
+                        style="color: blue;">思維鏈</strong>」（<strong style="color: red;">Chain-of-Thought</strong>,
+                    <strong style="color: purple;">CoT</strong>）提示技巧是指？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">要求模型以條列式輸出結果</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">引導模型在給出最終答案前，先<strong
+                                style="background-color: #ffff0030;">產生一系列中間的推理步驟或思考過程</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將一個複雜問題分解成多個獨立的子問題分別提問</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">提供多個不同的提示讓模型選擇</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">思維鏈</strong>（<strong
+                            style="color: purple;">CoT</strong>）提示是一種增強<strong
+                            style="color: blue;">大型語言模型</strong>（特別是在數學、常識和符號推理任務上）表現的技巧。它透過在提示的範例中（<strong
+                            style="color: blue;">Few-shot CoT</strong>）或直接在指令中（<strong style="color: blue;">Zero-shot
+                            CoT</strong>）明確地引導模型，不僅要給出最終答案，還要<strong
+                            style="background-color: #ffff0030;">展示得出答案的詳細推理步驟或中間思考過程</strong>。這種方式鼓勵模型進行更深入、更結構化的思考，從而提高複雜問題的求解準確率。
+                    </div>
+                    <img src="../image/Chain-of-Thought.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">為<strong style="color: blue;">生成式AI</strong>模型生成的內容添加「<strong
+                        style="color: blue;">浮水印</strong>」（<strong
+                        style="color: red;">Watermarking</strong>）技術，主要是為了達成什麼目的？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高生成內容的藝術美感</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">幫助<strong
+                                style="background-color: #ffff0030;">識別內容是由AI生成</strong>，以提高<strong
+                                style="background-color: #ffff0030;">透明度</strong>和<strong
+                                style="background-color: #ffff0030;">可追溯性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">加快模型的生成速度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加生成內容的多樣性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">隨著AI生成內容越來越逼真，區分AI生成和人類創作變得困難，這可能被用於傳播<strong
+                            style="color: blue;">虛假資訊</strong>或侵犯<strong style="color: blue;">版權</strong>。<strong
+                            style="color: blue;">AI浮水印</strong>技術試圖在模型生成內容（如文本、圖像）時嵌入難以察覺但可以被特定演算法檢測到的標記（<strong
+                            style="color: blue;">浮水印</strong>）。這樣做的目的是為了<strong
+                            style="background-color: #ffff0030;">增加透明度</strong>，讓接收者或平台能夠判斷內容是否由AI生成，有助於<strong
+                            style="background-color: #ffff0030;">追溯來源、打擊濫用</strong>，是<strong
+                            style="color: blue;">負責任AI</strong>實踐的一部分。</div>
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI</strong>的「<strong
+                        style="color: blue;">預訓練-微調</strong>」（<strong style="color: red;">Pre-training and
+                        Fine-tuning</strong>）範式指的是什麼流程？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">先用小數據集微調，再用大數據集預訓練</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">先在<strong
+                                style="background-color: #ffff0030;">大量通用數據上訓練</strong>一個基礎模型（<strong
+                                style="color: blue;">預訓練</strong>），然後在<strong
+                                style="background-color: #ffff0030;">特定任務數據上進一步調整</strong>模型（<strong
+                                style="color: blue;">微調</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只進行預訓練，不進行微調</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">對模型的每一層分別進行預訓練和微調</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">這是當前訓練大型<strong style="color: blue;">生成式模型</strong>（尤其是<strong
+                            style="color: purple;">LLM</strong>）的標準流程。第一階段是<strong
+                            style="background-color: #ffff0030;">預訓練</strong>：使用海量的、無標註或自監督的通用數據（如來自網路的文本）來訓練一個非常大的模型，使其學習通用的語言模式、世界知識和基本推理能力。第二階段是<strong
+                            style="background-color: #ffff0030;">微調</strong>：針對特定的下游任務（如情感分析、問答、特定領域知識）或特定的行為偏好（如遵循指令、無害性），使用規模相對較小的、有標註的數據來進一步優化預訓練好的模型，使其更好地適應特定需求。
+                    </div>
+                    <img src="../image/pre-training and fine-tuning1.PNG" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: purple;">VAE</strong>中，<strong
+                        style="color: blue;">KL散度</strong>（<strong style="color: red;">Kullback–Leibler
+                        Divergence</strong>）損失項的作用是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">衡量生成數據與真實數據的相似度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">促使<strong style="color: blue;">編碼器</strong>產生的<strong
+                                style="color: blue;">潛在分佈</strong>接近於預先設定的<strong
+                                style="color: blue;">先驗分佈</strong>（通常是<strong style="color: blue;">標準常態分佈</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">最小化<strong style="color: blue;">解碼器</strong>的<strong
+                                style="color: blue;">重構誤差</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加生成數據的多樣性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">VAE</strong>的損失函數通常包含兩部分：<strong
+                            style="color: blue;">重構損失</strong>（<strong style="color: red;">Reconstruction
+                            Loss</strong>）和<strong style="color: blue;">KL散度</strong>損失。<strong
+                            style="color: blue;">重構損失</strong>（如均方誤差或交叉熵）確保<strong
+                            style="color: blue;">解碼器</strong>能夠從潛在向量中恢復出接近原始輸入的數據。<strong
+                            style="color: blue;">KL散度損失</strong>則是一個<strong
+                            style="background-color: #ffff0030;">正規化項</strong>（<strong
+                            style="color: red;">Regularization Term</strong>），它衡量<strong
+                            style="color: blue;">編碼器</strong>輸出的<strong
+                            style="color: blue;">潛在變數分佈</strong>（通常是多元高斯分佈）與一個預設的簡單<strong
+                            style="color: blue;">先驗分佈</strong>（通常是<strong style="color: blue;">標準常態分佈</strong> N(0,
+                        I)）之間的差異。最小化<strong style="color: blue;">KL散度</strong>損失會促使<strong
+                            style="color: blue;">潛在空間</strong>結構化，使其接近<strong
+                            style="color: blue;">先驗分佈</strong>，有利於從<strong
+                            style="color: blue;">先驗分佈</strong>中採樣來生成新數據，並使得<strong
+                            style="color: blue;">潛在空間</strong>更加平滑。</div>
+                    <img src="../image/VAE_KL_Kullback–Leibler Divergence.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">GPT</strong> 模型系列（如 <strong
+                        style="color: purple;">GPT-3</strong>, <strong style="color: purple;">GPT-4</strong>）主要是哪種類型的
+                    <strong style="color: blue;">Transformer</strong> 架構？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅包含<strong style="color: blue;">編碼器</strong>（<strong
+                                style="color: red;">Encoder-only</strong>）架構，如 <strong
+                                style="color: purple;">BERT</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅包含<strong style="color: blue;">解碼器</strong>（<strong
+                                style="color: red;">Decoder-only</strong>）架構</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">包含<strong style="color: blue;">編碼器</strong>和<strong
+                                style="color: blue;">解碼器</strong>（<strong
+                                style="color: red;">Encoder-Decoder</strong>）架構，如 <strong
+                                style="color: purple;">T5</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">混合了 <strong style="color: purple;">CNN</strong> 和 <strong
+                                style="color: blue;">Transformer</strong> 的架構</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">原始的 <strong style="color: blue;">Transformer</strong> 模型包含<strong
+                            style="color: blue;">編碼器</strong>和<strong style="color: blue;">解碼器</strong>兩部分，常用於<strong
+                            style="color: blue;">序列到序列</strong>（<strong style="color: red;">Seq2Seq</strong>）任務，如<strong
+                            style="color: blue;">機器翻譯</strong>。然而，後續發展出了不同的變體。<strong
+                            style="color: purple;">BERT</strong> 及其家族主要採用<strong
+                            style="color: blue;">僅編碼器</strong>（<strong
+                            style="color: red;">Encoder-only</strong>）架構，擅長理解輸入文本的上下文，常用於<strong
+                            style="color: blue;">自然語言理解</strong>（<strong style="color: purple;">NLU</strong>）任務。<strong
+                            style="color: purple;">GPT</strong> 系列模型則主要採用<strong
+                            style="background-color: #ffff0030;">僅解碼器</strong>（<strong
+                            style="color: red;">Decoder-only</strong>）架構，並使用<strong
+                            style="color: blue;">遮蔽式自注意力</strong>（<strong style="color: red;">Masked
+                            Self-Attention</strong>）來確保在預測當前詞語時只看到前面的詞語，特別適合<strong
+                            style="color: blue;">自回歸</strong>式的<strong style="color: blue;">文本生成</strong>任務。<strong
+                            style="color: purple;">T5</strong> 和 <strong style="color: purple;">BART</strong>
+                        等模型則採用完整的<strong style="color: blue;">編碼器-解碼器</strong>架構。</div>
+                    <img src="../image/autoregressive.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">文本生成</strong>中的「<strong
+                        style="color: blue;">溫度縮放</strong>」（<strong style="color: red;">Temperature
+                        Scaling</strong>）參數的作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">控制生成文本的長度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">調整模型輸出概率分佈的形狀，<strong
+                                style="background-color: #ffff0030;">影響生成文本的隨機性</strong>和<strong
+                                style="background-color: #ffff0030;">創造性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">設定模型訓練的學習率</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">指定使用的 <strong style="color: purple;">GPU</strong> 溫度上限</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在<strong
+                            style="color: blue;">自回歸模型</strong>生成下一個詞語時，模型會輸出一個詞彙表中所有詞語的概率分佈。<strong
+                            style="color: blue;">溫度</strong>（<strong
+                            style="color: red;">Temperature</strong>）是一個超參數，用於在從這個概率分佈中採樣之前對其進行調整。<strong
+                            style="background-color: #ffff0030;">較低的溫度</strong>（如 <
+                            1）會使得概率分佈更尖銳，模型更傾向於選擇概率最高的詞語，生成結果更<strong style="background-color: #ffff0030;">
+                            保守、確定性更高</strong>。<strong style="background-color: #ffff0030;">較高的溫度</strong>（如 >
+                            1）會使得概率分佈更平緩，增加了選擇低概率詞語的可能性，生成結果更<strong
+                                style="background-color: #ffff0030;">隨機、更有創造性</strong>，但也可能不連貫。溫度為 1 時不改變原始分佈。</div>
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">潛在擴散模型</strong>（<strong
+                        style="color: red;">Latent Diffusion Models</strong>, <strong
+                        style="color: purple;">LDM</strong>），如 <strong style="color: blue;">Stable
+                        Diffusion</strong>，與標準<strong style="color: blue;">擴散模型</strong>的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全不使用擴散過程</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在一個<strong
+                                style="background-color: #ffff0030;">較低維度的潛在空間</strong>（<strong
+                                style="color: red;">Latent Space</strong>）中<strong
+                                style="background-color: #ffff0030;">執行擴散和去噪過程</strong>，而非直接在像素空間</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只適用於生成黑白圖像</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用 <strong style="color: purple;">GAN</strong> 作為其核心組件</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">標準的<strong
+                            style="color: blue;">擴散模型</strong>直接在高維的像素空間中進行加噪和去噪，計算成本非常高。<strong
+                            style="color: blue;">潛在擴散模型</strong>（<strong
+                            style="color: purple;">LDM</strong>）是對此的改進。它首先使用一個預訓練好的<strong
+                            style="color: blue;">自編碼器</strong>（<strong
+                            style="color: red;">Autoencoder</strong>）將高維圖像壓縮到一個低維的<strong
+                            style="color: blue;">潛在空間</strong>。然後，<strong
+                            style="background-color: #ffff0030;">在該潛在空間中執行擴散模型的加噪和去噪過程</strong>。最後，再使用<strong
+                            style="color: blue;">自編碼器</strong>的<strong
+                            style="color: blue;">解碼器</strong>將去噪後的潛在向量映射回像素空間，生成最終圖像。這種在低維空間操作的方式<strong
+                            style="background-color: #ffff0030;">大大降低了計算複雜度和訓練成本</strong>，使得高解析度圖像生成更加高效，<strong
+                            style="color: blue;">Stable Diffusion</strong> 就是一個成功的例子。</div>
+                    <img src="../image/Latent Diffusion Models (LDMs).png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI</strong>在影片生成方面的挑戰之一是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖像解析度過低</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">保持生成內容在<strong
+                                style="background-color: #ffff0030;">時間上的連貫性</strong>和<strong
+                                style="background-color: #ffff0030;">物理合理性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">缺乏有效的文本輸入方式</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">無法生成彩色影片</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">影片生成比靜態圖像生成更具挑戰性，因為它不僅需要生成視覺上逼真的畫面，還需要確保這些畫面在<strong
+                            style="background-color: #ffff0030;">時間維度上是連貫的</strong>。這意味著物體應該平滑地移動，場景變化應該合理，並且要符合基本的物理規律（如重力、碰撞）。維持長時間的<strong
+                            style="background-color: #ffff0030;">時序一致性</strong>（<strong style="color: red;">Temporal
+                            Coherence</strong>）和<strong
+                            style="background-color: #ffff0030;">物理合理性</strong>是當前影片生成模型（如<strong
+                            style="color: blue;">Sora</strong>）需要克服的主要難題。</div>
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">指令微調</strong>（<strong
+                        style="color: red;">Instruction Fine-tuning</strong>）是一種讓<strong
+                        style="color: blue;">預訓練語言模型</strong>學會什麼能力的技術？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">寫出更優美的詩歌</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">遵循使用者以自然語言提出的各種指令或問題</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">生成特定風格的圖像</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">檢測文本中的語法錯誤</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">原始的<strong style="color: blue;">預訓練語言模型</strong>（如<strong
+                            style="color: purple;">GPT-3</strong>的基礎模型）主要學會了預測下一個詞，但不一定能很好地理解並遵循人類的指令。<strong
+                            style="color: blue;">指令微調</strong>透過使用大量<strong
+                            style="background-color: #ffff0030;">「指令-回應」格式的數據</strong>對預訓練模型進行<strong
+                            style="color: blue;">微調</strong>，教導模型如何理解各種自然語言指令（如「總結這段文字」、「寫一封郵件」、「翻譯這句話」）並生成恰當的回應。這是使<strong
+                            style="color: purple;">LLM</strong>變得更像有用助手（如<strong
+                            style="color: blue;">ChatGPT</strong>）的關鍵步驟之一。</div>
+                    <img src="../image/Instruction Fine-tuning.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">AI Alignment</strong>（<strong
+                        style="color: blue;">對齊</strong>）問題在<strong style="color: blue;">大型語言模型</strong>中主要關注什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">將模型的輸出文本與輸入提示的長度對齊</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">確保模型的行為和目標與<strong
+                                style="background-color: #ffff0030;">人類的意圖和價值觀保持一致</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將不同<strong style="color: blue;">語言模型</strong>的參數進行對齊</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">對齊模型的輸入和輸出數據格式</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">AI對齊</strong>是一個重要的研究領域，特別是對於能力越來越強的大型模型。其核心目標是確保<strong
+                            style="color: purple;">AI</strong>系統的<strong
+                            style="background-color: #ffff0030;">目標、行為和決策過程符合設計者和社會的期望、意圖和倫理價值觀</strong>。這涉及到如何讓模型理解並遵循複雜的、有時甚至是模糊的人類指令，避免產生有害、有偏見或非預期的輸出，即使在追求其設定的目標時也是如此。例如，透過<strong
+                            style="color: blue;">指令微調</strong>和<strong style="color: blue;">從人類回饋中學習</strong>（<strong
+                            style="color: purple;">RLHF</strong>）等技術來實現<strong style="color: blue;">對齊</strong>。</div>
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI</strong>與傳統軟體開發的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">生成式AI</strong>不需要任何程式碼</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">傳統軟體依賴<strong
+                                style="background-color: #ffff0030;">明確的程式邏輯和規則</strong>，而<strong
+                                style="color: blue;">生成式AI</strong>依賴<strong
+                                style="background-color: #ffff0030;">從數據中學習模式</strong>來產生輸出</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">生成式AI</strong>的輸出是完全確定且可預測的</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">傳統軟體不需要數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">傳統軟體開發是基於程式設計師編寫的<strong
+                            style="background-color: #ffff0030;">明確指令、規則和演算法</strong>來運作的，對於相同的輸入，通常會產生完全相同的確定性輸出。<strong
+                            style="color: blue;">生成式AI</strong>則是<strong
+                            style="background-color: #ffff0030;">基於數據驅動</strong>的，它從大量數據中<strong
+                            style="background-color: #ffff0030;">學習潛在的模式和關係</strong>，其輸出是基於學習到的概率分佈生成的，因此往往帶有一定的隨機性，對於相同的輸入提示，可能產生不同的輸出結果。雖然<strong
+                            style="color: blue;">生成式AI</strong>的底層也需要程式碼來實現模型和訓練流程，但其核心行為模式與傳統基於規則的軟體有本質區別。</div>
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">從人類回饋中學習</strong>（<strong
+                        style="color: red;">Reinforcement Learning from Human Feedback</strong>, <strong
+                        style="color: purple;">RLHF</strong>）主要用於訓練<strong style="color: blue;">大型語言模型</strong>實現什麼目標？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">學習更多的世界知識</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使模型的輸出<strong
+                                style="background-color: #ffff0030;">更符合人類的偏好</strong>，例如<strong
+                                style="background-color: #ffff0030;">更有用、更誠實、更無害</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提高模型在特定知識問答<strong style="color: blue;">基準</strong>上的分數</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">加快模型的推論速度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RLHF</strong> 是<strong
+                            style="color: blue;">對齊</strong>（<strong style="color: red;">Alignment</strong>）<strong
+                            style="color: blue;">大型語言模型</strong>行為的關鍵技術之一，特別是用於訓練像 <strong
+                            style="color: blue;">ChatGPT</strong> 這樣的對話模型。它通常在<strong
+                            style="color: blue;">指令微調</strong>之後進行。其過程大致是：首先讓模型針對一些提示生成多個不同的回應，然後由<strong
+                            style="background-color: #ffff0030;">人類標註者對這些回應進行排序或評分</strong>，以體現人類的偏好（哪個答案更好、更有幫助、更安全等）。接著，利用這些人類偏好數據訓練一個<strong
+                            style="color: blue;">獎勵模型</strong>（<strong style="color: red;">Reward
+                            Model</strong>），該模型能夠預測哪個回應更符合人類偏好。最後，使用<strong
+                            style="color: blue;">強化學習</strong>演算法（如<strong style="color: purple;">PPO</strong>）來<strong
+                            style="color: blue;">微調</strong>原始的<strong
+                            style="color: blue;">語言模型</strong>，使其生成的內容能夠最大化<strong
+                            style="color: blue;">獎勵模型</strong>的評分，從而使其行為更符合人類的期望。</div>
+                    <img src="../image/RLHF.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">Transformer</strong>架構中，"<strong
+                        style="color: blue;">位置編碼</strong>" (<strong style="color: red;">Positional Encoding</strong>)
+                    的目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">標記句子的情感極性</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">為模型提供輸入序列中<strong
+                                style="background-color: #ffff0030;">詞語的位置資訊</strong>，因為<strong
+                                style="color: blue;">自注意力機制</strong>本身不包含順序概念</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對輸入的<strong style="color: blue;">詞嵌入</strong>進行降維</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">區分不同的語言</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Transformer</strong> 的<strong
+                            style="color: blue;">自注意力機制</strong>在計算相關性時，是平等地看待輸入序列中的所有位置的，它<strong
+                            style="background-color: #ffff0030;">本身並不直接處理或利用詞語的順序資訊</strong>。然而，在自然語言中，詞語的順序至關重要。為了讓模型能夠利用這種順序資訊，<strong
+                            style="color: blue;">Transformer</strong> 在將<strong
+                            style="color: blue;">詞嵌入</strong>（<strong style="color: red;">Word
+                            Embedding</strong>）輸入模型之前，會為每個位置的<strong style="color: blue;">詞嵌入</strong>添加一個獨特的「<strong
+                            style="color: blue;">位置編碼</strong>」向量。這個<strong
+                            style="color: blue;">位置編碼</strong>向量提供了關於詞語在序列中絕對或相對位置的資訊，使得模型能夠區分不同位置的相同詞語，並理解序列的順序結構。
+                    </div>
+                    <img src="../image/Positional Encoding.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="5" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">哪種技術常用於評估生成圖像品質的自動指標，透過比較生成圖像和真實圖像的特徵分佈？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">準確率</strong> (<strong
+                                style="color: red;">Accuracy</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">Fréchet Inception Distance</strong>
+                            (<strong style="color: purple;">FID</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">均方誤差</strong> (<strong
+                                style="color: red;">Mean Squared Error</strong>, <strong
+                                style="color: purple;">MSE</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">BLEU</strong> 分數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估生成圖像的品質（逼真度和多樣性）也很困難。<strong style="color: purple;">FID</strong>
+                        是一個廣泛使用的<strong style="color: blue;">自動評估指標</strong>。它首先使用一個預訓練好的<strong
+                            style="color: blue;">圖像分類</strong>模型（通常是 <strong style="color: blue;">Inception
+                            V3</strong>）提取大量真實圖像和生成圖像的深層特徵（通常是某個隱藏層的激活值）。然後，假設這些特徵服從多維高斯分佈，<strong
+                            style="background-color: #ffff0030;">計算這兩個分佈之間的 Fréchet 距離</strong>。<strong
+                            style="color: purple;">FID</strong> 分數<strong
+                            style="background-color: #ffff0030;">越低</strong>，表示生成圖像的特徵分佈與真實圖像越接近，通常意味著生成圖像的品質越高、多樣性越好。選項A是分類指標。選項C通常用於像素級比較。選項D用於文本評估。
+                    </div>
+                    <img src="../image/FID_Fréchet Inception Distance.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">關於<strong style="color: blue;">生成式AI</strong>的未來發展趨勢，以下描述何者<strong
+                        style="font-weight: normal;">較不可能</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型朝向<strong style="color: blue;">多模態</strong>（<strong
+                                style="color: red;">Multi-modal</strong>）能力發展</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">更注重模型<strong style="color: blue;">效率</strong>、<strong
+                                style="color: blue;">可控性</strong>和<strong style="color: blue;">安全性</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">完全取代人類</strong>進行所有決策和創造性工作</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">與<strong style="color: blue;">特定領域知識</strong>更深度地結合</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">生成式AI</strong>的未來發展趨於整合<strong
+                            style="color: blue;">多種模態</strong>（文本、圖像、聲音等）以更全面地理解世界；同時，隨著模型能力增強，如何提高<strong
+                            style="color: blue;">效率</strong>（用於部署）、增強<strong
+                            style="color: blue;">可控性</strong>（減少幻覺和有害輸出）、保障<strong
+                            style="color: blue;">安全性</strong>將是關鍵；將通用模型與<strong
+                            style="color: blue;">特定領域知識</strong>（如醫療、法律、金融）結合以提供專業服務也是重要方向。然而，認為<strong
+                            style="color: purple;">AI</strong>會「<strong
+                            style="background-color: #ffff0030;">完全取代</strong>」人類的決策和創造力是一種過於簡化和極端的看法。<strong
+                            style="color: purple;">AI</strong>更可能作為強大的<strong
+                            style="background-color: #ffff0030;">輔助工具</strong>，增強人類的能力，而非完全替代，特別是在涉及複雜價值判斷、情感和原創性的領域。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">當我們說一個<strong style="color: blue;">大型語言模型</strong>具有「<strong
+                        style="color: blue;">湧現能力</strong>」（<strong style="color: red;">Emergent
+                        Abilities</strong>）時，通常是指什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型在訓練過程中突然出現錯誤</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">當模型規模（如參數數量、訓練數據量）達到某個閾值後，模型<strong
+                                style="background-color: #ffff0030;">突然表現出之前較小模型所不具備的、未被明確設計的新能力</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型能夠生成多種不同語言的文本</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型在處理特定任務時速度非常快</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">湧現能力</strong>是觀察到的大型模型現象。指的是某些複雜能力（如進行多步推理、理解比喻、寫程式碼等）在模型規模較小時幾乎不存在或表現很差，但<strong
+                            style="background-color: #ffff0030;">當模型規模增大到一定程度後，這些能力會突然顯著地出現或提升</strong>，其表現超出簡單外插（<strong
+                            style="color: red;">Extrapolation</strong>）的預期。理解和預測<strong
+                            style="color: blue;">湧現能力</strong>是大型模型研究中的一個有趣且重要的課題。</div>
+                    <img src="../image/Emergent Abilities.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為了讓<strong style="color: blue;">文本到圖像模型</strong>（如<strong
+                        style="color: blue;">Stable Diffusion</strong>）生成特定人物或物體的圖像，常用的一種技術是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高圖像輸出的解析度</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">增加提示詞的長度</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用少量樣本進行<strong
+                                style="background-color: #ffff0030;">模型微調</strong>或<strong
+                                style="background-color: #ffff0030;">概念注入技術</strong>，如 <strong
+                                style="color: purple;">LoRA</strong> (<strong style="color: red;">Low-Rank
+                                Adaptation</strong>) 或 <strong style="color: blue;">Textual Inversion</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">改變圖像的色彩風格</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">預訓練的<strong
+                            style="color: blue;">文本到圖像模型</strong>雖然能生成多樣化的圖像，但通常無法精確生成使用者指定的特定人物、物體或風格（因為模型沒見過）。為了實現這種客製化生成，需要對模型進行調整。常用的技術包括：
+                        <ol>
+                            <li><strong style="color: blue;">微調</strong>（<strong
+                                    style="color: red;">Fine-tuning</strong>）：使用包含目標概念的少量圖像對整個模型或部分模型進行微調。</li>
+                            <li><strong style="color: blue;">Textual Inversion</strong>：為目標概念學習一個特殊的<strong
+                                    style="color: blue;">詞嵌入</strong>（<strong style="color: red;">text
+                                    embedding</strong>），之後可以在提示詞中使用這個特殊詞彙來生成該概念。</li>
+                            <li><strong style="color: purple;">LoRA</strong> (<strong style="color: red;">Low-Rank
+                                    Adaptation</strong>)：一種<strong
+                                    style="color: blue;">參數高效的微調技術</strong>，只訓練添加到模型原有權重上的少量低秩矩陣，就能有效適應新概念，同時保持原有模型能力。
+                            </li>
+                        </ol>
+                        這些技術允許使用者用少量樣本「教會」模型認識新的、特定的視覺概念。
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+        <!-- Add this div for "No results" message -->
+        <div id="noResultsMessage" style="display: none; text-align: center; margin-top: 20px; color: #777;"></div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions(); // Call the main filter function
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterQuestions); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterQuestions(); // Trigger filter on Enter key
+            }
+            // Optional: live search/filtering as user types
+            // filterQuestions();
+        });
+
+
+        // Combined filter and search function
+        function filterQuestions() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false; // Track if any questions match
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Display a message if no questions match
+            if (noResultsMessage) {
+                if (!anyVisible) {
+                    noResultsMessage.style.display = 'block';
+                    if (searchText !== "") {
+                        noResultsMessage.textContent = '沒有找到符合所有篩選條件和搜尋關鍵字的題目。';
+                    } else {
+                        noResultsMessage.textContent = '沒有找到符合篩選條件的題目。';
+                    }
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            }
+        }
+
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (for visual feedback, if desired)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Example: Temporarily highlight clicked option
+                // Remove highlight from siblings first
+                const parentOptions = option.closest('.options-container');
+                if (parentOptions) {
+                    parentOptions.querySelectorAll('.option-item').forEach(sib => sib.style.border = 'none');
+                }
+                // Add a temporary border to clicked option
+                // option.style.border = '2px solid #9ec5fe'; // Example highlight
+                // Note: This is just visual, doesn't affect correctness logic shown by .correct class
+            });
+        });
+
+        // Initial setup
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply initial filter/search state on load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        // Ensure the noResultsMessage div exists after questionsContainer
+        const questionsContainer = document.getElementById('questionsContainer');
+        if (!document.getElementById('noResultsMessage') && questionsContainer) {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'noResultsMessage';
+            messageDiv.style.display = 'none';
+            messageDiv.style.textAlign = 'center';
+            messageDiv.style.marginTop = '20px';
+            messageDiv.style.color = '#777'; // Use a slightly muted color
+            questionsContainer.insertAdjacentElement('afterend', messageDiv);
+        }
+
+    </script>
+</body>
+
+</html>

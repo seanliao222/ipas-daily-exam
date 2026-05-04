@@ -1,0 +1,3040 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22101 敘述性統計與資料摘要技術</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        .explanation-content ul,
+        .explanation-content ol {
+            /* Add padding to lists */
+            padding-left: 20px;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* No results message style */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #000000;
+            /* Ensure message text is black */
+            display: none;
+            /* Hidden by default */
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22101 敘述性統計與資料摘要技術</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">統計學基本概念與數據類型</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">集中趨勢量數</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">離散趨勢量數</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">相對位置量數</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">資料分佈形狀</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">敘述統計圖表</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">相關性與關聯分析</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">資料摘要與報表技術</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">敘述性統計</strong>（<strong
+                        style="color: red;">Descriptive Statistics</strong>）的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">整理、描述和總結</strong>數據<strong
+                                style="color: blue;">樣本</strong>的基本特徵</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從<strong style="color: blue;">樣本</strong>數據推斷<strong
+                                style="color: blue;">母體</strong>的特性</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">檢定關於<strong style="color: blue;">母體</strong>的假設是否成立</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">建立預測模型來預測未來的數值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">統計學主要分為<strong style="color: blue;">敘述性統計</strong>和<strong
+                            style="color: blue;">推論性統計</strong>（<strong style="color: red;">Inferential
+                            Statistics</strong>）。<strong style="color: blue;">敘述性統計</strong>旨在<strong
+                            style="background-color: #ffff0030;">描述和呈現手頭上數據（樣本）的狀況</strong>，使用圖表（如<strong
+                            style="color: blue;">直方圖</strong>、<strong style="color: blue;">箱型圖</strong>）和數值量數（如<strong
+                            style="color: blue;">平均數</strong>、<strong style="color: blue;">標準差</strong>）來<strong
+                            style="background-color: #ffff0030;">總結數據的集中趨勢、離散程度、分佈形狀</strong>等基本特徵。它<strong
+                            style="background-color: #ffff0030;">不涉及從樣本推論到母體</strong>。選項 B 和 C 屬於<strong
+                            style="color: blue;">推論性統計</strong>的範疇。選項 D 屬於預測建模的範疇，雖然可能基於統計原理，但其目的超越了單純的描述。</div>
+                    <img src="../image/descriptive_statistics.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在統計學中，將數據分為<strong style="color: blue;">名目</strong>（<strong
+                        style="color: red;">Nominal</strong>）、<strong style="color: blue;">次序</strong>（<strong
+                        style="color: red;">Ordinal</strong>）、<strong style="color: blue;">等距</strong>（<strong
+                        style="color: red;">Interval</strong>）和<strong style="color: blue;">等比</strong>（<strong
+                        style="color: red;">Ratio</strong>）四種尺度，主要是基於數據的什麼特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據的收集來源</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據所包含的<strong
+                                style="background-color: #ffff0030;">數學性質</strong>與<strong
+                                style="background-color: #ffff0030;">可進行的運算類型</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據量的大小</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據的視覺化呈現方式</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">數據的<strong
+                            style="color: blue;">測量尺度</strong>決定了數據的性質以及可以對其進行的統計分析類型：
+                        <ul>
+                            <li><strong style="color: blue;">名目尺度</strong>：僅用於<strong
+                                    style="background-color: #ffff0030;">分類</strong>，數值無大小或順序意義（如性別、血型）。只能計算次數、<strong
+                                    style="color: blue;">眾數</strong>。</li>
+                            <li><strong style="color: blue;">次序尺度</strong>：具有<strong
+                                    style="background-color: #ffff0030;">順序關係</strong>，但差值無意義（如教育程度：國小、國中、高中）。可計算<strong
+                                    style="color: blue;">中位數</strong>、<strong style="color: blue;">百分位數</strong>。</li>
+                            <li><strong style="color: blue;">等距尺度</strong>：具有順序和<strong
+                                    style="background-color: #ffff0030;">相等間距</strong>，差值有意義，但<strong
+                                    style="background-color: #ffff0030;">沒有絕對零點</strong>（如攝氏溫度）。可進行加減運算，計算<strong
+                                    style="color: blue;">平均數</strong>、<strong style="color: blue;">標準差</strong>。</li>
+                            <li><strong style="color: blue;">等比尺度</strong>：具有等距尺度的所有性質，且有<strong
+                                    style="background-color: #ffff0030;">絕對零點</strong>，比值有意義（如身高、體重、收入）。可進行所有算術運算。</li>
+                        </ul>
+                        這種分類是基於數據的數學特性和可執行的運算類型。
+                    </div>
+                    <img src="../image/Nominal Ordinal Interval Ratio.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">下列哪一個<strong style="color: blue;">集中趨勢</strong>量數最容易受到<strong
+                        style="color: blue;">極端值</strong>（<strong style="color: red;">Outliers</strong>）的影響？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">幾何平均數</strong>（<strong
+                                style="color: red;">Geometric Mean</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">集中趨勢</strong>量數用於描述數據的中心位置。
+                        <ul>
+                            <li><strong style="color: blue;">平均數</strong>：所有數值的總和除以數值個數。因為計算涉及所有數值，所以<strong
+                                    style="background-color: #ffff0030;">一個或幾個極端值會顯著拉高或拉低平均數</strong>。</li>
+                            <li><strong style="color: blue;">中位數</strong>：將數據排序後位於中間位置的數值。它只取決於數據的位置，<strong
+                                    style="background-color: #ffff0030;">不受兩端極端值的影響</strong>，因此對異常值具有<strong
+                                    style="color: blue;">穩健性</strong>（<strong style="color: red;">Robust</strong>）。</li>
+                            <li><strong style="color: blue;">眾數</strong>：數據中出現次數最多的數值。它也不受極端值的影響，但可能不存在或有多個。</li>
+                            <li><strong style="color: blue;">幾何平均數</strong>：常用於計算比率或增長率的平均，對極端值也較敏感。</li>
+                        </ul>
+                        因此，<strong style="color: blue;">平均數</strong>是最容易受<strong
+                            style="color: blue;">極端值</strong>影響的<strong
+                            style="color: blue;">集中趨勢</strong>量數。在數據存在明顯異常值時，<strong
+                            style="color: blue;">中位數</strong>通常是更合適的代表中心趨勢的指標。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">標準差</strong>（<strong
+                        style="color: red;">Standard Deviation</strong>）是衡量數據的什麼特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據的中心位置</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據相對於<strong style="color: blue;">平均數</strong>的<strong
+                                style="background-color: #ffff0030;">離散程度或變異程度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據分佈的對稱性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據中出現頻率最高的值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">離散趨勢</strong>量數用於描述數據的分散或變異程度。<strong
+                            style="color: blue;">標準差</strong>是其中最常用的一個指標，它計算的是各數據點與其<strong
+                            style="color: blue;">平均數</strong>之間差異的平方的平均數的平方根（即<strong style="color: blue;">變異數</strong>
+                        <strong style="color: red;">Variance</strong> 的平方根）。<strong
+                            style="background-color: #ffff0030;">標準差越大，表示數據點越分散</strong>，偏離<strong
+                            style="color: blue;">平均數</strong>的程度越大；<strong
+                            style="background-color: #ffff0030;">標準差越小，表示數據點越集中</strong>在<strong
+                            style="color: blue;">平均數</strong>附近。選項 A 是<strong style="color: blue;">集中趨勢</strong>。選項 C
+                        是<strong style="color: blue;">分佈形狀</strong>（<strong style="color: blue;">偏態</strong>）。選項 D
+                        是<strong style="color: blue;">眾數</strong>。
+                    </div>
+                    <img src="../image/Standard-Deviation-Formula.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">百分位數</strong>（<strong
+                        style="color: red;">Percentile</strong>） <strong style="color: purple;">P75</strong> 代表什麼意義？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據集中有 75% 的數值等於這個值</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據集中<strong style="background-color: #ffff0030;">至少有 75%
+                                的數值小於或等於這個值</strong>，且<strong style="background-color: #ffff0030;">至少有 25%
+                                的數值大於或等於這個值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據集的<strong style="color: blue;">平均數</strong>是 75</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據集的<strong style="color: blue;">標準差</strong>是 75</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">百分位數</strong>是衡量數據<strong
+                            style="color: blue;">相對位置</strong>的指標。第 k 個<strong
+                            style="color: blue;">百分位數</strong>（<strong
+                            style="color: purple;">Pk</strong>）是指一個數值，使得數據集中<strong
+                            style="background-color: #ffff0030;">至少有 k% 的觀測值小於或等於它</strong>，同時<strong
+                            style="background-color: #ffff0030;">至少有 (100-k)% 的觀測值大於或等於它</strong>。因此，<strong
+                            style="color: purple;">P75</strong>（也稱為<strong style="color: blue;">第三四分位數</strong> <strong
+                            style="color: purple;">Q3</strong>）表示數據集中至少有 75% 的數值小於或等於 <strong
+                            style="color: purple;">P75</strong>，且至少有 25% 的數值大於或等於 <strong
+                            style="color: purple;">P75</strong>。它將數據分成了較低的 75% 和較高的 25%。</div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">如果一個數據分佈的<strong style="color: blue;">偏態係數</strong>（<strong
+                        style="color: red;">Skewness Coefficient</strong>）為正值，這通常表示該分佈呈現什麼形狀？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">對稱分佈</strong>（<strong
+                                style="color: red;">Symmetric Distribution</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">右偏分佈</strong>（<strong
+                                style="color: red;">Right-Skewed Distribution</strong>），尾部向右延伸</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">左偏分佈</strong>（<strong
+                                style="color: red;">Left-Skewed Distribution</strong>），尾部向左延伸</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">雙峰分佈</strong>（<strong
+                                style="color: red;">Bimodal Distribution</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">偏態</strong>（<strong
+                            style="color: red;">Skewness</strong>）是衡量數據分佈<strong
+                            style="background-color: #ffff0030;">不對稱程度</strong>的指標。
+                        <ul>
+                            <li><strong style="color: blue;">偏態係數 = 0</strong>：表示分佈大致對稱（如<strong
+                                    style="color: blue;">常態分佈</strong>）。</li>
+                            <li><strong style="color: blue;">偏態係數 > 0</strong>：表示分佈為<strong
+                                    style="background-color: #ffff0030;">右偏</strong>（或稱正偏），數據的<strong
+                                    style="background-color: #ffff0030;">尾部向右側</strong>（數值較大的一側）延伸較長，大部分數據集中在左側。在右偏分佈中，通常
+                                <strong style="color: blue;">平均數</strong> > <strong style="color: blue;">中位數</strong> >
+                                <strong style="color: blue;">眾數</strong>。
+                            </li>
+                            <li><strong style="color: blue;">偏態係數 < 0</strong>：表示分佈為<strong
+                                            style="background-color: #ffff0030;">左偏</strong>（或稱負偏），數據的<strong
+                                            style="background-color: #ffff0030;">尾部向左側</strong>（數值較小的一側）延伸較長，大部分數據集中在右側。在左偏分佈中，通常
+                                        <strong style="color: blue;">平均數</strong>
+                                        < <strong style="color: blue;">中位數</strong>
+                                < <strong style="color: blue;">眾數</strong>。
+                            </li>
+                        </ul>
+                        因此，正的<strong style="color: blue;">偏態係數</strong>對應<strong style="color: blue;">右偏分佈</strong>。
+                    </div>
+                    <img src="../image/Skewness Coefficient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="6" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">箱型圖</strong>（<strong style="color: red;">Box
+                        Plot</strong>，或稱盒鬚圖）主要用於呈現數據的哪些統計資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>和<strong
+                                style="color: blue;">標準差</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong>、<strong
+                                style="color: blue;">四分位數</strong>（<strong style="color: purple;">Q1</strong>, <strong
+                                style="color: purple;">Q3</strong>）、<strong
+                                style="color: blue;">全距</strong>（或特定範圍內的極值）以及可能的<strong
+                                style="color: blue;">異常值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">每個數值的具體頻率</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩個變數之間的<strong style="color: blue;">線性相關性</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">箱型圖</strong>是一種有效呈現數據分佈摘要的視覺化圖表。它主要展示了<strong
+                            style="background-color: #ffff0030;">五個關鍵的數值摘要</strong>（<strong
+                            style="color: red;">Five-Number Summary</strong>）以及異常值：
+                        <ul>
+                            <li><strong style="color: blue;">最小值</strong>（<strong
+                                    style="color: red;">Minimum</strong>）：通常是數據的下邊緣（不含異常值）。</li>
+                            <li><strong style="color: blue;">第一四分位數</strong>（<strong
+                                    style="color: purple;">Q1</strong>）：第 25 <strong
+                                    style="color: blue;">百分位數</strong>，盒子的下邊緣。</li>
+                            <li><strong style="color: blue;">中位數</strong>（<strong style="color: red;">Median</strong>,
+                                <strong style="color: purple;">Q2</strong>）：第 50 <strong
+                                    style="color: blue;">百分位數</strong>，盒子中間的線。
+                            </li>
+                            <li><strong style="color: blue;">第三四分位數</strong>（<strong
+                                    style="color: purple;">Q3</strong>）：第 75 <strong
+                                    style="color: blue;">百分位數</strong>，盒子的上邊緣。</li>
+                            <li><strong style="color: blue;">最大值</strong>（<strong
+                                    style="color: red;">Maximum</strong>）：通常是數據的上邊緣（不含異常值）。</li>
+                        </ul>
+                        盒子本身代表了中間 50% 的數據範圍（即<strong style="color: blue;">四分位距</strong> <strong
+                            style="color: purple;">IQR</strong> = <strong style="color: purple;">Q3</strong> - <strong
+                            style="color: purple;">Q1</strong>）。從盒子延伸出去的線（鬚 <strong
+                            style="color: red;">Whisker</strong>）通常表示數據的主要範圍。超出鬚線範圍的點通常被標記為可能的<strong
+                            style="background-color: #ffff0030;">異常值</strong>。<strong
+                            style="color: blue;">箱型圖</strong>可以直觀地展示數據的<strong
+                            style="background-color: #ffff0030;">中心位置、離散程度、對稱性</strong>和是否存在異常值。
+                    </div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="7" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">皮爾森相關係數</strong>（<strong
+                        style="color: red;">Pearson Correlation Coefficient</strong>）主要用於衡量哪種類型變數之間的關係強度與方向？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個<strong style="color: blue;">名目類別變數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">兩個<strong style="color: blue;">次序類別變數</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩個<strong style="color: blue;">連續數值變數</strong>（<strong
+                                style="color: blue;">等距</strong>或<strong style="color: blue;">等比尺度</strong>）之間的<strong
+                                style="background-color: #ffff0030;">線性關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">一個<strong style="color: blue;">類別變數</strong>和一個<strong
+                                style="color: blue;">數值變數</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">皮爾森相關係數</strong>（常用符號 r）是衡量兩個<strong
+                            style="color: blue;">連續變數</strong>之間<strong
+                            style="background-color: #ffff0030;">線性</strong>關係強度和方向的最常用指標。其值介於 <strong
+                            style="background-color: #ffff0030;">-1 和 +1</strong> 之間：
+                        <ul>
+                            <li>+1：表示完全正線性相關。</li>
+                            <li>-1：表示完全負線性相關。</li>
+                            <li>0：表示沒有線性相關。</li>
+                        </ul>
+                        相關係數的絕對值越大，表示線性關係越強。需要注意的是，<strong style="color: blue;">皮爾森相關係數</strong>只能衡量<strong
+                            style="background-color: #ffff0030;">線性關係</strong>，無法捕捉非線性關係；且相關性不等於因果關係。對於類別變數間的關聯（A,
+                        B），通常使用<strong style="color: blue;">卡方檢定</strong>或<strong
+                            style="color: blue;">列聯表分析</strong>。對於一個類別和一個數值變數（D），可以使用點二系列相關或<strong
+                            style="color: blue;">變異數分析</strong>（<strong style="color: purple;">ANOVA</strong>）。
+                    </div>
+                    <img src="../image/Understanding_The_Pearson_Correlation_Coefficient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">四分位距</strong>（<strong
+                        style="color: red;">Interquartile Range</strong>, <strong
+                        style="color: purple;">IQR</strong>）是如何計算的？它主要用於衡量什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">最大值減去最小值；衡量數據的<strong style="color: blue;">全距</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">第三四分位數</strong>（<strong
+                                style="color: purple;">Q3</strong>）減去<strong
+                                style="color: blue;">第一四分位數</strong>（<strong
+                                style="color: purple;">Q1</strong>）；衡量數據<strong style="background-color: #ffff0030;">中間
+                                50% 的離散程度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>加減一個<strong
+                                style="color: blue;">標準差</strong>；衡量數據約 68% 的範圍</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據的總和除以個數；衡量數據的<strong style="color: blue;">平均值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">四分位距</strong>（<strong
+                            style="color: purple;">IQR</strong>）是衡量數據<strong
+                            style="color: blue;">離散程度</strong>的另一個常用指標，特別是它對<strong
+                            style="color: blue;">異常值不敏感</strong>（<strong
+                            style="color: blue;">穩健性</strong>）。其計算方法是<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">第三四分位數</strong>（<strong
+                                style="color: purple;">Q3</strong>，第 75 <strong
+                                style="color: blue;">百分位數</strong>）減去<strong
+                                style="color: blue;">第一四分位數</strong>（<strong style="color: purple;">Q1</strong>，第 25
+                            <strong style="color: blue;">百分位數</strong>）</strong>。<strong
+                            style="color: purple;">IQR</strong> 代表了數據集<strong style="background-color: #ffff0030;">中間
+                            50% 的數值所散佈的範圍</strong>。<strong style="color: purple;">IQR</strong>
+                        越大，表示數據中間部分的變異程度越大；<strong style="color: purple;">IQR</strong> 越小，表示數據中間部分越集中。<strong
+                            style="color: blue;">全距</strong>（<strong
+                            style="color: red;">Range</strong>）（A）是最大值減最小值，易受<strong
+                            style="color: blue;">極端值</strong>影響。選項 C 描述的是<strong
+                            style="color: blue;">常態分佈</strong>下的經驗法則。選項 D 是<strong style="color: blue;">平均數</strong>的定義。
+                    </div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">直方圖</strong>（<strong
+                        style="color: red;">Histogram</strong>）與<strong style="color: blue;">長條圖</strong>（<strong
+                        style="color: red;">Bar Chart</strong>）的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong>用於顯示<strong
+                                style="color: blue;">類別數據</strong>，<strong style="color: blue;">長條圖</strong>用於顯示<strong
+                                style="color: blue;">數值數據</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong>用於顯示<strong
+                                style="background-color: #ffff0030;">連續數值數據的分佈</strong>（將數據分組），長條之間通常<strong
+                                style="background-color: #ffff0030;">沒有間隙</strong>；<strong
+                                style="color: blue;">長條圖</strong>用於比較<strong
+                                style="background-color: #ffff0030;">不同類別的數量或頻率</strong>，長條之間通常<strong
+                                style="background-color: #ffff0030;">有間隙</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong>只能顯示百分比，<strong
+                                style="color: blue;">長條圖</strong>只能顯示絕對數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">直方圖</strong>的長條寬度必須相等，<strong
+                                style="color: blue;">長條圖</strong>的寬度可以不同</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">雖然兩者都使用長條來表示數據，但用途和繪製方式不同：
+                        <ul>
+                            <li><strong style="color: blue;">直方圖</strong>：用於視覺化<strong
+                                    style="background-color: #ffff0030;">連續數值型變數</strong>的分佈。它將數值範圍劃分成若干個連續的區間（稱為
+                                <strong style="color: red;">bins</strong>
+                                或組距），然後計算落入每個區間的數據點數量（頻數或頻率），並用長條的高度表示。由於區間是連續的，長條之間通常<strong
+                                    style="background-color: #ffff0030;">沒有間隙</strong>（除非某區間頻數為零）。
+                            </li>
+                            <li><strong style="color: blue;">長條圖</strong>：用於比較<strong
+                                    style="background-color: #ffff0030;">離散類別型變數</strong>的數量、頻率或某個數值指標。每個長條代表一個獨立的類別，長條的高度表示該類別對應的數值。由於類別是離散的，長條之間通常<strong
+                                    style="background-color: #ffff0030;">有間隙</strong>以示區分。</li>
+                        </ul>
+                        選項 B 正確描述了這個核心區別。
+                    </div>
+                    <img src="../image/Bar-chart-versus-histogram-chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">對於呈現<strong style="color: blue;">左偏</strong>（<strong
+                        style="color: red;">Left-Skewed</strong>）分佈的數據，<strong style="color: blue;">集中趨勢</strong>的典型關係是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>）&lt; <strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）&lt; <strong
+                                style="color: blue;">眾數</strong>（<strong style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>）&gt; <strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）&gt; <strong
+                                style="color: blue;">眾數</strong>（<strong style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>）= <strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）= <strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>（<strong
+                                style="color: red;">Mean</strong>）= <strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>），但與<strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）無關</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">分佈的偏斜度會影響三種<strong style="color: blue;">集中趨勢</strong>量數的相對位置：
+                        <ul>
+                            <li><strong style="color: blue;">對稱分佈</strong>：<strong style="color: blue;">平均數</strong> ≈
+                                <strong style="color: blue;">中位數</strong> ≈ <strong style="color: blue;">眾數</strong>。
+                            </li>
+                            <li><strong style="color: blue;">右偏分佈</strong>（正偏，尾部向右）：少數較大的<strong
+                                    style="color: blue;">極端值</strong>會將<strong style="color: blue;">平均數</strong>向右拉，因此
+                                <strong style="color: blue;">平均數</strong> &gt; <strong style="color: blue;">中位數</strong>
+                                &gt; <strong style="color: blue;">眾數</strong>。
+                            </li>
+                            <li><strong style="color: blue;">左偏分佈</strong>（負偏，尾部向左）：少數較小的<strong
+                                    style="color: blue;">極端值</strong>會將<strong style="color: blue;">平均數</strong>向左拉，因此
+                                <strong style="background-color: #ffff0030;"><strong style="color: blue;">平均數</strong>
+                                    &lt; <strong style="color: blue;">中位數</strong> &lt; <strong
+                                        style="color: blue;">眾數</strong></strong>。
+                            </li>
+                        </ul>
+                        選項 A 正確描述了左偏分佈的典型情況。
+                    </div>
+                    <img src="../image/skewness-left-right-positive-negative.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">變異係數</strong>（<strong
+                        style="color: red;">Coefficient of Variation</strong>, <strong
+                        style="color: purple;">CV</strong>）的計算方式及其主要用途是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">標準差</strong>除以樣本數；用於推斷<strong
+                                style="color: blue;">母體</strong>標準差</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">標準差</strong>除以<strong
+                                style="color: blue;">平均數</strong>（通常乘以 100%）；用於<strong
+                                style="background-color: #ffff0030;">比較不同單位或不同平均數的數據集的相對離散程度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>除以<strong
+                                style="color: blue;">標準差</strong>；用於衡量數據的集中程度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">最大值減最小值再除以<strong style="color: blue;">平均數</strong>；用於<strong
+                                style="color: blue;">標準化</strong>數據範圍</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準差</strong>是一個<strong
+                            style="color: blue;">絕對的離散程度</strong>量數，其單位與原始數據相同。當需要比較兩組單位不同（如身高 vs. 體重）或<strong
+                            style="color: blue;">平均數</strong>差異很大（如成人身高 vs. 嬰兒身高）的數據的<strong
+                            style="background-color: #ffff0030;">相對變異程度</strong>時，直接比較<strong
+                            style="color: blue;">標準差</strong>可能沒有意義。<strong style="color: blue;">變異係數</strong>（<strong
+                            style="color: purple;">CV</strong>）透過將<strong style="color: blue;">標準差</strong>相對於<strong
+                            style="color: blue;">平均數</strong>進行<strong style="color: blue;">標準化</strong>（CV = <strong
+                            style="color: blue;">標準差</strong> / |<strong style="color: blue;">平均數</strong>|），得到一個<strong
+                            style="background-color: #ffff0030;">無單位的相對離散程度指標</strong>。<strong
+                            style="color: purple;">CV</strong> 越大，表示數據的相對變異程度越大。例如，可以用 <strong
+                            style="color: purple;">CV</strong> 來比較股票 A 的價格波動相對於其<strong
+                            style="color: blue;">平均</strong>價格的程度，與股票 B 的價格波動相對於其<strong
+                            style="color: blue;">平均</strong>價格的程度。</div>
+                    <img src="../image/CV_coefficient of variation.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">Z 分數</strong>（<strong
+                        style="color: red;">Z-score</strong>）的計算公式是 (X - μ) / σ，其中 X 是原始分數，μ 是<strong
+                        style="color: blue;">平均數</strong>，σ 是<strong style="color: blue;">標準差</strong>。<strong
+                        style="color: blue;">Z 分數</strong>代表什麼意義？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">原始分數在數據集中的排名</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">原始分數距離<strong style="color: blue;">平均數</strong>有<strong
+                                style="background-color: #ffff0030;">多少個標準差</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">原始分數相對於最大值的比例</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">原始分數出現的頻率</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Z 分數</strong>（也稱為<strong
+                            style="color: blue;">標準分數</strong> <strong style="color: red;">Standard
+                            Score</strong>）是一種將原始分數轉換為以<strong style="color: blue;">標準差</strong>為單位表示其<strong
+                            style="color: blue;">相對位置</strong>的方法。<strong style="color: blue;">Z
+                            分數</strong>的數值表示該原始分數距離其所在數據集的<strong style="color: blue;">平均數</strong>有<strong
+                            style="background-color: #ffff0030;">多少個標準差</strong>。<strong
+                            style="color: purple;">Z</strong> > 0 表示分數高於<strong
+                            style="color: blue;">平均數</strong>，<strong style="color: purple;">Z</strong>
+                        < 0 表示分數低於<strong style="color: blue;">平均數</strong>，<strong style="color: purple;">Z</strong> =
+                            0 表示分數等於<strong style="color: blue;">平均數</strong>。<strong style="color: blue;">Z
+                                分數</strong>的絕對值越大，表示該分數距離<strong style="color: blue;">平均數</strong>越遠。<strong
+                                style="color: blue;">Z 分數</strong>常用於：(1) 比較來自不同分佈的分數的相對位置；(2) 偵測<strong
+                                style="color: blue;">異常值</strong>（通常 |Z| > 3 被視為異常）。
+                    </div>
+                    <img src="../image/Z-score.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">峰度</strong>（<strong
+                        style="color: red;">Kurtosis</strong>）是衡量數據分佈形態的哪個特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">分佈的<strong style="color: blue;">不對稱性</strong>（<strong
+                                style="color: red;">Asymmetry</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">分佈峰部的<strong style="background-color: #ffff0030;">尖峭程度</strong>與<strong
+                                style="background-color: #ffff0030;">尾部的厚重程度</strong>（<strong
+                                style="color: red;">Peakedness and Tail Heaviness</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分佈的<strong style="color: blue;">中心位置</strong>（<strong
+                                style="color: red;">Central Location</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">分佈的<strong style="color: blue;">分散程度</strong>（<strong
+                                style="color: red;">Dispersion</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">峰度</strong>是描述數據分佈形狀的另一個指標（相對於<strong
+                            style="color: blue;">常態分佈</strong>）。它主要衡量分佈的<strong
+                            style="background-color: #ffff0030;">峰部</strong>是比<strong
+                            style="color: blue;">常態分佈</strong>更尖峭還是更平坦，以及<strong
+                            style="background-color: #ffff0030;">尾部</strong>是比<strong
+                            style="color: blue;">常態分佈</strong>更厚重（包含更多<strong style="color: blue;">極端值</strong>）還是更輕薄。
+                        <ul>
+                            <li><strong style="color: blue;">高狹峰</strong>（<strong
+                                    style="color: red;">Leptokurtic</strong>）：峰度值 > 0（相對於常態的超額峰度），峰部更尖，尾部更厚。</li>
+                            <li><strong style="color: blue;">常態峰</strong>（<strong
+                                    style="color: red;">Mesokurtic</strong>）：峰度值 ≈ 0，與<strong
+                                    style="color: blue;">常態分佈</strong>相似。</li>
+                            <li><strong style="color: blue;">低闊峰</strong>（<strong
+                                    style="color: red;">Platykurtic</strong>）：峰度值 < 0，峰部更平坦，尾部更輕薄，極端值較少。</li>
+                        </ul>
+                        <strong style="color: blue;">偏態</strong>衡量的是對稱性（A），<strong
+                            style="color: blue;">集中趨勢</strong>量數衡量中心位置（C），<strong
+                            style="color: blue;">離散趨勢</strong>量數衡量分散程度（D）。
+                    </div>
+                    <img src="../image/Kurtosis_eng.png" class="responsive-img">
+                    <img src="../image/Kurtosis.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">散佈圖</strong>（<strong
+                        style="color: red;">Scatter Plot</strong>）最適合用於視覺化探索哪種類型數據之間的關係？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單個<strong style="color: blue;">類別變數</strong>的頻率分佈</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">兩個連續數值變數</strong>之間的關係
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">單個數值變數隨時間的變化趨勢</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">多個<strong style="color: blue;">類別變數</strong>構成的比例</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">散佈圖</strong>使用二維笛卡爾座標系，將每個數據點表示為一個點，其中一個<strong
+                            style="color: blue;">數值變數</strong>的值對應 X 軸座標，另一個<strong
+                            style="color: blue;">數值變數</strong>的值對應 Y 軸座標。透過觀察點的分佈模式，可以直觀地判斷<strong
+                            style="background-color: #ffff0030;">兩個數值變數之間是否存在某種關係</strong>（如線性正相關、負相關、非線性關係或無關係），以及關係的強度和是否存在異常點。選項
+                        A 常用<strong style="color: blue;">長條圖</strong>或<strong style="color: blue;">圓餅圖</strong>。選項 C
+                        常用折線圖。選項 D 常用堆疊長條圖或<strong style="color: blue;">圓餅圖</strong>。</div>
+                    <img src="../image/Scatter Plot.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">若兩個變數的<strong style="color: blue;">皮爾森相關係數</strong>為
+                    -0.85，這表示兩者之間存在什麼樣的關係？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">強度較弱的正線性關係</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">強度很強的正線性關係</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">強度很強的負線性關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">幾乎沒有線性關係</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">皮爾森相關係數</strong> r 的值介於 -1 到 +1
+                        之間。符號表示關係的方向：<strong
+                            style="background-color: #ffff0030;">正號表示正相關</strong>（一個變數增加，另一個傾向於增加），<strong
+                            style="background-color: #ffff0030;">負號表示負相關</strong>（一個變數增加，另一個傾向於減少）。<strong
+                            style="background-color: #ffff0030;">絕對值 |r| 表示線性關係的強度</strong>：越接近 1，表示線性關係越強；越接近
+                        0，表示線性關係越弱。r = -0.85，<strong style="background-color: #ffff0030;">符號為負</strong>，表示負相關；<strong
+                            style="background-color: #ffff0030;">絕對值為 0.85</strong>，接近 1，表示線性關係<strong
+                            style="background-color: #ffff0030;">強度很強</strong>。因此，這表示兩個變數之間存在<strong
+                            style="background-color: #ffff0030;">強度很強的負線性關係</strong>。</div>
+                    <img src="../image/Understanding_The_Pearson_Correlation_Coefficient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">製作<strong style="color: blue;">資料摘要報告</strong>時，針對不同的受眾（如技術團隊 vs.
+                    管理階層），應該注意調整報告的哪個方面？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">原始數據的準確性</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">內容的技術深度</strong>、<strong
+                                style="background-color: #ffff0030;">呈現方式</strong>（如圖表 vs. 詳細統計量）與<strong
+                                style="background-color: #ffff0030;">關鍵訊息的強調</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據收集的時間點</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用的統計軟體版本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        有效的溝通需要考慮受眾的背景和需求。向技術團隊報告時，可以包含更詳細的統計量、模型細節和技術挑戰。但向管理階層或非技術背景的<strong
+                            style="color: blue;">利害關係人</strong>報告時，應避免過多的技術術語，<strong
+                            style="background-color: #ffff0030;">著重於呈現關鍵的發現、業務洞察和結論</strong>，並多使用<strong
+                            style="background-color: #ffff0030;">易於理解的視覺化圖表</strong>（如<strong
+                            style="color: blue;">長條圖</strong>、折線圖、儀表板）。報告的重點、詳細程度和呈現方式都需要根據受眾進行調整，以確保資訊能夠被有效接收和理解。數據準確性（A）對所有受眾都很重要。收集時間（C）和軟體版本（D）通常不是報告呈現的主要調整點。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">「請問您的教育程度：(A) 國小 (B) 國中 (C) 高中 (D) 大學 (E) 研究所及以上」，這個問題收集到的數據屬於哪種<strong
+                        style="color: blue;">測量尺度</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">名目尺度</strong>（<strong
+                                style="color: red;">Nominal</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">次序尺度</strong>（<strong
+                                style="color: red;">Ordinal</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">等距尺度</strong>（<strong
+                                style="color: red;">Interval</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">等比尺度</strong>（<strong
+                                style="color: red;">Ratio</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">教育程度的選項之間存在<strong
+                            style="background-color: #ffff0030;">明確的順序關係</strong>（研究所 > 大學 > 高中 > ...），因此它不僅僅是<strong
+                            style="color: blue;">名目尺度</strong>。然而，我們不能說「大學」和「高中」之間的差距與「國中」和「國小」之間的差距是相等的（<strong
+                            style="background-color: #ffff0030;">差值無意義</strong>），也不存在絕對的零點。因此，這種數據屬於<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">次序尺度</strong></strong>。
+                    </div>
+                    <img src="../image/Nominal Ordinal Interval Ratio.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">計算一組數據 {2, 3, 3, 4, 5, 8, 10} 的<strong
+                        style="color: blue;">中位數</strong>（<strong style="color: red;">Median</strong>）是多少？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">3</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">4</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">5</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">5.71 (<strong style="color: blue;">平均數</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">計算<strong style="color: blue;">中位數</strong>的步驟：
+                        <ol>
+                            <li>將數據<strong style="background-color: #ffff0030;">從小到大排序</strong>：{2, 3, 3, 4, 5, 8, 10}
+                            </li>
+                            <li>找出位於<strong style="background-color: #ffff0030;">中間位置</strong>的數值。這組數據有 7
+                                個數值（奇數個），中間位置是第 (7+1)/2 = 4 個數值。</li>
+                            <li>第 4 個數值是 4。</li>
+                        </ol>
+                        因此，<strong style="color: blue;">中位數</strong>是 4。<strong style="color: blue;">眾數</strong>是
+                        3（出現次數最多）。<strong style="color: blue;">平均數</strong>是 (2+3+3+4+5+8+10)/7 ≈ 5.71。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">變異數</strong>（<strong
+                        style="color: red;">Variance</strong>）的計算涉及到每個數據點與<strong
+                        style="color: blue;">平均數</strong>差異的平方和。如果所有數據點都完全相同，則<strong
+                        style="color: blue;">變異數</strong>為多少？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">0</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">1</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">平均數</strong>的值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">無法確定</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">變異數</strong>衡量數據的<strong
+                            style="color: blue;">離散程度</strong>。如果所有數據點都完全相同，那麼每個數據點都等於<strong
+                            style="color: blue;">平均數</strong>。因此，每個數據點與<strong style="color: blue;">平均數</strong>的差異都是
+                        0。這些差異的平方和自然也是 0，所以<strong style="color: blue;">變異數</strong>為 <strong
+                            style="background-color: #ffff0030;">0</strong>。這表示數據沒有任何變異或分散。</div>
+                    <img src="../image/variance-formula.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">某次考試中，小明的 <strong style="color: blue;">Z 分數</strong>為 1.5，小華的 <strong
+                        style="color: blue;">Z 分數</strong>為 -0.5。這表示？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">小明的原始分數比小華低</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">小明的原始分數<strong
+                                style="background-color: #ffff0030;">高於平均分數</strong>，小華的原始分數<strong
+                                style="background-color: #ffff0030;">低於平均分數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩人的原始分數都低於平均分數</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">無法從 <strong style="color: blue;">Z 分數</strong>判斷與<strong
+                                style="color: blue;">平均數</strong>的相對關係</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Z 分數</strong>表示一個分數距離<strong
+                            style="color: blue;">平均數</strong>有多少個<strong style="color: blue;">標準差</strong>。<strong
+                            style="background-color: #ffff0030;">正的 Z 分數</strong>表示該分數高於<strong
+                            style="color: blue;">平均數</strong>，<strong style="background-color: #ffff0030;">負的 Z
+                            分數</strong>表示該分數低於<strong style="color: blue;">平均數</strong>。小明的 <strong
+                            style="color: blue;">Z 分數</strong>為 1.5（正數），表示他的分數高於<strong
+                            style="color: blue;">平均數</strong> 1.5 個<strong style="color: blue;">標準差</strong>。小華的 <strong
+                            style="color: blue;">Z 分數</strong>為 -0.5（負數），表示他的分數低於<strong
+                            style="color: blue;">平均數</strong> 0.5 個<strong
+                            style="color: blue;">標準差</strong>。因此，小明的表現相對較好，高於平均；小華的表現相對較差，低於平均。</div>
+                    <img src="../image/Z-score.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">峰度係數</strong>（<strong
+                        style="color: red;">Kurtosis Coefficient</strong>）可以用來比較數據分佈尾部的厚重程度。哪個分佈的尾部<strong
+                        style="font-weight: normal;">最厚重</strong>（包含更多<strong style="color: blue;">極端值</strong>）？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">高狹峰</strong>（<strong
+                                style="color: red;">Leptokurtic</strong>）分佈</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">常態峰</strong>（<strong
+                                style="color: red;">Mesokurtic</strong>）分佈</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">低闊峰</strong>（<strong
+                                style="color: red;">Platykurtic</strong>）分佈</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">均勻分佈（<strong style="color: red;">Uniform Distribution</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">如前所述，<strong style="color: blue;">峰度</strong>衡量峰部尖峭度和尾部厚重度。<strong
+                            style="color: blue;">高狹峰</strong>（<strong
+                            style="color: red;">Leptokurtic</strong>）分佈的特點是峰部比<strong
+                            style="color: blue;">常態分佈</strong>更尖，同時<strong
+                            style="background-color: #ffff0030;">尾部比常態分佈更厚</strong>，這意味著出現<strong
+                            style="color: blue;">極端值</strong>的機率相對較高。<strong style="color: blue;">常態峰</strong>（<strong
+                            style="color: red;">Mesokurtic</strong>）是基準。<strong
+                            style="color: blue;">低闊峰</strong>（<strong
+                            style="color: red;">Platykurtic</strong>）則是峰部較平坦，尾部較輕薄，<strong
+                            style="color: blue;">極端值</strong>較少。因此，<strong style="color: blue;">高狹峰</strong>分佈的尾部最厚重。
+                    </div>
+                    <img src="../image/Kurtosis_eng.png" class="responsive-img">
+                    <img src="../image/Kurtosis.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">想要視覺化比較不同產品線在過去一年中每個月的銷售額變化趨勢，最適合使用哪種圖表？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圓餅圖</strong>（<strong
+                                style="color: red;">Pie Chart</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">散佈圖</strong>（<strong
+                                style="color: red;">Scatter Plot</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">多線折線圖</strong>（<strong
+                                style="color: red;">Multiple Line Chart</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">箱型圖</strong>（<strong
+                                style="color: red;">Box Plot</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">折線圖特別適合用於展示<strong
+                            style="background-color: #ffff0030;">數據隨時間變化的趨勢</strong>。當需要比較多個類別（如不同產品線）在同一時間維度上的趨勢時，可以使用<strong
+                            style="color: blue;">多線折線圖</strong>，每一條線代表一個產品線，X 軸表示時間（月份），Y
+                        軸表示銷售額。這樣可以清晰地比較各產品線的銷售表現及其隨時間的波動情況。<strong
+                            style="color: blue;">圓餅圖</strong>（A）適用於顯示各部分佔整體的比例。<strong
+                            style="color: blue;">散佈圖</strong>（B）適用於觀察兩個數值變數的關係。<strong
+                            style="color: blue;">箱型圖</strong>（D）適用於展示數據分佈的摘要。</div>
+                    <img src="../image/Multiple Line Chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果兩個變數的<strong style="color: blue;">相關係數</strong>接近於 0，這表示？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個變數之間必定沒有任何關係</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">兩個變數之間<strong
+                                style="background-color: #ffff0030;">沒有線性關係</strong>，但<strong
+                                style="background-color: #ffff0030;">可能存在非線性關係</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩個變數之間存在很強的負相關</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩個變數之間存在很強的正相關</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">皮爾森相關係數</strong>衡量的是<strong
+                            style="background-color: #ffff0030;">線性</strong>關係的強度和方向。<strong
+                            style="color: blue;">相關係數</strong>接近 0 僅表示兩個變數之間<strong
+                            style="background-color: #ffff0030;">缺乏線性關係</strong>。然而，它們之間可能存在其他類型的關係，例如二次方關係（呈現 U 型或倒 U
+                        型）、週期性關係或其他複雜的非線性模式。因此，不能斷定它們之間沒有任何關係。觀察<strong
+                            style="color: blue;">散佈圖</strong>是判斷是否存在非線性關係的更好方法。</div>
+                    <img src="../image/Understanding_The_Pearson_Correlation_Coefficient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在製作<strong style="color: blue;">資料摘要報告</strong>時，設計的<strong
+                        style="font-weight: normal;">首要</strong>原則應該是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">盡可能包含最多的圖表和指標</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">清晰地呈現關鍵績效指標</strong>（<strong
+                                style="color: purple;">KPIs</strong>）和<strong
+                                style="background-color: #ffff0030;">最重要的資訊</strong>，<strong
+                                style="background-color: #ffff0030;">符合受眾的需求</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用最酷炫、最複雜的視覺化效果</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只顯示原始數據表格</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">儀表板的目的是將關鍵資訊和指標以易於理解和監控的方式呈現給使用者（通常是決策者）。有效的儀表板設計應遵循以下原則：(1)
+                        <strong style="background-color: #ffff0030;">明確目標受眾和目的</strong>：了解誰會使用儀表板以及他們需要回答什麼問題。(2)
+                        <strong style="background-color: #ffff0030;">聚焦關鍵指標</strong>：突出顯示最重要的 <strong
+                            style="color: purple;">KPI</strong> 和核心洞察，避免資訊過載。(3) <strong
+                            style="background-color: #ffff0030;">選擇合適的視覺化</strong>：根據數據類型和要傳達的訊息選擇最清晰的圖表。(4) <strong
+                            style="background-color: #ffff0030;">保持簡潔和直觀</strong>：佈局清晰，易於瀏覽和理解。(5) <strong
+                            style="background-color: #ffff0030;">提供上下文</strong>：例如與目標值或歷史數據進行比較。選項 B 涵蓋了最重要的原則。選項 A 和 C
+                        可能導致混亂和失焦。選項 D 則失去了儀表板的摘要和視覺化價值。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">下列何者屬於<strong style="color: blue;">類別型</strong>（<strong
+                        style="color: red;">Categorical</strong>）數據？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">顧客年齡</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">顧客的<strong style="background-color: #ffff0030;">居住城市</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">顧客的年收入</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">顧客上次購買距今天數</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">類別型數據</strong>是將觀測值歸入不同組別或類別的數據。顧客的居住城市（如台北、台中、高雄）是將顧客歸入不同地理類別，屬於<strong
+                            style="color: blue;">類別型數據</strong>（更具體地說是<strong
+                            style="color: blue;">名目尺度</strong>）。顧客年齡（A）、年收入（C）和上次購買距今天數（D）都是可以進行數學運算的數值，屬於<strong
+                            style="color: blue;">數值型</strong>（<strong style="color: red;">Numerical</strong>）或稱<strong
+                            style="color: blue;">定量</strong>（<strong
+                            style="color: red;">Quantitative</strong>）數據（通常是<strong style="color: blue;">等比尺度</strong>）。
+                    </div>
+                    <img src="../image/Nominal Ordinal Interval Ratio.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當數據呈現高度<strong style="color: blue;">右偏</strong>（<strong
+                        style="color: red;">Positively Skewed</strong>）時，哪個<strong
+                        style="color: blue;">集中趨勢</strong>量數通常會<strong style="font-weight: normal;">小於</strong><strong
+                        style="color: blue;">平均數</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）和<strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅<strong style="color: blue;">中位數</strong>（<strong
+                                style="color: red;">Median</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅<strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">沒有量數會小於<strong style="color: blue;">平均數</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在高度<strong style="color: blue;">右偏</strong>的分佈中，存在少數數值很大的<strong
+                            style="color: blue;">極端值</strong>，這些<strong style="color: blue;">極端值</strong>會將<strong
+                            style="color: blue;">平均數</strong>往右邊（數值較大方向）拉。而<strong
+                            style="color: blue;">中位數</strong>只受數據位置影響，<strong
+                            style="color: blue;">眾數</strong>是出現次數最多的值（通常在數據密集的區域），它們受<strong
+                            style="color: blue;">極端值</strong>的影響較小。因此，在典型的<strong
+                            style="color: blue;">右偏</strong>分佈中，量數的關係是：<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">平均數</strong> > <strong
+                                style="color: blue;">中位數</strong> > <strong
+                                style="color: blue;">眾數</strong></strong>。所以，<strong
+                            style="color: blue;">中位數</strong>和<strong style="color: blue;">眾數</strong>通常都會小於<strong
+                            style="color: blue;">平均數</strong>。</div>
+                    <img src="../image/skewness-left-right-positive-negative.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">全距</strong>（<strong
+                        style="color: red;">Range</strong>）作為<strong style="color: blue;">離散趨勢</strong>量數的主要缺點是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">計算過於複雜</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">極易受到數據中極端值</strong>（最大值和最小值）的影響，<strong
+                                style="background-color: #ffff0030;">不能反映中間數據的分布情況</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只適用於<strong style="color: blue;">類別型數據</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">其單位與原始數據不同</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">全距</strong>的計算非常簡單（最大值 - 最小值）（A
+                        錯誤）。然而，它只考慮了數據的兩個端點值，<strong
+                            style="background-color: #ffff0030;">完全忽略了數據集中間部分的分布情況</strong>。如果數據中存在一個或兩個<strong
+                            style="color: blue;">極端值</strong>，<strong style="color: blue;">全距</strong>就會被這些<strong
+                            style="color: blue;">極端值</strong>決定，無法真實反映數據整體的離散程度，因此它是一個非常<strong
+                            style="background-color: #ffff0030;">不穩健</strong>（<strong
+                            style="color: red;">Non-robust</strong>）的<strong style="color: blue;">離散趨勢</strong>量數（B
+                        正確）。<strong style="color: blue;">全距</strong>適用於<strong style="color: blue;">數值型數據</strong>（C
+                        錯誤），其單位與原始數據相同（D 錯誤）。</div>
+                    <img src="../image/Box Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">四分位數</strong>（<strong
+                        style="color: red;">Quartiles</strong>）將排序後的數據分成幾個相等的部分？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">兩個</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">三個</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">四個</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">五個</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">四分位數</strong>是將排序後的數據集分成<strong
+                            style="background-color: #ffff0030;">四個包含相等數量</strong>（約 25%）數據點的部分的分割點。這三個分割點分別是：
+                        <ul>
+                            <li><strong style="color: blue;">第一四分位數</strong> (<strong
+                                    style="color: purple;">Q1</strong>)：第 25 <strong style="color: blue;">百分位數</strong>。
+                            </li>
+                            <li><strong style="color: blue;">第二四分位數</strong> (<strong
+                                    style="color: purple;">Q2</strong>)：第 50 <strong
+                                    style="color: blue;">百分位數</strong>，也就是<strong style="color: blue;">中位數</strong>。
+                            </li>
+                            <li><strong style="color: blue;">第三四分位數</strong> (<strong
+                                    style="color: purple;">Q3</strong>)：第 75 <strong style="color: blue;">百分位數</strong>。
+                            </li>
+                        </ul>
+                        因此，<strong style="color: purple;">Q1</strong>, <strong style="color: purple;">Q2</strong>,
+                        <strong style="color: purple;">Q3</strong> 這三個值將數據分成了四個相等的部分。
+                        <img src="../image/quartiles.jpg" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">常態分佈</strong>（<strong
+                        style="color: red;">Normal Distribution</strong>）曲線的形狀特徵是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">向右偏斜</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">向左偏斜</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">對稱的鐘形</strong>（<strong
+                                style="color: red;">Bell-shaped</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">U 形</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">常態分佈</strong>（也稱<strong
+                            style="color: blue;">高斯分佈</strong> <strong style="color: red;">Gaussian
+                            Distribution</strong>）是統計學中最重要的一種機率分佈。其機率密度函數曲線呈現<strong
+                            style="background-color: #ffff0030;">對稱的鐘形</strong>，峰值位於<strong
+                            style="color: blue;">平均數</strong>處。在<strong style="color: blue;">常態分佈</strong>中，<strong
+                            style="color: blue;">平均數</strong>、<strong style="color: blue;">中位數</strong>和<strong
+                            style="color: blue;">眾數</strong>三者相等。其<strong style="color: blue;">偏態</strong>係數為
+                        0，超額<strong style="color: blue;">峰度</strong>係數也為 0。許多自然和社會現象中的變數分佈都近似於<strong
+                            style="color: blue;">常態分佈</strong>。</div>
+                    <img src="../image/Standard-Normal-Distribution.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">圓餅圖</strong>（<strong style="color: red;">Pie
+                        Chart</strong>）最適合用來呈現哪種類型的數據資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單一數值變數隨時間的變化</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">一個<strong
+                                style="background-color: #ffff0030;">整體中各個組成部分所佔的百分比或比例</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">兩個數值變數之間的<strong style="color: blue;">相關性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數值數據的分佈情況</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圓餅圖</strong>將一個圓形（代表總體
+                        100%）分割成多個扇形，每個扇形的角度（或面積）代表其對應類別佔總體的<strong
+                            style="background-color: #ffff0030;">比例或百分比</strong>。它非常直觀地展示了<strong
+                            style="background-color: #ffff0030;">各部分相對於整體的構成情況</strong>。然而，當類別過多或各類別比例相近時，<strong
+                            style="color: blue;">圓餅圖</strong>可能難以準確比較各部分的大小，此時<strong
+                            style="color: blue;">長條圖</strong>可能是更好的選擇。選項 A 適用折線圖，選項 C 適用<strong
+                            style="color: blue;">散佈圖</strong>，選項 D 適用<strong style="color: blue;">直方圖</strong>或<strong
+                            style="color: blue;">箱型圖</strong>。</div>
+                    <img src="../image/pie-chart.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">熱力圖</strong>（<strong
+                        style="color: red;">Heatmap</strong>）在資料分析中常用於視覺化呈現什麼資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單一變數的分佈</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列</strong>數據的趨勢</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">矩陣數據中的數值大小</strong>，通常用<strong
+                                style="background-color: #ffff0030;">顏色深淺</strong>表示（例如，特徵之間的<strong
+                                style="color: blue;">相關係數矩陣</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">地理空間數據的分佈</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">熱力圖</strong>是一種將<strong
+                            style="background-color: #ffff0030;">矩陣數據視覺化</strong>的方法。它使用不同的顏色或顏色強度來表示矩陣中每個單元格的數值大小。顏色越深（或越暖色調）通常表示數值越大，反之則越小。<strong
+                            style="color: blue;">熱力圖</strong>常用於：(1) 視覺化<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">相關係數矩陣</strong></strong>：快速識別哪些變數之間存在強相關性。(2) 展示<strong
+                            style="color: blue;">混淆矩陣</strong>：清晰顯示分類模型的預測情況。(3) 比較不同類別在多個指標上的表現。(4) 基因表達數據分析等。選項 D
+                        地理空間數據通常用地圖視覺化呈現。</div>
+                    <img src="../image/Heatmap.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">互動式資料視覺化</strong>（<strong
+                        style="color: red;">Interactive Data Visualization</strong>）相比於靜態圖表的主要優勢是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">製作成本更低</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">允許使用者透過<strong
+                                style="background-color: #ffff0030;">操作</strong>（如<strong
+                                style="color: blue;">縮放、篩選、懸停提示</strong>）來<strong
+                                style="background-color: #ffff0030;">探索數據</strong>、發現更深層次的模式與細節</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">總是能在一張圖中顯示所有數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">不需要任何數據清理步驟</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">靜態圖表只能呈現固定的視圖，而<strong
+                            style="color: blue;">互動式視覺化</strong>（常見於網頁儀表板或 <strong style="color: purple;">BI</strong>
+                        工具）允許使用者與圖表進行互動。例如，使用者可以：(1) <strong style="background-color: #ffff0030;">縮放</strong>（<strong
+                            style="color: red;">Zooming</strong>）：放大感興趣的區域。(2) <strong
+                            style="background-color: #ffff0030;">篩選</strong>（<strong
+                            style="color: red;">Filtering</strong>）：只顯示特定條件下的數據。(3) <strong
+                            style="background-color: #ffff0030;">懸停</strong>（<strong
+                            style="color: red;">Hovering</strong>）：將滑鼠移到數據點上顯示詳細資訊。(4) <strong
+                            style="background-color: #ffff0030;">點擊</strong>（<strong
+                            style="color: red;">Clicking</strong>）：觸發<strong style="color: blue;">下鑽</strong>（<strong
+                            style="color: red;">Drill-down</strong>）或聯動其他圖表。這種<strong
+                            style="background-color: #ffff0030;">互動性</strong>使得使用者能夠更主動、更深入地<strong
+                            style="background-color: #ffff0030;">探索數據</strong>，發現靜態圖表可能忽略的細節和模式，從而獲得更豐富的洞察。製作成本（A）通常更高。選項
+                        C、D 顯然不正確。</div>
+                    <img src="../image/Interactive Data Visualization.gif" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">母體</strong>（<strong
+                        style="color: red;">Population</strong>）與<strong style="color: blue;">樣本</strong>（<strong
+                        style="color: red;">Sample</strong>）的關係是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">母體</strong>是從<strong
+                                style="color: blue;">樣本</strong>中抽取的一部分</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">樣本</strong>是從<strong
+                                style="color: blue;">母體</strong>中抽取出來、用於<strong
+                                style="background-color: #ffff0030;">研究和推斷母體特徵</strong>的<strong
+                                style="background-color: #ffff0030;">一部分</strong>個體或觀測值</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">母體</strong>和<strong
+                                style="color: blue;">樣本</strong>是完全相同的概念</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">樣本量總是需要大於<strong style="color: blue;">母體</strong>量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在統計學中，<strong
+                            style="background-color: #ffff0030;">母體</strong>是指研究者感興趣的<strong
+                            style="background-color: #ffff0030;">所有個體或觀測值的完整集合</strong>（例如，全台灣所有大學生的身高）。由於研究整個<strong
+                            style="color: blue;">母體</strong>往往不切實際（成本高、耗時長），研究者通常會從<strong
+                            style="color: blue;">母體</strong>中抽取一部分具有代表性的個體或觀測值，這個子集就稱為<strong
+                            style="background-color: #ffff0030;">樣本</strong>（例如，隨機抽取 1000 名台灣大學生的身高）。<strong
+                            style="color: blue;">敘述性統計</strong>描述的是<strong style="color: blue;">樣本</strong>的特徵，而<strong
+                            style="color: blue;">推論性統計</strong>則是利用<strong style="color: blue;">樣本</strong>的資訊來<strong
+                            style="background-color: #ffff0030;">推斷或估計母體的特徵</strong>（如<strong
+                            style="color: blue;">母體</strong>平均身高）。<strong style="color: blue;">樣本</strong>是<strong
+                            style="color: blue;">母體</strong>的一部分，樣本量通常遠小於<strong style="color: blue;">母體</strong>量。
+                    </div>
+                    <img src="../image/Population Sample.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">如果一組數據的<strong style="color: blue;">標準差</strong>為 0，這意味著什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據呈現<strong style="color: blue;">常態分佈</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據中存在<strong style="color: blue;">極端值</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">所有數據點的數值都完全相同</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據的<strong style="color: blue;">平均數</strong>為 0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">標準差</strong>衡量數據相對於<strong
+                            style="color: blue;">平均數</strong>的<strong style="color: blue;">離散程度</strong>。<strong
+                            style="color: blue;">標準差</strong>的計算涉及每個數據點與<strong
+                            style="color: blue;">平均數</strong>差異的平方和。只有當所有數據點都與<strong
+                            style="color: blue;">平均數</strong>完全相等時，這些差異才會全部為 0，導致<strong
+                            style="color: blue;">標準差</strong>為 0。因此，<strong style="color: blue;">標準差</strong>為 0
+                        意味著<strong style="background-color: #ffff0030;">數據沒有任何變異</strong>，所有觀測值都是同一個數值。這與數據是否呈<strong
+                            style="color: blue;">常態分佈</strong>（A）、是否存在<strong
+                            style="color: blue;">極端值</strong>（B）或<strong style="color: blue;">平均數</strong>是否為
+                        0（D）沒有必然聯繫。</div>
+                    <img src="../image/Standard-Deviation-Formula.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">第一四分位數</strong>（<strong
+                        style="color: purple;">Q1</strong>）與第 25 <strong style="color: blue;">百分位數</strong>（<strong
+                        style="color: purple;">P25</strong>）的關係是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">Q1</strong> 通常大於 <strong
+                                style="color: purple;">P25</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">Q1</strong> 通常小於 <strong
+                                style="color: purple;">P25</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">Q1</strong> <strong
+                                style="background-color: #ffff0030;">等於</strong> <strong
+                                style="color: purple;">P25</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">兩者之間沒有固定關係</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">四分位數</strong>是<strong
+                            style="color: blue;">百分位數</strong>的特殊情況。<strong style="color: blue;">第一四分位數</strong>（<strong
+                            style="color: purple;">Q1</strong>）定義為將數據從小到大排序後，排在第 25% 位置的數值，也就是<strong
+                            style="background-color: #ffff0030;">第 25 百分位數</strong>（<strong
+                            style="color: purple;">P25</strong>）。同理，<strong style="color: blue;">第二四分位數</strong>（<strong
+                            style="color: purple;">Q2</strong>）等於第 50 <strong style="color: blue;">百分位數</strong>（<strong
+                            style="color: purple;">P50</strong>，即<strong style="color: blue;">中位數</strong>），<strong
+                            style="color: blue;">第三四分位數</strong>（<strong style="color: purple;">Q3</strong>）等於第 75
+                        <strong style="color:1 blue;">百分位數</strong>（<strong style="color: purple;">P75</strong>）。
+                    </div>
+                    <img src="../image/quartiles.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">柴比雪夫不等式</strong>（<strong
+                        style="color: red;">Chebyshev's Inequality</strong>）提供了一個關於數據分佈的什麼樣的資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">任何數據分佈都必定是對稱的</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">對於<strong
+                                style="background-color: #ffff0030;">任何分佈形態</strong>的數據，<strong
+                                style="background-color: #ffff0030;">至少有多少比例</strong>的數據會落在距離<strong
+                                style="color: blue;">平均數</strong> k 個<strong style="color: blue;">標準差</strong>的範圍內</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只有<strong style="color: blue;">常態分佈</strong>的數據才具有意義</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據的<strong style="color: blue;">峰度</strong>必定為 0</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">柴比雪夫不等式</strong>是一個普遍適用於<strong
+                            style="background-color: #ffff0030;">任何機率分佈</strong>（無論其形狀如何）的定理。它說明，對於任何 k > 1，<strong
+                            style="background-color: #ffff0030;">至少有 (1 - 1/k^2) 比例</strong>的數據會落在距離<strong
+                            style="color: blue;">平均數</strong> k 個<strong style="color: blue;">標準差</strong>的範圍 [μ - kσ, μ
+                        + kσ] 之內。例如，當 k=2 時，至少有 (1 - 1/2^2) = 3/4 = 75% 的數據落在<strong style="color: blue;">平均數</strong>
+                        ±2 個<strong style="color: blue;">標準差</strong>內；當 k=3 時，至少有 (1 - 1/3^2) = 8/9 ≈ 88.9%
+                        的數據落在<strong style="color: blue;">平均數</strong> ±3 個<strong
+                            style="color: blue;">標準差</strong>內。相較於只適用於<strong
+                            style="color: blue;">常態分佈</strong>的經驗法則（68-95-99.7 法則），<strong
+                            style="color: blue;">柴比雪夫不等式</strong>提供了一個更保守但適用範圍更廣的下限保證。</div>
+                    <img src="../image/Chebyshev's Inequality.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">頻率多邊形圖</strong>（<strong
+                        style="color: red;">Frequency Polygon</strong>）通常是如何繪製的？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用<strong style="color: blue;">長條圖</strong>表示每個類別的頻率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將<strong style="color: blue;">直方圖</strong>每個組的<strong
+                                style="background-color: #ffff0030;">頂部中點用直線連接</strong>起來</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">繪製每個數據點的 X 和 Y 座標</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將<strong style="color: blue;">圓餅圖</strong>的每個扇形邊緣連接</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">頻率多邊形圖</strong>是另一種視覺化<strong
+                            style="color: blue;">連續數值</strong>數據分佈的方法，可以看作是<strong
+                            style="color: blue;">直方圖</strong>的一種變形。它的繪製方法是：先確定<strong
+                            style="color: blue;">直方圖</strong>的各個組距（<strong
+                            style="color: red;">bins</strong>），找到每個組距的<strong
+                            style="background-color: #ffff0030;">中點</strong>，然後以該中點為橫座標，以該組距的頻數（或頻率）為縱座標標出點，最後用<strong
+                            style="background-color: #ffff0030;">直線依次連接這些點</strong>。通常還會在第一個組距左側和最後一個組距右側各增加一個頻數為零的點，使得多邊形圖的兩端能落到橫軸上，形成一個封閉的多邊形。它比<strong
+                            style="color: blue;">直方圖</strong>更能清晰地展示分佈的形狀和趨勢。</div>
+                    <img src="../image/Frequency-Polygons.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">斯皮爾曼等級相關係數</strong>（<strong
+                        style="color: red;">Spearman Rank Correlation Coefficient</strong>）與<strong
+                        style="color: blue;">皮爾森相關係數</strong>的主要不同之處在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">斯皮爾曼</strong>只能用於<strong
+                                style="color: blue;">類別數據</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">斯皮爾曼</strong>衡量的是變數<strong
+                                style="background-color: #ffff0030;">等級</strong>（<strong
+                                style="color: red;">Ranks</strong>）之間的<strong
+                                style="background-color: #ffff0030;">單調關係</strong>（<strong style="color: red;">Monotonic
+                                Relationship</strong>），而不是嚴格的<strong style="color: blue;">線性關係</strong>，且適用於<strong
+                                style="color: blue;">次序尺度</strong>數據</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">斯皮爾曼</strong>的值域是 0 到 1</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">皮爾森</strong>對<strong
+                                style="color: blue;">異常值</strong>不敏感，<strong style="color: blue;">斯皮爾曼</strong>很敏感</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">斯皮爾曼等級相關係數</strong>（常用符號 ρ 或
+                        rs）是一種非參數的相關性度量。它不直接使用原始數據值，而是先將兩個變數的數據分別轉換為它們的<strong
+                            style="background-color: #ffff0030;">等級</strong>（排序位置），然後計算這些等級之間的<strong
+                            style="color: blue;">皮爾森相關係數</strong>。因此，它衡量的是兩個變數之間<strong
+                            style="background-color: #ffff0030;">單調關係</strong>的強度和方向（即一個變數增加時，另一個變數是傾向於增加還是減少，而不要求其關係必須是直線）。主要優點是：(1)
+                        適用於<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">次序尺度數據</strong></strong>；(2) 對<strong
+                            style="background-color: #ffff0030;">異常值不敏感</strong>（因為使用的是等級）；(3) 能捕捉到<strong
+                            style="background-color: #ffff0030;">非線性的單調關係</strong>。其值域也是 -1 到 +1（C 錯誤）。選項 A 錯誤。選項 D
+                        錯誤，<strong style="color: blue;">斯皮爾曼</strong>對異常值較不敏感。</div>
+                    <img src="../image/Spearman Rank Correlation.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">資料摘要</strong>技術中，<strong
+                        style="color: blue;">樞紐分析表</strong>（<strong style="color: red;">Pivot Table</strong>）的主要功能是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">視覺化單一變數的分佈</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">對大量的表格數據進行<strong
+                                style="background-color: #ffff0030;">快速匯總、聚合</strong>（如求和、計數、平均）、<strong
+                                style="background-color: #ffff0030;">交叉分析</strong>和<strong
+                                style="background-color: #ffff0030;">重新排列</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">預測未來的數據趨勢</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">清理數據中的<strong style="color: blue;">缺失值</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">樞紐分析表</strong>是電子試算表軟體（如 <strong
+                            style="color: red;">Excel</strong>）和數據分析工具中常用的一種強大功能。它允許使用者選擇原始表格數據中的欄位，將它們拖放到不同的區域（如列、欄、值、篩選器），從而<strong
+                            style="background-color: #ffff0030;">動態地、交互地對數據進行重新組織和匯總計算</strong>。使用者可以輕鬆地按不同維度進行分組、計算總計、平均值、計數等聚合指標，快速地從不同角度探索和<strong
+                            style="color: blue;">摘要</strong>大量數據，是進行<strong
+                            style="color: blue;">探索性分析</strong>和製作<strong style="color: blue;">摘要報表</strong>的有效工具。</div>
+                    <img src="../image/Pivot Table.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">離散型變數</strong>（<strong
+                        style="color: red;">Discrete Variable</strong>）和<strong
+                        style="color: blue;">連續型變數</strong>（<strong style="color: red;">Continuous
+                        Variable</strong>）的主要區別是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">離散型變數</strong>只能是整數，<strong
+                                style="color: blue;">連續型變數</strong>只能是小數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">離散型變數</strong>的值通常是<strong
+                                style="background-color: #ffff0030;">可數的</strong>（即使可能是無限可數），其值之間存在間隙；<strong
+                                style="color: blue;">連續型變數</strong>可以在一個區間內<strong
+                                style="background-color: #ffff0030;">取任何值</strong>，其值之間沒有間隙</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">離散型變數</strong>用於分類，<strong
+                                style="color: blue;">連續型變數</strong>用於排序</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">離散型變數</strong>數據量小，<strong
+                                style="color: blue;">連續型變數</strong>數據量大</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">數值型變數</strong>可以進一步分為<strong
+                            style="color: blue;">離散型</strong>和<strong style="color: blue;">連續型</strong>：
+                        <ul>
+                            <li><strong style="color: blue;">離散型變數</strong>：其可能取的值是<strong
+                                    style="background-color: #ffff0030;">孤立的、可數的</strong>點。例如，一個家庭的孩子數量（0, 1, 2,
+                                ...）、投擲骰子的點數（1, 2, 3, 4, 5, 6）、每小時通過某路口的汽車數量。即使可能取的值有無限多個（如泊松分佈），但值之間是跳躍的。</li>
+                            <li><strong style="color: blue;">連續型變數</strong>：其可能取的值可以在一個給定的範圍內<strong
+                                    style="background-color: #ffff0030;">連續變化</strong>，任意兩個值之間都可能存在其他值。例如，身高、體重、溫度、時間。
+                            </li>
+                        </ul>
+                        選項 B 準確描述了這個區別。選項 A 不完全正確，離散變數也可以是有限小數（如鞋碼），重點是可數性。選項 C 混淆了變數類型和尺度。選項 D 與數據量無關。
+                        <img src="../image/discrete variable and continuous variable.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">下列哪個量數<strong style="font-weight: normal;">不是</strong>衡量數據<strong
+                        style="color: blue;">離散程度</strong>的指標？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">全距</strong>（<strong
+                                style="color: red;">Range</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">變異數</strong>（<strong
+                                style="color: red;">Variance</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">四分位距</strong>（<strong
+                                style="color: purple;">IQR</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">眾數</strong>（<strong
+                                style="color: red;">Mode</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">離散趨勢</strong>量數用於描述數據點相互之間的分散程度或偏離中心位置的程度。常見的<strong
+                            style="color: blue;">離散趨勢</strong>量數包括<strong style="color: blue;">全距</strong>、<strong
+                            style="color: blue;">變異數</strong>、<strong style="color: blue;">標準差</strong>、<strong
+                            style="color: blue;">四分位距</strong>、平均絕對離差等。<strong
+                            style="color: blue;">眾數</strong>是衡量數據<strong
+                            style="color: blue;">集中趨勢</strong>的指標，表示數據中出現次數最多的值，它<strong
+                            style="background-color: #ffff0030;">不反映數據的分散情況</strong>。</div>
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">如果數據分佈非常對稱，其<strong style="color: blue;">偏態係數</strong>（<strong
+                        style="color: red;">Skewness Coefficient</strong>）應接近於多少？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">0</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">1</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">-1</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">3</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">偏態係數</strong>衡量數據分佈的<strong
+                            style="color: blue;">不對稱程度</strong>。對於<strong
+                            style="background-color: #ffff0030;">完全對稱的分佈</strong>（如<strong
+                            style="color: blue;">常態分佈</strong>），其<strong style="color: blue;">偏態係數</strong>為 <strong
+                            style="background-color: #ffff0030;">0</strong>。正值表示<strong
+                            style="color: blue;">右偏</strong>，負值表示<strong
+                            style="color: blue;">左偏</strong>。絕對值越大，表示偏斜程度越嚴重。</div>
+                    <img src="../image/Skewness Coefficient.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">莖葉圖</strong>（<strong
+                        style="color: red;">Stem-and-Leaf Plot</strong>）的主要優點是可以同時做到什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">顯示<strong style="color: blue;">相關性</strong>和因果關係</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">展示數據的<strong
+                                style="background-color: #ffff0030;">分佈形狀</strong>，同時<strong
+                                style="background-color: #ffff0030;">保留原始數據值</strong>（或其近似值）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">比較多個類別的比例</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">預測未來的<strong style="color: blue;">時間序列</strong>值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">莖葉圖</strong>是一種呈現定量數據分佈的簡單圖形方法，特別適用於小數據集。它將每個數值分成「莖」（通常是較高位數）和「葉」（通常是最低位數）。圖的形狀類似於旋轉
+                        90 度的<strong style="color: blue;">直方圖</strong>，可以展示數據的<strong
+                            style="background-color: #ffff0030;">分佈、集中趨勢和對稱性</strong>。與<strong
+                            style="color: blue;">直方圖</strong>不同的是，<strong style="color: blue;">莖葉圖</strong><strong
+                            style="background-color: #ffff0030;">保留了原始數據的數值信息</strong>（可以從莖和葉組合還原出原始值或其近似值），而<strong
+                            style="color: blue;">直方圖</strong>只顯示了組內的頻數。</div>
+                    <img src="../image/Stem-and-Leaf Plot.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">列聯表</strong>（<strong
+                        style="color: red;">Contingency Table</strong>）或<strong
+                        style="color: blue;">交叉表</strong>（<strong
+                        style="color: red;">Cross-Tabulation</strong>）主要用於分析哪種類型數據之間的關係？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">兩個或多個類別型變數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">兩個連續數值型變數</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一個<strong style="color: blue;">類別型</strong>和一個<strong
+                                style="color: blue;">數值型</strong>變數</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">時間序列</strong>數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">列聯表</strong>是一種以矩陣形式展示<strong
+                            style="background-color: #ffff0030;">兩個（或多個）類別型變數頻率分佈</strong>的表格。表格的行代表一個變數的各個類別，列代表另一個變數的各個類別，單元格中的數值則表示同時屬於對應行類別和列類別的觀測數量（頻數）。透過分析<strong
+                            style="color: blue;">列聯表</strong>中的頻數、百分比以及進行<strong
+                            style="color: blue;">卡方檢定</strong>（<strong style="color: red;">Chi-squared
+                            Test</strong>）等統計分析，可以判斷這兩個（或多個）<strong style="color: blue;">類別變數</strong>之間是否存在關聯性。</div>
+                    <img src="../image/Contingency Table.png" class="responsive-img">
+
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據儀表板</strong>（<strong
+                        style="color: red;">Dashboard</strong>）中常用的「<strong style="color: blue;">下鑽</strong>」（<strong
+                        style="color: red;">Drill-down</strong>）功能指的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">放大圖表的特定區域</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從<strong style="background-color: #ffff0030;">匯總層級</strong>的數據<strong
+                                style="background-color: #ffff0030;">深入到更詳細層級</strong>的數據（例如從年度數據看到月度數據，或從全國數據看到各省市數據）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">篩選掉不符合條件的數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">改變圖表的顏色主題</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">下鑽</strong>是<strong
+                            style="color: blue;">互動式儀表板</strong>中常見的功能，允許使用者在查看匯總數據時，點擊某個數據點或類別，<strong
+                            style="background-color: #ffff0030;">進一步查看構成該匯總數據的更細粒度的明細數據</strong>。例如，在查看全國總銷售額時，可以點擊「北部地區」<strong
+                            style="color: blue;">下鑽</strong>查看北部各省份的銷售額，再點擊「某省份」<strong
+                            style="color: blue;">下鑽</strong>查看該省各城市的銷售額。這種功能使得使用者可以從宏觀概覽逐步深入到微觀細節，更好地理解數據的層級結構和成因。</div>
+                    <img src="../image/Drill-Down.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">幾何平均數</strong>（<strong
+                        style="color: red;">Geometric Mean</strong>）最常用於計算哪一類數據的<strong
+                        style="color: blue;">平均值</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">溫度數據</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">比率、百分比變化或增長率</strong>（例如投資報酬率）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">考試分數</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">人口數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">幾何平均數</strong>是 n 個正數乘積的 n
+                        次方根。它特別適用於計算具有<strong style="background-color: #ffff0030;">乘法關係或複合效應</strong>的數據的<strong
+                            style="color: blue;">平均值</strong>，例如：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">平均增長率</strong>：計算多年投資的平均年化報酬率時，應使用<strong
+                                    style="color: blue;">幾何平均數</strong>，因為每年的報酬率是以前一年的基礎進行複合計算的。</li>
+                            <li><strong style="background-color: #ffff0030;">平均比率</strong>：計算一系列比率數據的<strong
+                                    style="color: blue;">平均值</strong>。</li>
+                        </ul>
+                        直接使用<strong style="color: blue;">算術平均數</strong>計算增長率會高估實際的平均增長水平。
+                    </div>
+                    <img src="../image/Geometric Mean.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="4" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">十等分位數</strong>（<strong
+                        style="color: red;">Deciles</strong>）將數據分成幾個相等的部分？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">四個</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">五個</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">十個</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">一百個</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">與<strong style="color: blue;">四分位數</strong>（<strong
+                            style="color: red;">Quartiles</strong>）將數據分成四部分、<strong
+                            style="color: blue;">百分位數</strong>（<strong
+                            style="color: red;">Percentiles</strong>）將數據分成一百部分類似，<strong
+                            style="color: blue;">十等分位數</strong>（<strong
+                            style="color: red;">Deciles</strong>）是將排序後的數據集分成<strong
+                            style="background-color: #ffff0030;">十個包含相等數量</strong>（約 10%）數據點的部分。共有九個<strong
+                            style="color: blue;">十等分位數</strong>，分別是 <strong style="color: purple;">D1, D2, ...,
+                            D9</strong>。其中 <strong style="color: purple;">D1 = P10, D2 = P20, ..., D5 = P50 = Q2 = 中位數,
+                            ..., D9 = P90</strong>。</div>
+                    <img src="../image/deciles.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">累積頻率分佈圖</strong>（<strong
+                        style="color: red;">Cumulative Frequency Distribution Graph</strong> 或 <strong
+                        style="color: red;">Ogive</strong>）的 Y 軸通常表示什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">每個組別的頻率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">小於或等於某個數值上限的<strong
+                                style="background-color: #ffff0030;">累積頻率</strong>或<strong
+                                style="background-color: #ffff0030;">累積相對頻率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據的<strong style="color: blue;">平均值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據的<strong style="color: blue;">標準差</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">累積頻率分佈圖</strong>（常稱為 <strong
+                            style="color: red;">Ogive</strong>
+                        圖）是用於視覺化數據累積情況的折線圖。其橫軸通常表示數據分組的上限（或有時是組中點），縱軸表示小於或等於該橫軸值的數據點的<strong
+                            style="background-color: #ffff0030;">累積數量</strong>（<strong
+                            style="color: blue;">累積頻數</strong>）或<strong
+                            style="background-color: #ffff0030;">累積比例</strong>（<strong
+                            style="color: blue;">累積相對頻數</strong>或累積百分比）。曲線總是呈現非遞減的趨勢，最終達到總頻數或 100%。<strong
+                            style="color: red;">Ogive</strong> 圖可以用來快速估計某個數值對應的<strong
+                            style="color: blue;">百分位數</strong>，或某個<strong style="color: blue;">百分位數</strong>對應的數值。</div>
+                    <img src="../image/Ogive.JPG" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="8" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">在呈現<strong style="color: blue;">敘述性統計</strong>結果時，表格（<strong
+                        style="color: red;">Table</strong>）相比於圖表（<strong style="color: red;">Chart</strong>）的主要優勢在於？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">更直觀地展示趨勢和模式</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">能夠<strong style="background-color: #ffff0030;">精確地呈現詳細的數值資訊</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">更具視覺吸引力</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">更適合比較多個類別的比例</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">圖表（如<strong style="color: blue;">長條圖</strong>、折線圖、<strong
+                            style="color: blue;">散佈圖</strong>）擅長於直觀地展示數據的模式、趨勢、關係和分佈形狀，易於快速理解。然而，它們通常犧牲了數值的精確性。表格則以行列形式組織數據，能夠<strong
+                            style="background-color: #ffff0030;">清晰、準確地呈現大量的詳細數值</strong>（例如，具體的<strong
+                            style="color: blue;">平均數</strong>、<strong
+                            style="color: blue;">標準差</strong>、頻數、百分比到小數點後幾位）。當需要查閱或比較精確數值時，表格是更合適的選擇。通常，一個好的<strong
+                            style="color: blue;">數據報告</strong>會結合使用圖表和表格，利用圖表進行視覺化呈現和趨勢說明，利用表格提供精確的數據支持。</div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterAndSearch(); // Call the main filter function
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterAndSearch);
+        document.getElementById("starFilter").addEventListener("change", filterAndSearch); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterAndSearch); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterAndSearch(); // Trigger filter on Enter key
+            }
+        });
+
+
+        // Combined filter and search function
+        function filterAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            let anyVisible = false; // Track if any questions match
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Display or hide the 'no results' message
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    // Generate a more informative message based on active filters/search
+                    let filterMessage = '沒有找到符合條件的題目。'; // Default message
+                    let filtersActive = [];
+                    if (direction !== 'all') filtersActive.push('方向 ' + direction);
+                    if (stars !== 'all') filtersActive.push(stars + ' 星');
+                    if (searchText !== '') filtersActive.push('關鍵字 "' + searchText + '"');
+
+                    if (filtersActive.length > 0) {
+                        filterMessage = '沒有找到符合 ' + filtersActive.join('、') + ' 的題目。';
+                    }
+                    noResultsMessage.textContent = filterMessage;
+                }
+            }
+            updateProgressBar(); // Recalculate progress after filtering/searching changes layout
+        }
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+            updateProgressBar(); // Recalculate progress as layout changes
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (no functional change, just basic setup)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Basic interaction, no grading logic implemented here
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterAndSearch(); // Apply default filters ('all', no search) on load
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+
+        // Ensure the noResultsMessage div exists after questionsContainer (or create if needed)
+        const questionsContainer = document.getElementById('questionsContainer');
+        if (questionsContainer && !document.getElementById('noResultsMessage')) {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'noResultsMessage';
+            messageDiv.style.display = 'none';
+            messageDiv.style.textAlign = 'center';
+            messageDiv.style.padding = '20px'; // Added padding for visibility
+            messageDiv.style.color = '#000000'; // Black text as requested
+            messageDiv.style.fontSize = '1.1rem';
+            questionsContainer.insertAdjacentElement('afterend', messageDiv);
+        } else if (document.getElementById('noResultsMessage')) {
+            // Ensure existing message div style is correct
+            document.getElementById('noResultsMessage').style.color = '#000000';
+            document.getElementById('noResultsMessage').style.padding = '20px';
+        }
+
+    </script>
+</body>
+
+</html>

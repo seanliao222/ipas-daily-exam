@@ -1,0 +1,3247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L21201 AI導入評估</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        .explanation-content ul,
+        .explanation-content ol {
+            /* Add padding to lists */
+            padding-left: 20px;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* No results message style */
+        #noResultsMessage {
+            text-align: center;
+            padding: 20px;
+            color: #000000;
+            /* Ensure message text is black */
+            display: none;
+            /* Hidden by default */
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L21201 AI導入評估</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">AI導入評估基本概念與流程</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">業務需求與AI機會識別</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">數據評估與準備度分析</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">技術可行性評估</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">成本效益分析與ROI評估</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">風險評估與管理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">組織文化與人才準備度</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">AI倫理、法規與社會影響評估</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">進行 <strong style="color: purple;">AI</strong> 導入評估的首要步驟通常是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">選擇合適的 <strong style="color: purple;">AI</strong> 模型</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">明確定義希望透過 AI
+                                解決的業務問題或達成的目標</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">評估公司現有的數據基礎設施</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算預期的<strong style="color: blue;">投資報酬率</strong> (<strong
+                                style="color: red;">Return on Investment</strong>, <strong
+                                style="color: purple;">ROI</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">任何 <strong style="color: purple;">AI</strong> 專案的成功都始於對<strong
+                            style="color: blue;">業務需求</strong>的深刻理解。在考慮導入 <strong style="color: purple;">AI</strong>
+                        之前，最重要的是要<strong
+                            style="background-color: #ffff0030;">先清楚地界定想要解決的具體業務挑戰是什麼</strong>（例如，降低客服成本、提高生產良率、改善客戶體驗），或是希望達成的具體業務目標（例如，增加營收、擴大市佔率）。<strong
+                            style="background-color: #ffff0030;">只有明確了問題或目標</strong>，才能判斷 <strong
+                            style="color: purple;">AI</strong>
+                        是否為合適的解決方案，並為後續的技術選型、數據收集、模型開發和效益評估提供明確的方向。如果沒有清晰的業務目標，<strong
+                            style="color: purple;">AI</strong> 專案很容易變成「為了 <strong style="color: purple;">AI</strong> 而
+                        <strong style="color: purple;">AI</strong>」，最終難以落地或產生實際價值。</div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在評估導入 <strong style="color: purple;">AI</strong> 的機會時，哪種類型的業務流程通常具有較高的潛力？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">重複性高、規則明確、且依賴大量數據進行判斷</strong>的流程</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">需要高度創意和複雜人際互動的流程</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">涉及全新、無歷史數據可參考的業務模式</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">決策過程完全依賴直覺和個人經驗的流程</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> 特別擅長處理具有以下特點的任務：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">重複性高</strong> (<strong
+                                    style="color: red;">High Repetition</strong>): 需要大量重複執行的操作，人工執行容易疲勞或出錯。</li>
+                            <li><strong style="background-color: #ffff0030;">規則明確或模式可循</strong> (<strong
+                                    style="color: red;">Clear Rules or Patterns</strong>): 雖然 <strong
+                                    style="color: purple;">AI</strong> 可以處理複雜模式，但如果流程規則相對清晰或存在可從數據中學習的模式，則更容易應用。</li>
+                            <li><strong style="background-color: #ffff0030;">數據依賴性強</strong> (<strong
+                                    style="color: red;">Data-Driven</strong>): 決策過程需要分析大量數據才能做出判斷。</li>
+                        </ol>
+                        例如，客戶服務中的常見問題回答、影像辨識中的瑕疵檢測、基於歷史數據的銷售預測等。相反，需要高度創意、複雜情感理解、深度人際溝通或全新領域探索的任務，目前 <strong
+                            style="color: purple;">AI</strong> 的應用潛力相對較低。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在進行 <strong style="color: purple;">AI</strong> 導入的<strong
+                        style="color: blue;">數據評估</strong>時，以下哪個因素最為關鍵？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據的<strong style="background-color: #ffff0030;">品質、數量、相關性和可用性</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據儲存的硬碟品牌</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據視覺化工具的美觀程度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據產生的時間是否都在晚上</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">數據是 <strong style="color: purple;">AI</strong>
+                        模型的「燃料」，其重要性不言而喻。在評估數據準備度時，需要考量：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">品質</strong> (<strong
+                                    style="color: red;">Quality</strong>): 數據是否準確、完整、一致？是否存在錯誤值、缺失值、異常值？（<strong
+                                    style="color: red;">Garbage In, Garbage Out</strong>）</li>
+                            <li><strong style="background-color: #ffff0030;">數量</strong> (<strong
+                                    style="color: red;">Quantity</strong>): 是否有足夠的數據量來訓練一個有效的模型？（特別是<strong
+                                    style="color: blue;">監督式學習</strong>）</li>
+                            <li><strong style="background-color: #ffff0030;">相關性</strong> (<strong
+                                    style="color: red;">Relevance</strong>): 數據是否與要解決的業務問題直接相關？是否包含能預測目標的特徵？</li>
+                            <li><strong style="background-color: #ffff0030;">可用性</strong> (<strong
+                                    style="color: red;">Availability/Accessibility</strong>):
+                                數據是否容易取得？是否需要跨部門整合？是否存在隱私或法規限制？</li>
+                        </ul>
+                        缺乏高品質、足夠數量且相關的可用數據，是許多 <strong style="color: purple;">AI</strong>
+                        專案失敗的主要原因之一。其他選項（硬碟品牌、視覺化美觀、產生時間）通常不是評估數據本身是否適合 <strong style="color: purple;">AI</strong>
+                        應用的核心因素。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">評估 <strong style="color: purple;">AI</strong> <strong
+                        style="color: blue;">技術可行性</strong>時，需要考慮以下哪個因素？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">目前市場上最昂貴的 <strong style="color: purple;">AI</strong> 解決方案</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">公司 <strong style="color: purple;">CEO</strong> 個人對 <strong
+                                style="color: purple;">AI</strong> 技術的偏好</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">現有 <strong style="color: purple;">AI</strong> 技術的<strong
+                                style="background-color: #ffff0030;">成熟度</strong>、<strong
+                                style="background-color: #ffff0030;">解決特定問題的能力</strong>以及與現有系統<strong
+                                style="background-color: #ffff0030;">整合的複雜度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">競爭對手是否已經導入了 <strong style="color: purple;">AI</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">技術可行性評估</strong>旨在判斷從技術角度來看，導入 <strong
+                            style="color: purple;">AI</strong> 是否現實可行。需要考量的因素包括：
+                        <ul>
+                            <li><strong style="color: blue;">技術成熟度</strong> (<strong style="color: red;">Technology
+                                    Maturity</strong>): 解決目標問題所需的 <strong style="color: purple;">AI</strong>
+                                技術（如特定演算法、模型）是否已經足夠成熟和穩定？是否有成功的應用案例？</li>
+                            <li><strong style="color: blue;">問題解決能力</strong> (<strong
+                                    style="color: red;">Problem-Solving Capability</strong>): 現有 <strong
+                                    style="color: purple;">AI</strong> 技術是否真的能夠有效地解決所定義的業務問題？其預期效能（如準確率、速度）是否能滿足業務需求？
+                            </li>
+                            <li><strong style="color: blue;">整合複雜度</strong> (<strong style="color: red;">Integration
+                                    Complexity</strong>): 將新的 <strong style="color: purple;">AI</strong> 系統與公司現有的
+                                <strong style="color: purple;">IT</strong> 基礎設施、數據源、業務流程整合的難易程度如何？是否需要大量的客製化開發？</li>
+                            <li><strong style="color: blue;">可擴展性與維護性</strong> (<strong style="color: red;">Scalability
+                                    & Maintainability</strong>): 未來系統是否容易擴展以應對增長的數據量或用戶量？是否容易維護和更新？</li>
+                        </ul>
+                        僅僅考慮最貴方案、<strong style="color: purple;">CEO</strong> 偏好或競爭對手動態，都不能客觀評估技術上的可行性。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="5" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在進行 <strong style="color: purple;">AI</strong> 導入的<strong
+                        style="color: blue;">成本效益分析</strong>時，除了直接的開發和購買成本，還需要考慮哪些潛在成本？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">競爭對手的潛在收益</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">數據收集與標註成本</strong>、<strong
+                                style="background-color: #ffff0030;">模型訓練與維護成本</strong>、<strong
+                                style="background-color: #ffff0030;">人員培訓成本</strong>、<strong
+                                style="background-color: #ffff0030;">系統整合與變更管理成本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">公司股票的價格波動</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">市場上最新的 <strong style="color: purple;">AI</strong> 研究論文數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估 <strong style="color: purple;">AI</strong>
+                        專案的總體成本時，不能只看硬體、軟體或演算法的購買/開發費用，還必須考慮一系列相關的<strong
+                            style="background-color: #ffff0030;">隱性或間接成本</strong>：
+                        <ul>
+                            <li><strong style="color: blue;">數據成本</strong>: 收集、清洗、整理、標註（如果是<strong
+                                    style="color: blue;">監督式學習</strong>）數據所需的人力、時間和工具成本。</li>
+                            <li><strong style="color: blue;">模型成本</strong>: 模型訓練需要計算資源（如 <strong
+                                    style="color: purple;">GPU</strong>），後續的模型監控、更新、重新訓練也需要持續投入。</li>
+                            <li><strong style="color: blue;">整合成本</strong>: 將 <strong style="color: purple;">AI</strong>
+                                系統接入現有系統可能需要額外的開發和測試。</li>
+                            <li><strong style="color: blue;">維運成本</strong>: 系統運行所需的基礎設施（如雲端費用）、監控和維護人力。</li>
+                            <li><strong style="color: blue;">人員成本</strong>: 聘用或培訓具備 <strong
+                                    style="color: purple;">AI</strong> 技能的人才（如<strong
+                                    style="color: blue;">資料科學家</strong>、<strong style="color: blue;">AI
+                                    工程師</strong>），以及對現有員工進行相關培訓。</li>
+                            <li><strong style="color: blue;">變更管理成本</strong>: 導入 <strong
+                                    style="color: purple;">AI</strong> 可能改變現有工作流程，需要進行溝通、協調和適應。</li>
+                            <li>（潛在）<strong style="color: blue;">錯誤成本</strong>: <strong
+                                    style="color: purple;">AI</strong> 模型可能出錯，需要考慮錯誤帶來的潛在損失或補救成本。</li>
+                        </ul>
+                        全面評估這些成本，才能更準確地判斷 <strong style="color: purple;">AI</strong> 專案的真實<strong
+                            style="color: blue;">投資報酬率</strong>。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 導入評估中的<strong
+                        style="color: blue;">風險評估</strong>應涵蓋哪些方面？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅技術風險（如模型效能不佳）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅數據風險（如數據洩露）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">技術風險、數據風險、操作風險、倫理與合規風險、以及組織變革風險</strong>等多個面向</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅市場競爭風險</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> 導入伴隨著多方面的潛在風險，全面的<strong
+                            style="color: blue;">風險評估</strong>應至少包含：
+                        <ul>
+                            <li><strong style="color: blue;">技術風險</strong>: 模型效能不如預期、演算法選擇錯誤、技術過時、難以擴展或維護。</li>
+                            <li><strong style="color: blue;">數據風險</strong>: 數據品質差、數據量不足、數據取得困難、<strong
+                                    style="color: blue;">數據偏誤</strong> (<strong
+                                    style="color: red;">Bias</strong>)、數據隱私洩露、數據安全問題。</li>
+                            <li><strong style="color: blue;">操作風險</strong>: <strong style="color: purple;">AI</strong>
+                                系統輸出錯誤導致業務損失、系統整合失敗、使用者操作不當。</li>
+                            <li><strong style="color: blue;">倫理與合規風險</strong>: 模型產生歧視性結果、決策過程不透明（<strong
+                                    style="color: blue;">黑盒子</strong>問題）、侵犯使用者隱私、違反相關法律法規（如 <strong
+                                    style="color: purple;">GDPR</strong>、個資法）。</li>
+                            <li><strong style="color: blue;">組織變革風險</strong>: 員工抵制變革、缺乏相應技能、組織流程調整困難、未能實現預期效益。</li>
+                            <li><strong style="color: blue;">供應商風險</strong>: 依賴的第三方 <strong
+                                    style="color: purple;">AI</strong> 服務不穩定或停止服務。</li>
+                        </ul>
+                        識別並評估這些風險，並制定相應的緩解措施，是確保 <strong style="color: purple;">AI</strong> 專案成功的重要環節。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">評估組織導入 <strong style="color: purple;">AI</strong> 的<strong
+                        style="color: blue;">準備度</strong>時，除了技術和數據，還需要重點關注哪個面向？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">辦公室的地理位置</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">組織文化、領導階層的支持、以及員工的技能和接受度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">公司使用的電腦品牌</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">公司的創立年份</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> 導入不僅是技術問題，更是<strong
+                            style="color: blue;">組織變革</strong>的過程。因此，評估組織<strong
+                            style="color: blue;">準備度</strong>時，<strong
+                            style="background-color: #ffff0030;">人的因素至關重要</strong>：
+                        <ul>
+                            <li><strong style="color: blue;">組織文化</strong> (<strong style="color: red;">Organizational
+                                    Culture</strong>): 公司是否鼓勵創新、接受實驗和容忍失敗？是否願意擁抱數據驅動的決策？</li>
+                            <li><strong style="color: blue;">領導階層支持</strong> (<strong style="color: red;">Leadership
+                                    Support</strong>): 高層管理者是否理解 <strong style="color: purple;">AI</strong>
+                                的價值，願意投入資源並積極推動變革？</li>
+                            <li><strong style="color: blue;">員工技能</strong> (<strong style="color: red;">Employee
+                                    Skills</strong>): 組織內部是否擁有或能夠培養/引進具備 <strong style="color: purple;">AI</strong>
+                                相關知識和技能的人才？員工是否具備使用新 <strong style="color: purple;">AI</strong> 工具的能力？</li>
+                            <li><strong style="color: blue;">員工接受度</strong> (<strong style="color: red;">Employee
+                                    Acceptance</strong>): 員工是否理解 <strong style="color: purple;">AI</strong>
+                                導入的目的？是否擔心工作被取代？是否有足夠的溝通和培訓來降低疑慮和抵觸情緒？</li>
+                        </ul>
+                        缺乏組織層面的支持和準備，即使有好的技術和數據，<strong style="color: purple;">AI</strong> 專案也很難成功落地並發揮價值。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">AI</strong> 導入評估中，考量 <strong
+                        style="color: blue;">AI 倫理</strong> (<strong style="color: red;">AI Ethics</strong>) 的主要目的是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高 <strong style="color: purple;">AI</strong> 模型的計算速度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">確保 <strong style="color: purple;">AI</strong> 系統的開發和應用符合<strong
+                                style="background-color: #ffff0030;">公平、透明、可解釋、負責、安全和尊重隱私</strong>等道德原則，<strong
+                                style="background-color: #ffff0030;">避免潛在的負面社會影響</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">增加 <strong style="color: purple;">AI</strong> 專案的預算</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">選擇最新的 <strong style="color: purple;">AI</strong> 演算法</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">隨著 <strong style="color: purple;">AI</strong>
+                        技術的廣泛應用，其潛在的倫理風險和社會影響也日益受到關注。在 <strong style="color: purple;">AI</strong> 導入評估階段就納入<strong
+                            style="color: blue;">倫理考量</strong>，旨在：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">確保公平性</strong> (<strong
+                                    style="color: red;">Fairness</strong>): 避免 <strong
+                                    style="color: purple;">AI</strong> 系統因訓練數據的<strong
+                                    style="color: blue;">偏誤</strong>而產生歧視性的結果（例如，在招聘、信貸審批中對特定人群不利）。</li>
+                            <li><strong style="background-color: #ffff0030;">提高透明度與可解釋性</strong> (<strong
+                                    style="color: red;">Transparency & Explainability</strong>): 理解 <strong
+                                    style="color: purple;">AI</strong> 模型做出決策的方式和原因，尤其是在高風險應用中。</li>
+                            <li><strong style="background-color: #ffff0030;">明確責任歸屬</strong> (<strong
+                                    style="color: red;">Accountability</strong>): 界定 <strong
+                                    style="color: purple;">AI</strong> 系統出錯時的責任方。</li>
+                            <li><strong style="background-color: #ffff0030;">保障安全與可靠性</strong> (<strong
+                                    style="color: red;">Safety & Reliability</strong>): 確保 <strong
+                                    style="color: purple;">AI</strong> 系統的穩定運行，避免產生危害。</li>
+                            <li><strong style="background-color: #ffff0030;">尊重隱私</strong> (<strong
+                                    style="color: red;">Privacy</strong>): 在數據收集和使用過程中保護個人隱私。</li>
+                        </ul>
+                        <strong style="background-color: #ffff0030;">負責任的 AI</strong> (<strong
+                            style="color: red;">Responsible AI</strong>) 強調在 <strong style="color: purple;">AI</strong>
+                        的整個生命週期中融入倫理原則，不僅是為了遵守法規，更是為了建立使用者和社會的信任，實現技術的可持續發展。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">計算 <strong style="color: purple;">AI</strong> 專案的<strong
+                        style="color: blue;">投資報酬率</strong> (<strong style="color: red;">Return on Investment</strong>,
+                    <strong style="color: purple;">ROI</strong>) 時，需要評估 <strong style="color: purple;">AI</strong>
+                    導入可能帶來的哪些「<strong style="color: blue;">效益</strong>」(<strong style="color: red;">Benefits</strong>)？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">成本降低</strong>（如自動化帶來的效率提升）、<strong
+                                style="background-color: #ffff0030;">營收增加</strong>（如個性化推薦帶來的銷售增長）、<strong
+                                style="background-color: #ffff0030;">客戶滿意度提升</strong>、<strong
+                                style="background-color: #ffff0030;">決策品質改善</strong>等<strong
+                                style="background-color: #ffff0030;">有形和無形效益</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅計算節省的電力費用</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅計算減少的員工數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅計算購買 <strong style="color: purple;">AI</strong> 軟體的折扣</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估 <strong style="color: purple;">AI</strong>
+                        導入的效益需要從多個維度考量，不僅僅是直接的財務指標。效益可以分為：
+                        <ul>
+                            <li><strong style="color: blue;">有形效益</strong> (<strong style="color: red;">Tangible
+                                    Benefits</strong>): 可以直接量化為金錢價值的效益。
+                                <ul>
+                                    <li><strong style="background-color: #ffff0030;">成本降低</strong>:
+                                        通過自動化重複任務、提高流程效率、減少錯誤率、優化資源配置等方式節省成本。</li>
+                                    <li><strong style="background-color: #ffff0030;">營收增加</strong>:
+                                        通過改善產品/服務、個性化行銷、開發新市場、提高客戶轉換率等方式增加收入。</li>
+                                </ul>
+                            </li>
+                            <li><strong style="color: blue;">無形效益</strong> (<strong style="color: red;">Intangible
+                                    Benefits</strong>): 難以直接量化為金錢價值，但對企業長期發展同樣重要的效益。
+                                <ul>
+                                    <li><strong style="background-color: #ffff0030;">客戶滿意度/體驗提升</strong>: 提供更快速、更個性化的服務。
+                                    </li>
+                                    <li><strong style="color: blue;">員工滿意度/效率提升</strong>: 將員工從繁瑣工作中解放出來，專注於更有價值的工作。</li>
+                                    <li><strong style="background-color: #ffff0030;">決策品質改善</strong>: 基於數據洞察做出更明智的決策。
+                                    </li>
+                                    <li><strong style="color: blue;">風險降低</strong>: 提高合規性、預測潛在風險。</li>
+                                    <li><strong style="color: blue;">品牌形象提升/創新能力增強</strong>: 展現技術領先地位。</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        全面的效益評估有助於更準確地計算 <strong style="color: purple;">ROI</strong>，並證明 <strong
+                            style="color: purple;">AI</strong> 專案的價值。<strong style="color: purple;">ROI</strong> = (總效益
+                        - 總成本) / 總成本 * 100%。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">數據評估</strong>階段發現數據量不足時，可以考慮採取以下哪種措施？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">立即放棄 <strong style="color: purple;">AI</strong> 專案</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">隨機生成一些假數據</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">探索<strong style="color: blue;">數據增強</strong> (<strong
+                                style="color: red;">Data Augmentation</strong>)、<strong
+                                style="color: blue;">遷移學習</strong> (<strong style="color: red;">Transfer
+                                Learning</strong>)、或尋找<strong
+                                style="background-color: #ffff0030;">外部數據源</strong>/<strong
+                                style="background-color: #ffff0030;">合成數據</strong> (<strong
+                                style="color: red;">Synthetic Data</strong>) 的可能性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">要求業務部門立即產生更多數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">數據量不足是 <strong style="color: purple;">AI</strong>
+                        專案中常見的問題。面對這種情況，可以考慮以下應對策略：
+                        <ul>
+                            <li><strong style="color: blue;">數據增強</strong> (<strong style="color: red;">Data
+                                    Augmentation</strong>): 對現有數據進行變換（如圖像翻轉、旋轉；文本同義詞替換）以生成更多樣例。</li>
+                            <li><strong style="color: blue;">遷移學習</strong> (<strong style="color: red;">Transfer
+                                    Learning</strong>): 利用在大型相關數據集上預訓練好的模型，在少量目標數據上進行微調。</li>
+                            <li><strong style="background-color: #ffff0030;">尋找外部數據源</strong>: 購買或利用公開的數據集來補充自有數據。</li>
+                            <li><strong style="background-color: #ffff0030;">生成合成數據</strong> (<strong
+                                    style="color: red;">Synthetic Data</strong>): 利用生成模型（如 <strong
+                                    style="color: purple;">GAN</strong>）創建人工數據，模擬真實數據的分佈。</li>
+                            <li>採用對數據量要求較低的模型: 例如一些傳統機器學習方法或針對小樣本學習設計的演算法。</li>
+                            <li>調整專案範疇: 縮小問題範圍，使其對數據量的要求降低。</li>
+                        </ul>
+                        直接放棄或隨機生成假數據通常不是最佳選擇。要求業務部門立即產生數據可能不切實際。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 導入評估框架通常包含哪些核心階段？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">機會識別</strong>、<strong
+                                style="background-color: #ffff0030;">可行性評估</strong>、<strong
+                                style="color: blue;">概念驗證</strong> (<strong style="color: purple;">PoC</strong>)、<strong
+                                style="background-color: #ffff0030;">規劃與路線圖制定</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型訓練、模型部署、模型監控</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據收集、數據清洗、特徵工程</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">市場調查、產品設計、行銷推廣</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">一個結構化的 <strong style="color: purple;">AI</strong> 導入評估流程通常會經歷以下階段：
+                        <ol>
+                            <li><strong style="color: blue;">機會識別</strong> (<strong style="color: red;">Opportunity
+                                    Identification</strong>): 理解業務痛點和目標，探索 <strong style="color: purple;">AI</strong>
+                                可能的應用場景和潛在價值。</li>
+                            <li><strong style="color: blue;">可行性評估</strong> (<strong style="color: red;">Feasibility
+                                    Assessment</strong>): 從業務、數據、技術、組織、倫理等多個維度評估導入 <strong
+                                    style="color: purple;">AI</strong> 的可行性和風險。</li>
+                            <li><strong style="color: blue;">概念驗證</strong> (<strong style="color: red;">Proof of
+                                    Concept</strong>, <strong style="color: purple;">PoC</strong>):
+                                針對高潛力且具可行性的機會，進行小規模實驗或原型開發，以驗證技術的可行性和初步效果，降低後續投入風險。</li>
+                            <li><strong style="color: blue;">規劃與路線圖制定</strong> (<strong style="color: red;">Planning &
+                                    Roadmap</strong>): 基於 <strong style="color: purple;">PoC</strong>
+                                結果和整體評估，制定詳細的導入計劃、資源分配、時間表和衡量指標，形成 <strong style="color: purple;">AI</strong> 策略路線圖。
+                            </li>
+                        </ol>
+                        選項 B 和 C 描述的是 <strong style="color: purple;">AI</strong> 模型開發生命週期中的具體技術步驟。選項 D 描述的是產品開發和市場推廣流程。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">技術可行性</strong>時，"<strong
+                        style="color: blue;">黑盒子</strong>" (<strong style="color: red;">Black Box</strong>) 問題指的是
+                    <strong style="color: purple;">AI</strong> 模型的哪個特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型運行速度慢</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型需要大量數據訓練</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的<strong style="background-color: #ffff0030;">內部決策過程難以理解和解釋</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型容易受到<strong style="color: blue;">對抗性攻擊</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">許多複雜的 <strong style="color: purple;">AI</strong>
+                        模型，特別是深度學習模型，其內部運作機制和做出特定預測的原因往往非常複雜，難以被人類直接理解或解釋，就像一個不透明的「<strong
+                            style="color: blue;">黑盒子</strong>」。這種<strong
+                            style="background-color: #ffff0030;">缺乏可解釋性</strong> (<strong
+                            style="color: red;">Interpretability/Explainability</strong>)
+                        的問題在高風險決策場景（如醫療診斷、金融信貸、司法判決）中尤其令人擔憂，因為無法理解決策依據就難以信任模型的結果，也難以發現和修正潛在的<strong
+                            style="color: blue;">偏誤</strong>或錯誤。因此，在<strong
+                            style="color: blue;">技術可行性評估</strong>中，需要考慮目標應用的<strong
+                            style="color: blue;">可解釋性</strong>要求，以及是否有方法（如 <strong style="color: purple;">LIME</strong>,
+                        <strong style="color: purple;">SHAP</strong> 等可解釋 <strong style="color: purple;">AI</strong>
+                        技術）來緩解<strong style="color: blue;">黑盒子</strong>問題。</div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">總體擁有成本</strong> (<strong
+                        style="color: red;">Total Cost of Ownership</strong>, <strong
+                        style="color: purple;">TCO</strong>) 的概念在 <strong style="color: purple;">AI</strong> 導入評估中的意義是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅計算 <strong style="color: purple;">AI</strong> 軟體的購買價格</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">評估 <strong style="color: purple;">AI</strong> 系統在其<strong
+                                style="background-color: #ffff0030;">整個生命週期內的全部成本</strong>，包括<strong
+                                style="background-color: #ffff0030;">直接和間接成本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅計算模型訓練的電費</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅評估 <strong style="color: purple;">AI</strong> 帶來的總收益</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">總體擁有成本</strong> (<strong
+                            style="color: purple;">TCO</strong>) 是一個財務概念，旨在全面評估擁有某項資產（在這裡是 <strong
+                            style="color: purple;">AI</strong> 系統）在其<strong
+                            style="background-color: #ffff0030;">整個生命週期</strong>內所發生的所有成本。這不僅包括初期的購買或開發成本（<strong
+                            style="color: blue;">直接成本</strong>），還包括後續的營運、維護、升級、人員培訓、技術支援、整合、甚至最終的汰換成本（<strong
+                            style="color: blue;">間接成本/隱性成本</strong>）。在進行 <strong style="color: purple;">AI</strong>
+                        導入的<strong style="color: blue;">成本效益分析</strong>時，採用 <strong style="color: purple;">TCO</strong>
+                        的視角有助於更全面、更準確地估算總投入，避免低估長期成本，從而做出更明智的投資決策。</div>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">AI</strong> <strong
+                        style="color: blue;">風險管理</strong>中，對於已識別出的高風險項目，可以採取的應對策略<strong
+                        style="font-weight: normal;">不包含</strong>以下哪項？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">風險規避</strong> (<strong
+                                style="color: red;">Avoidance</strong>)：改變計畫以完全避開風險。</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">風險轉移</strong> (<strong
+                                style="color: red;">Transfer</strong>)：將風險轉嫁給第三方（如購買保險、外包）。</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">風險緩解</strong> (<strong
+                                style="color: red;">Mitigation</strong>)：採取措施降低風險發生的可能性或影響程度。</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;"><strong
+                                    style="color: blue;">風險忽視</strong> (<strong
+                                    style="color: red;">Ignorance</strong>)</strong>：完全忽略風險的存在。</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">標準的<strong
+                            style="color: blue;">風險管理</strong>流程通常包括風險識別、風險分析、風險評估和風險應對。對於已識別和評估的風險，常見的應對策略有四種（有時加入第五種「接受」）：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">規避</strong> (<strong
+                                    style="color: red;">Avoidance</strong>): 透過改變專案範疇、目標或方法，完全消除風險事件發生的可能性。</li>
+                            <li><strong style="background-color: #ffff0030;">轉移</strong> (<strong
+                                    style="color: red;">Transfer</strong>): 將風險的後果和應對責任轉移給第三方，例如購買保險或將特定環節外包。</li>
+                            <li><strong style="background-color: #ffff0030;">緩解</strong> (<strong
+                                    style="color: red;">Mitigation</strong>): 採取積極措施來降低風險發生的機率或減輕其發生時的負面影響。這是最常用的策略。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">接受</strong> (<strong
+                                    style="color: red;">Acceptance</strong>):
+                                對於發生機率低或影響小的風險，或應對成本過高的風險，選擇不採取特別行動，並準備好應對其可能後果（被動接受或設立應急儲備）。</li>
+                        </ol>
+                        <strong style="background-color: #ffff0030;">忽視</strong> (<strong
+                            style="color: red;">Ignorance</strong>) 風險並不是一種有效的風險管理策略，它只會讓組織暴露在未知的威脅之下。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">變革管理</strong> (<strong
+                        style="color: red;">Change Management</strong>) 在 <strong style="color: purple;">AI</strong>
+                    導入過程中的主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">負責撰寫 <strong style="color: purple;">AI</strong> 模型的程式碼</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">管理和引導</strong>因導入 <strong
+                                style="color: purple;">AI</strong> 而引起的<strong
+                                style="background-color: #ffff0030;">組織、流程和人員方面的轉變</strong>，以<strong
+                                style="background-color: #ffff0030;">減少阻力</strong>並確保順利過渡</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">採購 <strong style="color: purple;">AI</strong> 所需的硬體設備</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">監控 <strong style="color: purple;">AI</strong> 模型的線上效能</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">導入 <strong style="color: purple;">AI</strong>
+                        通常不僅僅是引入一項新技術，它往往會對現有的工作流程、角色職責、組織架構甚至企業文化產生影響。<strong
+                            style="color: blue;">變革管理</strong>是一套結構化的方法，旨在幫助組織和個人順利地從現狀過渡到期望的未來狀態。在 <strong
+                            style="color: purple;">AI</strong> 導入背景下，<strong style="color: blue;">變革管理</strong>的工作包括：
+                        <ul>
+                            <li>與利害關係人（員工、管理者等）進行有效溝通，說明變革的原因、目標和影響。</li>
+                            <li>提供必要的培訓和支援，幫助員工適應新的工具和流程。</li>
+                            <li>識別和處理員工的疑慮和抵觸情緒。</li>
+                            <li>調整組織結構或工作流程以配合 <strong style="color: purple;">AI</strong> 系統的應用。</li>
+                            <li>監控變革過程，確保達到預期目標。</li>
+                        </ul>
+                        有效的<strong style="color: blue;">變革管理</strong>是降低 <strong style="color: purple;">AI</strong>
+                        導入失敗風險、確保技術真正落地並發揮價值的關鍵因素。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在識別 <strong style="color: purple;">AI</strong> 應用機會時，進行「<strong
+                        style="color: blue;">痛點分析</strong>」(<strong style="color: red;">Pain Point Analysis</strong>)
+                    的目的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">分析競爭對手的優勢</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">找出目前業務流程中存在的<strong
+                                style="background-color: #ffff0030;">效率低下、成本過高、錯誤頻繁或客戶不滿意的環節</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">評估 <strong style="color: purple;">AI</strong> 技術的最新發展</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">設計 <strong style="color: purple;">AI</strong> 模型的演算法</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">痛點分析</strong>是從問題出發尋找解決方案的常用方法。在尋找
+                        <strong style="color: purple;">AI</strong> 導入機會時，通過深入訪談、觀察、數據分析等方式，<strong
+                            style="background-color: #ffff0030;">找出當前業務運營中存在的具體「痛點」</strong>，例如：哪個環節耗費最多人力和時間？哪個流程的錯誤率最高？客戶最常抱怨的問題是什麼？哪些決策缺乏數據支持？識別出這些痛點後，就可以評估是否可以利用
+                        <strong style="color: purple;">AI</strong> 技術來針對性地解決這些問題，從而帶來實際的業務價值。這種從實際問題出發的方法，比單純追求新技術更能確保
+                        <strong style="color: purple;">AI</strong> 應用的有效性。</div>
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據偏誤</strong> (<strong
+                        style="color: red;">Data Bias</strong>) 可能導致 <strong style="color: purple;">AI</strong>
+                    模型產生不公平或歧視性的結果，以下哪項<strong style="font-weight: normal;">不是</strong>常見的<strong
+                        style="color: blue;">數據偏誤</strong>來源？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">歷史偏誤</strong> (<strong
+                                style="color: red;">Historical Bias</strong>)：數據反映了過去社會存在的偏見。</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">抽樣偏誤</strong> (<strong
+                                style="color: red;">Sampling Bias</strong>)：收集的數據未能代表真實世界的人口分佈。</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">標註偏誤</strong> (<strong
+                                style="color: red;">Labeling Bias</strong>)：人工標註數據時引入了標註者的主觀偏見。</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">演算法偏誤</strong> (<strong
+                                style="color: red;">Algorithmic Bias</strong>)：<strong
+                                style="background-color: #ffff0030;">演算法本身設計完美無缺</strong>。</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">數據偏誤</strong>是導致 <strong
+                            style="color: purple;">AI</strong> 不公平性的主要根源之一，常見的來源包括：
+                        <ul>
+                            <li><strong style="color: blue;">歷史偏誤</strong>:
+                                訓練數據本身就包含了現實世界中長期存在的、系統性的偏見或歧視（例如，歷史招聘數據可能顯示男性工程師比例遠高於女性）。</li>
+                            <li><strong style="color: blue;">抽樣偏誤/代表性偏誤</strong>:
+                                數據收集過程未能涵蓋所有相關群體，或者某些群體的樣本量遠少於其他群體，導致數據不能代表目標應用的真實分佈。</li>
+                            <li><strong style="color: blue;">標註偏誤</strong>: 在需要人工標註數據時，標註人員可能因自身背景、經驗或主觀判斷而引入偏見。</li>
+                            <li><strong style="color: blue;">測量偏誤</strong> (<strong style="color: red;">Measurement
+                                    Bias</strong>): 測量工具或方法本身存在系統性誤差，導致不同群體的數據失真程度不同。</li>
+                        </ul>
+                        雖然演算法的選擇和設計也可能<strong style="background-color: #ffff0030;">放大</strong>或<strong
+                            style="background-color: #ffff0030;">引入</strong>偏誤（例如，某些演算法對數據不平衡更敏感），但將演算法本身視為「<strong
+                            style="background-color: #ffff0030;">完美無缺</strong>」是不現實的，且<strong
+                            style="color: blue;">數據偏誤</strong>是獨立於演算法存在的、更為根本的問題來源。因此，演算法本身也可能是偏誤的來源之一，但選項 D
+                        的表述（完美無缺）使得它成為「不是」常見數據偏誤來源的答案，因為演算法本身也可能存在問題或加劇數據中的偏誤。嚴格來說，偏誤可能來源於數據、演算法設計或兩者交互作用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估 <strong style="color: purple;">AI</strong> 導入對社會的潛在影響時，需要考慮「<strong
+                        style="color: blue;">就業衝擊</strong>」，這指的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 公司創造了多少新的就業機會</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 自動化可能<strong
+                                style="background-color: #ffff0030;">取代部分現有工作崗位</strong>，以及可能<strong
+                                style="background-color: #ffff0030;">創造新的工作崗位</strong>，對<strong
+                                style="background-color: #ffff0030;">整體就業結構和技能需求的影響</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 系統對環境造成的影響</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">員工使用 <strong style="color: purple;">AI</strong> 工具後的滿意度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong>
+                        的發展和應用對勞動力市場可能產生深遠影響。評估其「<strong style="color: blue;">就業衝擊</strong>」需要考慮兩個方面：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">工作取代</strong> (<strong
+                                    style="color: red;">Job Displacement</strong>): <strong
+                                    style="color: purple;">AI</strong>
+                                在自動化某些任務（尤其是重複性、流程化的任務）方面效率很高，可能導致部分依賴這些技能的工作崗位減少或消失。</li>
+                            <li><strong style="background-color: #ffff0030;">工作創造與轉型</strong> (<strong
+                                    style="color: red;">Job Creation and Transformation</strong>): <strong
+                                    style="color: purple;">AI</strong> 的發展也會催生新的工作機會（如 <strong style="color: blue;">AI
+                                    工程師</strong>、<strong style="color: blue;">數據科學家</strong>、<strong
+                                    style="color: blue;">AI 倫理師</strong>），同時也會改變現有工作的內容，要求員工具備新的技能（如與 <strong
+                                    style="color: purple;">AI</strong> 協作、利用 <strong style="color: purple;">AI</strong>
+                                工具提高效率）。</li>
+                        </ol>
+                        因此，評估<strong
+                            style="color: blue;">就業衝擊</strong>不僅要看可能失去的工作，也要看可能增加或轉變的工作，以及對勞動力技能需求的整體影響，並考慮相應的社會配套措施（如再培訓計畫、社會保障）。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">概念驗證</strong> (<strong
+                        style="color: red;">Proof of Concept</strong>, <strong style="color: purple;">PoC</strong>) 在
+                    <strong style="color: purple;">AI</strong> 導入評估中的主要價值是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">直接產生可上線運行的 <strong style="color: purple;">AI</strong> 產品</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">以<strong style="background-color: #ffff0030;">較低的成本和風險</strong>，<strong
+                                style="background-color: #ffff0030;">快速驗證 AI 技術解決特定問題的可行性和潛在效果</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">完成所有必要的數據收集工作</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">取代完整的<strong style="color: blue;">成本效益分析</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">PoC</strong>
+                        是一個小規模的、實驗性的專案，目標是在投入大量資源進行全面開發之前，先驗證一個想法或技術是否可行以及是否能帶來初步的預期效果。在 <strong
+                            style="color: purple;">AI</strong> 導入評估中，<strong style="color: purple;">PoC</strong> 的價值在於：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">降低風險</strong>:
+                                在早期階段識別潛在的技術障礙或數據問題，避免在不可行的方向上投入過多資源。</li>
+                            <li><strong style="background-color: #ffff0030;">驗證可行性</strong>: 證明所選的 <strong
+                                    style="color: purple;">AI</strong> 方法確實能夠處理目標問題。</li>
+                            <li><strong style="background-color: #ffff0030;">評估初步效果</strong>:
+                                獲得一些初步的量化結果，為後續的決策（是否繼續投入、如何調整方案）提供依據。</li>
+                            <li><strong style="color: blue;">增強信心/獲得支持</strong>: 向利害關係人展示 <strong
+                                    style="color: purple;">AI</strong> 的潛力，爭取後續專案的支持和資源。</li>
+                        </ul>
+                        <strong style="color: purple;">PoC</strong> 的重點是快速驗證，而不是開發一個完美的、可直接上線的產品。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在評估 <strong style="color: purple;">AI</strong> 專案效益時，區分「<strong
+                        style="color: blue;">領先指標</strong>」(<strong style="color: red;">Leading Indicators</strong>)
+                    和「<strong style="color: blue;">落後指標</strong>」(<strong style="color: red;">Lagging
+                        Indicators</strong>) 的意義是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">領先指標</strong>比<strong
+                                style="color: blue;">落後指標</strong>更難測量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">領先指標</strong>用於<strong
+                                style="background-color: #ffff0030;">預測未來</strong>的結果，<strong
+                                style="color: blue;">落後指標</strong>用於<strong
+                                style="background-color: #ffff0030;">衡量已發生</strong>的結果，結合兩者能更全面地評估進度和成效</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 專案只應關注<strong
+                                style="color: blue;">落後指標</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">領先指標</strong>是成本，<strong
+                                style="color: blue;">落後指標</strong>是收益</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在衡量專案或業務績效時：
+                        <ul>
+                            <li><strong style="color: blue;">落後指標</strong> (<strong style="color: red;">Lagging
+                                    Indicators</strong>): 衡量的是<strong
+                                    style="background-color: #ffff0030;">過去</strong>的績效或<strong
+                                    style="background-color: #ffff0030;">已發生</strong>的結果。它們易於測量但難以直接影響或改變。例如：上個月的銷售額、上一季的客戶流失率、專案的最終
+                                <strong style="color: purple;">ROI</strong>。</li>
+                            <li><strong style="color: blue;">領先指標</strong> (<strong style="color: red;">Leading
+                                    Indicators</strong>): 衡量的是能夠<strong
+                                    style="background-color: #ffff0030;">預測</strong>或<strong
+                                    style="background-color: #ffff0030;">驅動</strong>未來結果的活動或因素。它們通常更難測量，但可以通過干預來影響最終結果。例如：本週的銷售拜訪次數、新註冊用戶數、模型預測的準確率（可能預示未來的業務影響）、員工參與培訓的時數。
+                            </li>
+                        </ul>
+                        在 <strong style="color: purple;">AI</strong> 專案評估中，結合監控<strong
+                            style="color: blue;">領先指標</strong>（如模型準確率、處理速度、用戶採用率）和<strong
+                            style="color: blue;">落後指標</strong>（如成本節省、營收增長、客戶滿意度），可以更及時地了解專案進展，發現潛在問題，並評估最終的成效。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">對於需要處理敏感個人資料的 <strong style="color: purple;">AI</strong> 應用，<strong
+                        style="color: blue;">數據評估</strong>階段應特別關注哪個面向？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據儲存的成本</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">數據隱私保護措施</strong>與<strong
+                                style="background-color: #ffff0030;">相關法規遵循</strong>（如 <strong
+                                style="color: purple;">GDPR</strong>、<strong style="color: blue;">個人資料保護法</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據視覺化的效果</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據產生的速度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">當 <strong style="color: purple;">AI</strong>
+                        應用涉及處理個人身份資訊、健康記錄、金融交易等敏感數據時，<strong style="background-color: #ffff0030;">數據隱私</strong>和<strong
+                            style="background-color: #ffff0030;">法規遵循</strong>是至關重要的考量。評估需要涵蓋：
+                        <ul>
+                            <li><strong style="color: blue;">數據收集的合法性</strong>: 是否獲得用戶充分告知和同意？</li>
+                            <li><strong style="color: blue;">數據最小化原則</strong>: 是否只收集了必要的最少量數據？</li>
+                            <li><strong style="color: blue;">數據安全措施</strong>: 是否有足夠的技術和管理措施保護數據免遭未授權訪問、洩露或濫用？（如加密、存取控制）
+                            </li>
+                            <li><strong style="color: blue;">數據去識別化/匿名化</strong>: 是否可以或需要對數據進行處理以移除個人身份標識？</li>
+                            <li><strong style="color: blue;">法規遵循</strong>: 是否符合當地的個人資料保護法規（如歐盟的 <strong
+                                    style="color: purple;">GDPR</strong>、台灣的<strong
+                                    style="color: blue;">個資法</strong>）的要求？</li>
+                        </ul>
+                        未能妥善處理<strong style="color: blue;">數據隱私</strong>不僅可能導致嚴重的法律後果和聲譽損害，也會侵蝕用戶信任。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">評估 <strong style="color: purple;">AI</strong> 技術方案時，考慮「<strong
+                        style="color: blue;">自建</strong>」(<strong style="color: red;">Build</strong>)、「<strong
+                        style="color: blue;">購買</strong>」(<strong style="color: red;">Buy</strong>) 或「<strong
+                        style="color: blue;">合作</strong>」(<strong style="color: red;">Partner</strong>) 的決策依據通常<strong
+                        style="font-weight: normal;">不包含</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">公司內部 <strong style="color: purple;">AI</strong> 技術能力與資源</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">上市時間</strong> (<strong
+                                style="color: red;">Time-to-Market</strong>) 的壓力</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">解決方案的獨特性與策略重要性</div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">競爭對手使用的雲端平台品牌</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在決定如何獲取 <strong style="color: purple;">AI</strong>
+                        能力時，組織通常面臨<strong style="color: blue;">自建</strong>、<strong
+                            style="color: blue;">購買</strong>現成方案或與外部夥伴<strong
+                            style="color: blue;">合作</strong>的選擇。決策時需要權衡多個因素：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">內部能力與資源</strong>: 公司是否有足夠的技術人才、數據和基礎設施來自建
+                                <strong style="color: purple;">AI</strong> 系統？</li>
+                            <li><strong style="background-color: #ffff0030;">上市時間</strong>: 業務需求是否急迫？購買或合作通常能更快地部署解決方案。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">成本</strong>: 自建、購買、合作的初期和長期成本（<strong
+                                    style="color: purple;">TCO</strong>）各是多少？</li>
+                            <li><strong style="background-color: #ffff0030;">獨特性與控制力</strong>:
+                                需求是否非常獨特，需要高度客製化？自建能提供最大的控制力。現成方案可能無法完全滿足需求。</li>
+                            <li><strong style="background-color: #ffff0030;">策略重要性</strong>: 該 <strong
+                                    style="color: purple;">AI</strong> 能力是否為公司的核心競爭力？如果是，自建可能更具策略意義。</li>
+                            <li><strong style="background-color: #ffff0030;">供應商/合作夥伴的選擇</strong>: 市場上是否有成熟可靠的供應商或合作夥伴？
+                            </li>
+                        </ul>
+                        競爭對手使用的雲端平台品牌本身不是決定自建、購買或合作的核心依據，儘管雲端平台的選擇會影響技術架構和成本。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">若評估發現組織內部缺乏足夠的 <strong style="color: purple;">AI</strong> 專業人才，可行的應對方式包含？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">完全放棄導入 <strong style="color: purple;">AI</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">要求現有 <strong style="color: purple;">IT</strong> 人員立即轉型為 <strong
+                                style="color: purple;">AI</strong> 專家</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">外部招聘、內部培訓、與學術界或顧問公司合作、採用低程式碼/無程式碼 AI 平台</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅依賴開源模型，不需任何人才</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong>
+                        人才短缺是許多組織面臨的挑戰。應對策略是多樣的，可以組合使用：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">外部招聘</strong> (<strong
+                                    style="color: red;">Hiring</strong>): 直接從市場上招聘有經驗的 <strong
+                                    style="color: purple;">AI</strong> 人才。</li>
+                            <li><strong style="background-color: #ffff0030;">內部培訓/賦能</strong> (<strong
+                                    style="color: red;">Upskilling/Reskilling</strong>): 投資於現有員工的培訓，提升他們的 <strong
+                                    style="color: purple;">AI</strong> 相關技能。</li>
+                            <li><strong style="background-color: #ffff0030;">合作</strong> (<strong
+                                    style="color: red;">Partnership</strong>): 與大學、研究機構或專業 <strong
+                                    style="color: purple;">AI</strong> 顧問公司合作，獲取外部專業知識和支援。</li>
+                            <li><strong style="color: blue;">外包</strong> (<strong
+                                    style="color: red;">Outsourcing</strong>): 將部分 <strong
+                                    style="color: purple;">AI</strong> 開發或維護工作外包給第三方服務商。</li>
+                            <li><strong style="background-color: #ffff0030;">採用工具平台</strong>: 利用市面上的<strong
+                                    style="color: blue;">自動化機器學習</strong> (<strong style="color: red;">AutoML</strong>)
+                                或<strong style="color: blue;">低程式碼/無程式碼</strong> (<strong
+                                    style="color: red;">Low-code/No-code</strong>) <strong
+                                    style="color: purple;">AI</strong> 平台，降低對專業 <strong
+                                    style="color: purple;">AI</strong> 人才的依賴程度，讓業務人員或一般 <strong
+                                    style="color: purple;">IT</strong> 人員也能參與 <strong style="color: purple;">AI</strong>
+                                應用開發。</li>
+                        </ul>
+                        完全放棄或僅依賴開源模型而忽略人才需求都是不切實際的。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在進行 <strong style="color: purple;">AI</strong> <strong
+                        style="color: blue;">倫理評估</strong>時，「<strong style="color: blue;">透明度</strong>」原則指的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 模型的預測結果必須 100% 正確</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 系統的程式碼必須完全開源</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 系統的<strong
+                                style="background-color: #ffff0030;">運作方式、使用的數據、以及做出決策的依據</strong>應該是<strong
+                                style="background-color: #ffff0030;">清晰、可被理解和追溯的</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 系統必須使用最新的硬體</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> <strong
+                            style="color: blue;">倫理</strong>中的<strong style="color: blue;">透明度</strong>原則強調 <strong
+                            style="color: purple;">AI</strong> 系統不應是一個完全的「<strong
+                            style="color: blue;">黑盒子</strong>」。它包含幾個層面的含義：
+                        <ul>
+                            <li><strong style="color: blue;">數據透明</strong>: 使用了哪些數據來訓練模型？數據是如何收集和處理的？</li>
+                            <li><strong style="color: blue;">演算法透明/可解釋性</strong>: 模型的運作原理是什麼？它是如何根據輸入做出輸出的？（這與<strong
+                                    style="color: blue;">可解釋性</strong>密切相關）</li>
+                            <li><strong style="color: blue;">決策透明</strong>: 對於特定的預測或決策，其主要的依據或影響因素是什麼？</li>
+                        </ul>
+                        提高<strong style="color: blue;">透明度</strong>有助於建立使用者信任、發現和修正<strong
+                            style="color: blue;">偏誤</strong>、確保<strong
+                            style="color: blue;">公平性</strong>以及釐清責任。雖然完全的<strong
+                            style="color: blue;">透明度</strong>（例如揭露所有模型細節）可能涉及商業機密或難以實現，但追求適當程度的<strong
+                            style="color: blue;">透明度</strong>和<strong style="color: blue;">可解釋性</strong>是<strong
+                            style="color: blue;">負責任 AI</strong> 的重要目標。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">定義 <strong style="color: purple;">AI</strong> 專案的<strong
+                        style="color: blue;">成功指標</strong> (<strong style="color: red;">Success Metrics</strong>) 時，應該遵循
+                    <strong style="color: purple;">SMART</strong> 原則，其中 "<strong style="color: purple;">M</strong>"
+                    代表什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">管理的 (<strong style="color: red;">Manageable</strong>)</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">可衡量的 (<strong
+                                    style="color: red;">Measurable</strong>)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">有意義的 (<strong style="color: red;">Meaningful</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">多樣的 (<strong style="color: red;">Multiple</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">SMART</strong>
+                        原則是設定目標和衡量指標的常用框架，確保目標清晰可行：
+                        <ul>
+                            <li><strong style="color: purple;">S - Specific</strong> (具體的): 目標定義清晰明確，不含糊。</li>
+                            <li><strong style="color: purple;">M - Measurable</strong> (可衡量的): 目標可以用<strong
+                                    style="background-color: #ffff0030;">具體的數字或標準來衡量</strong>達成程度。必須能夠追蹤進度。</li>
+                            <li><strong style="color: purple;">A - Achievable / Attainable</strong> (可達成的):
+                                目標是實際的，在現有資源和條件下可以實現。</li>
+                            <li><strong style="color: purple;">R - Relevant</strong> (相關的): 目標與整體的業務策略或專案宗旨相關聯。</li>
+                            <li><strong style="color: purple;">T - Time-bound</strong> (有時限的): 設定明確的完成期限。</li>
+                        </ul>
+                        在設定 <strong style="color: purple;">AI</strong> 專案的<strong
+                            style="color: blue;">成功指標</strong>時，確保其「<strong
+                            style="background-color: #ffff0030;">可衡量</strong>」至關重要，這樣才能客觀地評估專案是否達到了預期效果（例如，客服回應時間縮短
+                        20%，模型預測準確率達到 90%，成本降低 15%）。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">模型漂移</strong> (<strong
+                        style="color: red;">Model Drift</strong>) 是 <strong style="color: purple;">AI</strong>
+                    系統維運中的一個潛在風險，它指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型程式碼被意外修改</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">由於<strong
+                                style="background-color: #ffff0030;">真實世界數據分佈隨時間變化</strong>，導致已部署模型的<strong
+                                style="background-color: #ffff0030;">效能逐漸下降</strong>的現象</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型訓練過程中斷</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型被複製到多個伺服器</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong>
+                        模型通常是在某個特定時間點的歷史數據上訓練的。然而，真實世界的環境是動態變化的，例如使用者行為改變、市場趨勢變化、外部事件影響等，這會導致線上實際遇到的數據分佈（輸入數據的特性或目標變數的關係）與訓練時的數據分佈產生差異。這種差異會使得原本效能良好的模型，在部署一段時間後預測能力逐漸下降，這種現象就稱為<strong
+                            style="color: blue;">模型漂移</strong>。<strong style="color: blue;">模型漂移</strong>主要有兩種類型：<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">概念漂移</strong> (<strong
+                                style="color: red;">Concept Drift</strong>)</strong>（輸入特徵與目標變數之間的關係發生變化）和<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">數據漂移</strong> (<strong
+                                style="color: red;">Data Drift</strong>)</strong>（輸入數據本身的統計特性發生變化）。為了應對<strong
+                            style="color: blue;">模型漂移</strong>，需要建立持續的監控機制，定期評估模型效能，並在必要時進行模型的重新訓練或更新。</div>
+                </div>
+                <img src="../image/Model Drift.png" class="responsive-img">
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">AI</strong> 導入評估流程中，「<strong
+                        style="color: blue;">利害關係人分析</strong>」(<strong style="color: red;">Stakeholder
+                        Analysis</strong>) 的主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">分析 <strong style="color: purple;">AI</strong> 模型的利弊</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">識別</strong>所有可能受 <strong
+                                style="color: purple;">AI</strong> 專案影響或對專案有影響力的個人或群體，並<strong
+                                style="background-color: #ffff0030;">了解他們的需求、期望和顧慮</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分析數據來源的可靠性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">分析專案的<strong style="color: blue;">投資報酬率</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">任何專案的成功都離不開<strong
+                            style="color: blue;">利害關係人</strong>的支持與合作。<strong
+                            style="color: blue;">利害關係人</strong>是指那些會影響專案或被專案影響的個人、群體或組織。在 <strong
+                            style="color: purple;">AI</strong> 導入評估中進行<strong style="color: blue;">利害關係人分析</strong>，旨在：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">識別關鍵人物</strong>:
+                                找出誰是專案的決策者、贊助者、使用者、開發者、受影響者、反對者等。</li>
+                            <li><strong style="background-color: #ffff0030;">了解需求與期望</strong>: 弄清楚不同<strong
+                                    style="color: blue;">利害關係人</strong>對 <strong style="color: purple;">AI</strong>
+                                專案的期望、目標和成功標準是什麼。</li>
+                            <li><strong style="background-color: #ffff0030;">評估影響與顧慮</strong>: 分析 <strong
+                                    style="color: purple;">AI</strong> 導入對不同<strong
+                                    style="color: blue;">利害關係人</strong>可能帶來的正面和負面影響，以及他們可能存在的擔憂或反對意見。</li>
+                            <li><strong style="background-color: #ffff0030;">制定溝通與參與策略</strong>:
+                                根據分析結果，制定針對性的溝通計劃和參與策略，以爭取支持、管理期望、化解衝突，確保專案順利推進。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在進行<strong style="color: blue;">成本效益分析</strong>時，如何量化 <strong
+                        style="color: purple;">AI</strong> 導入帶來的「<strong style="color: blue;">客戶滿意度提升</strong>」這類<strong
+                        style="color: blue;">無形效益</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">無法量化，只能忽略不計</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通過<strong style="color: blue;">代理指標</strong> (<strong
+                                style="color: red;">Proxy Metrics</strong>) 間接衡量，如<strong
+                                style="background-color: #ffff0030;">客戶流失率降低</strong>、<strong
+                                style="color: blue;">淨推薦值</strong> (<strong style="color: purple;">NPS</strong>) <strong
+                                style="background-color: #ffff0030;">提高</strong>、<strong
+                                style="background-color: #ffff0030;">重複購買率增加</strong>等</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">直接估算一個固定的金額</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只計算為此投入的成本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">無形效益</strong>（如客戶滿意度、品牌形象、員工士氣）雖然難以直接用金錢衡量，但在評估 <strong
+                            style="color: purple;">AI</strong> 專案價值時不應被忽略。量化<strong
+                            style="color: blue;">無形效益</strong>的常用方法是尋找<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">代理指標</strong> (<strong
+                                style="color: red;">Proxy Metrics</strong>)</strong>，這些指標雖然不是效益本身，但與效益密切相關且可以量化。例如：
+                        <ul>
+                            <li><strong style="color: blue;">客戶滿意度提升</strong> 可能體現在：<strong
+                                    style="color: blue;">客戶流失率</strong> (<strong style="color: red;">Churn
+                                    Rate</strong>) 降低、<strong style="color: blue;">客戶生命週期價值</strong> (<strong
+                                    style="color: red;">Customer Lifetime Value</strong>, <strong
+                                    style="color: purple;">CLTV</strong>) 增加、<strong style="color: blue;">淨推薦值</strong>
+                                (<strong style="color: red;">Net Promoter Score</strong>, <strong
+                                    style="color: purple;">NPS</strong>) 提高、正面評價數量增加、客訴案件減少、<strong
+                                    style="color: blue;">重複購買率</strong>上升等。</li>
+                            <li><strong style="color: blue;">員工效率提升</strong> 可能體現在：任務處理時間縮短、單位時間產出增加、加班時數減少等。</li>
+                        </ul>
+                        通過追蹤這些<strong style="color: blue;">代理指標</strong>的變化，可以間接地評估<strong
+                            style="color: blue;">無形效益</strong>的大小，並嘗試將其與財務結果（如營收增加、成本降低）建立聯繫。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據治理</strong> (<strong
+                        style="color: red;">Data Governance</strong>) 在 <strong style="color: purple;">AI</strong>
+                    導入評估中的重要性體現在？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">確保數據的<strong
+                                style="background-color: #ffff0030;">品質、安全、合規性</strong>和<strong
+                                style="background-color: #ffff0030;">有效利用</strong>，為 <strong
+                                style="color: purple;">AI</strong> 應用提供可信賴的數據基礎</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅負責購買數據儲存硬體</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅負責數據視覺化呈現</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">決定使用哪種 <strong style="color: purple;">AI</strong> 演算法</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">數據治理</strong>是指對組織內的數據資產進行管理和控制的一套原則、政策、標準、流程和控管措施。在 <strong
+                            style="color: purple;">AI</strong> 時代，<strong style="color: blue;">數據治理</strong>變得尤為重要，因為
+                        <strong style="color: purple;">AI</strong> 系統的效能和可靠性高度依賴於數據。良好的<strong
+                            style="color: blue;">數據治理</strong>可以：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">確保數據品質</strong>: 建立數據標準、監控數據品質、處理數據問題。</li>
+                            <li><strong style="background-color: #ffff0030;">保障數據安全與隱私</strong>: 制定數據存取權限、加密措施、防止數據洩露。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">確保法規遵循</strong>: 遵守相關的數據保護法規。</li>
+                            <li><strong style="background-color: #ffff0030;">提高數據可用性</strong>:
+                                建立數據目錄、定義數據資產、促進數據共享（在合規前提下）。</li>
+                            <li><strong style="background-color: #ffff0030;">明確數據責任</strong>: 界定數據擁有者、管理者和使用者的職責。</li>
+                        </ul>
+                        沒有健全的<strong style="color: blue;">數據治理</strong>體系，<strong style="color: purple;">AI</strong>
+                        專案將面臨數據品質低下、安全隱患、合規風險等諸多挑戰，難以成功。因此，評估組織的<strong style="color: blue;">數據治理</strong>成熟度是 <strong
+                            style="color: purple;">AI</strong> 導入評估的關鍵一環。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當評估發現導入 <strong style="color: purple;">AI</strong>
+                    可能對現有員工工作造成衝擊時，組織應優先考慮的策略是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">立即進行大規模裁員</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">規劃員工<strong style="background-color: #ffff0030;">再培訓</strong> (<strong
+                                style="color: red;">Reskilling</strong>) 和<strong
+                                style="background-color: #ffff0030;">技能提升</strong> (<strong
+                                style="color: red;">Upskilling</strong>) 計畫，幫助他們適應<strong
+                                style="background-color: #ffff0030;">人機協作</strong>的新工作模式</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">完全停止 <strong style="color: purple;">AI</strong> 導入計畫</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">對員工隱瞞 <strong style="color: purple;">AI</strong> 的實際影響</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> 的目標通常是增強人類能力，而非完全取代。面對
+                        <strong style="color: purple;">AI</strong> 可能帶來的<strong
+                            style="color: blue;">就業衝擊</strong>，負責任的組織應採取積極主動的策略，幫助員工適應變革：
+                        <ul>
+                            <li><strong style="color: blue;">技能提升</strong> (<strong
+                                    style="color: red;">Upskilling</strong>): 幫助員工深化現有技能，以更好地利用 <strong
+                                    style="color: purple;">AI</strong> 工具完成工作。</li>
+                            <li><strong style="color: blue;">再培訓</strong> (<strong
+                                    style="color: red;">Reskilling</strong>): 幫助員工學習全新的技能，以便轉向因 <strong
+                                    style="color: purple;">AI</strong> 而產生的新角色或需求增加的角色。</li>
+                            <li><strong style="color: blue;">內部轉調</strong>: 提供機會讓受影響的員工轉移到公司內部的其他崗位。</li>
+                            <li><strong style="color: blue;">人機協作設計</strong>: 重新設計工作流程，讓人與 <strong
+                                    style="color: purple;">AI</strong> 能夠有效地協同工作，發揮各自優勢。</li>
+                        </ul>
+                        同時，保持透明溝通，讓員工了解變革的必要性、影響以及組織提供的支持，對於減少焦慮和阻力至關重要。立即裁員或隱瞞都不是可持續或符合倫理的做法。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">評估不同 <strong style="color: purple;">AI</strong> 供應商或解決方案時，除了功能和價格，還應該考慮其？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">供應商的辦公室裝潢</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">技術支援能力</strong>、<strong
+                                style="color: blue;">服務水準協議</strong> (<strong
+                                style="color: purple;">SLA</strong>)、<strong style="color: blue;">可擴展性</strong>、<strong
+                                style="color: blue;">安全性</strong>、以及供應商的<strong
+                                style="background-color: #ffff0030;">長期穩定性與發展路線圖</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">供應商 <strong style="color: purple;">CEO</strong> 的學歷</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">供應商的標誌設計</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">選擇外部 <strong style="color: purple;">AI</strong>
+                        解決方案或合作夥伴時，需要進行全面的評估：
+                        <ul>
+                            <li><strong style="color: blue;">功能契合度</strong>: 方案功能是否滿足業務需求？</li>
+                            <li><strong style="color: blue;">技術效能</strong>: 方案的準確率、速度、穩定性如何？</li>
+                            <li><strong style="color: blue;">成本效益</strong>: 價格是否合理？<strong
+                                    style="color: blue;">總體擁有成本</strong> (<strong style="color: purple;">TCO</strong>)
+                                如何？</li>
+                            <li><strong style="background-color: #ffff0030;">技術支援與服務</strong>: 供應商是否提供及時有效的技術支援？<strong
+                                    style="color: blue;">服務水準協議</strong> (<strong style="color: red;">Service Level
+                                    Agreement</strong>, <strong style="color: purple;">SLA</strong>) 是否明確？</li>
+                            <li><strong style="color: blue;">整合性與擴展性</strong>: 是否容易與現有系統整合？未來是否容易擴展？</li>
+                            <li><strong style="background-color: #ffff0030;">安全性與合規性</strong>: 方案是否符合安全標準和法規要求？</li>
+                            <li><strong style="background-color: #ffff0030;">供應商穩定性與路線圖</strong>:
+                                供應商是否財務穩健、信譽良好？其產品是否有清晰的未來發展規劃？</li>
+                            <li><strong style="color: blue;">客製化能力</strong>: 方案是否提供足夠的彈性以滿足特定需求？</li>
+                        </ul>
+                        綜合考量這些因素，才能選擇最適合自身需求的合作夥伴或解決方案。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">負責任的 AI</strong> (<strong
+                        style="color: red;">Responsible AI</strong>) 框架通常包含哪些核心原則？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">速度、成本、易用性</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">公平性、可靠性與安全性、隱私與保障、包容性、透明度、當責性</strong> (<strong
+                                style="color: red;">Accountability</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">創新性、市場佔有率、獲利能力</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">開源、雲端原生、可擴展性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">負責任的 AI</strong> 旨在確保 <strong
+                            style="color: purple;">AI</strong>
+                        系統的開發和部署是以合乎道德、法律和社會規範的方式進行。雖然不同組織提出的框架細節可能略有差異，但通常包含以下核心原則（以微軟為例）：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">公平性</strong> (<strong
+                                    style="color: red;">Fairness</strong>): <strong style="color: purple;">AI</strong>
+                                系統應公平對待所有人，避免產生或加劇偏見。</li>
+                            <li><strong style="background-color: #ffff0030;">可靠性與安全性</strong> (<strong
+                                    style="color: red;">Reliability & Safety</strong>): <strong
+                                    style="color: purple;">AI</strong> 系統應在其設計的操作條件下穩定、安全地運行。</li>
+                            <li><strong style="background-color: #ffff0030;">隱私與保障</strong> (<strong
+                                    style="color: red;">Privacy & Security</strong>): <strong
+                                    style="color: purple;">AI</strong> 系統應保護數據隱私並確保數據安全。</li>
+                            <li><strong style="background-color: #ffff0030;">包容性</strong> (<strong
+                                    style="color: red;">Inclusiveness</strong>): <strong
+                                    style="color: purple;">AI</strong> 系統的設計應考慮到不同背景和能力的人群。</li>
+                            <li><strong style="background-color: #ffff0030;">透明度</strong> (<strong
+                                    style="color: red;">Transparency</strong>): <strong
+                                    style="color: purple;">AI</strong> 系統的運作方式和決策依據應易於理解。</li>
+                            <li><strong style="background-color: #ffff0030;">當責性</strong> (<strong
+                                    style="color: red;">Accountability</strong>): 設計和部署 <strong
+                                    style="color: purple;">AI</strong> 系統的人應對其影響負責。</li>
+                        </ul>
+                        在 <strong style="color: purple;">AI</strong> 導入評估階段就考慮這些原則，有助於從源頭降低風險，建立可信賴的 <strong
+                            style="color: purple;">AI</strong> 應用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 專案的「<strong
+                        style="color: blue;">最小可行性產品</strong>」(<strong style="color: red;">Minimum Viable
+                        Product</strong>, <strong style="color: purple;">MVP</strong>) 的概念強調什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">開發一個包含所有想像中功能的完整產品</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">以<strong
+                                style="background-color: #ffff0030;">最快速度、最少資源</strong>開發出一個具備<strong
+                                style="background-color: #ffff0030;">核心功能</strong>、能夠解決用戶最關鍵問題的產品版本，以便<strong
+                                style="background-color: #ffff0030;">快速驗證市場和收集回饋</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只開發產品的使用者介面，不包含實際功能</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">一個僅供內部測試、不發布給用戶的版本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">MVP</strong> 是<strong
+                            style="color: blue;">精實創業</strong> (<strong style="color: red;">Lean Startup</strong>)
+                        中的一個核心概念。它指的是用最少的努力和開發時間創建一個產品版本，該版本只包含足以滿足早期使用者 (<strong style="color: red;">Early
+                            Adopters</strong>) 需求的核心功能，並且能夠被用來驗證產品的核心假設、收集用戶回饋。<strong
+                            style="color: purple;">MVP</strong> 的目標不是追求完美或功能齊全，而是<strong
+                            style="background-color: #ffff0030;">快速學習和迭代</strong>。在 <strong
+                            style="color: purple;">AI</strong> 專案中，<strong style="color: purple;">MVP</strong> 可以幫助團隊：
+                        <ul>
+                            <li>快速驗證 <strong style="color: purple;">AI</strong> 解決方案是否能解決核心業務問題。</li>
+                            <li>收集真實用戶的使用數據和回饋，用於改進模型和產品設計。</li>
+                            <li>降低初期投入風險，避免在錯誤方向上投入過多資源。</li>
+                            <li>逐步迭代，根據市場反應調整產品方向。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 導入評估中，建立「<strong
+                        style="color: blue;">回退計畫</strong>」(<strong style="color: red;">Fallback Plan</strong>) 的目的是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">加速 <strong style="color: purple;">AI</strong> 模型的訓練</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">預先規劃當 <strong style="color: purple;">AI</strong> 系統<strong
+                                style="background-color: #ffff0030;">出現故障、效能不佳或其他意外情況</strong>時，可以<strong
+                                style="background-color: #ffff0030;">切換回原有流程或替代方案</strong>的應急措施</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提高 <strong style="color: purple;">AI</strong> 模型的預測準確率</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">減少 <strong style="color: purple;">AI</strong> 專案的初期投資</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong>
+                        系統並非萬無一失，可能會因為各種原因（如<strong
+                            style="color: blue;">模型漂移</strong>、數據異常、系統錯誤、惡意攻擊）而出現故障或產生不可靠的結果。<strong
+                            style="color: blue;">回退計畫</strong>是一種風險緩解措施，旨在為這些潛在的失敗情況做好準備。它預先定義了當 <strong
+                            style="color: purple;">AI</strong> 系統無法正常工作或其輸出不可信時，應該採取的<strong
+                            style="background-color: #ffff0030;">應急步驟</strong>，例如：
+                        <ul>
+                            <li>切換回原來的人工作業流程。</li>
+                            <li>啟用備用的、基於規則的簡易系統。</li>
+                            <li>將任務轉交給人工審核。</li>
+                        </ul>
+                        擁有清晰的<strong style="color: blue;">回退計畫</strong>可以確保在 <strong style="color: purple;">AI</strong>
+                        系統失效時，業務仍能持續運作，降低對業務造成的中斷和損失。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估數據品質時，"<strong style="color: blue;">數據一致性</strong>" (<strong
+                        style="color: red;">Data Consistency</strong>) 指的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據量是否足夠大</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據在<strong
+                                style="background-color: #ffff0030;">不同來源、不同時間點或不同記錄之間</strong>是否存在<strong
+                                style="background-color: #ffff0030;">矛盾或不匹配</strong>的情況</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據是否包含個人隱私資訊</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據是否容易被 <strong style="color: purple;">AI</strong> 模型理解</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">數據一致性</strong>是衡量數據品質的一個重要維度。它關注的是數據內部以及跨數據源之間是否存在邏輯上的<strong
+                            style="background-color: #ffff0030;">矛盾或衝突</strong>。例如：
+                        <ul>
+                            <li>同一個客戶在不同系統中的地址資訊不一致。</li>
+                            <li>訂單的總金額與各個明細項目的金額之和不符。</li>
+                            <li>某個欄位的數據格式（如日期格式）在不同記錄中不統一。</li>
+                            <li>數值超出合理的範圍（例如，年齡為 200 歲）。</li>
+                        </ul>
+                        數據不一致會導致分析結果錯誤或模型效能下降。在數據評估階段識別並處理（如清洗、校驗、統一格式）數據不一致問題，對於確保 <strong
+                            style="color: purple;">AI</strong> 應用的可靠性非常重要。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估 <strong style="color: purple;">AI</strong>
+                    導入的業務價值時，除了直接的財務回報，還應該考慮其對什麼的貢獻？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">公司伺服器的數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">公司的<strong style="background-color: #ffff0030;">長期策略目標</strong>與<strong
+                                style="background-color: #ffff0030;">核心競爭力</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">員工的平均通勤時間</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">辦公室的綠植數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">評估 <strong style="color: purple;">AI</strong> 導入的價值不應僅限於短期的 <strong
+                            style="color: purple;">ROI</strong> 計算，更應從策略層面思考其長期影響。需要評估該 <strong
+                            style="color: purple;">AI</strong> 應用是否：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">支持公司的整體策略方向？</strong>
+                                例如，是否符合數位轉型、客戶中心、創新領先等策略。</li>
+                            <li><strong style="background-color: #ffff0030;">有助於建立或強化公司的核心競爭力？</strong>
+                                例如，是否能顯著提高核心流程效率、改善關鍵產品性能、或創造獨特的客戶體驗。</li>
+                            <li><strong style="background-color: #ffff0030;">為未來發展奠定基礎？</strong> 例如，是否能積累有價值的數據資產、培養關鍵的
+                                <strong style="color: purple;">AI</strong> 人才、或探索新的業務模式。</li>
+                        </ul>
+                        即使某些 <strong style="color: purple;">AI</strong> 應用的短期財務回報不明顯，但如果它對公司的長期策略目標和競爭優勢有重要貢獻，也可能值得投入。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">敏感性分析</strong> (<strong
+                        style="color: red;">Sensitivity Analysis</strong>) 在 <strong style="color: purple;">AI</strong>
+                    專案<strong style="color: blue;">成本效益評估</strong>中的作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">分析使用者對 <strong style="color: purple;">AI</strong> 系統的情感反應</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">評估<strong
+                                style="background-color: #ffff0030;">關鍵假設</strong>（如成本、效益、採用率）的<strong
+                                style="background-color: #ffff0030;">變化</strong>對專案最終結果（如 <strong
+                                style="color: purple;">ROI</strong>）的<strong
+                                style="background-color: #ffff0030;">影響程度</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分析數據的隱私敏感度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">分析模型對輸入特徵的敏感度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">成本效益分析</strong>中的許多輸入（如未來成本節省、營收增長預期、模型準確率、用戶採用速度等）都帶有不確定性，只是基於當前的估計或假設。<strong
+                            style="color: blue;">敏感性分析</strong>是一種評估這些不確定性影響的方法。它通過系統性地<strong
+                            style="background-color: #ffff0030;">改變某一個或幾個關鍵假設的數值</strong>（例如，假設成本增加 10% 或效益降低
+                        10%），觀察這些變化對最終結果（如 <strong style="color: purple;">ROI</strong>、<strong
+                            style="color: blue;">淨現值</strong> <strong style="color: purple;">NPV</strong>、<strong
+                            style="color: blue;">回收期</strong> <strong style="color: red;">Payback
+                            Period</strong>）產生多大的影響。這有助於識別哪些假設對專案的成敗最為關鍵（即結果對其變化最敏感），從而可以重點關注這些高風險因素，並了解專案在不同情境下的可能表現。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估 <strong style="color: purple;">AI</strong> <strong
+                        style="color: blue;">倫理風險</strong>時，需要關注演算法的<strong style="color: blue;">公平性</strong> (<strong
+                        style="color: red;">Fairness</strong>)。以下哪項是衡量<strong style="color: blue;">公平性</strong>的常見考量？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型是否使用了最新的演算法</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型是否對<strong
+                                style="background-color: #ffff0030;">受保護的群體</strong>（如基於性別、種族、年齡）產生了<strong
+                                style="background-color: #ffff0030;">不成比例的負面影響</strong>或不同的錯誤率</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的程式碼是否易於閱讀</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型是否由知名公司開發</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> <strong
+                            style="color: blue;">公平性</strong>是一個複雜且多維度的概念，沒有單一的、普遍適用的定義或度量標準。評估<strong
+                            style="color: blue;">公平性</strong>時，通常需要考慮模型是否對某些受法律或道德保護的群體（通常基於性別、種族、年齡、宗教、殘疾狀況等敏感屬性）產生了<strong
+                            style="background-color: #ffff0030;">系統性的、不利的差別待遇</strong>。常見的<strong
+                            style="color: blue;">公平性</strong>考量/度量包括：
+                        <ul>
+                            <li><strong style="color: blue;">群體公平性</strong> (<strong style="color: red;">Group
+                                    Fairness</strong>):
+                                要求模型在不同群體之間的某些統計指標（如準確率、錯誤率、正例預測率）上表現一致。例如，不同性別的貸款申請者是否具有相似的通過率（<strong
+                                    style="color: blue;">人口均等</strong> <strong style="color: red;">Demographic
+                                    Parity</strong>）？或者，對於實際符合資格的不同性別申請者，模型是否具有相似的預測準確率（<strong
+                                    style="color: blue;">機會均等</strong> <strong style="color: red;">Equal
+                                    Opportunity</strong> 或<strong style="color: blue;">準確率均等</strong> <strong
+                                    style="color: red;">Equalized Odds</strong>）？</li>
+                            <li><strong style="color: blue;">個體公平性</strong> (<strong style="color: red;">Individual
+                                    Fairness</strong>): 要求相似的個體應受到相似的對待。</li>
+                        </ul>
+                        在評估 <strong style="color: purple;">AI</strong> 應用時，需要根據具體場景和潛在影響，選擇合適的<strong
+                            style="color: blue;">公平性</strong>定義和度量標準，並檢查模型是否存在違反這些標準的風險。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">"<strong style="color: blue;">數據素養</strong>" (<strong
+                        style="color: red;">Data Literacy</strong>) 對於組織成功導入 <strong style="color: purple;">AI</strong>
+                    的重要性在於？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使各級員工能夠<strong
+                                style="background-color: #ffff0030;">理解數據、利用數據進行溝通和決策</strong>，並能有效地與 <strong
+                                style="color: purple;">AI</strong> 系統互動</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">確保所有員工都會寫程式</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">讓所有數據都儲存在同一個地方</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">購買最昂貴的數據分析工具</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">數據素養</strong>是指閱讀、理解、創建、溝通和批判性思考數據的能力。在 <strong
+                            style="color: purple;">AI</strong> 時代，<strong
+                            style="color: blue;">數據素養</strong>對於組織中的所有成員（而不僅僅是<strong
+                            style="color: blue;">數據科學家</strong>）都變得越來越重要：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">理解 AI 基礎</strong>: 了解 <strong
+                                    style="color: purple;">AI</strong> 如何利用數據學習和做出預測，有助於更好地應用和信任 <strong
+                                    style="color: purple;">AI</strong> 工具。</li>
+                            <li><strong style="background-color: #ffff0030;">有效溝通</strong>: 能夠用數據來支持論點、解釋發現，促進跨部門協作。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">數據驅動決策</strong>: 培養基於數據證據而非僅憑直覺來做決策的文化。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">人機協作</strong>: 知道如何向 <strong
+                                    style="color: purple;">AI</strong> 系統提供有效的輸入，以及如何解讀和應用 <strong
+                                    style="color: purple;">AI</strong> 的輸出。</li>
+                            <li><strong style="background-color: #ffff0030;">識別潛在問題</strong>: 能夠質疑數據的來源、品質和潛在偏誤。</li>
+                        </ul>
+                        提升組織整體的<strong style="color: blue;">數據素養</strong>是建立<strong
+                            style="color: blue;">數據驅動</strong>文化、充分發揮 <strong style="color: purple;">AI</strong> 價值的基礎。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 的「<strong
+                        style="color: blue;">可解釋性</strong>」(<strong
+                        style="color: red;">Explainability/Interpretability</strong>) 為何在高風險應用中特別重要？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">可以讓模型運行更快</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">有助於<strong
+                                style="background-color: #ffff0030;">建立信任、偵錯、確保公平性、滿足法規要求</strong>以及讓受影響者理解決策原因</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">可以降低數據儲存成本</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">可以自動生成程式碼</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">對於決策結果可能對個人或社會產生重大影響的高風險應用（如醫療診斷、<strong
+                            style="color: blue;">自動駕駛</strong>、信貸審批、司法判決），理解 <strong style="color: purple;">AI</strong>
+                        模型為何做出特定決策至關重要：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">建立信任</strong>: 使用者和監管者需要相信模型的決策是合理且可靠的。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">偵錯與改進</strong>: 了解模型犯錯的原因有助於改進模型設計或數據。</li>
+                            <li><strong style="background-color: #ffff0030;">確保公平性</strong>: 檢查模型是否依賴了不恰當或帶有<strong
+                                    style="color: blue;">偏見</strong>的特徵。</li>
+                            <li><strong style="background-color: #ffff0030;">滿足法規要求</strong>: 某些法規（如 <strong
+                                    style="color: purple;">GDPR</strong>）要求對自動化決策提供解釋。</li>
+                            <li><strong style="background-color: #ffff0030;">使用者理解與申訴</strong>:
+                                讓受到決策影響的個人能夠理解原因，並在必要時提出質疑或申訴。</li>
+                        </ul>
+                        因此，在評估和選擇 <strong style="color: purple;">AI</strong> 技術方案時，必須將應用的風險等級與所需的<strong
+                            style="color: blue;">可解釋性</strong>程度納入考量。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="1" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">"<strong style="color: blue;">AI 成熟度模型</strong>" (<strong
+                        style="color: red;">AI Maturity Model</strong>) 通常用於評估什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單一 <strong style="color: purple;">AI</strong> 演算法的複雜度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">組織在採用和應用 <strong style="color: purple;">AI</strong> 技術方面的<strong
+                                style="background-color: #ffff0030;">整體能力和發展階段</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 領域的最新研究進展</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 硬體的效能</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">AI
+                            成熟度模型</strong>是一種框架，用於評估一個組織在成功導入和利用 <strong style="color: purple;">AI</strong> 方面的<strong
+                            style="background-color: #ffff0030;">整體準備情況和發展水平</strong>。它通常會從多個維度（如策略、文化、人才、數據、技術、治理等）將組織的
+                        <strong style="color: purple;">AI</strong>
+                        能力劃分為不同的階段（例如，初始階段、探索階段、應用階段、優化階段、轉型階段）。通過評估組織在各個維度上的表現，可以判斷其當前的 <strong
+                            style="color: purple;">AI</strong> 成熟度等級，找出差距和改進的重點領域，並為制定下一階段的 <strong
+                            style="color: purple;">AI</strong> 發展策略提供參考。</div>
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">技術評估</strong>中，考慮 <strong
+                        style="color: purple;">AI</strong> 模型的「<strong style="color: blue;">泛化能力</strong>」(<strong
+                        style="color: red;">Generalization Ability</strong>) 是指？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型在訓練數據上的表現</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型在<strong
+                                style="background-color: #ffff0030;">從未見過的新數據</strong>上的<strong
+                                style="background-color: #ffff0030;">表現能力</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型可以處理的數據類型數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型程式碼的長度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">模型的<strong style="color: blue;">泛化能力</strong>是指訓練好的模型應用於<strong
+                            style="background-color: #ffff0030;">未知的、獨立於訓練集的新數據</strong>時的效能表現。一個好的模型不僅應該在訓練數據上表現良好，更重要的是能夠有效地<strong
+                            style="background-color: #ffff0030;">泛化</strong>到新的、從未見過的數據上。如果模型在訓練數據上表現很好，但在測試數據（或實際應用場景）上表現很差，就表示發生了<strong
+                            style="background-color: #ffff0030;">過擬合 (<strong
+                                style="color: red;">Overfitting</strong>)</strong>，模型的<strong
+                            style="color: blue;">泛化能力</strong>差。評估模型的<strong style="color: blue;">泛化能力</strong>是機器學習和
+                        <strong style="color: purple;">AI</strong> 領域的核心目標之一，通常通過在獨立的測試集上評估模型效能來進行。</div>
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">回收期</strong> (<strong
+                        style="color: red;">Payback Period</strong>) 作為 <strong style="color: purple;">AI</strong>
+                    專案的評估指標，它衡量的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">專案的總利潤</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">專案的累計效益等於其<strong
+                                style="background-color: #ffff0030;">初始投資成本所需的時間</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">專案的風險等級</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">專案的技術複雜度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">回收期</strong>是評估投資專案經濟效益的常用指標之一，特別是從<strong
+                            style="background-color: #ffff0030;">流動性</strong>和<strong
+                            style="background-color: #ffff0030;">短期風險</strong>角度考量。它計算的是從專案開始投資起，需要多長時間才能通過專案產生的淨現金流入（效益減去營運成本）來完全收回初始的投資成本。<strong
+                            style="color: blue;">回收期</strong><strong
+                            style="background-color: #ffff0030;">越短</strong>，表示資金回收越快，流動性越好，短期內承擔的風險也相對較低。然而，<strong
+                            style="color: blue;">回收期</strong>方法的主要缺點是它<strong
+                            style="background-color: #ffff0030;">忽略了回收期之後的現金流</strong>，也沒有考慮<strong
+                            style="background-color: #ffff0030;">資金的時間價值</strong>（即未來的錢不如現在的錢值錢）。因此，它通常需要與其他指標（如<strong
+                            style="color: blue;">淨現值</strong> <strong style="color: purple;">NPV</strong>、<strong
+                            style="color: blue;">內部報酬率</strong> <strong style="color: purple;">IRR</strong>、<strong
+                            style="color: blue;">投資報酬率</strong> <strong
+                            style="color: purple;">ROI</strong>）結合使用，以進行更全面的評估。</div>
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在評估用於訓練 <strong style="color: purple;">AI</strong> 模型的數據時，"<strong
+                        style="color: blue;">標註品質</strong>" (<strong style="color: red;">Label Quality</strong>) 為何重要？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">標註越多樣化越好，不需考慮正確性</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">不準確或不一致的標註會誤導模型學習</strong>，<strong
+                                style="background-color: #ffff0030;">直接影響模型的效能和可靠性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">標註只需要由一個人完成即可</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">標註工具越貴，品質越高</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在<strong
+                            style="color: blue;">監督式學習</strong>中，模型是通過學習輸入數據（特徵）與其對應的正確輸出（標籤 <strong
+                            style="color: red;">Label</strong>）之間的映射關係來進行訓練的。因此，訓練數據的<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">標註品質</strong></strong>直接決定了模型學習的「老師」的好壞。如果標註存在大量錯誤（例如，將貓的圖片標記為狗）或不一致（例如，對於邊界模糊的物體，不同標註者的標準不一），模型就會學習到錯誤的模式，導致其預測不準確、不可靠。所謂「<strong
+                            style="color: red;">Garbage In, Garbage Out</strong>」，低品質的標註是訓練出低效能 <strong
+                            style="color: purple;">AI</strong>
+                        模型的主要原因之一。因此，在數據準備階段，確保標註的準確性、一致性和覆蓋性至關重要，可能需要制定清晰的標註指南、對標註人員進行培訓、以及進行多重標註和交叉驗證。</div>
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">AI</strong> 導入的「<strong
+                        style="color: blue;">試點專案</strong>」(<strong style="color: red;">Pilot Project</strong>) 與
+                    <strong style="color: purple;">PoC</strong> 的主要區別通常在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">試點專案</strong>完全不需要評估</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">試點專案</strong>通常<strong
+                                style="background-color: #ffff0030;">規模更大</strong>，<strong
+                                style="background-color: #ffff0030;">更接近真實應用場景</strong>，目標是驗證 <strong
+                                style="color: purple;">AI</strong> 方案在<strong
+                                style="background-color: #ffff0030;">實際操作環境下的整合性、穩定性和業務影響</strong>，為全面推廣做準備</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">PoC</strong> 需要更長的開發時間</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只有<strong style="color: blue;">試點專案</strong>需要考慮成本</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">PoC</strong> 和<strong
+                            style="color: blue;">試點專案</strong>都是在全面導入前進行的驗證步驟，但側重點和規模不同：
+                        <ul>
+                            <li><strong style="color: purple;">PoC</strong> (<strong style="color: red;">Proof of
+                                    Concept</strong>): 更側重於<strong
+                                    style="background-color: #ffff0030;">技術可行性</strong>的快速驗證。目標是回答「這個技術能不能解決這個問題？」規模通常較小，環境可能受控，不一定完全模擬真實場景。
+                            </li>
+                            <li><strong style="color: blue;">試點專案</strong> (<strong style="color: red;">Pilot
+                                    Project</strong>): 在 <strong style="color: purple;">PoC</strong> 成功後進行，更側重於<strong
+                                    style="background-color: #ffff0030;">實際應用和整合</strong>的驗證。目標是回答「這個方案在我們的實際環境中運行效果如何？能否順利整合？實際業務影響多大？」規模通常比
+                                <strong style="color: purple;">PoC</strong>
+                                大，涉及真實數據和流程，參與的用戶範圍也更廣，旨在測試方案的穩定性、易用性、與現有系統的整合情況，並收集更全面的使用者回饋和業務指標，為後續的全面部署 (<strong
+                                    style="color: red;">Rollout</strong>) 提供依據和經驗。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">AI</strong> 導入評估中，考慮「<strong
+                        style="color: blue;">法規遵循</strong>」(<strong style="color: red;">Regulatory Compliance</strong>)
+                    的重要性在於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">確保使用的 <strong style="color: purple;">AI</strong> 模型是最先進的</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">確保 <strong style="color: purple;">AI</strong> 系統的開發和應用符合相關的<strong
+                                style="background-color: #ffff0030;">法律、法規和行業標準</strong>，避免法律風險和處罰</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">加快 <strong style="color: purple;">AI</strong> 專案的開發速度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加 <strong style="color: purple;">AI</strong> 專案的媒體曝光度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong>
+                        的應用受到越來越多法律法規的規範，尤其是在涉及個人數據、金融、醫療、交通等敏感領域。在導入評估階段就必須考慮：
+                        <ul>
+                            <li><strong style="color: blue;">數據隱私法規</strong>: 如 <strong
+                                    style="color: purple;">GDPR</strong>、<strong
+                                    style="color: purple;">CCPA</strong>、台灣<strong
+                                    style="color: blue;">個資法</strong>等，對個人數據的收集、處理、儲存、使用和跨境傳輸有嚴格規定。</li>
+                            <li><strong style="color: blue;">反歧視法規</strong>: 禁止基於特定屬性（如種族、性別）的歧視性決策。<strong
+                                    style="color: purple;">AI</strong> 模型如果產生<strong
+                                    style="color: blue;">偏誤</strong>結果，可能觸犯相關法規。</li>
+                            <li><strong style="color: blue;">行業特定法規</strong>: 金融業（如反洗錢、公平借貸）、醫療業（如 <strong
+                                    style="color: purple;">HIPAA</strong>）等可能有針對 <strong
+                                    style="color: purple;">AI</strong> 應用的特定規範。</li>
+                            <li><strong style="color: blue;">新興 AI 法規</strong>: 各國（如歐盟 <strong style="color: purple;">AI
+                                    Act</strong>）正在制定或已經出台專門針對 <strong style="color: purple;">AI</strong> 風險和應用的法規。</li>
+                        </ul>
+                        未能遵守相關法規可能導致巨額罰款、訴訟、業務中斷和聲譽損害。因此，<strong style="background-color: #ffff0030;">法規遵循</strong>是
+                        <strong style="color: purple;">AI</strong> 導入評估中不可或缺的一環。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="6" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">技術債</strong>」(<strong
+                        style="color: red;">Technical Debt</strong>) 在 <strong style="color: purple;">AI</strong>
+                    專案中的含義可能是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">購買 <strong style="color: purple;">AI</strong> 硬體設備所欠的款項</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">為了短期速度或目標而採用了<strong
+                                style="background-color: #ffff0030;">次優的技術方案或架構</strong>，導致<strong
+                                style="background-color: #ffff0030;">未來需要花費更多成本來維護、重構或修正</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 模型訓練消耗的電力成本</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong> 專利申請的費用</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">技術債</strong>是軟體開發中的一個比喻，指的是開發團隊為了追求短期目標（如快速上線）而選擇了權宜之計（<strong
+                            style="color: red;">Easy but suboptimal
+                            solution</strong>），而不是採用更耗時但更優良、更可持續的方案。這種選擇就像借債一樣，雖然暫時解決了問題，但未來需要付出額外的「利息」（即更高的維護成本、重構困難、系統脆弱性增加）來償還。在
+                        <strong style="color: purple;">AI</strong> 專案中，<strong
+                            style="color: blue;">技術債</strong>可能體現在：糟糕的數據管理、缺乏模組化設計、模型版本控制混亂、缺乏自動化測試、文檔不全等方面。在評估階段就應考慮方案的長期可維護性，避免積累過多<strong
+                            style="color: blue;">技術債</strong>。</div>
+                </div>
+                <img src="../image/Technical Debt.jpeg" class="responsive-img">
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="7" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">建立「<strong style="color: blue;">AI 卓越中心</strong>」(<strong
+                        style="color: red;">AI Center of Excellence</strong>, <strong
+                        style="color: purple;">CoE</strong>) 對於組織導入 <strong style="color: purple;">AI</strong> 的意義是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">一個存放 <strong style="color: purple;">AI</strong> 伺服器的實體機房</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">集中組織內的 AI
+                                專業知識、最佳實踐、工具和治理標準</strong>，以推動和支持各業務部門的 <strong style="color: purple;">AI</strong> 應用
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一個展示 <strong style="color: purple;">AI</strong> 成就的博物館</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">一個專門採購 <strong style="color: purple;">AI</strong> 軟體的部門</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI CoE</strong>
+                        是一個跨功能的團隊或組織單位，負責在整個企業內推動 <strong style="color: purple;">AI</strong> 的策略制定、能力建設和應用落地。其職能通常包括：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">制定 AI 策略與治理</strong>: 確立 <strong
+                                    style="color: purple;">AI</strong> 發展方向、倫理準則、數據標準和治理框架。</li>
+                            <li><strong style="background-color: #ffff0030;">知識分享與培訓</strong>: 匯集和傳播 <strong
+                                    style="color: purple;">AI</strong> 相關知識、最佳實踐，提供內部培訓。</li>
+                            <li><strong style="background-color: #ffff0030;">技術支援與諮詢</strong>: 為各業務部門的 <strong
+                                    style="color: purple;">AI</strong> 專案提供技術指導、工具平台和專家支援。</li>
+                            <li><strong style="background-color: #ffff0030;">標準化與重用</strong>: 推廣標準化的 <strong
+                                    style="color: purple;">AI</strong> 工具、平台和流程，促進元件重用，提高效率。</li>
+                            <li><strong style="background-color: #ffff0030;">創新孵化</strong>: 探索和實驗新的 <strong
+                                    style="color: purple;">AI</strong> 技術和應用場景。</li>
+                        </ul>
+                        建立 <strong style="color: purple;">CoE</strong> 有助於打破部門壁壘，整合資源，確保 <strong
+                            style="color: purple;">AI</strong> 導入與業務策略一致，並在組織內規模化地推廣 <strong
+                            style="color: purple;">AI</strong> 應用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">對於 <strong style="color: purple;">AI</strong> 導入機會進行<strong
+                        style="color: blue;">優先級排序</strong>時，常用的評估維度組合是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">技術最新程度 和 開發人員數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">潛在業務價值</strong> (<strong
+                                style="color: red;">Business Value</strong>) 和 <strong
+                                style="background-color: #ffff0030;">可行性/實施難度</strong> (<strong
+                                style="color: red;">Feasibility/Complexity</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">CEO</strong> 的喜好程度 和 媒體報導熱度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">所需數據量 和 演算法名稱</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">當組織識別出多個潛在的 <strong style="color: purple;">AI</strong>
+                        應用機會時，需要對它們進行<strong style="color: blue;">優先級排序</strong>，以決定先投入資源在哪裡。一個常用的排序框架是基於兩個主要維度：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">潛在業務價值</strong>:
+                                這個機會如果成功實現，能帶來多大的業務影響？（例如，預計的成本節省、營收增長、效率提升、策略重要性等）</li>
+                            <li><strong style="background-color: #ffff0030;">可行性/實施難度</strong>: 實現這個機會的難易程度如何？（考慮<strong
+                                    style="color: blue;">技術成熟度</strong>、<strong
+                                    style="color: blue;">數據可用性</strong>、整合複雜度、所需資源、風險等）</li>
+                        </ol>
+                        通常，應該優先選擇那些<strong style="background-color: #ffff0030;">價值高且可行性也高</strong>（或實施難度低）的機會（所謂的
+                        "<strong style="color: red;">Low-hanging fruit</strong>" 或 "<strong style="color: red;">Quick
+                            Wins</strong>"），以快速展現成效，建立信心。對於價值高但難度也高的機會，可能需要更長遠的規劃和投入。價值低或難度極高的機會，其優先級通常較低。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="5" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">衡量 <strong style="color: purple;">AI</strong> 模型效能的指標（如<strong
+                        style="color: blue;">準確率</strong>、<strong style="color: blue;">精確率</strong>、<strong
+                        style="color: blue;">召回率</strong>）屬於 <strong style="color: purple;">AI</strong> 導入評估中的哪個環節？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">數據評估</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">技術可行性評估</strong> 和 <strong
+                                style="background-color: #ffff0030;">效益評估</strong>（作為<strong
+                                style="color: blue;">領先指標</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅<strong style="color: blue;">風險評估</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅<strong style="color: blue;">組織準備度</strong>評估</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">AI</strong> 模型的效能指標（如分類任務的<strong
+                            style="color: blue;">準確率</strong>、<strong style="color: blue;">精確率</strong>、<strong
+                            style="color: blue;">召回率</strong>、<strong style="color: blue;">F1-score</strong>，回歸任務的
+                        <strong style="color: purple;">RMSE</strong>、<strong style="color: purple;">MAE</strong> 等）在
+                        <strong style="color: purple;">AI</strong> 導入評估中扮演多重角色：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;">技術可行性評估</strong>:
+                                評估現有技術是否能達到業務所需的最低效能門檻？例如，如果業務要求瑕疵檢測準確率必須達到 99%，而目前技術只能做到 90%，則技術上可能尚不可行。</li>
+                            <li><strong style="background-color: #ffff0030;">效益評估</strong>: 模型效能通常是實現最終業務效益的<strong
+                                    style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">領先指標</strong></strong>。例如，更高的預測準確率可能轉化為更高的銷售額或更低的成本。在效益評估時，需要將模型效能指標與業務價值聯繫起來。
+                            </li>
+                            <li><strong style="color: blue;">風險評估</strong>: 過低的模型效能本身就是一種技術風險和操作風險。</li>
+                        </ul>
+                        因此，模型效能指標是連接<strong style="color: blue;">技術可行性</strong>和業務價值的橋樑，在多個評估環節都需要被考慮。
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="noResultsMessage">沒有找到符合條件的題目。</div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterAndSearch(); // Call the main filter function
+            // Removed scrollIntoView as it might be jarring with multiple filter types
+            // document.getElementById('questionsContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterAndSearch);
+        document.getElementById("starFilter").addEventListener("change", filterAndSearch); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterAndSearch); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterAndSearch(); // Trigger filter on Enter key
+            }
+            // Optional: live search/filtering as user types
+            // filterAndSearch();
+        });
+
+
+        // Combined filter and search function
+        function filterAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            const noResultsMessage = document.getElementById('noResultsMessage');
+            let anyVisible = false; // Track if any questions match
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Display or hide the 'no results' message
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                if (!anyVisible) {
+                    // Generate a more informative message based on active filters/search
+                    let filterMessage = '沒有找到符合條件的題目。'; // Default message
+                    let filtersActive = [];
+                    if (direction !== 'all') filtersActive.push('方向 ' + direction);
+                    if (stars !== 'all') filtersActive.push(stars + ' 星');
+                    if (searchText !== '') filtersActive.push('關鍵字 "' + searchText + '"');
+
+                    if (filtersActive.length > 0) {
+                        filterMessage = '沒有找到符合 ' + filtersActive.join('、') + ' 的題目。';
+                    }
+                    noResultsMessage.textContent = filterMessage;
+                }
+            }
+            updateProgressBar(); // Recalculate progress after filtering/searching changes layout
+        }
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+            updateProgressBar(); // Recalculate progress as layout changes
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (no functional change, just basic setup)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Basic interaction, no grading logic implemented here
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterAndSearch(); // Apply default filters ('all', no search) on load
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+
+        // Ensure the noResultsMessage div exists after questionsContainer (or create if needed)
+        const questionsContainer = document.getElementById('questionsContainer');
+        if (questionsContainer && !document.getElementById('noResultsMessage')) {
+            const messageDiv = document.createElement('div');
+            messageDiv.id = 'noResultsMessage';
+            messageDiv.style.display = 'none';
+            messageDiv.style.textAlign = 'center';
+            messageDiv.style.padding = '20px'; // Added padding for visibility
+            messageDiv.style.color = '#000000'; // Black text as requested
+            messageDiv.style.fontSize = '1.1rem';
+            questionsContainer.insertAdjacentElement('afterend', messageDiv);
+        } else if (document.getElementById('noResultsMessage')) {
+            // Ensure existing message div style is correct
+            document.getElementById('noResultsMessage').style.color = '#000000';
+            document.getElementById('noResultsMessage').style.padding = '20px';
+        }
+
+    </script>
+</body>
+
+</html>

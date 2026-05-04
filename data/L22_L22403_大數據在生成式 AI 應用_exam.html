@@ -1,0 +1,3284 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L22403 大數據在生成式AI中的應用</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-items: flex-start;
+            /* Align items to the start */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .option-text {
+            line-height: 1.6;
+            /* Increased */
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.7;
+            /* Increased further */
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+
+        /* Message for no results */
+        #noResultsMessage {
+            display: none;
+            /* Hidden by default */
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L22403 大數據在生成式AI中的應用</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">用於生成式AI的大數據收集與前處理</option>
+                    <option value="2">支援生成式AI的大數據架構與平台</option>
+                    <option value="3">利用大數據優化生成式AI模型訓練</option>
+                    <option value="4">大數據於生成式AI模型推論與部署之應用</option>
+                    <option value="5">大數據在生成式AI評估與監控中的角色</option>
+                    <option value="6">生成式AI應用中的大數據隱私與安全</option>
+                    <option value="7">生成式AI與大數據整合的應用案例</option>
+                    <option value="8">大數據於生成式AI之挑戰與未來趨勢</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">用於生成式AI的大數據收集與前處理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">支援生成式AI的大數據架構與平台</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">利用大數據優化生成式AI模型訓練</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">大數據於生成式AI模型推論與部署之應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">大數據在生成式AI評估與監控中的角色</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">生成式AI應用中的大數據隱私與安全</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">生成式AI與大數據整合的應用案例</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">大數據於生成式AI之挑戰與未來趨勢</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">訓練<strong style="color: blue;">大型語言模型</strong>（<strong
+                        style="color: red;">Large Language Model</strong>, <strong
+                        style="color: purple;">LLM</strong>）時，使用<strong style="color: blue;">網路爬蟲</strong>收集的大量<strong
+                        style="color: blue;">文本數據</strong>，最可能面臨的首要<strong style="color: blue;">大數據前處理</strong>挑戰是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據量過小，不足以訓練模型</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">數據品質參差不齊</strong>，包含大量<strong
+                                style="color: blue;">雜訊</strong>、<strong style="color: blue;">重複內容</strong>和低品質文本</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據格式過於單一，缺乏<strong style="color: blue;">多樣性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據儲存成本過高，無法負擔</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        從網路上爬取的數據（如<strong style="color: red;">Common Crawl</strong>）本質上是<strong
+                            style="background-color: #ffff0030;">未經處理的原始數據</strong>，其中充滿了<strong
+                            style="color: blue;">雜訊</strong>（如<strong
+                            style="color: purple;">HTML</strong>標籤、廣告、導航欄）、<strong
+                            style="color: blue;">重複或近重複</strong>的頁面、低品質內容（如垃圾郵件、自動生成的文本）以及不適當的內容。因此，在將這些<strong
+                            style="color: blue;">大數據</strong>用於訓練<strong
+                            style="color: purple;">LLM</strong>之前，必須進行大規模的<strong
+                            style="color: blue;">數據清洗</strong>、<strong style="color: blue;">過濾</strong>和<strong
+                            style="color: blue;">去重</strong>。這個過程被稱為<strong style="color: blue;">數據整理</strong>（<strong
+                            style="color: red;">Data Curation</strong>），是確保模型訓練品質的關鍵第一步，也是<strong
+                            style="color: blue;">大數據前處理</strong>中最耗時和計算密集的工作之一。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在訓練一個需要數百<strong style="color: purple;">TB</strong>甚至<strong
+                        style="color: purple;">PB</strong>級數據的<strong style="color: blue;">生成式AI模型</strong>時，哪種<strong
+                        style="color: blue;">大數據儲存</strong>方案最適合用於存放原始及處理後的訓練數據集？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">傳統的<strong style="color: blue;">關聯式資料庫</strong>（<strong
+                                style="color: red;">Relational Database</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">單一伺服器上的本地文件系統</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">分散式文件系統</strong>（如<strong
+                                style="color: purple;">HDFS</strong>）或<strong
+                                style="color: blue;">雲端物件儲存</strong>（如<strong style="color: purple;">AWS S3</strong>,
+                            <strong style="color: red;">Google Cloud Storage</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">記憶體內資料庫</strong>（<strong
+                                style="color: red;">In-memory Database</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        處理<strong style="color: purple;">PB</strong>級的數據遠超出了單一伺服器或傳統<strong
+                            style="color: blue;">關聯式資料庫</strong>的處理能力。<strong
+                            style="color: blue;">分散式文件系統</strong>（如<strong style="color: red;">Hadoop Distributed File
+                            System</strong>, <strong style="color: purple;">HDFS</strong>）和<strong
+                            style="color: blue;">雲端物件儲存</strong>服務被設計用來<strong
+                            style="background-color: #ffff0030;">水平擴展</strong>（<strong style="color: red;">scale
+                            out</strong>），能夠經濟高效地儲存和管理<strong
+                            style="background-color: #ffff0030;">極大規模的數據</strong>，並提供<strong
+                            style="background-color: #ffff0030;">高吞吐量</strong>的數據訪問，這對於<strong
+                            style="color: blue;">大數據處理框架</strong>（如<strong
+                            style="color: red;">Spark</strong>）和大規模模型訓練至關重要。<strong
+                            style="color: blue;">記憶體內資料庫</strong>雖然快，但不適合儲存如此龐大的數據集。
+                        <img src="../image/HDFS.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">使用<strong style="color: red;">Apache Spark</strong>進行大型<strong
+                        style="color: blue;">生成式AI模型</strong>（如<strong style="color: blue;">圖像生成模型</strong>）的訓練數據<strong
+                        style="color: blue;">前處理</strong>時，其相較於傳統<strong style="color: red;">MapReduce</strong>的主要優勢是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅能處理<strong style="color: blue;">結構化數據</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">基於<strong style="color: blue;">記憶體</strong>的計算，<strong
+                                style="background-color: #ffff0030;">大幅減少了磁碟I/O</strong>，提高了<strong
+                                style="background-color: #ffff0030;">迭代計算的效率</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">不支援<strong style="color: blue;">容錯</strong>機制</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只能運行在單一節點上</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Apache Spark</strong>的核心優勢之一是其基於<strong
+                            style="color: blue;">彈性分散式資料集</strong> (<strong style="color: red;">Resilient Distributed
+                            Datasets</strong>, <strong style="color: purple;">RDDs</strong>)或<strong
+                            style="color: red;">DataFrames</strong>/<strong
+                            style="color: red;">Datasets</strong>的<strong
+                            style="background-color: #ffff0030;">記憶體內計算</strong>能力。對於需要<strong
+                            style="background-color: #ffff0030;">多次迭代處理數據</strong>的任務（如<strong
+                            style="color: blue;">機器學習算法</strong>、複雜的數據轉換流程），<strong
+                            style="color: red;">Spark</strong>可以將中間結果<strong
+                            style="background-color: #ffff0030;">緩存在記憶體中</strong>，避免了像<strong
+                            style="color: red;">MapReduce</strong>那樣每次迭代都需要讀寫磁碟，從而顯著提高了性能。這對於涉及複雜<strong
+                            style="color: blue;">特徵工程</strong>或多階段處理的<strong
+                            style="color: blue;">生成式AI數據準備</strong>工作尤其有利。<strong
+                            style="color: red;">Spark</strong>能處理多種數據類型，具備<strong
+                            style="color: blue;">容錯性</strong>，且是為<strong style="color: blue;">分散式環境</strong>設計的。
+                        <img src="../image/Spark In-Memory Computing.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">當需要將一個訓練好的<strong style="color: blue;">大型生成式AI模型</strong>（例如數十億參數的<strong
+                        style="color: purple;">LLM</strong>）<strong style="color: blue;">部署</strong>用於<strong
+                        style="color: blue;">線上推論</strong>（<strong style="color: red;">Inference</strong>）並處理<strong
+                        style="background-color: #ffff0030;">高併發請求</strong>時，通常會利用哪種<strong
+                        style="color: blue;">大數據</strong>相關技術來<strong
+                        style="background-color: #ffff0030;">分散負載</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅增加單一伺服器的<strong style="color: purple;">CPU</strong>核心數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使用<strong style="color: blue;">容器化</strong>（如<strong
+                                style="color: red;">Docker</strong>/<strong
+                                style="color: red;">Kubernetes</strong>）配合<strong
+                                style="color: blue;">負載平衡器</strong>（<strong style="color: red;">Load
+                                Balancer</strong>）將請求分發到<strong style="background-color: #ffff0030;">多個模型實例副本</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將模型參數儲存在<strong style="color: blue;">關聯式資料庫</strong>中</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用<strong style="color: blue;">批次處理</strong>（<strong
+                                style="color: red;">Batch Processing</strong>）框架如<strong
+                                style="color: red;">MapReduce</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">大型生成式AI模型</strong>的<strong
+                            style="color: blue;">推論</strong>通常計算密集且可能需要大量記憶體。為了處理<strong
+                            style="background-color: #ffff0030;">高併發</strong>的線上請求並保證低延遲，標準做法是<strong
+                            style="color: blue;">水平擴展</strong>。這通常通過將模型打包成<strong
+                            style="color: blue;">容器</strong>（如<strong style="color: red;">Docker</strong>），然後使用<strong
+                            style="color: blue;">容器編排系統</strong>（如<strong
+                            style="color: red;">Kubernetes</strong>）部署<strong
+                            style="background-color: #ffff0030;">多個相同的模型實例</strong>（副本）。前端的<strong
+                            style="color: blue;">負載平衡器</strong>則負責將傳入的請求均勻地分發到這些健康的實例上，從而<strong
+                            style="background-color: #ffff0030;">分散負載</strong>，提高系統的吞吐量和可用性。這種架構是<strong
+                            style="color: blue;">雲原生</strong>和現代大規模服務部署的常用模式，也適用於大型<strong
+                            style="color: purple;">AI</strong>模型的<strong
+                            style="color: blue;">推論服務</strong>。僅增加單一伺服器資源（垂直擴展）有其上限。<strong
+                            style="color: blue;">資料庫</strong>不適合儲存模型參數進行快速<strong
+                            style="color: blue;">推論</strong>。<strong style="color: blue;">批次處理</strong>框架不適用於低延遲的線上請求。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">監控</strong>一個部署上線的<strong
+                        style="color: blue;">生成式AI服務</strong>（如<strong
+                        style="color: blue;">聊天機器人</strong>）時，收集和分析大量的<strong
+                        style="background-color: #ffff0030;">用戶互動日誌</strong>（如請求內容、生成的回應、用戶反饋），以便持續評估模型性能和發現潛在問題（如<strong
+                        style="color: blue;">偏見</strong>、有害內容生成）。這體現了<strong style="color: blue;">大數據</strong>在<strong
+                        style="color: blue;">生成式AI生命週期</strong>的哪個階段的應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型初始訓練階段</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據收集與標註階段</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型部署後的<strong style="background-color: #ffff0030;">監控、評估與維護</strong>階段
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型架構設計階段</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">生成式AI模型</strong>部署後並非一勞永逸。<strong
+                            style="background-color: #ffff0030;">持續收集和分析</strong>模型在實際應用中產生的<strong
+                            style="background-color: #ffff0030;">大量數據</strong>（如用戶查詢、模型輸出、用戶點擊/評分反饋等日誌）至關重要。這些<strong
+                            style="color: blue;">大數據</strong>可用於<strong
+                            style="color: blue;">監控</strong>模型的性能指標（如回應相關性、流暢度、安全性），檢測<strong
+                            style="color: blue;">模型漂移</strong>（<strong style="color: red;">Model
+                            Drift</strong>）、發現和量化<strong style="color: blue;">偏見</strong>或有害內容的生成頻率，以及收集用於模型<strong
+                            style="color: blue;">再訓練</strong>或<strong
+                            style="color: blue;">微調</strong>的數據。這屬於模型生命週期中<strong
+                            style="color: blue;">部署後的運維</strong>（<strong
+                            style="color: purple;">MLOps</strong>）環節，<strong
+                            style="color: blue;">大數據分析平台</strong>（如<strong style="color: red;">ELK Stack</strong>,
+                        <strong style="color: red;">Splunk</strong>, 或基於<strong
+                            style="color: red;">Spark</strong>/<strong style="color: red;">Flink</strong>的<strong
+                            style="color: blue;">流處理</strong>）在此扮演關鍵角色。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="6" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在利用包含<strong style="color: blue;">個人身份資訊</strong>（<strong
+                        style="color: red;">Personally Identifiable Information</strong>, <strong
+                        style="color: purple;">PII</strong>）的<strong style="color: blue;">大數據集</strong>訓練<strong
+                        style="color: blue;">生成式AI模型</strong>時，為了保護<strong
+                        style="color: blue;">用戶隱私</strong>，哪種技術可以在保留數據<strong
+                        style="color: blue;">統計特性</strong>的同時，降低個體數據被洩露的風險？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據增強</strong>（<strong
+                                style="color: red;">Data Augmentation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">特徵工程</strong>（<strong
+                                style="color: red;">Feature Engineering</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">差分隱私</strong>（<strong
+                                style="color: red;">Differential Privacy</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">模型壓縮</strong>（<strong
+                                style="color: red;">Model Compression</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">差分隱私</strong>是一種強有力的<strong
+                            style="background-color: #ffff0030;">隱私保護框架</strong>，它通過在數據分析或模型訓練過程中（例如在梯度更新或數據聚合時）添加精心控制的<strong
+                            style="background-color: #ffff0030;">隨機噪聲</strong>，使得最終發布的結果（如模型參數、統計數據）對於數據集中是否存在任何單一個體數據不敏感。換句話說，即使攻擊者知道除某個特定用戶外的所有數據，也無法確定該用戶的數據是否在原始數據集中，從而提供了<strong
+                            style="background-color: #ffff0030;">數學上可證明的隱私保障</strong>。這對於處理涉及敏感訊息的大數據集（尤其是在<strong
+                            style="color: blue;">生成式AI</strong>可能記住並洩露訓練數據的風險下）非常重要。其他選項：<strong
+                            style="color: blue;">數據增強</strong>和<strong style="color: blue;">特徵工程</strong>是數據處理技術，<strong
+                            style="color: blue;">模型壓縮</strong>是優化模型大小，它們本身不直接提供<strong
+                            style="color: blue;">隱私保護</strong>。
+                    </div>
+                    <img src="../image/Differential Privacy.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">一家電子商務公司希望利用<strong
+                        style="color: blue;">生成式AI</strong>自動為其數百萬種商品生成獨特且吸引人的<strong
+                        style="background-color: #ffff0030;">描述文本</strong>。為了確保生成的描述與商品屬性（如顏色、材質、尺寸等）相關且準確，他們需要整合哪兩類關鍵技術？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅使用<strong style="color: blue;">推薦系統</strong><strong
+                                style="color: blue;">演算法</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅使用<strong style="color: blue;">自然語言處理</strong>（<strong
+                                style="color: purple;">NLP</strong>）進行<strong style="color: blue;">情感分析</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">大數據處理</strong>（用於管理商品屬性數據）和<strong
+                                style="color: blue;">條件式文本生成模型</strong>（<strong style="color: red;">Conditioned Text
+                                Generation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">電腦視覺</strong>（<strong
+                                style="color: red;">Computer Vision</strong>）和<strong
+                                style="color: blue;">語音識別</strong>（<strong style="color: red;">Speech
+                                Recognition</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        這個應用場景需要結合兩方面的能力：首先，需要有效管理和訪問包含數百萬商品及其詳細屬性的<strong
+                            style="color: blue;">大數據</strong>（通常儲存在<strong style="color: blue;">資料倉儲</strong>、<strong
+                            style="color: blue;">數據湖</strong>或<strong style="color: purple;">NoSQL</strong><strong
+                            style="color: blue;">資料庫</strong>中），這需要<strong
+                            style="color: blue;">大數據處理</strong>技術。其次，需要一個能夠根據輸入的條件（即商品的屬性）生成對應文本的<strong
+                            style="color: blue;">生成式AI模型</strong>，這屬於<strong
+                            style="background-color: #ffff0030;">條件式文本生成</strong>（一種<strong
+                            style="color: blue;">生成式AI</strong>）。模型需要以商品屬性數據作為輸入（<strong
+                            style="color: red;">prompt</strong>或<strong
+                            style="color: red;">condition</strong>），生成與之匹配的描述。因此，整合<strong
+                            style="color: blue;">大數據</strong>管理和<strong style="color: blue;">條件式生成模型</strong>是實現該目標的關鍵。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">生成式AI</strong>領域，利用超大規模數據集（如數萬億<strong
+                        style="color: red;">tokens</strong>的文本）訓練<strong style="color: blue;">基礎模型</strong>（<strong
+                        style="color: red;">Foundation Models</strong>）時，最顯著的挑戰之一是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">缺乏有效的<strong style="color: blue;">模型評估</strong>指標</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型過於簡單，無法捕捉數據複雜性</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">巨大的計算資源需求</strong>（算力、時間）和隨之而來的<strong
+                                style="background-color: #ffff0030;">能源消耗與成本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">難以找到足夠多樣化的數據源</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        訓練參數動輒數千億甚至上兆、數據量達<strong style="color: purple;">PB</strong>級的<strong
+                            style="color: blue;">基礎模型</strong>，需要<strong
+                            style="background-color: #ffff0030;">極其龐大的計算資源</strong>，包括數千個高性能<strong
+                            style="color: purple;">GPU</strong>/<strong
+                            style="color: purple;">TPU</strong>，以及數週甚至數月的訓練時間。這不僅導致了極高的訓練成本（可能達數百萬甚至數千萬美元），也引發了對其巨大<strong
+                            style="background-color: #ffff0030;">能源消耗</strong>和環境影響的擔憂。這種對算力的極端需求是目前大規模<strong
+                            style="color: blue;">生成式AI</strong>發展中最核心的挑戰之一，也驅動了對更高效訓練<strong
+                            style="color: blue;">演算法</strong>、硬體和<strong style="color: blue;">分散式系統</strong>的研究。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為了提高<strong style="color: blue;">生成式AI模型</strong>訓練數據的<strong
+                        style="color: blue;">多樣性</strong>，除了從多個來源收集數據外，還可以利用<strong
+                        style="color: blue;">大數據集</strong>進行哪種數據<strong style="color: blue;">前處理</strong>操作？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據增強</strong>（<strong
+                                style="color: red;">Data Augmentation</strong>），例如對圖像進行旋轉、裁剪，或對文本進行同義詞替換、回譯</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據去重</strong>（<strong
+                                style="color: red;">Deduplication</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">數據標準化</strong>（<strong
+                                style="color: red;">Standardization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">數據抽樣</strong>（<strong
+                                style="color: red;">Sampling</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">數據增強</strong>是一種常用的技術，旨在通過對現有數據進行各種變換來<strong
+                            style="background-color: #ffff0030;">人工擴充訓練數據集的大小和多樣性</strong>，而無需收集更多原始數據。對於圖像數據，常見的增強方法包括隨機旋轉、縮放、裁剪、翻轉、顏色抖動等。對於文本數據，則可能包括同義詞替換、隨機插入/刪除詞語、句子重排、以及利用<strong
+                            style="color: blue;">機器翻譯</strong>進行回譯（<strong
+                            style="color: red;">back-translation</strong>）等。在處理<strong
+                            style="color: blue;">大數據集</strong>時，可以應用這些增強技術來生成更多的訓練樣本，有助於提高模型的<strong
+                            style="color: blue;">泛化能力</strong>和穩健性。<strong style="color: blue;">去重</strong>、<strong
+                            style="color: blue;">標準化</strong>和<strong
+                            style="color: blue;">抽樣</strong>是其他數據處理步驟，但它們的主要目的不是增加數據<strong
+                            style="color: blue;">多樣性</strong>。
+                        <img src="../image/Data Augmentation.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">哪種<strong style="color: blue;">資料庫</strong>類型特別適合儲存和查詢<strong
+                        style="color: blue;">生成式AI</strong>（尤其是<strong
+                        style="color: purple;">LLM</strong>）中常用於增強上下文理解的<strong
+                        style="color: blue;">向量嵌入</strong>（<strong style="color: red;">Vector Embeddings</strong>）？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">鍵值存儲</strong>（<strong
+                                style="color: red;">Key-Value Store</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">文件資料庫</strong>（<strong
+                                style="color: red;">Document Database</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">向量資料庫</strong>（<strong
+                                style="color: red;">Vector Database</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">圖資料庫</strong>（<strong
+                                style="color: red;">Graph Database</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">向量嵌入</strong>是將文本、圖像或其他數據轉換為<strong
+                            style="color: blue;">高維數值向量</strong>的表示，相似的項目在向量空間中距離較近。<strong
+                            style="color: blue;">生成式AI</strong>，特別是<strong
+                            style="color: purple;">LLM</strong>在進行如<strong style="color: blue;">檢索增強生成</strong>（<strong
+                            style="color: red;">Retrieval-Augmented Generation</strong>, <strong
+                            style="color: purple;">RAG</strong>）等任務時，需要<strong
+                            style="background-color: #ffff0030;">高效地在大規模向量集合中查找與輸入查詢最相似的向量</strong>（即<strong
+                            style="color: blue;">最近鄰搜索</strong>）。<strong style="color: blue;">向量資料庫</strong>（如 <strong
+                            style="color: red;">Pinecone</strong>, <strong style="color: red;">Weaviate</strong>,
+                        <strong style="color: red;">Milvus</strong>, <strong
+                            style="color: red;">ChromaDB</strong>）專門為此類任務設計，它們優化了<strong
+                            style="color: blue;">高維向量</strong>的儲存、索引（如使用 <strong style="color: purple;">HNSW</strong>,
+                        <strong style="color: purple;">IVF</strong> 等算法）和<strong
+                            style="color: blue;">相似性搜索</strong>，能夠在<strong
+                            style="color: blue;">大數據</strong>規模下實現快速、準確的向量檢索，這是其他類型<strong
+                            style="color: blue;">資料庫</strong>難以高效完成的。
+                        <img src="../image/Vector Database1.png" class="responsive-img">
+                        <img src="../image/Vector Database2.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在利用<strong style="color: blue;">大數據</strong>訓練<strong
+                        style="color: blue;">生成式AI模型</strong>時，<strong style="color: blue;">分散式訓練</strong>（<strong
+                        style="color: red;">Distributed Training</strong>）的主要目標是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">減少模型所需的參數數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">利用多個計算節點（如<strong style="color: purple;">GPU</strong>/<strong
+                                style="color: purple;">TPU</strong>）<strong
+                                style="background-color: #ffff0030;">並行處理數據或模型</strong>，以<strong
+                                style="background-color: #ffff0030;">加速訓練過程</strong>和處理更大規模的模型/數據</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提高模型輸出的<strong style="color: blue;">可解釋性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">自動選擇最佳的模型架構</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        訓練<strong
+                            style="color: blue;">大型生成式AI模型</strong>通常需要處理海量數據和巨大的模型參數，單一計算節點往往無法在合理時間內完成訓練，或者無法容納整個模型。<strong
+                            style="color: blue;">分散式訓練</strong>通過將計算任務分配到多個節點（如多台機器上的多個<strong
+                            style="color: purple;">GPU</strong>）上<strong
+                            style="background-color: #ffff0030;">並行執行</strong>，來克服這些限制。常見的策略包括<strong
+                            style="color: blue;">數據並行</strong>（<strong style="color: red;">Data
+                            Parallelism</strong>，每個節點處理一部分數據，同步梯度）和<strong style="color: blue;">模型並行</strong>（<strong
+                            style="color: red;">Model Parallelism</strong>，將模型的不同部分放在不同節點上），其核心目標是<strong
+                            style="background-color: #ffff0030;">縮短訓練時間</strong>和/或<strong
+                            style="background-color: #ffff0030;">支援更大規模的模型與數據集</strong>。
+                        <img src="../image/Distributed Training.webp" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">對於需要低延遲回應的<strong
+                        style="color: blue;">生成式AI應用</strong>（如即時圖像風格轉換），如果模型<strong
+                        style="color: blue;">推論</strong>時間較長，可以利用<strong
+                        style="color: blue;">大數據預處理</strong>技術做些什麼來優化用戶體驗？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">增加模型的層數以提高精度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">預先計算和快取</strong>（<strong
+                                style="color: red;">Cache</strong>）常用輸入或中間結果的向量表示或部分生成結果</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">使用更高解析度的輸入數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">強制所有用戶排隊等待</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong
+                            style="color: blue;">快取</strong>是一種常見的優化技術。如果某些輸入（或輸入的某部分，如用戶畫的草圖的初始向量）經常出現，或者某些計算步驟可以預先完成，可以將這些結果儲存在快速訪問的<strong
+                            style="color: blue;">快取</strong>中（如記憶體或<strong
+                            style="color: red;">Redis</strong>）。當新的請求到來時，如果能在<strong
+                            style="color: blue;">快取</strong>中找到匹配的預計算結果，就可以直接使用或作為起點，從而跳過部分耗時的計算，<strong
+                            style="background-color: #ffff0030;">縮短整體回應時間</strong>。分析歷史<strong
+                            style="color: blue;">大數據日誌</strong>可以幫助識別哪些內容適合<strong style="color: blue;">快取</strong>。
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">使用<strong style="color: purple;">A/B測試</strong>來評估不同版本<strong
+                        style="color: blue;">生成式AI模型</strong>（例如，不同提示或微調策略的<strong
+                        style="color: blue;">聊天機器人</strong>）的效果時，需要收集<strong
+                        style="background-color: #ffff0030;">大量用戶互動數據</strong>來進行<strong
+                        style="color: blue;">統計分析</strong>。這主要利用了<strong style="color: blue;">大數據</strong>的哪個特性？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據速度（<strong style="color: red;">Velocity</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據量（<strong style="color: red;">Volume</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據多樣性（<strong style="color: red;">Variety</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據真實性（<strong style="color: red;">Veracity</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">A/B測試</strong>的核心是將用戶<strong
+                            style="color: blue;">隨機分配</strong>到不同組（A組使用模型版本A，B組使用模型版本B），然後收集<strong
+                            style="background-color: #ffff0030;">足夠多的用戶行為數據</strong>（如點擊率、轉換率、滿意度評分等），以<strong
+                            style="color: blue;">統計</strong>上顯著的方式比較兩個版本的性能差異。為了獲得可靠的<strong
+                            style="color: blue;">統計</strong>結果並檢測出可能較小的性能差異，通常需要<strong
+                            style="background-color: #ffff0030;">大量的用戶樣本和互動數據</strong>，這直接體現了<strong
+                            style="color: blue;">大數據</strong>的「量」（<strong
+                            style="color: red;">Volume</strong>）的特性。雖然速度、多樣性和真實性也很重要，但<strong
+                            style="color: purple;">A/B測試</strong>成功的基礎在於足夠的<strong
+                            style="background-color: #ffff0030;">數據量</strong>來支持<strong
+                            style="color: blue;">統計推斷</strong>。
+                    </div>
+                    <img src="../image/big_data.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在訓練<strong
+                        style="color: blue;">生成式AI模型</strong>時，若使用來自多個用戶的數據，但希望模型訓練在<strong
+                        style="background-color: #ffff0030;">本地設備</strong>上進行，<strong
+                        style="background-color: #ffff0030;">僅將聚合後的模型更新</strong>（而非原始數據）發送到中央伺服器。這種保護<strong
+                        style="color: blue;">數據隱私</strong>的<strong style="color: blue;">大數據處理範式</strong>被稱為什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">集中式學習</strong>（<strong
+                                style="color: red;">Centralized Learning</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">聯邦學習</strong>（<strong
+                                style="color: red;">Federated Learning</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">遷移學習</strong>（<strong
+                                style="color: red;">Transfer Learning</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">強化學習</strong>（<strong
+                                style="color: red;">Reinforcement Learning</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">聯邦學習</strong>是一種<strong
+                            style="color: blue;">分散式機器學習</strong>方法，允許多個參與方（如用戶設備或機構）協作訓練一個共享模型，而<strong
+                            style="background-color: #ffff0030;">無需將他們的本地原始數據發送出去</strong>。每個參與方在本地使用自己的數據訓練模型，然後<strong
+                            style="background-color: #ffff0030;">只將模型的更新</strong>（如梯度或模型權重）安全地聚合到中央伺服器，用於更新全局模型。然後全局模型再分發回參與方進行下一輪訓練。這種方法特別適用於需要利用分佈在各處的敏感<strong
+                            style="color: blue;">大數據</strong>（如手機用戶輸入、醫療記錄）進行模型訓練，同時又要保護<strong
+                            style="color: blue;">數據隱私</strong>的場景。
+                        <img src="../image/Federated Learning.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">利用<strong style="color: blue;">大數據分析</strong>用戶在<strong
+                        style="color: blue;">社群媒體</strong>上的發文內容、互動模式和關係網路，來訓練一個可以生成<strong
+                        style="background-color: #ffff0030;">個性化、符合用戶語氣和興趣</strong>的<strong
+                        style="color: blue;">社群媒體貼文</strong>的<strong
+                        style="color: blue;">生成式AI模型</strong>。這個應用整合了<strong
+                        style="color: blue;">大數據分析</strong>與哪個<strong style="color: blue;">生成式AI</strong>的主要能力？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像生成</strong>（<strong
+                                style="color: red;">Image Generation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">音樂生成</strong>（<strong
+                                style="color: red;">Music Generation</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">文本生成</strong>（<strong
+                                style="color: red;">Text Generation</strong>），特別是風格化和個性化文本生成</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">影片生成</strong>（<strong
+                                style="color: red;">Video Generation</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        該應用場景的核心是生成<strong style="color: blue;">社群媒體貼文</strong>，這屬於<strong
+                            style="color: blue;">文本生成</strong>的範疇。更進一步，它要求生成的文本具有<strong
+                            style="background-color: #ffff0030;">個性化</strong>特徵（符合特定用戶的風格、興趣），這是通過利用<strong
+                            style="color: blue;">大數據分析</strong>用戶歷史行為和關係網路來實現的。模型需要學習用戶的語言模式、常用詞彙、主題偏好等，並在生成文本時體現這些特徵。因此，這是<strong
+                            style="color: blue;">大數據分析</strong>與<strong
+                            style="background-color: #ffff0030;">個性化/風格化文本生成</strong>技術的結合。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">數據漂移</strong>」（<strong
+                        style="color: red;">Data Drift</strong>）是指生產環境中的實時數據分佈逐漸偏離了訓練模型時所用的數據分佈。在<strong
+                        style="color: blue;">大數據</strong>驅動的<strong style="color: blue;">生成式AI</strong>應用中，<strong
+                        style="color: blue;">數據漂移</strong>可能導致什麼主要問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型訓練速度變快</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型<strong
+                                style="background-color: #ffff0030;">性能下降</strong>，生成結果的品質、相關性或準確性降低</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型變得更加公平，沒有偏見</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型<strong style="color: blue;">推論</strong>所需的計算資源減少</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong
+                            style="color: blue;">生成式AI模型</strong>是從訓練數據中學習模式和分佈的。當實際應用中的數據（例如，用戶查詢的類型、主題、風格隨時間變化）與訓練數據產生顯著差異時，模型基於舊數據學到的知識可能不再適用於新數據，導致其<strong
+                            style="background-color: #ffff0030;">性能下降</strong>。例如，一個基於舊新聞數據訓練的文本摘要模型，可能無法很好地摘要關於新興事件的報導。因此，<strong
+                            style="color: blue;">監控</strong><strong style="color: blue;">數據漂移</strong>並定期使用新數據<strong
+                            style="color: blue;">重新訓練</strong>或<strong style="color: blue;">微調模型</strong>，是維持<strong
+                            style="color: blue;">生成式AI</strong>服務品質的關鍵挑戰，而這需要持續的<strong
+                            style="color: blue;">大數據監控</strong>與處理能力。
+                        <img src="../image/Data Drift.png" class="responsive-img">
+                        <img src="../image/Model Drift.png" class="responsive-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在準備用於訓練<strong style="color: blue;">生成式AI模型</strong>的圖像<strong
+                        style="color: blue;">大數據集</strong>時，進行數據<strong
+                        style="color: blue;">標準化</strong>（例如，將所有圖像縮放到相同尺寸、<strong
+                        style="color: blue;">歸一化</strong>像素值）的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">增加數據集的總大小</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">確保輸入數據具有<strong
+                                style="background-color: #ffff0030;">一致的格式和範圍</strong>，有助於模型穩定訓練和收斂</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">完全消除數據中的所有<strong style="color: blue;">噪聲</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">為每張圖像生成文字描述</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        來自不同來源的圖像數據可能具有不同的尺寸、解析度、色彩空間和像素值範圍。在將這些數據輸入<strong style="color: blue;">神經網路</strong>（如<strong
+                            style="color: purple;">GAN</strong>或<strong style="color: red;">Diffusion
+                            Model</strong>）進行訓練之前，通常需要進行<strong
+                            style="color: blue;">標準化</strong>處理。將圖像縮放到統一尺寸可以使模型處理固定大小的輸入。<strong
+                            style="color: blue;">歸一化</strong>像素值（例如，縮放到[0, 1]或[-1, 1]範圍，或進行零<strong
+                            style="color: blue;">均值</strong>單位<strong style="color: blue;">方差</strong><strong
+                            style="color: blue;">標準化</strong>）有助於<strong style="color: blue;">梯度下降</strong>等優化<strong
+                            style="color: blue;">演算法</strong>更穩定地工作，<strong
+                            style="background-color: #ffff0030;">加速模型收斂</strong>，並可能提高最終性能。這一步驟確保了數據的<strong
+                            style="background-color: #ffff0030;">一致性</strong>，是許多<strong
+                            style="color: blue;">機器學習</strong>和<strong style="color: blue;">深度學習</strong>流程中的標準預處理環節。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-direction="2" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Ray</strong>是一個流行的開源框架，常用於大規模<strong
+                        style="color: purple;">AI</strong>和<strong style="color: red;">Python</strong>應用。在<strong
+                        style="color: blue;">生成式AI</strong>領域，<strong
+                        style="color: red;">Ray</strong>特別適合用於處理哪項涉及<strong style="color: blue;">大數據</strong>和複雜計算的任務？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">編寫<strong style="color: purple;">SQL</strong>查詢</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">分散式訓練</strong>（<strong
+                                style="color: red;">Distributed Training</strong>）、<strong
+                                style="color: blue;">超參數調整</strong>（<strong style="color: red;">Hyperparameter
+                                Tuning</strong>）和<strong style="color: blue;">模型服務</strong>（<strong
+                                style="color: red;">Model Serving</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">創建靜態網頁</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">設計用戶界面（<strong style="color: purple;">UI</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Ray</strong>提供了一個簡單而強大的<strong
+                            style="color: purple;">API</strong>，用於構建和運行<strong
+                            style="color: blue;">分散式應用程式</strong>。它特別擅長處理需要大量計算資源和<strong
+                            style="color: blue;">並行處理</strong>的<strong style="color: purple;">AI</strong>工作負載。<strong
+                            style="color: red;">Ray Core</strong>提供了底層的<strong
+                            style="color: blue;">分散式</strong>原語（如<strong style="color: red;">Tasks</strong>和<strong
+                            style="color: red;">Actors</strong>），而其上的<strong style="color: blue;">函式庫</strong>（如<strong
+                            style="color: red;">Ray Train</strong>, <strong style="color: red;">Ray Tune</strong>,
+                        <strong style="color: red;">Ray Serve</strong>）則分別針對<strong
+                            style="color: blue;">分散式模型訓練</strong>、大規模<strong
+                            style="color: blue;">超參數</strong>搜索/優化以及可擴展的<strong
+                            style="color: blue;">模型推論服務</strong>提供了高級抽象。因此，<strong
+                            style="color: red;">Ray</strong>被廣泛應用於加速和擴展<strong
+                            style="color: blue;">大型生成式AI模型</strong>的訓練、實驗和部署流程。
+                    </div>
+                    <img src="../image/RayStack.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在使用<strong style="color: blue;">大數據</strong>進行<strong
+                        style="color: blue;">生成式AI模型</strong>訓練時，「<strong style="color: blue;">資料平行處理</strong>」（<strong
+                        style="color: red;">Data Parallelism</strong>）是一種常見的<strong
+                        style="color: blue;">分散式</strong>策略，其基本原理是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">將模型的不同層分配到不同的計算節點上</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將<strong
+                                style="background-color: #ffff0030;">完整的模型複製到多個計算節點</strong>，每個節點處理一小批（<strong
+                                style="color: red;">mini-batch</strong>）不同的數據，然後<strong
+                                style="background-color: #ffff0030;">匯總梯度</strong>進行更新</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只使用數據集中的一小部分進行訓練</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將訓練數據轉換為不同的格式</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">資料平行處理</strong>是最常用的<strong
+                            style="color: blue;">分散式訓練</strong>方法之一。其核心思想是：將大型訓練數據集劃分成多個子集（<strong
+                            style="color: red;">mini-batches</strong>），同時在多個計算單元（<strong
+                            style="color: red;">workers</strong>，通常是<strong
+                            style="color: purple;">GPU</strong>）上保留<strong
+                            style="background-color: #ffff0030;">完整的模型副本</strong>。每個<strong
+                            style="color: red;">worker</strong>獨立地使用分配給它的數據子集計算梯度。然後，通過某種機制（如<strong
+                            style="color: blue;">參數伺服器</strong>或<strong
+                            style="color: red;">AllReduce</strong>算法）將所有<strong
+                            style="color: red;">workers</strong>計算出的梯度進行<strong
+                            style="background-color: #ffff0030;">聚合</strong>（例如求平均），並用聚合後的梯度來更新所有模型副本的參數。這樣可以顯著加快處理整個大型數據集所需的時間。選項A描述的是<strong
+                            style="color: blue;">模型平行處理</strong>（<strong style="color: red;">Model
+                            Parallelism</strong>）。
+                    </div>
+                    <img src="../image/Data Parallelism Model Parallelism.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">對於一個需要處理大量不同用戶請求的<strong
+                        style="color: blue;">生成式AI服務</strong>，為了優化資源利用率和成本，可以採用哪種基於<strong
+                        style="color: blue;">大數據</strong>請求模式分析的部署策略？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">始終保持最大數量的模型實例運行</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">自動擴縮容</strong>（<strong
+                                style="color: red;">Auto-scaling</strong>）：根據實時的請求負載（如<strong
+                                style="color: purple;">QPS</strong>、<strong style="color: purple;">CPU</strong>/<strong
+                                style="color: purple;">GPU</strong>利用率）<strong
+                                style="background-color: #ffff0030;">動態調整運行的模型實例數量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將所有請求路由到單一的最強大的伺服器</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">定期手動增加或減少伺服器數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        用戶請求量通常不是恆定的，會有高峰和低谷時段。<strong style="color: blue;">自動擴縮容</strong>是一種<strong
+                            style="color: blue;">雲端運算</strong>和大規模服務管理中的關鍵技術。它通過持續監控服務的負載指標（這些指標本身就是一種<strong
+                            style="color: blue;">大數據流</strong>），並根據預設的規則（例如，當平均<strong
+                            style="color: purple;">CPU</strong>利用率超過70%時增加實例，低於30%時減少實例），<strong
+                            style="background-color: #ffff0030;">自動調整</strong>後端運行的服務實例（如<strong
+                            style="color: blue;">模型推論容器</strong>）的數量。這樣可以在需求高峰時保證服務性能和可用性，在需求低谷時減少資源使用，從而<strong
+                            style="background-color: #ffff0030;">優化成本效益</strong>。這需要一個能夠收集和分析負載<strong
+                            style="color: blue;">大數據</strong>並觸發擴縮容操作的監控和管理系統（如<strong style="color: red;">Kubernetes
+                            HPA</strong>）。
+                    </div>
+                    <img src="../image/Auto-scaling.jpeg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">生成式AI模型</strong>（如<strong
+                        style="color: purple;">LLM</strong>）的輸出是否包含<strong style="color: blue;">偏見</strong>（<strong
+                        style="color: red;">Bias</strong>）時，僅僅依賴小樣本的人工評估可能不夠全面。利用<strong
+                        style="color: blue;">大數據分析</strong>可以如何輔助<strong style="color: blue;">偏見檢測</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">忽略所有與敏感屬性相關的數據</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">設計<strong
+                                style="background-color: #ffff0030;">大量</strong>涵蓋不同敏感群體（如性別、種族、職業）的<strong
+                                style="background-color: #ffff0030;">測試提示</strong>（<strong
+                                style="color: red;">prompts</strong>），收集模型對這些提示的<strong
+                                style="background-color: #ffff0030;">大量回應</strong>，並使用<strong
+                                style="color: purple;">NLP</strong>技術和<strong
+                                style="color: blue;">統計方法</strong>分析回應中是否存在針對特定群體的<strong
+                                style="color: blue;">刻板印象</strong>、負面情感或不公平表述</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只分析模型回應的語法正確性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">假設所有<strong style="color: blue;">大數據</strong>訓練的模型都是公平的</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">偏見檢測</strong>是一個複雜問題。<strong
+                            style="color: blue;">大數據</strong>方法可以通過<strong
+                            style="background-color: #ffff0030;">系統性地、大規模地測試</strong>模型在特定場景下的行為來提供更全面的視角。這包括：(1)
+                        構建包含<strong style="background-color: #ffff0030;">大量</strong>針對不同群體的測試案例（如「描述一位[職業]」）；(2)
+                        收集模型對這些案例的<strong style="background-color: #ffff0030;">大量</strong>生成結果；(3) 利用<strong
+                            style="color: blue;">自然語言處理</strong>（<strong style="color: purple;">NLP</strong>）工具（如<strong
+                            style="color: blue;">情感分析</strong>、<strong style="color: blue;">詞嵌入</strong>關聯性分析）和<strong
+                            style="color: blue;">統計檢驗</strong>，量化分析模型輸出中是否系統性地出現對某些群體不利或刻板的描述。例如，分析不同性別代詞與特定職業或形容詞的共現頻率。這種基於<strong
+                            style="color: blue;">大數據</strong>的量化評估比小範圍人工檢查更具規模性和客觀性。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">當<strong style="color: blue;">生成式AI應用</strong>需要處理來自歐盟用戶的<strong
+                        style="color: blue;">大數據</strong>時，哪項法規對<strong
+                        style="color: blue;">個人數據</strong>的收集、處理和保護提出了嚴格要求，是必須遵守的重要<strong
+                        style="color: blue;">合規性</strong>框架？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">美國健康保險流通與責任法案（<strong style="color: purple;">HIPAA</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">歐盟<strong style="color: blue;">通用數據保護條例</strong>（<strong
+                                style="color: red;">General Data Protection Regulation</strong>, <strong
+                                style="color: purple;">GDPR</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">薩班斯-奧克斯利法案</strong>（<strong
+                                style="color: red;">Sarbanes-Oxley Act</strong>, <strong
+                                style="color: purple;">SOX</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">國際標準化組織<strong style="color: red;">ISO 27001</strong>標準</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">GDPR</strong>是歐盟範圍內關於<strong
+                            style="color: blue;">數據保護</strong>和<strong
+                            style="color: blue;">隱私</strong>的法規，對任何處理歐盟居民<strong
+                            style="color: blue;">個人數據</strong>的組織（無論其地理位置如何）都具有約束力。它規定了數據處理的原則（如合法性、公平性、透明性、目的限制、數據最小化、準確性、存儲限制、完整性和保密性），並賦予數據主體多項權利（如訪問權、更正權、刪除權、限制處理權、數據可攜權、反對權）。在利用<strong
+                            style="color: blue;">大數據</strong>訓練或運行<strong
+                            style="color: blue;">生成式AI應用</strong>時，如果涉及到歐盟用戶的<strong
+                            style="color: blue;">個人數據</strong>，必須確保符合<strong
+                            style="color: purple;">GDPR</strong>的要求，否則可能面臨巨額罰款。<strong
+                            style="color: purple;">HIPAA</strong>主要關乎美國的醫療資訊隱私，<strong
+                            style="color: purple;">SOX</strong>關乎財務報告，<strong style="color: red;">ISO
+                            27001</strong>是資訊安全管理體系的國際標準。
+                    </div>
+                    <img src="../image/GDPR_General Data Protection Regulation.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">檢索增強生成</strong>（<strong
+                        style="color: red;">Retrieval-Augmented Generation</strong>, <strong
+                        style="color: purple;">RAG</strong>）是一種結合了<strong style="color: blue;">大型語言模型</strong>和外部<strong
+                        style="color: blue;">知識庫</strong>的技術。在<strong style="color: blue;">大數據</strong>背景下，<strong
+                        style="color: purple;">RAG</strong>中的「檢索」步驟通常涉及什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">從網路上隨機下載文件</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">將用戶查詢轉換為<strong
+                                style="color: blue;">向量嵌入</strong>，然後在一個包含大量文檔（或文檔片段）<strong
+                                style="color: blue;">向量嵌入</strong>的索引（通常儲存在<strong
+                                style="color: blue;">向量資料庫</strong>中）中，<strong
+                                style="background-color: #ffff0030;">高效地搜索最相關的文檔片段</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對<strong style="color: blue;">語言模型</strong>進行完整的重新訓練</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">手動編寫所有可能的回答</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">RAG</strong>旨在通過結合預訓練<strong
+                            style="color: purple;">LLM</strong>的生成能力和從外部<strong
+                            style="color: blue;">知識源</strong>（如公司內部文檔、專業<strong
+                            style="color: blue;">知識庫</strong>）檢索到的最新或特定領域資訊，來提高生成內容的準確性和相關性，並減少「<strong
+                            style="color: blue;">幻覺</strong>」。其工作流程通常是：1. 將外部<strong
+                            style="color: blue;">知識庫</strong>（可能是非常大的文檔集合）進行切塊、轉換為<strong
+                            style="color: blue;">向量嵌入</strong>，並存儲在<strong style="color: blue;">向量資料庫</strong>中建立索引。2.
+                        當用戶提出查詢時，將查詢也轉換為<strong style="color: blue;">向量嵌入</strong>。3. 在<strong
+                            style="color: blue;">向量資料庫</strong>中執行<strong
+                            style="color: blue;">相似性搜索</strong>，找出與查詢向量最相關的幾個文檔片段（這一步是關鍵的<strong
+                            style="background-color: #ffff0030;">檢索</strong>步驟，涉及<strong
+                            style="color: blue;">大數據</strong>索引和搜索）。4. 將原始查詢和檢索到的相關文檔片段一起作為上下文（<strong
+                            style="color: red;">context</strong>）提供給<strong style="color: purple;">LLM</strong>。5.
+                        <strong style="color: purple;">LLM</strong>基於這些訊息生成最終的回答。這個<strong
+                            style="color: blue;">檢索</strong>步驟是利用<strong
+                            style="color: blue;">大數據</strong>（向量索引）技術來增強<strong style="color: blue;">生成模型</strong>的典型應用。
+                    </div>
+                    <img src="../image/RAG_Retrieval-Augmented-Generation.webp" class="responsive-img">
+                    <img src="../image/Vector Database1.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong
+                        style="color: blue;">生成式AI模型</strong>（尤其是大型模型）可能「記住」並在輸出中無意洩露其訓練數據中的敏感訊息（如個人姓名、地址、代碼片段）。從<strong
+                        style="color: blue;">大數據治理</strong>的角度來看，這引發了對哪項原則的擔憂？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型性能最優化</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據隱私與保密性</strong>（<strong
+                                style="color: red;">Data Privacy and Confidentiality</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型計算效率</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型的<strong style="color: blue;">可解釋性</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        大型<strong style="color: blue;">生成式模型</strong>是通過學習海量訓練數據中的模式來工作的。研究表明，在某些情況下，模型可能會<strong
+                            style="color: blue;">過度擬合</strong>（<strong
+                            style="color: red;">overfit</strong>）或「記憶」訓練數據中的特定、罕見的序列，並在後續生成過程中將其重現出來。如果訓練數據包含未被充分<strong
+                            style="color: blue;">匿名化</strong>或保護的<strong style="color: blue;">個人身份訊息</strong>（<strong
+                            style="color: purple;">PII</strong>）、商業機密或其他敏感內容，這種<strong
+                            style="background-color: #ffff0030;">記憶和洩露</strong>就構成了嚴重的<strong
+                            style="color: blue;">數據隱私和保密性風險</strong>。因此，在使用<strong
+                            style="color: blue;">大數據</strong>訓練<strong
+                            style="color: blue;">生成式AI</strong>時，採取有效的數據脫敏、<strong
+                            style="color: blue;">匿名化</strong>技術（如<strong
+                            style="color: blue;">差分隱私</strong>）以及對模型輸出進行過濾和<strong
+                            style="color: blue;">監控</strong>，是負責任<strong style="color: purple;">AI</strong>開發和部署的關鍵環節。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-direction="1" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在收集用於訓練<strong style="color: blue;">多模態生成模型</strong>（如<strong
+                        style="color: blue;">文本到圖像模型</strong> <strong style="color: red;">Stable
+                        Diffusion</strong>）的<strong style="color: blue;">大數據集</strong>（如 <strong
+                        style="color: red;">LAION-5B</strong>）時，數據通常包含圖像和與之配對的文本描述。這種配對數據的品質對模型性能至關重要，常見的<strong
+                        style="color: blue;">數據清洗</strong>步驟可能包括？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只保留解析度最高的圖像</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">過濾掉低品質</strong>的圖像（如模糊、損壞）、<strong
+                                style="background-color: #ffff0030;">不恰當內容</strong>（<strong
+                                style="color: purple;">NSFW</strong>）、以及與圖像內容<strong
+                                style="background-color: #ffff0030;">不相關或描述性差</strong>的文本標籤</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將所有文本描述翻譯成同一種語言</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">為每張圖像手動編寫詳細描述</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        像<strong style="color: red;">LAION</strong>這樣從網路上自動收集的大規模圖文配對數據集，不可避免地會包含品質問題。為了訓練出性能良好的<strong
+                            style="color: blue;">多模態模型</strong>，需要進行嚴格的<strong
+                            style="color: blue;">數據清洗</strong>。這通常包括：(1) <strong
+                            style="background-color: #ffff0030;">圖像質量過濾</strong>：去除過於模糊、解析度過低、損壞或包含水印的圖像。(2) <strong
+                            style="background-color: #ffff0030;">內容過濾</strong>：利用圖像或文本分類器篩除不適宜公開展示（<strong
+                            style="color: red;">Not Safe For Work</strong>, <strong
+                            style="color: purple;">NSFW</strong>）的內容。(3) <strong
+                            style="background-color: #ffff0030;">文本質量過濾</strong>：移除過短、無意義、與圖像明顯不符或語言混雜的文本描述。(4)
+                        可能還包括基於圖像和文本<strong
+                            style="color: blue;">嵌入</strong>相似度的過濾，以確保圖文對的語義相關性。這些步驟有助於提高訓練數據的信噪比，從而提升最終模型的生成品質和安全性。
+                    </div>
+                    <img src="../image/laion.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">一個需要快速處理和分析大量<strong
+                        style="background-color: #ffff0030;">實時數據流</strong>（例如，監控<strong
+                        style="color: blue;">社群媒體趨勢</strong>以動態調整<strong
+                        style="color: blue;">生成式AI</strong>的內容策略）的場景，最適合採用哪種<strong
+                        style="color: blue;">大數據處理架構</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅使用<strong style="color: blue;">批次處理</strong>（<strong
+                                style="color: red;">Batch Processing</strong>）如每日執行的<strong
+                                style="color: red;">MapReduce</strong>任務</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">流處理</strong>（<strong
+                                style="color: red;">Stream Processing</strong>）架構，如<strong style="color: red;">Apache
+                                Flink</strong>, <strong style="color: red;">Apache Kafka Streams</strong>, <strong
+                                style="color: red;">Spark Streaming</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">傳統的<strong style="color: blue;">資料倉儲</strong>（<strong
+                                style="color: red;">Data Warehouse</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">單機版的腳本語言處理</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">流處理架構</strong>專門設計用於處理<strong
+                            style="background-color: #ffff0030;">連續不斷、實時產生</strong>的<strong
+                            style="color: blue;">大數據流</strong>。它能夠在數據到達時立即進行處理和分析，實現<strong
+                            style="background-color: #ffff0030;">低延遲</strong>的響應。這對於需要根據最新訊息快速做出決策或調整行為的應用（如實時監控、<strong
+                            style="color: blue;">欺詐檢測</strong>、動態推薦、以及根據實時趨勢調整<strong
+                            style="color: purple;">AI</strong>生成內容）至關重要。<strong
+                            style="color: blue;">批次處理</strong>通常處理靜態的、累積到一定量的數據，延遲較高。<strong
+                            style="color: blue;">資料倉儲</strong>主要用於歷史數據的分析和報告。單機腳本無法處理大規模實時數據流。
+                    </div>
+                    <img src="../image/Spark-Streaming.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在訓練<strong style="color: blue;">大型生成式模型</strong>時，除了<strong
+                        style="color: blue;">數據平行處理</strong>，當模型本身過於龐大無法放入單一<strong
+                        style="color: purple;">GPU</strong>記憶體時，會採用哪種<strong style="color: blue;">分散式訓練</strong>策略？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只使用<strong style="color: purple;">CPU</strong>進行訓練</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">模型平行處理</strong>（<strong
+                                style="color: red;">Model Parallelism</strong>），將模型的<strong
+                                style="background-color: #ffff0030;">不同部分</strong>（如不同的層或注意力頭）<strong
+                                style="background-color: #ffff0030;">分散到不同的GPU</strong>上</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">梯度累加</strong>（<strong
+                                style="color: red;">Gradient Accumulation</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">提前停止</strong>（<strong
+                                style="color: red;">Early Stopping</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">模型平行處理</strong>是解決單個計算設備無法容納<strong
+                            style="background-color: #ffff0030;">超大模型</strong>問題的關鍵技術。它將一個巨大的模型<strong
+                            style="background-color: #ffff0030;">切分成多個部分</strong>，並將這些部分分別放置在不同的<strong
+                            style="color: purple;">GPU</strong>或其他計算單元上。在計算過程中，數據或中間結果需要在這些單元之間進行通信。常見的<strong
+                            style="color: blue;">模型平行處理</strong>方式包括<strong style="color: blue;">張量平行</strong>（<strong
+                            style="color: red;">Tensor Parallelism</strong>，將單個操作的計算分散）、<strong
+                            style="color: blue;">管道平行</strong>（<strong style="color: red;">Pipeline
+                            Parallelism</strong>，將模型的不同層按順序放在不同設備上，形成流水線）等。這通常與<strong
+                            style="color: blue;">數據平行處理</strong>結合使用（例如，<strong
+                            style="color: red;">DeepSpeed</strong>框架中的<strong
+                            style="color: red;">ZeRO</strong>技術），以應對超大規模模型的訓練挑戰。<strong
+                            style="color: blue;">梯度累加</strong>和<strong
+                            style="color: blue;">提前停止</strong>是訓練優化技巧，但不能解決模型過大的問題。
+                    </div>
+                    <img src="../image/Data Parallelism Model Parallelism.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為了評估<strong style="color: blue;">生成式AI</strong>（如<strong
+                        style="color: blue;">文本摘要模型</strong>）輸出的品質，除了人工評估外，常用的自動評估指標如 <strong
+                        style="color: purple;">ROUGE</strong> (<strong style="color: red;">Recall-Oriented Understudy
+                        for Gisting Evaluation</strong>) 分數，通常需要將模型生成的大量摘要與對應的<strong
+                        style="color: blue;">參考摘要</strong>（<strong style="color: red;">Reference
+                        Summaries</strong>）進行比較。準備這些<strong style="color: blue;">參考摘要</strong>本身可能涉及什麼<strong
+                        style="color: blue;">大數據</strong>挑戰？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型生成的摘要太短</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">獲取<strong
+                                style="background-color: #ffff0030;">大量高質量的、由人類撰寫或審定的參考摘要成本高昂且耗時</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: purple;">ROUGE</strong>分數無法計算</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">參考摘要</strong>過於多樣化</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        像<strong style="color: purple;">ROUGE</strong>、<strong
+                            style="color: purple;">BLEU</strong>等自動評估指標都需要一個或多個「黃金標準」的<strong
+                            style="color: blue;">參考輸出</strong>來與模型生成結果進行比較。對於<strong
+                            style="color: blue;">文本摘要</strong>、<strong style="color: blue;">機器翻譯</strong>等任務，<strong
+                            style="background-color: #ffff0030;">獲取大量</strong>（成千上萬甚至更多）由人類專家撰寫或仔細審核的<strong
+                            style="background-color: #ffff0030;">高質量參考文本</strong>，是一項<strong
+                            style="background-color: #ffff0030;">成本高昂</strong>（人力成本）且<strong
+                            style="background-color: #ffff0030;">耗時</strong>的任務。這限制了自動評估指標在<strong
+                            style="color: blue;">大數據</strong>規模下的應用範圍和可靠性，也是為什麼通常仍需要結合小範圍的人工評估來更全面地判斷模型性能。這是數據標註和評估基準構建中的一個典型<strong
+                            style="color: blue;">大數據</strong>挑戰。
+                    </div>
+                    <img src="../image/ROUGE_Recall-Oriented Understudy for Gisting Evaluation.jpg"
+                        class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">使用<strong style="color: blue;">大數據</strong>訓練<strong
+                        style="color: blue;">生成式AI模型</strong>時，如果數據來源包含受<strong
+                        style="color: blue;">版權保護</strong>的內容（如書籍、音樂、程式碼），可能會引發哪方面的法律和倫理風險？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型<strong style="color: blue;">過擬合</strong>風險</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">侵犯版權</strong>（<strong
+                                style="color: red;">Copyright Infringement</strong>）和<strong
+                                style="color: blue;">智慧財產權</strong>（<strong style="color: red;">Intellectual
+                                Property</strong>）問題</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">計算資源浪費</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據儲存空間不足</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">生成式AI</strong>通過學習訓練數據來生成新的內容。如果訓練數據中包含了大量受<strong
+                            style="color: blue;">版權保護</strong>的作品，而未獲得合法授權，那麼模型的訓練過程本身以及其生成的內容，都可能被視為對原作者<strong
+                            style="color: blue;">版權</strong>的侵犯。例如，模型可能會生成與訓練數據中受<strong
+                            style="color: blue;">版權保護</strong>文本、圖像或代碼高度相似的內容。這已成為<strong
+                            style="color: blue;">生成式AI</strong>領域一個主要的<strong
+                            style="background-color: #ffff0030;">法律和倫理爭議點</strong>，涉及<strong
+                            style="color: blue;">合理使用</strong>（<strong style="color: red;">Fair
+                            Use</strong>）原則的界定、數據來源的透明度和<strong style="color: blue;">版權</strong>歸屬等問題。
+                    </div>
+                    <img src="../image/Infringement.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">一家金融機構利用其海量的歷史交易數據和客戶行為數據，訓練一個<strong
+                        style="color: blue;">生成式AI模型</strong>來模擬市場波動或生成<strong style="color: blue;">合成的</strong>（<strong
+                        style="color: red;">Synthetic</strong>）但統計特性逼真的金融<strong
+                        style="color: blue;">時間序列數據</strong>，用於風險壓力測試或策略回測。這個應用場景主要利用了<strong
+                        style="color: blue;">大數據</strong>的哪個<strong style="color: blue;">價值</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">降低數據儲存成本</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從歷史數據中<strong
+                                style="background-color: #ffff0030;">學習複雜模式和分佈</strong>，並用於<strong
+                                style="background-color: #ffff0030;">生成新的、可用於模擬和測試的數據</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">即時處理交易請求</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">取代所有人類交易員</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        金融領域擁有大量高維度、高頻率的歷史數據。<strong style="color: blue;">生成式模型</strong>（如基於<strong
+                            style="color: purple;">GAN</strong>或<strong style="color: red;">Transformer</strong>的<strong
+                            style="color: blue;">時間序列模型</strong>）可以學習這些<strong
+                            style="color: blue;">大數據</strong>中蘊含的複雜相關性、波動性模式和尾部風險事件。訓練好的模型可以<strong
+                            style="background-color: #ffff0030;">生成大量統計特性與真實數據相似的合成數據</strong>。這些合成數據可以用於：(1)
+                        擴充數據集，尤其是在缺乏某些罕見事件數據時；(2) 進行<strong style="color: blue;">壓力測試</strong>，模擬歷史上未發生過的極端市場情景；(3)
+                        在不使用真實敏感數據的情況下進行策略回測或模型開發。這是利用<strong style="color: blue;">大數據</strong>訓練<strong
+                            style="color: blue;">生成模型</strong>以創造新<strong
+                            style="color: blue;">價值</strong>（模擬、測試數據）的典型應用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 31 -->
+            <div class="question-card" data-direction="8" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成式AI模型</strong>（尤其是<strong
+                        style="color: purple;">LLM</strong>）有時會產生「<strong style="color: blue;">幻覺</strong>」（<strong
+                        style="color: red;">Hallucination</strong>），即生成看似合理但實際上是虛假或與事實不符的資訊。在<strong
+                        style="color: blue;">大數據</strong>背景下，減輕<strong style="color: blue;">幻覺</strong>問題的策略之一是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用更小的模型</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">檢索增強生成</strong>（<strong
+                                style="color: purple;">RAG</strong>）：在生成回答前，先從可靠的<strong
+                                style="color: blue;">大數據知識庫</strong>中<strong
+                                style="background-color: #ffff0030;">檢索相關訊息</strong>，並將其作為上下文提供給模型</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只使用單一來源的訓練數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增加模型生成的隨機性（提高<strong style="color: red;">temperature</strong>參數）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">幻覺</strong>是<strong
+                            style="color: blue;">大型語言模型</strong>固有的一個挑戰，因為它們本質上是基於訓練數據中的統計模式來預測下一個詞，而不一定具備事實核查能力。<strong
+                            style="color: blue;">檢索增強生成</strong>（<strong
+                            style="color: purple;">RAG</strong>）是一種有效的緩解策略。通過在生成過程中引入一個<strong
+                            style="color: blue;">檢索</strong>步驟，從一個可信賴的、可能非常龐大的外部<strong
+                            style="color: blue;">知識庫</strong>（如維基百科、公司內部文檔、最新的新聞數據等，這些都需要<strong
+                            style="color: blue;">大數據技術</strong>來管理和索引）中找到與用戶問題相關的具體訊息，並讓模型在生成回答時「<strong
+                            style="background-color: #ffff0030;">參考</strong>」這些<strong
+                            style="color: blue;">檢索</strong>到的事實性內容，可以顯著提高生成結果的<strong
+                            style="background-color: #ffff0030;">準確性</strong>，減少憑空捏造（<strong
+                            style="color: blue;">幻覺</strong>）的可能性。
+                    </div>
+                    <img src="../image/RAG_Retrieval-Augmented-Generation.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 32 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: red;">Tokenization</strong>（<strong
+                        style="color: blue;">分詞</strong>/<strong style="color: blue;">標記化</strong>）是處理<strong
+                        style="color: blue;">文本大數據</strong>以訓練<strong
+                        style="color: purple;">LLM</strong>的關鍵第一步。對於包含<strong
+                        style="background-color: #ffff0030;">多種語言</strong>（如中文、英文、日文）的混合文本數據集，選擇或設計<strong
+                        style="color: blue;">分詞器</strong>時需要主要考慮什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只保留最長的文件</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">分詞器</strong>需要能有效處理<strong
+                                style="background-color: #ffff0030;">不同語言的文字結構</strong>（如中文的字、英文的詞根/詞綴、日文的假名漢字混合），並構建一個能夠<strong
+                                style="background-color: #ffff0030;">覆蓋多種語言常見單元的詞彙表</strong>（<strong
+                                style="color: red;">Vocabulary</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將所有文本轉換為小寫</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只使用空格作為分隔符</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        不同語言的<strong style="color: blue;">分詞</strong>/<strong
+                            style="color: blue;">標記化</strong>需求差異很大。例如，英文等基於空格分隔的語言，可以基於詞或<strong
+                            style="color: blue;">子詞</strong>（<strong style="color: red;">subword</strong>，如<strong
+                            style="color: purple;">Byte Pair Encoding</strong> - <strong
+                            style="color: purple;">BPE</strong>, <strong
+                            style="color: red;">WordPiece</strong>）進行切分。而中文、日文等沒有明顯空格分隔的語言，則需要更複雜的基於字或詞的切分策略，或者同樣採用<strong
+                            style="color: blue;">子詞</strong>方法。在處理包含<strong
+                            style="background-color: #ffff0030;">多種語言</strong>的<strong
+                            style="color: blue;">大數據集</strong>時，<strong
+                            style="color: blue;">分詞器</strong>必須能夠穩健地處理這些差異，避免將不同語言的文本切分成無意義的片段。同時，構建的<strong
+                            style="color: blue;">詞彙表</strong>需要足夠大且設計合理，以包含多種語言中的常見字符、<strong
+                            style="color: blue;">子詞</strong>單元，才能有效表示輸入文本並供模型學習。
+                    </div>
+                    <img src="../image/token.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 33 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">數據湖</strong>（<strong style="color: red;">Data
+                        Lake</strong>）架構允許企業儲存來自各種來源的原始、<strong style="color: blue;">半結構化</strong>和<strong
+                        style="color: blue;">結構化</strong><strong style="color: blue;">大數據</strong>。相較於傳統<strong
+                        style="color: blue;">資料倉儲</strong>，<strong style="color: blue;">數據湖</strong>在支持<strong
+                        style="color: blue;">生成式AI</strong>應用方面的主要優勢是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只支持<strong style="color: purple;">SQL</strong>查詢</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">靈活性高</strong>，能夠儲存<strong
+                                style="background-color: #ffff0030;">多樣化格式的原始數據</strong>（如文本、圖像、音頻），方便後續進行探索性分析和針對特定<strong
+                                style="color: purple;">AI</strong>任務的數據準備（<strong
+                                style="background-color: #ffff0030;">Schema-on-Read</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據在寫入前必須嚴格符合預定義的模式（<strong
+                                style="color: red;">Schema-on-Write</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">主要用於生成實時報表</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">生成式AI模型</strong>往往需要處理多種類型、格式不一的海量原始數據。<strong
+                            style="color: blue;">數據湖</strong>採用「<strong
+                            style="background-color: #ffff0030;">讀時模式</strong>」（<strong
+                            style="color: red;">Schema-on-Read</strong>）策略，允許先將各種<strong
+                            style="background-color: #ffff0030;">原始數據</strong>直接存入，而無需在寫入時強制轉換為統一的<strong
+                            style="color: blue;">結構化</strong>格式（這是傳統<strong style="color: blue;">資料倉儲</strong><strong
+                            style="color: red;">Schema-on-Write</strong>的做法）。這種<strong
+                            style="background-color: #ffff0030;">靈活性</strong>使得<strong
+                            style="color: blue;">數據湖</strong>非常適合存儲用於<strong style="color: purple;">AI</strong>/<strong
+                            style="color: purple;">ML</strong>的異構<strong style="color: blue;">大數據</strong>。<strong
+                            style="color: blue;">數據科學家</strong>和<strong
+                            style="color: purple;">AI</strong>工程師可以在需要時，再根據具體任務（如訓練一個圖像生成模型或文本分析模型）從<strong
+                            style="color: blue;">數據湖</strong>中提取相關的原始數據，並應用適當的處理和轉換。這為<strong
+                            style="color: blue;">探索性數據分析</strong>和靈活的<strong
+                            style="color: purple;">AI</strong>模型開發提供了便利。
+                    </div>
+                    <img src="../image/data lake data warehouse lakehouse.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 34 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">模型量化</strong>（<strong
+                        style="color: red;">Model Quantization</strong>）是一種常用的<strong
+                        style="color: blue;">模型壓縮</strong>技術，用於減少<strong
+                        style="color: blue;">生成式AI模型</strong>的大小和加速<strong style="color: blue;">推論</strong>。在<strong
+                        style="color: blue;">大數據</strong>服務部署中，量化的主要好處是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">顯著提高模型的生成品質</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">降低模型推論時的記憶體佔用和計算量</strong>，可能<strong
+                                style="background-color: #ffff0030;">提高推論速度</strong>並<strong
+                                style="background-color: #ffff0030;">降低硬體成本</strong>，尤其有利於邊緣部署</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">增加模型的參數數量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使得模型能夠處理更多種類的輸入數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">模型量化</strong>通常指將模型參數（權重和激活值）從較高精度的浮點數（如<strong
+                            style="color: purple;">FP32</strong>）表示轉換為較低精度的表示（如<strong
+                            style="color: purple;">FP16</strong>、<strong
+                            style="color: purple;">INT8</strong>甚至更低）。這樣做可以：1. 顯著<strong
+                            style="background-color: #ffff0030;">減小模型在磁碟和記憶體中的大小</strong>。2. <strong
+                            style="background-color: #ffff0030;">減少計算量</strong>，因為低精度運算通常更快。3. <strong
+                            style="background-color: #ffff0030;">降低功耗</strong>。這些優勢使得量化後的模型更容易部署到資源受限的環境（如邊緣設備或移動端），或者在雲端部署時能夠用更低的成本處理更多的<strong
+                            style="color: blue;">推論</strong>請求。雖然量化可能會帶來輕微的精度損失，但通常可以通過適當的技術（如量化感知訓練）來最小化這種影響。
+                    </div>
+                    <img src="../image/Quantization.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 35 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">持續<strong style="color: blue;">監控</strong>部署後的<strong
+                        style="color: blue;">生成式AI服務</strong>，收集大量關於請求<strong style="color: blue;">延遲</strong>、<strong
+                        style="color: blue;">錯誤率</strong>、<strong
+                        style="color: blue;">資源利用率</strong>等指標數據，主要目的是為了確保服務的哪個方面？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的創造力</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">服務的<strong style="color: blue;">可靠性</strong>（<strong
+                                style="color: red;">Reliability</strong>）、<strong
+                                style="color: blue;">可用性</strong>（<strong
+                                style="color: red;">Availability</strong>）和<strong
+                                style="color: blue;">性能</strong>（<strong style="color: red;">Performance</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型的倫理<strong style="color: blue;">合規性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">訓練數據的<strong style="color: blue;">多樣性</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">監控</strong>服務的運行指標（如響應時間、<strong
+                            style="color: purple;">QPS</strong>、<strong style="color: blue;">錯誤率</strong>、<strong
+                            style="color: purple;">CPU</strong>/<strong
+                            style="color: purple;">GPU</strong>/記憶體使用率）是確保線上服務穩定運行的基礎，這屬於系統運維和<strong
+                            style="color: purple;">MLOps</strong>的範疇。通過收集和分析這些實時的<strong
+                            style="color: blue;">大數據流</strong>，運維團隊可以及時發現性能瓶頸、資源不足、服務異常或潛在故障，並採取相應措施（如擴容、重啟實例、修復bug），以保證服務對用戶來說是<strong
+                            style="background-color: #ffff0030;">可靠的、隨時可用的，並且性能滿足要求</strong>。雖然倫理和數據<strong
+                            style="color: blue;">多樣性</strong>也很重要，但這些運行指標主要關注的是服務本身的穩定性和效率。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 36 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">資料匿名化</strong>（<strong
+                        style="color: red;">Data Anonymization</strong>）是處理包含<strong
+                        style="color: blue;">個人資訊</strong>的<strong style="color: blue;">大數據</strong>時常用的<strong
+                        style="color: blue;">隱私保護</strong>手段。以下哪項是對<strong style="color: blue;">匿名化</strong>技術在<strong
+                        style="color: blue;">生成式AI</strong>應用中侷限性的正確描述？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">匿名化</strong>可以完全保證數據無法被<strong
+                                style="color: blue;">重新識別</strong>（<strong
+                                style="color: red;">Re-identification</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">過度的匿名化可能移除過多有用訊息，降低數據效用</strong>（<strong
+                                style="color: red;">Utility</strong>），影響生成模型的訓練效果；且某些<strong
+                                style="color: blue;">匿名化</strong>技術仍可能被<strong
+                                style="color: blue;">鏈接攻擊</strong>（<strong style="color: red;">Linkage
+                                Attack</strong>）破解</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">匿名化</strong>只適用於圖像數據，不適用於文本數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">匿名化</strong>會增加數據的儲存需求</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        雖然<strong style="color: blue;">匿名化</strong>（如<strong
+                            style="color: purple;">k</strong>-匿名、<strong style="color: purple;">l</strong>-多樣性、<strong
+                            style="color: purple;">t</strong>-相近性）旨在移除或模糊化數據中的直接和間接標識符以保護<strong
+                            style="color: blue;">隱私</strong>，但它存在固有的挑戰。首先，<strong
+                            style="color: blue;">匿名化</strong>程度和<strong
+                            style="background-color: #ffff0030;">數據效用</strong>之間存在權衡：為了達到更高的<strong
+                            style="color: blue;">匿名保護</strong>級別，可能需要移除或泛化（<strong
+                            style="color: red;">generalize</strong>）更多數據細節，這可能導致數據失去對訓練<strong
+                            style="color: purple;">AI</strong>模型有價值的資訊。其次，即使數據經過<strong
+                            style="color: blue;">匿名化</strong>，如果攻擊者掌握了外部的輔助數據集，仍有可能通過<strong
+                            style="color: blue;">鏈接攻擊</strong>將<strong
+                            style="color: blue;">匿名數據</strong>與特定個體關聯起來，從而實現<strong
+                            style="color: blue;">重新識別</strong>。因此，<strong
+                            style="color: blue;">匿名化</strong>並非萬無一失的<strong
+                            style="color: blue;">隱私保護</strong>方法，尤其在處理<strong
+                            style="color: blue;">高維度</strong>、複雜關聯的<strong
+                            style="color: blue;">大數據</strong>時，需要謹慎評估其有效性和風險。相比之下，<strong
+                            style="color: blue;">差分隱私</strong>提供了更強的數學保障。
+                    </div>
+                    <table
+                        style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: Arial, sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <thead>
+                            <tr style="background-color: #3498db; color: white;">
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left; font-weight: bold;">
+                                    技術</th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left; font-weight: bold;">
+                                    描述</th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left; font-weight: bold;">
+                                    優點</th>
+                                <th style="border: 1px solid #ddd; padding: 12px; text-align: left; font-weight: bold;">
+                                    缺點</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f8f9fa;">
+                                <td style="border: 1px solid #ddd; padding: 12px; font-weight: bold; color: #2c3e50;">
+                                    <strong>k-匿名</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 12px;">確保每個記錄在數據集中至少有k-1個其他記錄與其不可區分。</td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #27ae60;">簡單易實現，降低重新識別風險。</td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #e74c3c;">
+                                    可能過度泛化數據，降低效用；對鏈接攻擊敏感。</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ddd; padding: 12px; font-weight: bold; color: #2c3e50;">
+                                    <strong>l-多樣性</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 12px;">在k-匿名基礎上，確保敏感屬性在每個組中至少有l個不同值。</td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #27ae60;">更好地保護敏感屬性，防止屬性洩露。
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #e74c3c;">實現更複雜；仍可能受鏈接攻擊影響。
+                                </td>
+                            </tr>
+                            <tr style="background-color: #f8f9fa;">
+                                <td style="border: 1px solid #ddd; padding: 12px; font-weight: bold; color: #2c3e50;">
+                                    <strong>t-相近性</strong></td>
+                                <td style="border: 1px solid #ddd; padding: 12px;">在l-多樣性基礎上，確保每個組中敏感屬性的分佈與整體數據集的分佈相近。
+                                </td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #27ae60;">提供更強的保護，防止分佈攻擊。</td>
+                                <td style="border: 1px solid #ddd; padding: 12px; color: #e74c3c;">最複雜的實現；可能進一步降低數據效用。
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Question 37 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">利用<strong style="color: blue;">生成式AI</strong>（如<strong
+                        style="color: purple;">GAN</strong>）生成逼真的<strong style="color: blue;">合成人臉圖像</strong><strong
+                        style="color: blue;">大數據集</strong>，可以用於訓練<strong
+                        style="color: blue;">人臉識別系統</strong>，尤其是在缺乏<strong
+                        style="color: blue;">多樣化</strong>真實人臉數據的情況下。這種做法的主要優勢是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成的圖像保證不含任何<strong style="color: blue;">偏見</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">可以按需生成<strong
+                                style="background-color: #ffff0030;">大量、多樣化的數據</strong>，有助於解決<strong
+                                style="background-color: #ffff0030;">數據稀疏</strong>和<strong
+                                style="color: blue;">多樣性</strong>不足問題，且可能<strong
+                                style="background-color: #ffff0030;">規避</strong>直接使用真實人臉數據的<strong
+                                style="color: blue;">隱私</strong>問題</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">合成圖像比真實圖像更容易被模型識別</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">生成合成圖像不需要任何訓練數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        生成<strong style="color: blue;">合成數據</strong>是<strong
+                            style="color: blue;">生成式AI</strong>的一個重要應用。在<strong
+                            style="color: blue;">人臉識別</strong>等領域，獲取涵蓋不同年齡、性別、種族、光照、姿態的<strong
+                            style="background-color: #ffff0030;">大規模真實數據集</strong>既困難又涉及<strong
+                            style="color: blue;">隱私風險</strong>。利用<strong
+                            style="color: purple;">GAN</strong>等模型可以生成<strong
+                            style="background-color: #ffff0030;">大量外觀逼真且多樣化的合成人臉圖像</strong>。這些<strong
+                            style="color: blue;">合成大數據</strong>可以：1. 擴充訓練集，提高模型的<strong
+                            style="color: blue;">泛化能力</strong>，尤其是在某些類別（如少數族裔）真實數據不足時。2. 用於測試模型的穩健性。3.
+                        在一定程度上繞開使用真實人臉數據可能帶來的<strong style="color: blue;">隱私</strong>合規問題（儘管合成數據本身的<strong
+                            style="color: blue;">偏見</strong>和倫理問題仍需關注）。當然，<strong
+                            style="color: blue;">生成模型</strong>本身也需要基於真實數據進行訓練。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 38 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">「<strong style="color: blue;">綠色AI</strong>」（<strong
+                        style="color: red;">Green AI</strong>）或「<strong style="color: blue;">可持續AI</strong>」（<strong
+                        style="color: red;">Sustainable AI</strong>）的趨勢日益受到關注。在<strong
+                        style="color: blue;">大數據</strong>和<strong style="color: blue;">生成式AI</strong>的背景下，這主要關注什麼問題？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">如何讓<strong style="color: purple;">AI</strong>模型生成更多關於環保的內容</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">大型<strong style="color: purple;">AI</strong>模型訓練和<strong
+                                style="color: blue;">推論</strong>過程中<strong
+                                style="background-color: #ffff0030;">巨大的能源消耗和碳排放</strong>問題，以及如何提高計算效率、降低環境影響</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">確保<strong style="color: purple;">AI</strong>模型只使用可再生能源進行訓練</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong>模型生成的內容是否環保</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        訓練和運行（尤其是大型）<strong
+                            style="color: blue;">生成式AI模型</strong>需要密集的計算，消耗大量電力，這對環境產生了顯著的影響（碳足跡）。<strong
+                            style="color: blue;">Green AI</strong> 運動倡導在<strong
+                            style="color: purple;">AI</strong>研究和開發中，不僅要關注模型的<strong
+                            style="color: blue;">準確率</strong>和性能，也要重視其<strong
+                            style="background-color: #ffff0030;">計算效率和環境成本</strong>。這包括開發更節能的模型架構、訓練<strong
+                            style="color: blue;">演算法</strong>（如使用更小的模型、<strong
+                            style="color: blue;">模型壓縮</strong>、稀疏化）、優化硬體使用、利用更高效的數據中心和可再生能源等，以降低<strong
+                            style="color: purple;">AI</strong>技術發展對環境的負擔。這是<strong
+                            style="color: blue;">大數據</strong>驅動的<strong
+                            style="color: blue;">生成式AI</strong>未來發展需要面對的重要挑戰。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 39 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">對於一個非常龐大的<strong style="color: blue;">文本數據集</strong>（例如數<strong
+                        style="color: purple;">TB</strong>），在進行<strong style="color: blue;">數據清洗</strong>和<strong
+                        style="color: blue;">預處理</strong>（如去除<strong style="color: purple;">HTML</strong>標籤、特殊字符、<strong
+                        style="color: blue;">重複行</strong>）時，如果單機處理速度過慢，最適合使用哪種<strong
+                        style="color: blue;">大數據工具</strong>來加速？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">文本編輯器（如<strong style="color: red;">Notepad++</strong>）</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">分散式處理框架</strong>，如<strong
+                                style="color: red;">Apache Spark</strong>或 <strong style="color: red;">Dask</strong>
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">關聯式資料庫</strong>（如<strong
+                                style="color: red;">MySQL</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">版本控制系統（如<strong style="color: red;">Git</strong>）</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        處理<strong style="color: purple;">TB</strong>級別的數據進行清洗和轉換，遠超出了單機工具（如文本編輯器）的處理能力。<strong
+                            style="color: blue;">分散式處理框架</strong>如<strong style="color: red;">Apache
+                            Spark</strong>或<strong style="color: red;">Python</strong>的<strong
+                            style="color: red;">Dask</strong>庫，能夠將數據和計算任務分發到一個<strong
+                            style="color: blue;">計算集群</strong>的多個節點上<strong
+                            style="background-color: #ffff0030;">並行執行</strong>。它們提供了高效的<strong
+                            style="color: purple;">API</strong>（如<strong style="color: red;">Spark</strong>的<strong
+                            style="color: purple;">RDD</strong>/<strong style="color: red;">DataFrame</strong> <strong
+                            style="color: purple;">API</strong>）來實現常見的數據轉換操作（如過濾、映射、<strong
+                            style="color: blue;">聚合</strong>、去重），可以顯著縮短處理大規模數據集所需的時間。<strong
+                            style="color: blue;">關聯式資料庫</strong>不適合處理<strong style="color: blue;">非結構化</strong>的<strong
+                            style="color: blue;">文本數據</strong>清洗，<strong style="color: red;">Git</strong>是版本控制工具。
+                    </div>
+                    <img src="../image/Spark_eco.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 40 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">超參數調整</strong>（<strong
+                        style="color: red;">Hyperparameter Tuning</strong>）是優化<strong
+                        style="color: blue;">生成式AI模型</strong>性能的關鍵步驟。當模型訓練成本高昂且<strong
+                        style="color: blue;">超參數</strong>組合空間巨大時，哪種基於<strong
+                        style="color: blue;">大數據</strong>實驗結果的優化策略比傳統<strong style="color: blue;">網格搜索</strong>（<strong
+                        style="color: red;">Grid Search</strong>）或<strong style="color: blue;">隨機搜索</strong>（<strong
+                        style="color: red;">Random Search</strong>）更有效率？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">手動調整</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">貝葉斯優化</strong>（<strong
+                                style="color: red;">Bayesian Optimization</strong>）或基於群體的優化算法（如<strong
+                                style="color: red;">Population Based Training</strong>, <strong
+                                style="color: purple;">PBT</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只嘗試一組固定的<strong style="color: blue;">超參數</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用最小的數據集進行搜索</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">網格搜索</strong>會嘗試所有可能的<strong
+                            style="color: blue;">超參數</strong>組合，<strong style="color: blue;">隨機搜索</strong>則隨機<strong
+                            style="color: blue;">抽樣</strong>。當<strong
+                            style="color: blue;">超參數</strong>空間很大或單次模型訓練成本很高（如大型<strong
+                            style="color: blue;">生成式模型</strong>）時，這兩種方法可能非常耗時且效率低下。<strong
+                            style="color: blue;">貝葉斯優化</strong>等<strong
+                            style="background-color: #ffff0030;">基於模型的優化方法</strong>，會利用<strong
+                            style="background-color: #ffff0030;">先前實驗的結果</strong>（即不同<strong
+                            style="color: blue;">超參數</strong>組合對應的模型性能，這本身就是一種需要管理的大數據）來學習一個代理模型（<strong
+                            style="color: red;">Surrogate Model</strong>），預測<strong
+                            style="color: blue;">超參數</strong>與性能的關係，並<strong
+                            style="background-color: #ffff0030;">智能地選擇</strong>下一個最有潛力提升性能的<strong
+                            style="color: blue;">超參數</strong>組合進行嘗試，從而用<strong
+                            style="background-color: #ffff0030;">更少的實驗次數</strong>找到接近最優的解。<strong
+                            style="color: purple;">PBT</strong>等方法則並行訓練多個模型，並根據性能動態調整<strong
+                            style="color: blue;">超參數</strong>和替換模型。<strong style="color: red;">Ray
+                            Tune</strong>等框架支持這些高級優化策略。
+                    </div>
+                    <img src="../image/Bayesian Optimization.PNG" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 41 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">將訓練好的<strong style="color: blue;">生成式AI模型</strong><strong
+                        style="color: blue;">部署</strong>到<strong style="color: blue;">雲端平台</strong>（如<strong
+                        style="color: purple;">AWS SageMaker</strong>, <strong style="color: red;">Google Vertex
+                        AI</strong>）進行大規模<strong style="color: blue;">推論服務</strong>時，平台通常提供了哪些基於<strong
+                        style="color: blue;">大數據監控</strong>的功能？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">自動編寫模型代碼</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">實時監控推論請求的<strong
+                                style="background-color: #ffff0030;">流量、延遲、錯誤率</strong>以及底層<strong
+                                style="background-color: #ffff0030;">計算資源</strong>（<strong
+                                style="color: purple;">CPU</strong>/<strong
+                                style="color: purple;">GPU</strong>/記憶體）的<strong
+                                style="background-color: #ffff0030;">使用情況</strong>，並提供<strong
+                                style="color: blue;">日誌記錄</strong>和告警功能</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">免費提供無限量的<strong style="color: purple;">GPU</strong>資源</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">自動為模型生成使用者介面</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        託管的<strong style="color: purple;">AI</strong>平台（<strong style="color: red;">Managed AI
+                            Platforms</strong>）通常內建了強大的<strong style="color: blue;">監控</strong>和<strong
+                            style="color: blue;">日誌</strong>功能，以幫助用戶管理<strong
+                            style="color: blue;">部署</strong>的模型。平台會自動收集關於模型端點（<strong
+                            style="color: red;">Endpoint</strong>）的大量運行時數據，例如<strong
+                            style="color: blue;">每秒查詢數</strong>（<strong style="color: purple;">QPS</strong>）、平均/<strong
+                            style="color: purple;">P99</strong><strong style="color: blue;">延遲</strong>、<strong
+                            style="color: purple;">HTTP</strong><strong
+                            style="color: blue;">錯誤碼</strong>（如5xx錯誤）、以及後端計算實例的<strong
+                            style="color: blue;">資源利用率</strong>等。這些近乎實時的<strong
+                            style="color: blue;">大數據指標</strong>對於了解服務健康狀況、診斷問題、設置<strong
+                            style="color: blue;">自動擴縮容</strong>策略以及容量規劃至關重要。用戶通常可以通過<strong
+                            style="color: blue;">儀表板</strong>查看這些指標，設置告警規則，並訪問詳細的請求/響應<strong
+                            style="color: blue;">日誌</strong>進行深入分析。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 42 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">為了檢測<strong style="color: blue;">生成式AI模型</strong>是否存在<strong
+                        style="color: blue;">數據記憶</strong>（<strong style="color: red;">Data
+                        Memorization</strong>）問題（即直接複製訓練數據中的內容），可以採取哪種基於<strong style="color: blue;">大數據</strong>比對的方法？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">只檢查模型生成內容的長度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從模型生成大量樣本，然後使用<strong
+                                style="background-color: #ffff0030;">高效的字符串匹配</strong>或<strong
+                                style="color: purple;">n-gram</strong><strong
+                                style="background-color: #ffff0030;">重疊算法</strong>，將生成樣本與原始訓練<strong
+                                style="color: blue;">大數據集</strong>進行比對，查找是否存在過長的完全或高度相似的匹配</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">詢問模型是否記得訓練數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">人工閱讀所有生成內容和訓練數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        檢測<strong
+                            style="color: blue;">數據記憶</strong>需要將模型的輸出與其龐大的訓練數據進行比較。由於兩者數據量都可能非常大，人工比對是不現實的。一種可行的方法是：(1)
+                        從訓練好的模型生成大量隨機或特定條件下的樣本。(2) 利用<strong style="color: blue;">大數據處理技術</strong>和<strong
+                            style="background-color: #ffff0030;">高效的文本比對算法</strong>（如後綴樹/數組、或者基於<strong
+                            style="color: purple;">n-gram</strong>哈希的近似匹配方法，如<strong
+                            style="color: red;">MinHash</strong>），將生成的樣本與原始訓練數據集（或其索引）進行大規模比對。(3) 識別出那些與訓練數據原文存在<strong
+                            style="background-color: #ffff0030;">異常高程度重疊</strong>（例如，連續幾十個或上百個詞完全一致）的生成樣本，這些可能就是<strong
+                            style="color: blue;">數據記憶</strong>的證據。這需要強大的<strong
+                            style="color: blue;">大數據處理</strong>能力來執行這種規模的比對。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 43 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在處理涉及<strong style="color: blue;">用戶生成內容</strong>（<strong
+                        style="color: red;">User-Generated Content</strong>, <strong
+                        style="color: purple;">UGC</strong>）的<strong style="color: blue;">大數據</strong>來訓練<strong
+                        style="color: blue;">生成式AI</strong>時，<strong style="color: blue;">數據清洗</strong>階段一個重要的<strong
+                        style="color: blue;">安全</strong>相關步驟是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">保留所有原始數據不作處理</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">識別和<strong
+                                style="background-color: #ffff0030;">過濾掉潛在的有害內容</strong>，如仇恨言論、暴力、色情資訊或惡意程式碼/腳本注入</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將所有用戶<strong style="color: purple;">ID</strong>替換為匿名編號</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只保留長度最長的內容</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong
+                            style="color: blue;">用戶生成內容</strong>來源廣泛，質量和安全性參差不齊。其中可能包含不當言論、非法訊息，甚至是用於攻擊的惡意代碼（例如，試圖通過特定輸入觸發模型漏洞或進行腳本注入）。在將這些<strong
+                            style="color: blue;">大數據</strong>用於訓練<strong style="color: blue;">生成式AI</strong>之前，進行<strong
+                            style="background-color: #ffff0030;">內容安全過濾</strong>是必不可少的步驟。這通常需要利用基於關鍵詞、正則表達式、<strong
+                            style="color: blue;">機器學習分類器</strong>（可能本身就是另一個<strong
+                            style="color: purple;">AI</strong>模型）或第三方內容審核服務來識別和移除這些<strong
+                            style="background-color: #ffff0030;">有害或危險的內容</strong>，以防止模型學會生成這些內容或被惡意利用。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 44 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">利用<strong style="color: blue;">生成式AI模型</strong>（如<strong
+                        style="color: red;">StyleGAN</strong>）和大量人臉圖像數據，可以創建「<strong
+                        style="color: blue;">深度偽造</strong>」（<strong
+                        style="color: red;">Deepfake</strong>）應用，例如換臉。這種技術的發展同時也凸顯了<strong
+                        style="color: blue;">大數據</strong>和<strong style="color: blue;">生成式AI</strong>結合可能帶來的哪項主要<strong
+                        style="color: blue;">社會風險</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">藝術創作的繁榮</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">虛假資訊</strong>（<strong
+                                style="color: red;">Disinformation</strong>）的製造與傳播、<strong
+                                style="background-color: #ffff0030;">身份盜用</strong>、以及對個人聲譽和社會信任的潛在破壞</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">數據儲存技術的進步</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算機硬體性能的提升</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: blue;">深度偽造</strong>技術利用<strong
+                            style="color: blue;">生成式AI</strong>（特別是<strong
+                            style="color: purple;">GAN</strong>）學習大量數據（如特定人物的影像）中的模式，然後生成高度逼真的、可以假亂真的偽造影像或音頻（例如，將一個人的臉換到另一個人身上，或模仿某人的聲音說話）。雖然這項技術有其潛在的正面應用（如影視特效），但其被濫用於製造<strong
+                            style="background-color: #ffff0030;">虛假新聞</strong>、政治宣傳、色情報復、<strong
+                            style="background-color: #ffff0030;">詐騙</strong>或誹謗的風險極高。這種能力對個人<strong
+                            style="color: blue;">隱私</strong>、<strong
+                            style="color: blue;">社會信任</strong>和訊息生態系統構成了嚴峻挑戰，是<strong
+                            style="color: blue;">生成式AI</strong>和<strong
+                            style="color: blue;">大數據</strong>技術發展需要重點關注和規範的倫理與<strong
+                            style="color: blue;">社會風險</strong>之一。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 45 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">未來，為了訓練更強大、更通用的<strong style="color: blue;">生成式AI模型</strong>（如通向<strong
+                        style="color: blue;">通用人工智能</strong> <strong style="color: purple;">AGI</strong>
+                    的模型），可能需要整合來自極其<strong style="color: blue;">多樣化</strong>來源的<strong
+                        style="background-color: #ffff0030;">超大規模數據</strong>（文本、圖像、音頻、影片、感測器數據、模擬數據等）。這對<strong
+                        style="color: blue;">大數據基礎設施</strong>提出了什麼樣的挑戰？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據量太小</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">需要能夠<strong
+                                style="background-color: #ffff0030;">高效儲存、處理、索引和融合極度異構</strong>（<strong
+                                style="color: red;">Heterogeneous</strong>）和<strong
+                                style="background-color: #ffff0030;">龐大</strong>（<strong
+                                style="color: red;">Exascale</strong>級別）數據的<strong
+                                style="background-color: #ffff0030;">統一、可擴展的基礎設施</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只需要傳統的<strong style="color: blue;">關係型資料庫</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據處理速度需要降低</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        目前的<strong style="color: blue;">生成式AI模型</strong>大多還是在單一或少數幾種模態上進行訓練。未來若要實現更接近人類智能水平的<strong
+                            style="color: purple;">AGI</strong>，模型需要能夠理解和整合來自真實世界各種感知通道的訊息。這意味著需要處理的數據不僅規模會達到前所未有的<strong
+                            style="color: red;">Exascale</strong>（百億億級）級別，而且其<strong
+                            style="background-color: #ffff0030;">異構性</strong>（種類、格式、結構的巨大差異）也將極大增加。現有的<strong
+                            style="color: blue;">數據湖</strong>、數據處理框架、<strong
+                            style="color: blue;">多模態資料庫</strong>等技術需要進一步發展，以應對這種<strong
+                            style="background-color: #ffff0030;">極端規模和異構性</strong>帶來的儲存、計算、數據融合和管理的挑戰。構建能夠支撐這種未來需求的統一、高效、可擴展的<strong
+                            style="color: blue;">大數據基礎設施</strong>，將是關鍵的技術瓶頸之一。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 46 -->
+            <div class="question-card" data-direction="1" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">使用 <strong style="color: red;">Prompt Engineering</strong> 來引導<strong
+                        style="color: blue;">大型語言模型</strong>生成特定風格或格式的文本時，為了找到最有效的 <strong
+                        style="color: red;">Prompt</strong> 樣板，研究人員可能會分析<strong
+                        style="background-color: #ffff0030;">大量</strong>（用戶查詢，模型回應，效果評分）的數據。這種利用歷史互動<strong
+                        style="color: blue;">大數據</strong>來優化 <strong style="color: red;">Prompt</strong> 的過程屬於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型架構設計</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">數據驅動的提示優化</strong>（<strong
+                                style="color: red;">Data-Driven Prompt Optimization</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型權重初始化</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">硬體加速設計</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: red;">Prompt Engineering</strong>
+                        本身是一門經驗性較強的技術，但可以通過數據分析使其更加系統化。通過收集和分析<strong
+                            style="background-color: #ffff0030;">大量用戶與模型互動的日誌數據</strong>（包括輸入的提示、模型生成的輸出以及用戶對輸出的反饋或評分），可以發現哪些提示結構、關鍵詞或範例（<strong
+                            style="color: red;">few-shot examples</strong>）能更穩定地引導模型產生期望的結果。這種基於歷史<strong
+                            style="color: blue;">大數據</strong>分析來迭代改進和發現最佳提示策略的方法，可以看作是<strong
+                            style="color: blue;">數據驅動的提示優化</strong>，有助於提高與大型<strong
+                            style="color: blue;">生成模型</strong>交互的效率和效果。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 47 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在構建支持<strong style="color: blue;">生成式AI</strong>應用的 <strong
+                        style="color: purple;">MLOps</strong> (<strong style="color: red;">Machine Learning
+                        Operations</strong>) 平台時，整合一個能夠<strong
+                        style="background-color: #ffff0030;">追蹤和管理訓練數據集版本、實驗參數、模型版本和評估結果</strong>的系統至關重要。這類系統解決了<strong
+                        style="color: blue;">大數據</strong>環境下的哪個核心問題？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">數據視覺化</strong>展示</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">實驗的<strong style="color: blue;">可重複性</strong>（<strong
+                                style="color: red;">Reproducibility</strong>）和<strong
+                                style="color: blue;">可追溯性</strong>（<strong style="color: red;">Traceability</strong>）
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">即時數據流處理</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">用戶身份驗證</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        訓練<strong style="color: blue;">生成式AI模型</strong>通常涉及多次實驗，使用不同版本的數據集、嘗試不同的<strong
+                            style="color: blue;">超參數</strong>、代碼或模型架構。在處理<strong
+                            style="color: blue;">大數據</strong>和複雜模型的環境下，如果缺乏系統化的管理，很容易忘記某個效果好的模型是用哪個數據集、哪組參數訓練出來的，導致實驗結果難以復現，也難以追溯問題的根源。<strong
+                            style="color: purple;">MLOps</strong>平台中的<strong
+                            style="background-color: #ffff0030;">實驗追蹤和版本控制工具</strong>（如<strong
+                            style="color: red;">MLflow</strong>, <strong style="color: red;">DVC</strong>, <strong
+                            style="color: red;">Weights & Biases</strong>）就是為了解決這個問題，它們記錄下每次實驗的關鍵<strong
+                            style="color: blue;">元數據</strong>（數據版本、代碼版本、參數、指標、產生的模型文件），確保了整個開發流程的<strong
+                            style="color: blue;">可重複性</strong>和<strong
+                            style="color: blue;">可追溯性</strong>，這對於團隊協作、模型迭代和<strong
+                            style="color: blue;">合規性</strong>都非常重要。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 48 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在利用<strong style="color: blue;">強化學習從人類反饋中學習</strong>（<strong
+                        style="color: red;">Reinforcement Learning from Human Feedback</strong>, <strong
+                        style="color: purple;">RLHF</strong>）來微調<strong
+                        style="color: blue;">大型語言模型</strong>時，需要收集大量人類對模型生成的多個候選回應進行排序或評分的數據。這種反饋數據的收集和管理體現了<strong
+                        style="color: blue;">大數據</strong>在優化<strong style="color: blue;">生成式AI</strong>哪個方面的作用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型的推理速度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">使模型的輸出更符合<strong
+                                style="background-color: #ffff0030;">人類的偏好、價值觀和期望</strong>（<strong
+                                style="color: red;">Alignment</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">模型的大小壓縮</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型的數學原理證明</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong style="color: purple;">RLHF</strong>是讓<strong
+                            style="color: purple;">LLM</strong>的行為與人類期望<strong
+                            style="background-color: #ffff0030;">對齊</strong>（<strong
+                            style="color: red;">Align</strong>）的關鍵技術（例如，使其更有用、更誠實、更無害）。它包含幾個步驟：1.
+                        收集人類對模型針對同一提示生成的不同回答進行<strong
+                            style="background-color: #ffff0030;">偏好排序</strong>的數據（例如，回答A比回答B好）。2. 利用這些<strong
+                            style="background-color: #ffff0030;">大量的偏好數據</strong>（這本身就是一種大數據）訓練一個<strong
+                            style="color: blue;">獎勵模型</strong>（<strong style="color: red;">Reward
+                            Model</strong>），該模型能夠預測哪個回答更符合人類偏好。3. 使用<strong style="color: blue;">強化學習</strong><strong
+                            style="color: blue;">演算法</strong>，以<strong
+                            style="color: blue;">獎勵模型</strong>的分數作為回報信號，來<strong
+                            style="color: blue;">微調</strong>原始的<strong
+                            style="color: purple;">LLM</strong>，使其傾向於生成能獲得更高獎勵分數（即更符合人類偏好）的回應。因此，收集和利用大量人類反饋數據是實現<strong
+                            style="color: blue;">模型對齊</strong>的核心。
+                    </div>
+                    <img src="../image/RLHF.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 49 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">同態加密</strong>（<strong
+                        style="color: red;">Homomorphic Encryption</strong>）是一種允許在<strong
+                        style="background-color: #ffff0030;">加密數據上直接進行計算</strong>的技術。在<strong
+                        style="color: blue;">大數據</strong>和<strong style="color: blue;">生成式AI</strong>的<strong
+                        style="color: blue;">隱私保護</strong>場景中，<strong style="color: blue;">同態加密</strong>的潛在應用前景是什麼？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">大幅加速模型訓練過程</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">允許在<strong
+                                style="background-color: #ffff0030;">不解密敏感數據</strong>（如用戶數據）的情況下，在雲端或第三方平台上進行模型訓練或<strong
+                                style="color: blue;">推論</strong>，從而提供<strong
+                                style="background-color: #ffff0030;">極高的隱私保護</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">減少模型<strong style="color: blue;">推論</strong>所需的記憶體</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">自動檢測數據中的<strong style="color: blue;">偏見</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        <strong
+                            style="color: blue;">同態加密</strong>允許對密文執行計算（如加法、乘法），計算結果解密後與對明文執行相同計算的結果一致。這意味著數據所有者可以將加密後的數據發送到不受信任的環境（如公有雲）進行處理（例如，模型訓練或使用模型進行<strong
+                            style="color: blue;">推論</strong>），而雲平台無法訪問原始的明文數據。這為處理極度敏感的<strong
+                            style="color: blue;">大數據</strong>（如醫療記錄、金融交易）提供了非常強的<strong
+                            style="color: blue;">隱私保障</strong>。然而，目前的<strong
+                            style="color: blue;">同態加密</strong>技術通常計算開銷極大，速度遠慢於明文計算，這是其實際應用於大規模<strong
+                            style="color: blue;">生成式AI</strong>訓練的主要障礙，但它仍然是一個活躍的研究領域和具有潛力的未來方向。
+                    </div>
+                    <img src="../image/Homomorphic Encryption.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Question 50 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">隨著<strong
+                        style="color: blue;">生成式AI模型</strong>的應用越來越廣泛，其產生的大量內容（文本、圖像、代碼等）本身也構成了新的<strong
+                        style="color: blue;">大數據</strong>。未來可能出現的一個挑戰是如何有效管理、索引、搜索和利用這些由<strong
+                        style="color: purple;">AI</strong>生成的內容？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: purple;">AI</strong>生成的內容太少，不成問題</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">是的，需要新的技術來<strong
+                                style="background-color: #ffff0030;">區分、評估、索引和複用AI生成的大量內容</strong>，並應對潛在的「<strong
+                                style="color: blue;">模型自噬</strong>」（<strong style="color: red;">Model
+                                Autophagy</strong>，即用<strong style="color: purple;">AI</strong>生成內容再訓練<strong
+                                style="color: purple;">AI</strong>導致性能下降）問題</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">所有<strong style="color: purple;">AI</strong>生成的內容都是完美的，無需管理</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">只需要將所有生成內容存儲為純文本文件</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">
+                        當<strong style="color: purple;">AI</strong>大量生成內容後，這些內容本身就變成了新的訊息資產和數據源。如何管理這海量的<strong
+                            style="color: purple;">AI</strong>生成數據成為新的挑戰：(1) 如何區分人類創作和<strong
+                            style="color: purple;">AI</strong>生成內容？(2) 如何評估<strong
+                            style="color: purple;">AI</strong>生成內容的質量、準確性和新穎性？(3) 如何有效地索引和搜索這些內容以供複用？(4)
+                        更重要的是，如果將大量<strong
+                            style="color: purple;">AI</strong>生成的內容再投入到下一代模型的訓練數據中，是否會導致模型學習到錯誤或簡化的模式，造成性能退化（即所謂的<strong
+                            style="color: blue;">模型自噬</strong>或數據污染問題）？這些都是在<strong
+                            style="color: blue;">大數據</strong>和<strong
+                            style="color: blue;">生成式AI</strong>交互影響下未來需要研究和解決的問題。
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div id="noResultsMessage" style="display: none;">沒有找到符合條件的題目。</div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions();
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", searchQuestions);
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            // Trigger search on Enter key press
+            if (event.key === "Enter") {
+                searchQuestions();
+            }
+            // Optional: Trigger filtering immediately as user types
+            // filterQuestions(); // Uncomment for live search filtering
+            // Or search on empty input to reset filters
+            if (document.getElementById("searchInput").value.trim() === '') {
+                searchQuestions(); // Will call filterQuestions inside if empty
+            }
+        });
+        // let searchTimeout; // For delayed search on keyup
+
+
+        // Combined filter and visibility function
+        function applyFiltersAndSearch() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false;
+            const noResultsMessage = document.getElementById('noResultsMessage');
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                // Show question if it matches all active filters (direction, stars, search)
+                if (matchesDirection && matchesStars && matchesSearch) {
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Show/hide the 'no results' message
+            if (noResultsMessage) {
+                noResultsMessage.style.display = anyVisible ? 'none' : 'block';
+                // Adjust message based on whether it was filtering or searching
+                if (!anyVisible) {
+                    if (searchText !== "") {
+                        noResultsMessage.textContent = '沒有找到符合搜尋條件的題目。';
+                    } else if (direction !== 'all' || stars !== 'all') {
+                        noResultsMessage.textContent = '沒有找到符合篩選條件的題目。';
+                    } else {
+                        noResultsMessage.textContent = '題庫為空或發生錯誤。'; // Fallback
+                    }
+                }
+            }
+            // Ensure progress bar updates after filtering changes layout
+            updateProgressBar();
+        }
+
+
+        // Trigger combined function for filters and search
+        function filterQuestions() {
+            applyFiltersAndSearch();
+        }
+
+        function searchQuestions() {
+            applyFiltersAndSearch();
+        }
+
+
+        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+            // Update progress bar in case toggling changes page height significantly
+            updateProgressBar();
+        });
+
+        // Click options (no interactive grading logic needed as per example)
+
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        }); let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Example doesn't highlight selection persistently, so no action needed here.
+                // If needed, add logic to add/remove a 'selected' class.
+            });
+        });
+
+        // Initial setup
+
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply filters (and potentially empty search) on initial load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        // Ensure explanations start visible as per initial state
+        let initialExplanations = document.querySelectorAll(".explanation-container");
+        initialExplanations.forEach(exp => exp.style.display = "block");
+
+    </script>
+</body>
+
+</html>

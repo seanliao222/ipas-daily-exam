@@ -1,0 +1,3193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <title>iPAS AI應用規劃師 經典題庫 - L21102 電腦視覺技術與應用</title>
+    <style>
+        /* RWD設定，讓整體版面在不同裝置都有良好顯示 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: #f5f5f5;
+            /* Change default text color to pure black */
+            color: #000000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 800px;
+            /* 可自訂最大寬度 */
+            height: auto;
+            display: block;
+            /* Center image */
+            margin: 15px auto;
+            /* Add some margin */
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.8rem;
+            /* Keep heading color as specified */
+            color: #2c3e50;
+        }
+
+        .header-container {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .header-container h1 {
+            margin: 0;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* 出題方向區塊樣式 */
+        .directions-container {
+            background-color: #fffbeb;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid #f1c40f;
+            border-radius: 5px;
+        }
+
+        .directions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep direction title color as specified */
+            color: #2c3e50;
+        }
+
+        .directions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .direction-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            /* Text color inside direction item will be black by default now */
+        }
+
+        .direction-item:hover {
+            background-color: #f1c40f;
+            color: white;
+            /* Keep hover text white */
+        }
+
+        .direction-number {
+            width: 25px;
+            height: 25px;
+            background-color: #f1c40f;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .direction-item:hover .direction-number {
+            background-color: white;
+            color: #f1c40f;
+            /* Keep hover number color */
+        }
+
+        /* 問題卡片樣式 */
+        .questions-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .question-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-id {
+            font-weight: bold;
+            /* Keep question ID color */
+            color: #3498db;
+        }
+
+        .question-frequency {
+            /* Renamed from importance for consistency */
+            /* Keep frequency color */
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .question-content {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            color: #000000;
+            /* Ensure question content is black */
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: #000000;
+            /* Ensure option text is black */
+        }
+
+        .option-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .option-item.correct {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+        }
+
+        .option-item.correct:hover {
+            background-color: #c3e6cb;
+        }
+
+        .option-label {
+            width: 25px;
+            height: 25px;
+            background-color: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+            font-weight: bold;
+            flex-shrink: 0;
+            /* Prevent label from shrinking */
+        }
+
+        .option-item.correct .option-label {
+            background-color: #28a745;
+        }
+
+        .explanation-container {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+            /* Initially shown */
+            color: #000000;
+            /* Ensure explanation text is black */
+        }
+
+        .explanation-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            /* Keep explanation header color */
+            color: #2c3e50;
+        }
+
+        .explanation-content {
+            line-height: 1.6;
+        }
+
+        .explanation-content ul,
+        .explanation-content ol {
+            /* Add padding to lists */
+            padding-left: 20px;
+        }
+
+        /* 控制區塊樣式 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+            /* Add gap for better spacing */
+        }
+
+        .filter-container,
+        .search-container,
+        .star-filter-container {
+            /* Added star filter container */
+            margin-bottom: 10px;
+            display: flex;
+            /* Align items nicely */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        .filter-label,
+        .search-label,
+        .star-filter-label {
+            /* Added star filter label */
+            font-weight: bold;
+            margin-right: 10px;
+            white-space: nowrap;
+            /* Prevent label wrapping */
+            color: #000000;
+            /* Ensure labels are black */
+        }
+
+        select,
+        input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            flex-grow: 1;
+            /* Allow input/select to grow */
+            min-width: 150px;
+            /* Ensure minimum width */
+            color: #000000;
+            /* Ensure input/select text is black */
+        }
+
+        input[type="text"] {
+            flex-grow: 2;
+            /* Allow search input to be wider */
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+            margin-left: 5px;
+            /* Add margin for buttons */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* RWD調整 */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint */
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+                /* Make items full width */
+            }
+
+            .filter-container,
+            .search-container,
+            .star-filter-container {
+                width: 100%;
+            }
+
+            select,
+            input[type="text"] {
+                width: auto;
+                /* Reset width */
+                flex-grow: 1;
+                /* Allow growth */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .directions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                align-items: flex-start;
+                /* Align label better on wrap */
+            }
+
+            .option-label {
+                margin-top: 2px;
+                /* Adjust label alignment */
+            }
+
+            .option-text {
+                word-break: break-word;
+                /* Allow long words to break */
+            }
+        }
+
+        /* 顯示/隱藏解析的按鈕 */
+        .toggle-explanations {
+            margin-bottom: 10px;
+            /* Adjusted margin */
+            display: flex;
+            /* Align button */
+            align-items: center;
+            /* Vertically align */
+        }
+
+        /* 返回頂部按鈕 */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+            opacity: 0.7;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            opacity: 1;
+        }
+
+        /* 進度指示器 */
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: #f1f1f1;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: #3498db;
+            width: 0%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1>iPAS AI應用規劃師 經典題庫</h1>
+            <div>L21102 電腦視覺技術與應用</div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-container">
+                <label for="directionFilter" class="filter-label">篩選出題方向：</label>
+                <select id="directionFilter">
+                    <option value="all">全部方向</option>
+                    <option value="1">方向一</option>
+                    <option value="2">方向二</option>
+                    <option value="3">方向三</option>
+                    <option value="4">方向四</option>
+                    <option value="5">方向五</option>
+                    <option value="6">方向六</option>
+                    <option value="7">方向七</option>
+                    <option value="8">方向八</option>
+                </select>
+            </div>
+
+            <div class="star-filter-container">
+                <label for="starFilter" class="star-filter-label">篩選重要性：</label>
+                <select id="starFilter">
+                    <option value="all">全部重要性</option>
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★</option>
+                    <option value="3">★★★</option>
+                    <option value="2">★★</option>
+                    <option value="1">★</option>
+                </select>
+            </div>
+
+            <div class="search-container">
+                <label for="searchInput" class="search-label">搜尋：</label>
+                <input type="text" id="searchInput" placeholder="輸入關鍵字...">
+                <button id="searchButton">搜尋</button>
+            </div>
+            <div class="toggle-explanations">
+                <button id="toggleExplanations">顯示/隱藏全部解析</button>
+                <button id="toggleAnswers">隱藏全部解答</button>
+            </div>
+        </div>
+
+        <div class="directions-container">
+            <div class="directions-title">出題方向</div>
+            <div class="directions-grid" id="directionsGrid">
+                <div class="direction-item" onclick="filterByDirection(1)">
+                    <div class="direction-number">1</div>
+                    <div class="direction-text">電腦視覺基本概念與範疇</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(2)">
+                    <div class="direction-number">2</div>
+                    <div class="direction-text">圖像獲取與前處理</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(3)">
+                    <div class="direction-number">3</div>
+                    <div class="direction-text">圖像特徵提取與描述</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(4)">
+                    <div class="direction-number">4</div>
+                    <div class="direction-text">核心電腦視覺任務</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(5)">
+                    <div class="direction-number">5</div>
+                    <div class="direction-text">深度學習在電腦視覺的應用</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(6)">
+                    <div class="direction-number">6</div>
+                    <div class="direction-text">常見電腦視覺模型架構</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(7)">
+                    <div class="direction-number">7</div>
+                    <div class="direction-text">電腦視覺應用場景</div>
+                </div>
+                <div class="direction-item" onclick="filterByDirection(8)">
+                    <div class="direction-number">8</div>
+                    <div class="direction-text">電腦視覺評估指標與挑戰</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+
+            <!-- Question 1 -->
+            <div class="question-card" data-direction="1" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#1</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">電腦視覺</strong> (<strong
+                        style="color: red;">Computer Vision</strong>, <strong style="color: purple;">CV</strong>)
+                    的主要目標是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">讓電腦能夠生成逼真的圖像</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">讓電腦能夠<strong
+                                style="background-color: #ffff0030;">從圖像或影像中「看見」並理解內容</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">開發更高效的圖像壓縮演算法</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">設計更好的相機鏡頭</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">電腦視覺</strong>是一個跨學科領域，旨在使電腦能夠<strong
+                            style="background-color: #ffff0030;">從數位圖像或影像中獲取高層次的理解</strong>。其目標是模仿人類視覺系統的功能，讓機器能夠「看見」和解釋視覺世界，進而執行諸如<strong
+                            style="color: blue;">物體識別</strong>、<strong style="color: blue;">場景理解</strong>、<strong
+                            style="color: blue;">活動識別</strong>等任務。選項 A 更接近<strong style="color: blue;">電腦圖學</strong>
+                        (<strong style="color: red;">Computer Graphics</strong>) 的目標。選項 C 和 D 分別涉及<strong
+                            style="color: blue;">圖像處理</strong>和<strong style="color: blue;">光學工程</strong>。</div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-direction="2" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#2</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">電腦視覺</strong>中，將彩色圖像轉換為<strong
+                        style="color: blue;">灰階圖像</strong> (<strong style="color: red;">Grayscale Conversion</strong>)
+                    的主要目的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">簡化圖像資訊，減少計算複雜度</strong>，因為許多視覺任務對顏色資訊不敏感</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">增加圖像的解析度</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">增強圖像的顏色飽和度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">消除圖像中的雜訊</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">彩色圖像通常包含三個顏色通道（如 <strong
+                            style="color: purple;">RGB</strong>：紅、綠、藍），而<strong
+                            style="color: blue;">灰階圖像</strong>只有一個<strong style="color: blue;">亮度</strong> (<strong
+                            style="color: red;">Intensity</strong>) 通道。將彩色圖像轉換為<strong
+                            style="color: blue;">灰階圖像</strong>是一種常見的<strong
+                            style="color: blue;">圖像前處理</strong>步驟，主要有以下原因：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">降低複雜度</strong>：處理單一通道比處理三個通道更簡單，計算量更小。</li>
+                            <li><strong style="background-color: #ffff0030;">減少維度</strong>：減少了需要處理的數據量。</li>
+                            <li><strong style="background-color: #ffff0030;">任務不敏感</strong>：許多<strong
+                                    style="color: blue;">電腦視覺</strong>任務（如<strong
+                                    style="color: blue;">邊緣檢測</strong>、早期<strong
+                                    style="color: blue;">物體識別</strong>的某些特徵提取）主要依賴於圖像的亮度變化，而對顏色資訊相對不敏感。</li>
+                        </ol>
+                        雖然顏色資訊在某些任務（如水果成熟度判斷、特定物體識別）中很重要，但在不需要顏色時轉換為灰階可以提高效率。
+                    </div>
+                </div>
+                <img src="../image/Grayscale Conversion.jpeg" class="responsive-img">
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-direction="3" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#3</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">SIFT</strong> (<strong
+                        style="color: red;">Scale-Invariant Feature Transform</strong>) 是一種著名的<strong
+                        style="color: blue;">圖像特徵描述子</strong>，它具有對哪些變換保持不變性的特點？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅<strong style="color: blue;">旋轉不變性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅<strong style="color: blue;">尺度不變性</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">尺度、旋轉和亮度變換不變性</strong>，並對<strong
+                                style="background-color: #ffff0030;">視角變換具有部分不變性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">顏色變換不變性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">SIFT</strong>
+                        是一種用於偵測和描述圖像局部特徵的演算法。其設計目標是使提取出的特徵（關鍵點及其描述子）在圖像發生某些幾何或光學變換時仍能保持穩定和可匹配。<strong
+                            style="color: purple;">SIFT</strong> 特徵具有以下主要不變性：
+                        <ul>
+                            <li><strong style="background-color: #ffff0030;"><strong style="color: blue;">尺度不變性</strong>
+                                    (<strong style="color: red;">Scale Invariance</strong>):</strong>
+                                無論物體在圖像中放大或縮小，都能偵測到相似的關鍵點。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong style="color: blue;">旋轉不變性</strong>
+                                    (<strong style="color: red;">Rotation Invariance</strong>):</strong>
+                                即使圖像被旋轉，也能偵測到相似的關鍵點並生成一致的描述子。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">亮度變換不變性</strong> (<strong style="color: red;">Illumination
+                                        Invariance</strong>):</strong> 對光照強度的變化具有穩健性。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">視角變換部分不變性</strong> (<strong
+                                        style="color: red;">Affine/Viewpoint Invariance</strong>):</strong>
+                                對於一定程度的視角變化（<strong style="color: blue;">仿射變換</strong>）也能保持穩定。</li>
+                        </ul>
+                        <strong style="color: purple;">SIFT</strong> 主要處理灰階圖像，對顏色變換不直接具備不變性。其強大的穩定性使其在<strong
+                            style="color: blue;">物體識別</strong>、<strong style="color: blue;">圖像匹配</strong>、<strong
+                            style="color: blue;">3D 重建</strong>等領域得到廣泛應用，儘管其計算量相對較大。
+                    </div>
+                </div>
+                <img src="../image/SIFT_Scale-Invariant Feature Transform.png" class="responsive-img">
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-direction="4" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#4</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content">在<strong style="color: blue;">電腦視覺</strong>任務中，「<strong
+                        style="color: blue;">圖像分割</strong>」(<strong style="color: red;">Image Segmentation</strong>)
+                    的目標是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">判斷圖像中是否包含某個特定類別的物體</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在圖像中定位物體的位置，並用<strong style="color: blue;">邊界框</strong> (<strong
+                                style="color: red;">Bounding Box</strong>) 標出</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將圖像中的<strong
+                                style="background-color: #ffff0030;">每個像素分配到一個物體類別或背景</strong>，實現<strong
+                                style="background-color: #ffff0030;">像素級別的分類</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">追蹤影像中物體的運動軌跡</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圖像分割</strong>是<strong
+                            style="color: blue;">電腦視覺</strong>中的一項基礎且重要的任務，其目標是將圖像劃分成多個不同的區域或片段
+                        (segments)，每個區域對應圖像中的一個特定物體或部分。與<strong style="color: blue;">圖像分類</strong>（判斷整張圖像的類別）和<strong
+                            style="color: blue;">物體偵測</strong>（用<strong style="color: blue;">邊界框</strong>定位物體）不同，<strong
+                            style="color: blue;">圖像分割</strong>旨在實現<strong
+                            style="background-color: #ffff0030;">像素級別</strong>的理解，即為圖像中的<strong
+                            style="background-color: #ffff0030;">每個像素</strong>分配一個語意標籤（例如，「貓」、「狗」、「天空」、「道路」）。常見的<strong
+                            style="color: blue;">圖像分割</strong>類型包括：
+                        <ul>
+                            <li><strong style="color: blue;">語意分割</strong> (<strong style="color: red;">Semantic
+                                    Segmentation</strong>): 將屬於同一物體類別的所有像素標記為相同類別（不區分同類物體的個體）。</li>
+                            <li><strong style="color: blue;">實例分割</strong> (<strong style="color: red;">Instance
+                                    Segmentation</strong>): 在<strong
+                                    style="color: blue;">語意分割</strong>的基礎上，進一步區分同類物體的個體實例（例如，標記出圖中的「貓1」、「貓2」）。</li>
+                            <li><strong style="color: blue;">全景分割</strong> (<strong style="color: red;">Panoptic
+                                    Segmentation</strong>): 結合<strong style="color: blue;">語意分割</strong>和<strong
+                                    style="color: blue;">實例分割</strong>，為圖像中的每個像素分配一個語意標籤和一個實例 ID。</li>
+                        </ul>
+                        選項 A 是<strong style="color: blue;">圖像分類</strong> (<strong style="color: red;">Image
+                            Classification</strong>)。選項 B 是<strong style="color: blue;">物體偵測</strong> (<strong
+                            style="color: red;">Object Detection</strong>)。選項 D 是<strong
+                            style="color: blue;">物體追蹤</strong> (<strong style="color: red;">Object Tracking</strong>)。
+                    </div>
+                </div>
+                <img src="../image/Image Segmentation.jpg" class="responsive-img">
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-direction="5" data-stars="5">
+                <div class="question-header">
+                    <div class="question-id">#5</div>
+                    <div class="question-frequency">★★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">卷積神經網路</strong> (<strong
+                        style="color: red;">Convolutional Neural Network</strong>, <strong
+                        style="color: purple;">CNN</strong>) 在<strong style="color: blue;">電腦視覺</strong>領域取得巨大成功的主要原因是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用了循環連接來處理序列資訊</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通過<strong style="color: blue;">卷積層</strong>的<strong
+                                style="background-color: #ffff0030;">權重共享</strong>和<strong
+                                style="color: blue;">池化層</strong>的<strong
+                                style="background-color: #ffff0030;">降維</strong>，<strong
+                                style="background-color: #ffff0030;">有效地提取圖像的空間階層特徵</strong>並<strong
+                                style="background-color: #ffff0030;">減少參數數量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">完全依賴於人工設計的特徵</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用了<strong style="color: blue;">強化學習</strong>來優化圖像處理流程</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">CNN</strong>
+                        的設計借鑒了生物視覺皮層的處理機制，其核心優勢在於：
+                        <ol>
+                            <li><strong style="color: blue;">局部感受野</strong> (<strong style="color: red;">Local Receptive
+                                    Fields</strong>): <strong
+                                    style="color: blue;">卷積核</strong>（濾波器）只關注輸入圖像的一小塊區域，提取局部特徵。</li>
+                            <li><strong style="background-color: #ffff0030;"><strong style="color: blue;">權重共享</strong>
+                                    (<strong style="color: red;">Weight Sharing</strong>):</strong> 同一個<strong
+                                    style="color: blue;">卷積核</strong>在圖像的不同位置滑動，使用相同的權重參數。這大大減少了模型的參數數量（相比全連接網路），降低了<strong
+                                    style="color: blue;">過擬合</strong>風險，並使得模型對物體的平移具有一定的不變性。</li>
+                            <li><strong style="color: blue;">池化層</strong> (<strong style="color: red;">Pooling
+                                    Layers</strong>): 通常在<strong style="color: blue;">卷積層</strong>之後使用，通過<strong
+                                    style="color: blue;">降採樣</strong>（如<strong style="color: blue;">最大池化</strong>
+                                <strong style="color: red;">Max Pooling</strong> 或<strong
+                                    style="color: blue;">平均池化</strong> <strong style="color: red;">Average
+                                    Pooling</strong>）來<strong
+                                    style="background-color: #ffff0030;">降低特徵圖的空間維度</strong>，進一步減少計算量和參數，同時增強模型對微小位移和形變的穩健性。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">階層式特徵學習</strong> (<strong style="color: red;">Hierarchical
+                                        Feature Learning</strong>):</strong> 淺層<strong
+                                    style="color: blue;">卷積層</strong>通常學習邊緣、角點等低階特徵，深層<strong
+                                    style="color: blue;">卷積層</strong>則基於低階特徵組合出更複雜、更抽象的高階特徵（如物體部件、完整物體）。</li>
+                        </ol>
+                        這些特性使得 <strong style="color: purple;">CNN</strong> 非常適合處理具有空間結構的圖像數據，能夠<strong
+                            style="background-color: #ffff0030;">自動學習到有效的視覺特徵表示</strong>。選項 A 描述的是 <strong
+                            style="color: purple;">RNN</strong>。選項 C 是傳統<strong
+                            style="color: blue;">電腦視覺</strong>方法的特點。選項 D 描述的是<strong style="color: blue;">強化學習</strong>。
+                    </div>
+                </div>
+                <img src="../image/CNN.webp" class="responsive-img">
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#6</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">CNN</strong> 架構中，<strong
+                        style="color: blue;">卷積層</strong> (<strong style="color: red;">Convolutional Layer</strong>)
+                    的主要作用是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用一組可學習的濾波器（<strong style="color: blue;">卷積核</strong>）在輸入圖像或<strong
+                                style="color: blue;">特徵圖</strong>上滑動，<strong
+                                style="background-color: #ffff0030;">提取局部特徵</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">降低<strong style="color: blue;">特徵圖</strong>的空間解析度，減少計算量</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">引入非線性，增強模型的表達能力</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將最終提取的特徵映射到輸出類別</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">卷積層</strong>是 <strong
+                            style="color: purple;">CNN</strong> 的核心組件。它包含多個可學習的濾波器（也稱為<strong
+                            style="color: blue;">卷積核</strong> <strong
+                            style="color: red;">Kernels</strong>）。每個濾波器是一個小的權重矩陣，它在輸入數據（如圖像或上一層的<strong
+                            style="color: blue;">特徵圖</strong>）上按指定步長滑動，與滑動窗口內的數值進行逐元素相乘再求和（<strong
+                            style="color: blue;">卷積運算</strong>），得到輸出<strong style="color: blue;">特徵圖</strong> (<strong
+                            style="color: red;">Feature Map</strong>)
+                        上的一個值。每個濾波器負責偵測一種特定的局部模式或特徵（如邊緣、角點、紋理等）。通過使用多個不同的濾波器，<strong
+                            style="color: blue;">卷積層</strong>可以<strong
+                            style="background-color: #ffff0030;">提取出輸入數據的多種局部特徵</strong>。選項 B 描述的是<strong
+                            style="color: blue;">池化層</strong> (<strong style="color: red;">Pooling Layer</strong>)
+                        的作用。選項 C 描述的是<strong style="color: blue;">激活函數</strong> (<strong style="color: red;">Activation
+                            Function</strong>) 的作用（通常跟在<strong style="color: blue;">卷積層</strong>或<strong
+                            style="color: blue;">全連接層</strong>之後）。選項 D 描述的是<strong style="color: blue;">全連接層</strong>
+                        (<strong style="color: red;">Fully Connected Layer</strong>) 或輸出層的作用。</div>
+                </div>
+                <img src="../image/CNN.webp" class="responsive-img">
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-direction="7" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#7</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">以下哪項是<strong style="color: blue;">電腦視覺</strong>在<strong
+                        style="color: blue;">自動駕駛</strong> (<strong style="color: red;">Autonomous Driving</strong>)
+                    領域的關鍵應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">自然語言指令理解</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;"><strong
+                                    style="color: blue;">車道線偵測</strong>、<strong
+                                    style="color: blue;">交通號誌識別</strong>、<strong
+                                    style="color: blue;">行人與車輛偵測</strong></strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">引擎效能優化</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">高精地圖繪製</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">電腦視覺</strong>是實現<strong
+                            style="color: blue;">自動駕駛</strong>的關鍵技術之一，主要用於<strong
+                            style="background-color: #ffff0030;">感知和理解車輛周圍的環境</strong>。其應用包括：
+                        <ul>
+                            <li><strong style="color: blue;">車道線偵測</strong> (<strong style="color: red;">Lane
+                                    Detection</strong>): 識別道路上的車道標線，輔助車輛保持在車道內行駛。</li>
+                            <li><strong style="color: blue;">交通號誌/標誌識別</strong> (<strong style="color: red;">Traffic
+                                    Sign/Light Recognition</strong>): 識別紅綠燈、速限標誌、停止標誌等交通控制信號。</li>
+                            <li><strong style="color: blue;">物體偵測與識別</strong> (<strong style="color: red;">Object
+                                    Detection and Recognition</strong>): 偵測並識別周圍的其他車輛、行人、自行車騎士、障礙物等。</li>
+                            <li><strong style="color: blue;">可通行區域分割</strong> (<strong style="color: red;">Drivable Area
+                                    Segmentation</strong>): 判斷哪些區域是車輛可以安全行駛的。</li>
+                            <li><strong style="color: blue;">深度估計/3D 場景理解</strong> (<strong style="color: red;">Depth
+                                    Estimation / 3D Scene Understanding</strong>): 估計物體的距離和場景的 3D 結構。</li>
+                        </ul>
+                        選項 A 屬於<strong style="color: blue;">自然語言處理</strong>。選項 C 屬於車輛工程。選項 D（<strong
+                            style="color: blue;">高精地圖</strong>）雖然對<strong
+                            style="color: blue;">自動駕駛</strong>很重要，但其繪製本身更多依賴 <strong
+                            style="color: purple;">GPS</strong>、<strong style="color: purple;">IMU</strong> 和<strong
+                            style="color: blue;">光達</strong> (<strong style="color: purple;">LiDAR</strong>)，<strong
+                            style="color: blue;">電腦視覺</strong>可用於輔助特徵匹配和定位。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-direction="8" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#8</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">物體偵測</strong> (<strong
+                        style="color: red;">Object Detection</strong>) 任務的模型效能時，常用的指標 <strong
+                        style="color: purple;">mAP</strong> (<strong style="color: red;">mean Average
+                        Precision</strong>) 是如何計算的？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">直接計算所有偵測框的平均精確率</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算<strong style="background-color: #ffff0030;">每個物體類別的平均精確率</strong>
+                            (<strong style="color: red;">Average Precision</strong>, <strong
+                                style="color: purple;">AP</strong>)，然後對<strong
+                                style="background-color: #ffff0030;">所有類別的 AP 值取平均</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">計算所有類別的平均召回率 (<strong style="color: red;">Average Recall</strong>)
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">計算整體偵測框的<strong style="color: blue;">交併比</strong> (<strong
+                                style="color: red;">Intersection over Union</strong>, <strong
+                                style="color: purple;">IoU</strong>) 的平均值</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">mAP</strong> (<strong
+                            style="color: red;">mean Average Precision</strong>) 是<strong
+                            style="color: blue;">物體偵測</strong>領域最常用的標準評估指標。其計算步驟如下：
+                        <ol>
+                            <li>對於<strong
+                                    style="background-color: #ffff0030;">每一個物體類別</strong>，根據模型輸出的偵測框（按置信度排序）和<strong
+                                    style="color: blue;">真實標註框</strong> (<strong style="color: red;">Ground
+                                    Truth</strong>)，計算其 Precision-Recall 曲線。通常通過設定不同的 <strong
+                                    style="color: purple;">IoU</strong> (<strong style="color: red;">Intersection over
+                                    Union</strong>) 閾值（如 0.5）來判斷偵測是否為 True Positive。</li>
+                            <li>計算該類別下的<strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">平均精確率</strong> (<strong style="color: red;">Average
+                                        Precision</strong>, <strong style="color: purple;">AP</strong>)</strong>。AP 通常是
+                                Precision-Recall 曲線下的面積。具體計算方法有多種（如 11 點插值法、所有點插值法），PASCAL VOC 和 COCO 競賽有不同的標準。</li>
+                            <li>對<strong style="background-color: #ffff0030;">所有物體類別</strong>的 AP 值取算術平均數，得到最終的 <strong
+                                    style="color: purple;">mAP</strong>。</li>
+                        </ol>
+                        因此，<strong style="color: purple;">mAP</strong> 衡量的是模型在所有類別上的平均偵測效能。
+                    </div>
+                </div>
+                <img src="../image/map_mean Average Precision.webp" class="responsive-img">
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#9</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">圖像增強</strong> (<strong
+                        style="color: red;">Image Enhancement</strong>) 技術，如<strong style="color: blue;">直方圖等化</strong>
+                    (<strong style="color: red;">Histogram Equalization</strong>)，其主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">改善圖像的視覺品質或突顯某些感興趣的特徵</strong>，例如提高圖像對比度</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">縮小圖像的檔案大小</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">移除圖像中的所有物體</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將圖像轉換為向量表示</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圖像增強</strong>是<strong
+                            style="color: blue;">圖像處理</strong>的一個分支，旨在通過修改圖像的像素值來<strong
+                            style="background-color: #ffff0030;">改善其視覺效果</strong>，或使其更適合於特定的應用。<strong
+                            style="color: blue;">直方圖等化</strong>是一種常用的<strong
+                            style="color: blue;">對比度增強</strong>技術，它通過重新分佈圖像的像素強度值，使得強度值的直方圖盡可能平坦，從而<strong
+                            style="background-color: #ffff0030;">擴展圖像的動態範圍</strong>，使原本過暗或過亮的區域細節更清晰。其他的<strong
+                            style="color: blue;">圖像增強</strong>技術還包括<strong style="color: blue;">對比度拉伸</strong>、<strong
+                            style="color: blue;">伽馬校正</strong>、<strong style="color: blue;">銳化濾波</strong>等。</div>
+                </div>
+                <img src="../image/Image Histogram.jpg" class="responsive-img">
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#10</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">邊緣偵測</strong> (<strong
+                        style="color: red;">Edge Detection</strong>) 在<strong style="color: blue;">電腦視覺</strong>中的主要作用是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">填充圖像中的缺失區域</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">找出圖像中物體邊界或亮度、顏色發生<strong
+                                style="background-color: #ffff0030;">顯著變化的區域</strong>，<strong
+                                style="background-color: #ffff0030;">提取圖像的結構資訊</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">對圖像進行分類</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">平滑圖像，去除雜訊</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">邊緣是圖像中像素強度（亮度、顏色或紋理）發生<strong
+                            style="background-color: #ffff0030;">急遽變化</strong>的位置，通常對應於物體的輪廓或不同區域的分界線。<strong
+                            style="color: blue;">邊緣偵測</strong>旨在識別並定位這些邊緣像素，生成<strong style="color: blue;">邊緣圖</strong>
+                        (<strong style="color: red;">Edge Map</strong>)。<strong
+                            style="background-color: #ffff0030;">邊緣包含了圖像重要的結構資訊</strong>，是許多後續視覺任務（如<strong
+                            style="color: blue;">物體識別</strong>、<strong style="color: blue;">圖像分割</strong>、<strong
+                            style="color: blue;">特徵提取</strong>）的基礎。常用的<strong style="color: blue;">邊緣偵測算子</strong>包括
+                        <strong style="color: blue;">Sobel</strong>、<strong
+                            style="color: blue;">Prewitt</strong>、<strong style="color: blue;">Laplacian</strong> 和
+                        <strong style="color: blue;">Canny</strong> 等。<strong style="color: blue;">Canny</strong>
+                        算子因其較好的偵測效果和對雜訊的抑制能力而被廣泛使用。
+                    </div>
+                </div>
+                <img src="../image/Edge Detection.png" class="responsive-img">
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-direction="4" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#11</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">物體偵測</strong> (<strong
+                        style="color: red;">Object Detection</strong>) 與<strong style="color: blue;">圖像分類</strong>
+                    (<strong style="color: red;">Image Classification</strong>) 的主要區別在於？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像分類</strong>僅判斷圖像包含哪個類別，而<strong
+                                style="color: blue;">物體偵測</strong>不僅要<strong
+                                style="background-color: #ffff0030;">識別物體類別</strong>，還要<strong
+                                style="background-color: #ffff0030;">定位物體在圖像中的位置</strong>（通常用<strong
+                                style="color: blue;">邊界框</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">物體偵測</strong>只能處理灰階圖像，<strong
+                                style="color: blue;">圖像分類</strong>可以處理彩色圖像</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">圖像分類</strong>速度更快，<strong
+                                style="color: blue;">物體偵測</strong>速度較慢</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">物體偵測</strong>使用 <strong
+                                style="color: purple;">RNN</strong>，<strong style="color: blue;">圖像分類</strong>使用 <strong
+                                style="color: purple;">CNN</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">圖像分類</strong>旨在為整張圖像分配一個類別標籤（例如，這是一張「貓」的圖片）。而<strong
+                            style="color: blue;">物體偵測</strong>是一個更複雜的任務，它需要在圖像中找出<strong
+                            style="background-color: #ffff0030;">所有</strong>感興趣的物體實例，並為每個實例提供兩個資訊：1. <strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">物體類別</strong></strong>（例如，「貓」、「狗」、「汽車」）；2. <strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">物體位置</strong></strong>，通常用一個緊密包圍該物體的<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">邊界框</strong> (<strong
+                                style="color: red;">Bounding Box</strong>)</strong> 來表示。因此，<strong
+                            style="color: blue;">物體偵測</strong>不僅要知道圖像裡有什麼，還要知道它們在哪裡。</div>
+                </div>
+                <img src="../image/Object Detection.png" class="responsive-img">
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-direction="5" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#12</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">資料增強</strong> (<strong
+                        style="color: red;">Data Augmentation</strong>) 在訓練深度學習<strong
+                        style="color: blue;">電腦視覺</strong>模型時的作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">減少模型訓練所需的時間</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通過對現有訓練圖像進行隨機變換（如翻轉、旋轉、縮放、顏色抖動）來<strong
+                                style="background-color: #ffff0030;">人工擴充訓練數據集</strong>，<strong
+                                style="background-color: #ffff0030;">提高模型的泛化能力</strong>並<strong
+                                style="background-color: #ffff0030;">減少過擬合</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提高圖像的解析度</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">自動標註圖像數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">深度學習模型通常需要大量的標註數據才能達到良好的效能。在數據量有限的情況下，模型容易產生<strong
+                            style="color: blue;">過擬合</strong> (<strong
+                            style="color: red;">Overfitting</strong>)，即模型過度學習了訓練數據的特性，但在未見過的測試數據上表現不佳。<strong
+                            style="color: blue;">資料增強</strong>是一種常用的<strong style="color: blue;">正則化</strong> (<strong
+                            style="color: red;">Regularization</strong>)
+                        技術，通過對原始訓練圖像應用一系列隨機的、保持標籤不變的幾何或光學變換（例如，水平翻轉、隨機裁剪、小角度旋轉、亮度/對比度/飽和度調整），來生成新的、看似不同的訓練樣本。這相當於<strong
+                            style="background-color: #ffff0030;">人工地增加了訓練數據的多樣性</strong>，迫使模型學習對這些變換具有不變性的更魯棒的特徵，從而<strong
+                            style="background-color: #ffff0030;">提高模型的泛化能力</strong> (<strong
+                            style="color: red;">Generalization Ability</strong>) 並<strong
+                            style="background-color: #ffff0030;">減輕過擬合</strong>。</div>
+                </div>
+                <img src="../image/Data Augmentation.png" class="responsive-img">
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#13</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">ResNet</strong> (<strong
+                        style="color: red;">Residual Network</strong>) 模型架構引入的主要創新是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用了更寬的卷積層 (<strong style="color: red;">Inception Module</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">首次將 <strong style="color: blue;">Transformer</strong> 應用於圖像分類</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">引入了<strong style="color: blue;">殘差連接</strong> (<strong
+                                style="color: red;">Residual Connection</strong>) 或<strong
+                                style="color: blue;">跳躍連接</strong> (<strong style="color: red;">Skip
+                                Connection</strong>)，允許資訊直接跨層傳遞，有效解決了<strong
+                                style="background-color: #ffff0030;">深度網路訓練中的梯度消失和退化問題</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用了分組卷積 (<strong style="color: red;">Grouped Convolution</strong>)
+                            來減少計算量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在 <strong style="color: blue;">ResNet</strong>
+                        出現之前，人們發現簡單地堆疊更多層數的深度神經網路，在達到一定深度後，訓練誤差和測試誤差反而會增加，這種現象稱為<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">網路退化</strong> (<strong
+                                style="color: red;">Degradation Problem</strong>)</strong>，這並非由<strong
+                            style="color: blue;">過擬合</strong>引起。<strong style="color: blue;">ResNet</strong>
+                        的核心思想是引入<strong style="background-color: #ffff0030;"><strong style="color: blue;">殘差學習</strong>
+                            (<strong style="color: red;">Residual Learning</strong>)</strong>。它不再讓網路層直接學習目標映射
+                        H(x)，而是學習一個<strong style="background-color: #ffff0030;">殘差映射</strong> F(x) = H(x) - x，然後目標映射變為
+                        H(x) = F(x) + x。這個 " + x " 的操作通過一個<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">跳躍連接</strong> (<strong style="color: red;">Skip
+                                Connection</strong>)</strong> 來實現，即將輸入 x 直接添加到 F(x) 的輸出上。這種結構使得<strong
+                            style="background-color: #ffff0030;">梯度更容易回傳到淺層網路</strong>，極大地緩解了<strong
+                            style="color: blue;">梯度消失</strong>問題，並使得<strong
+                            style="background-color: #ffff0030;">訓練非常深的網路</strong>（如幾十層甚至上百層）成為可能，有效解決了退化問題。選項 A 是
+                        <strong style="color: blue;">GoogLeNet</strong>/<strong style="color: blue;">Inception</strong>
+                        的特點。選項 B 是 <strong style="color: blue;">Vision Transformer</strong> (<strong
+                            style="color: purple;">ViT</strong>) 的特點。選項 D 是 <strong
+                            style="color: blue;">AlexNet</strong> 和後續一些輕量化網路的特點。
+                    </div>
+                </div>
+                <img src="../image/Resnet.webp" class="responsive-img">
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#14</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">人臉辨識</strong> (<strong
+                        style="color: red;">Face Recognition</strong>) 技術通常包含哪兩個主要步驟？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像增強</strong>和<strong
+                                style="color: blue;">圖像分割</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">人臉偵測</strong> (<strong
+                                style="color: red;">Face Detection</strong>) 和<strong
+                                style="color: blue;">人臉比對/識別</strong> (<strong style="color: red;">Face
+                                Matching/Identification</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">邊緣偵測</strong>和<strong
+                                style="color: blue;">特徵描述</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">圖像分類</strong>和<strong
+                                style="color: blue;">物體追蹤</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">典型的人臉辨識系統流程通常包括：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;"><strong style="color: blue;">人臉偵測</strong>
+                                    (<strong style="color: red;">Face Detection</strong>):</strong>
+                                在輸入的圖像或影像中找到人臉的位置和範圍（通常是用<strong style="color: blue;">邊界框</strong>標出）。這是第一步，確定哪裡有人臉。
+                            </li>
+                            <li>（可選）<strong style="color: blue;">人臉對齊</strong> (<strong style="color: red;">Face
+                                    Alignment</strong>): 根據偵測到的人臉關鍵點（如眼睛、鼻子、嘴角）進行幾何校正，將人臉旋轉、縮放到一個標準的姿態，以減少姿態變化對後續識別的影響。
+                            </li>
+                            <li><strong style="color: blue;">人臉特徵提取</strong> (<strong style="color: red;">Face Feature
+                                    Extraction</strong>): 從對齊後的人臉圖像中提取具有區分性的特徵向量（也稱為<strong
+                                    style="color: blue;">人臉嵌入</strong> <strong style="color: red;">Face
+                                    Embedding</strong>）。現代方法通常使用深度學習模型（如 <strong style="color: blue;">FaceNet</strong>,
+                                <strong style="color: blue;">ArcFace</strong>）來學習這種表示。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;"><strong
+                                        style="color: blue;">人臉比對/識別</strong> (<strong style="color: red;">Face
+                                        Matching/Identification</strong>):</strong>
+                                <ul>
+                                    <li><strong style="color: blue;">人臉驗證</strong> (<strong
+                                            style="color: red;">Verification</strong>, 1:1 比對):
+                                        判斷兩張人臉圖像是否屬於同一個人（例如，人臉解鎖）。通常計算兩個人臉特徵向量的相似度，並與閾值比較。</li>
+                                    <li><strong style="color: blue;">人臉識別</strong> (<strong
+                                            style="color: red;">Identification</strong>, 1:N 比對):
+                                        將輸入的人臉特徵向量與資料庫中儲存的多個已知人臉特徵向量進行比對，找出最相似的匹配項（例如，在人群中尋找某個人）。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        因此，<strong style="background-color: #ffff0030;">偵測</strong>和<strong
+                            style="background-color: #ffff0030;">比對/識別</strong>是<strong
+                            style="color: blue;">人臉辨識</strong>最核心的兩個環節。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#15</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">交併比</strong> (<strong
+                        style="color: red;">Intersection over Union</strong>, <strong
+                        style="color: purple;">IoU</strong>) 是評估<strong style="color: blue;">物體偵測</strong>和<strong
+                        style="color: blue;">圖像分割</strong>常用的指標，它計算的是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">預測區域（如<strong style="color: blue;">邊界框</strong>或分割掩碼）與<strong
+                                style="color: blue;">真實標註區域</strong>的<strong
+                                style="background-color: #ffff0030;">交集面積</strong>除以它們的<strong
+                                style="background-color: #ffff0030;">併集面積</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">預測區域與<strong style="color: blue;">真實標註區域</strong>的交集面積除以預測區域面積</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">預測區域與<strong style="color: blue;">真實標註區域</strong>的交集面積除以<strong
+                                style="color: blue;">真實標註區域</strong>面積</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">預測區域與<strong style="color: blue;">真實標註區域</strong>的中心點距離</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">交併比</strong> (<strong
+                            style="color: purple;">IoU</strong>)，也稱為 <strong style="color: red;">Jaccard
+                            index</strong>，是衡量兩個區域重疊程度的指標。計算公式為：<br>
+                        IoU = Area(Intersection) / Area(Union)<br>
+                        其中，Area(Intersection) 是預測區域（例如模型輸出的<strong style="color: blue;">邊界框</strong>或分割掩碼）和<strong
+                            style="color: blue;">真實標註區域</strong>（<strong style="color: red;">Ground
+                            Truth</strong>）的<strong style="background-color: #ffff0030;">交集面積</strong>，Area(Union)
+                        是它們的<strong style="background-color: #ffff0030;">併集面積</strong>。IoU 的值域在 0 到 1 之間，值越接近 1
+                        表示兩個區域重疊度越高，預測越準確；值為 0 表示兩個區域完全沒有重疊。在<strong style="color: blue;">物體偵測</strong>中，通常會設定一個 <strong
+                            style="color: purple;">IoU</strong> 閾值（例如 0.5 或 0.7），只有當預測框與真實框的 <strong
+                            style="color: purple;">IoU</strong> 大於該閾值時，才認為該偵測是正確的 (<strong style="color: red;">True
+                            Positive</strong>)。</div>
+                </div>
+                <img src="../image/Intersection over Union_IoU.png" class="responsive-img">
+            </div>
+
+            <!-- Q16 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#16</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">高斯濾波</strong> (<strong
+                        style="color: red;">Gaussian Filtering</strong>) 在<strong
+                        style="color: blue;">圖像處理</strong>中常用於？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">銳化圖像邊緣</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">平滑圖像，抑制高頻雜訊</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">提取圖像的紋理特徵</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">增強圖像的對比度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">高斯濾波</strong>是一種線性平滑濾波器，其權重（<strong
+                            style="color: blue;">卷積核</strong>）由高斯函數確定。中心像素的權重最大，距離中心越遠的像素權重越小。<strong
+                            style="color: blue;">高斯濾波</strong>的主要作用是<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">圖像平滑</strong> (<strong style="color: red;">Image
+                                Smoothing</strong>)</strong> 和 <strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">雜訊抑制</strong> (<strong style="color: red;">Noise
+                                Reduction</strong>)</strong>。由於高斯函數在頻域上是低通濾波器，它可以有效地衰減圖像中的高頻成分，而高頻成分通常對應於圖像的細節和雜訊。因此，<strong
+                            style="color: blue;">高斯濾波</strong>常用於預處理步驟中，以減少雜訊對後續處理（如<strong
+                            style="color: blue;">邊緣偵測</strong>）的影響。但過度平滑會導致圖像模糊，損失細節。</div>
+                </div>
+                <img src="../image/Gaussian Filtering.jpg" class="responsive-img">
+            </div>
+
+            <!-- Q17 -->
+            <div class="question-card" data-direction="3" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#17</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">HOG</strong> (<strong
+                        style="color: red;">Histogram of Oriented Gradients</strong>) 是一種常用於什麼任務的<strong
+                        style="color: blue;">特徵描述子</strong>？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">行人偵測</strong> (<strong
+                                style="color: red;">Pedestrian Detection</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">圖像超解析度</strong> (<strong
+                                style="color: red;">Image Super-Resolution</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">風格轉換</strong> (<strong
+                                style="color: red;">Style Transfer</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">光學字元辨識</strong> (<strong
+                                style="color: purple;">OCR</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">方向梯度直方圖</strong> (<strong
+                            style="color: purple;">HOG</strong>) 是一種用於<strong style="color: blue;">物體偵測</strong>的<strong
+                            style="color: blue;">特徵描述子</strong>。它通過計算圖像局部區域中梯度的方向和強度分佈來捕捉物體的形狀和外觀資訊。<strong
+                            style="color: purple;">HOG</strong> 特徵對光照變化和小的幾何變換具有一定的穩健性。<strong
+                            style="color: purple;">HOG</strong> 最成功的應用之一是在<strong
+                            style="background-color: #ffff0030;"><strong
+                                style="color: blue;">行人偵測</strong></strong>領域，它與線性 <strong
+                            style="color: purple;">SVM</strong> (<strong style="color: red;">Support Vector
+                            Machine</strong>) 分類器結合，在相當長一段時間內是<strong
+                            style="color: blue;">行人偵測</strong>的基準方法，取得了非常好的效果。雖然深度學習方法現在更為流行，但 <strong
+                            style="color: purple;">HOG</strong> 仍然是一種重要的、值得了解的傳統特徵描述方法。</div>
+                </div>
+                <img src="../image/HOG_Histogram of Oriented Gradients.jpg" class="responsive-img">
+            </div>
+
+            <!-- Q18 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#18</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">實例分割</strong> (<strong
+                        style="color: red;">Instance Segmentation</strong>) 與<strong style="color: blue;">語意分割</strong>
+                    (<strong style="color: red;">Semantic Segmentation</strong>) 的主要區別是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">實例分割</strong>速度更快</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">實例分割</strong>需要<strong
+                                style="background-color: #ffff0030;">區分同一物體類別的不同實例</strong>，而<strong
+                                style="color: blue;">語意分割</strong>不需要</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">語意分割</strong>輸出<strong
+                                style="color: blue;">邊界框</strong>，<strong style="color: blue;">實例分割</strong>輸出掩碼</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">實例分割</strong>只能處理特定類別，<strong
+                                style="color: blue;">語意分割</strong>可以處理所有類別</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">兩者都是像素級別的<strong style="color: blue;">圖像分割</strong>任務，但目標不同：
+                        <ul>
+                            <li><strong style="color: blue;">語意分割</strong> (<strong style="color: red;">Semantic
+                                    Segmentation</strong>): 為圖像中的每個像素分配一個物體類別標籤。它只關心像素屬於哪個<strong
+                                    style="background-color: #ffff0030;">類別</strong>（如貓、狗、樹），<strong
+                                    style="background-color: #ffff0030;">不區分</strong>這個類別下的不同個體。例如，圖像中有三隻貓，<strong
+                                    style="color: blue;">語意分割</strong>會將所有屬於貓的像素標記為「貓」。</li>
+                            <li><strong style="color: blue;">實例分割</strong> (<strong style="color: red;">Instance
+                                    Segmentation</strong>): 在<strong style="color: blue;">語意分割</strong>的基礎上，進一步<strong
+                                    style="background-color: #ffff0030;">區分</strong>同一類別的不同<strong
+                                    style="background-color: #ffff0030;">實例 (Instances)</strong>。例如，圖像中有三隻貓，<strong
+                                    style="color: blue;">實例分割</strong>會將它們分別標記為「貓1」、「貓2」、「貓3」。</li>
+                        </ul>
+                        因此，<strong style="color: blue;">實例分割</strong>提供了比<strong
+                            style="color: blue;">語意分割</strong>更豐富的資訊，是一個更具挑戰性的任務。<strong style="color: blue;">Mask
+                            R-CNN</strong> 是<strong style="color: blue;">實例分割</strong>領域的代表性模型。
+                    </div>
+                </div>
+                <img src="../image/image-segmentation.webp" class="responsive-img">
+            </div>
+
+            <!-- Q19 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#19</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">遷移學習</strong> (<strong
+                        style="color: red;">Transfer Learning</strong>) 在<strong
+                        style="color: blue;">電腦視覺</strong>中的常見做法是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">使用在大型圖像數據集（如 <strong style="color: red;">ImageNet</strong>）上<strong
+                                style="background-color: #ffff0030;">預訓練好的模型</strong>作為基礎，然後在目標任務的小型數據集上進行<strong
+                                style="background-color: #ffff0030;">微調</strong> (<strong
+                                style="color: red;">Fine-tuning</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">從頭開始在小型數據集上訓練一個全新的模型</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">只使用傳統的機器學習演算法（如 <strong style="color: purple;">SVM</strong>）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將不同模型的預測結果進行簡單平均</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">由於訓練大型深度學習模型（尤其是 <strong
+                            style="color: purple;">CNN</strong>）需要大量的標註數據和計算資源，從頭開始訓練往往不切實際，特別是當目標任務的數據量有限時。<strong
+                            style="color: blue;">遷移學習</strong>提供了一種有效的解決方案。常見做法是：
+                        <ol>
+                            <li>選擇一個在大型、通用的圖像數據集（如 <strong style="color: red;">ImageNet</strong>，包含上百萬張圖片和上千個類別）上<strong
+                                    style="background-color: #ffff0030;">預訓練</strong> (<strong
+                                    style="color: red;">Pre-trained</strong>) 好的模型（如 <strong
+                                    style="color: blue;">ResNet</strong>, <strong style="color: blue;">VGG</strong>,
+                                <strong style="color: blue;">Inception</strong>）。這些<strong
+                                    style="color: blue;">預訓練模型</strong>已經學會了通用的、具有層次結構的視覺特徵。
+                            </li>
+                            <li>將這個<strong style="color: blue;">預訓練模型</strong>作為<strong
+                                    style="background-color: #ffff0030;">特徵提取器</strong>或<strong
+                                    style="background-color: #ffff0030;">初始模型</strong>。</li>
+                            <li>針對具體的目標任務（可能只有少量標註數據），對<strong style="color: blue;">預訓練模型</strong>的全部或部分層（通常是後面的<strong
+                                    style="color: blue;">全連接層</strong>或最後幾層<strong
+                                    style="color: blue;">卷積層</strong>）進行<strong
+                                    style="background-color: #ffff0030;">微調</strong> (<strong
+                                    style="color: red;">Fine-tuning</strong>)，使其適應新任務的數據分佈和特定要求。</li>
+                        </ol>
+                        這種方法能夠顯著提高模型在小數據集上的效能，並加速訓練過程。
+                    </div>
+                </div>
+                <image src="../image/Transfer Learning.webp" class="responsive-img">
+            </div>
+
+            <!-- Q20 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#20</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content">在 <strong style="color: purple;">CNN</strong> 模型中，<strong
+                        style="color: blue;">池化層</strong> (<strong style="color: red;">Pooling Layer</strong>) 的主要作用是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提取圖像的顏色特徵</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">降低特徵圖的空間維度</strong>（寬度和高度），<strong
+                                style="background-color: #ffff0030;">減少計算量</strong>，並<strong
+                                style="background-color: #ffff0030;">提高模型對微小平移和形變的穩健性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">學習圖像的旋轉不變性</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">將輸入圖像標準化</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">池化層</strong>（也稱<strong
+                            style="color: blue;">下採樣層</strong> <strong style="color: red;">Subsampling
+                            Layer</strong>）通常插入在連續的<strong style="color: blue;">卷積層</strong>之間。它對輸入的<strong
+                            style="color: blue;">特徵圖</strong>進行降維操作。常見的池化操作有：
+                        <ul>
+                            <li><strong style="color: blue;">最大池化</strong> (<strong style="color: red;">Max
+                                    Pooling</strong>): 在一個局部窗口內，取特徵值的最大值作為輸出。</li>
+                            <li><strong style="color: blue;">平均池化</strong> (<strong style="color: red;">Average
+                                    Pooling</strong>): 在一個局部窗口內，取特徵值的平均值作為輸出。</li>
+                        </ul>
+                        <strong style="color: blue;">池化層</strong>的主要作用包括：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">降低維度/減少計算量</strong>: 顯著減小<strong
+                                    style="color: blue;">特徵圖</strong>的空間尺寸（寬和高），從而減少後續層的參數數量和計算量。</li>
+                            <li><strong style="background-color: #ffff0030;">增大感受野</strong>: 間接增大後續<strong
+                                    style="color: blue;">卷積層</strong>的感受野。</li>
+                            <li><strong style="background-color: #ffff0030;">提高穩健性/不變性</strong>:
+                                使模型對輸入的微小位移、形變或失真不那麼敏感，提高模型的泛化能力（例如，<strong
+                                    style="color: blue;">最大池化</strong>對局部平移具有一定的不變性）。</li>
+                        </ol>
+                    </div>
+                    <img src="../image/CNN.webp" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q21 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#21</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">光學字元辨識</strong> (<strong
+                        style="color: red;">Optical Character Recognition</strong>, <strong
+                        style="color: purple;">OCR</strong>) 技術可以應用於以下哪個場景？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">人臉解鎖手機</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="color: blue;">自動駕駛</strong>車輛避障</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">掃描紙本文件並將其轉換為可編輯的電子文本</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">醫療影像診斷</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">OCR</strong>
+                        的核心功能是將圖像中的文字轉換為機器可讀的文本格式。因此，它的典型應用場景包括：
+                        <ul>
+                            <li><strong style="color: blue;">文件數位化</strong>: 將掃描的紙質文件、書籍、報紙等轉換為可搜索、可編輯的電子文本。</li>
+                            <li><strong style="color: blue;">車牌辨識</strong>: 識別車輛牌照上的字元。</li>
+                            <li><strong style="color: blue;">名片辨識</strong>: 自動提取名片上的聯絡資訊。</li>
+                            <li><strong style="color: blue;">票據/表單辨識</strong>: 自動讀取發票、收據、表格中的文字和數字。</li>
+                            <li><strong style="color: blue;">場景文字辨識</strong>: 識別照片或影片中自然場景裡的文字（如路牌、招牌）。</li>
+                        </ul>
+                        選項 A 是<strong style="color: blue;">人臉辨識</strong>。選項 B 涉及<strong
+                            style="color: blue;">物體偵測</strong>、<strong style="color: blue;">深度估計</strong>等。選項 D 是<strong
+                            style="color: blue;">醫學影像分析</strong>。
+                    </div>
+                </div>
+                <img src="../image/OCR_Optical Character Recognition.png" class="responsive-img">
+            </div>
+
+            <!-- Q22 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#22</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在評估<strong style="color: blue;">圖像分類</strong>模型時，<strong
+                        style="color: blue;">準確率</strong> (<strong style="color: red;">Accuracy</strong>)
+                    可能不是一個好的指標，尤其是在什麼情況下？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">數據集非常大</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">數據集<strong style="background-color: #ffff0030;">類別分佈極不平衡</strong>
+                            (<strong style="color: red;">Imbalanced dataset</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型訓練速度很快</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">使用了<strong style="color: blue;">遷移學習</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">準確率</strong> (<strong
+                            style="color: red;">Accuracy</strong>) = (<strong style="color: purple;">TP</strong> +
+                        <strong style="color: purple;">TN</strong>) / (<strong style="color: purple;">TP</strong> +
+                        <strong style="color: purple;">TN</strong> + <strong style="color: purple;">FP</strong> +
+                        <strong style="color: purple;">FN</strong>)，即預測正確的樣本數佔總樣本數的比例。在類別分佈均衡的情況下，<strong
+                            style="color: blue;">準確率</strong>是一個直觀的指標。但是，當數據集存在<strong
+                            style="background-color: #ffff0030;">嚴重類別不平衡</strong>時（例如，99% 的樣本屬於 A 類，只有 1% 的樣本屬於 B
+                        類），<strong style="color: blue;">準確率</strong>就可能具有誤導性。一個簡單地將所有樣本都預測為多數類（A 類）的模型，其<strong
+                            style="color: blue;">準確率</strong>可以達到 99%，但它對於少數類（B
+                        類）的識別能力完全為零，這在很多實際應用（如欺詐檢測、罕見病診斷）中是不可接受的。在這種情況下，需要關注其他指標，如<strong
+                            style="color: blue;">精確率</strong> (<strong style="color: red;">Precision</strong>)、<strong
+                            style="color: blue;">召回率</strong> (<strong style="color: red;">Recall</strong>)、<strong
+                            style="color: blue;">F1-score</strong> 或 <strong style="color: purple;">AUC</strong>
+                        (<strong style="color: red;">Area Under the ROC Curve</strong>)。
+                    </div>
+                </div>
+                <img src="../image/Confusion-matrix-Precision-Recall-Accuracy-and-F1-score.png" class="responsive-img">
+            </div>
+
+            <!-- Q23 -->
+            <div class="question-card" data-direction="1" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#23</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">圖像在電腦中通常如何表示？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">一維向量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">由<strong
+                                style="background-color: #ffff0030;">像素值組成的二維（灰階）或三維（彩色）矩陣/張量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">文本字串</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">聲音波形</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">數位圖像在電腦中是以離散的<strong style="color: blue;">像素</strong> (<strong
+                            style="color: red;">Pixel</strong>, <strong style="color: red;">Picture Element</strong>)
+                        陣列來表示的。每個像素代表圖像上一個點的顏色或亮度資訊。
+                        <ul>
+                            <li><strong style="color: blue;">灰階圖像</strong> (<strong style="color: red;">Grayscale
+                                    Image</strong>): 每個像素用一個數值表示其亮度（通常是 0 到 255 之間的整數），可以看作是一個<strong
+                                    style="background-color: #ffff0030;">二維矩陣</strong>（高度 x 寬度）。</li>
+                            <li><strong style="color: blue;">彩色圖像</strong> (<strong style="color: red;">Color
+                                    Image</strong>): 每個像素通常由多個顏色通道的值組成，最常見的是 <strong style="color: purple;">RGB</strong>
+                                模型，即每個像素包含紅色 (R)、綠色 (G)、藍色 (B) 三個通道的值。因此，彩色圖像可以看作是一個<strong
+                                    style="background-color: #ffff0030;">三維張量</strong>（高度 x 寬度 x 通道數）。</li>
+                        </ul>
+                    </div>
+                    <img src="../image/Scalars_Vectors_Matrices_Tensors.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q24 -->
+            <div class="question-card" data-direction="6" data-stars="4">
+                <div class="question-header">
+                    <div class="question-id">#24</div>
+                    <div class="question-frequency">★★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">YOLO</strong> (<strong
+                        style="color: red;">You Only Look Once</strong>) 是一種流行的<strong
+                        style="color: blue;">物體偵測</strong>模型，其主要特點是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">採用<strong style="color: blue;">兩階段</strong> (<strong
+                                style="color: red;">Two-stage</strong>) 的偵測流程，先生成候選區域再分類</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">採用<strong style="color: blue;">單階段</strong> (<strong
+                                style="color: red;">One-stage</strong>) 的偵測流程，將<strong
+                                style="color: blue;">物體偵測</strong>視為<strong
+                                style="background-color: #ffff0030;">回歸問題</strong>，<strong
+                                style="background-color: #ffff0030;">直接預測邊界框和類別機率</strong>，<strong
+                                style="background-color: #ffff0030;">速度快</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">主要用於<strong style="color: blue;">圖像分割</strong>任務</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">需要非常大的計算資源才能運行</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">YOLO</strong> 是<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">單階段</strong> (<strong
+                                style="color: red;">One-stage</strong>)</strong> 物體偵測器的代表。與 <strong
+                            style="color: purple;">R-CNN</strong> 系列（如 <strong style="color: blue;">Fast R-CNN</strong>,
+                        <strong style="color: blue;">Faster R-CNN</strong>）等<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">兩階段</strong> (<strong
+                                style="color: red;">Two-stage</strong>)</strong> 方法不同（兩階段方法通常先生成一系列可能包含物體的候選區域 <strong
+                            style="color: red;">Proposals</strong>，然後再對這些區域進行分類和<strong
+                            style="color: blue;">邊界框</strong>回歸），<strong style="color: purple;">YOLO</strong> 將<strong
+                            style="color: blue;">物體偵測</strong>看作是一個單一的<strong
+                            style="background-color: #ffff0030;">回歸問題</strong>。它將輸入圖像劃分成網格 (<strong
+                            style="color: red;">Grid</strong>)，並<strong
+                            style="background-color: #ffff0030;">直接</strong>在每個網格單元預測包含的物體<strong
+                            style="color: blue;">邊界框</strong>、置信度（是否包含物體）以及類別機率。這種端到端的設計使得 <strong
+                            style="color: purple;">YOLO</strong> 的<strong
+                            style="background-color: #ffff0030;">偵測速度非常快</strong>，能夠達到實時處理的要求，同時在準確率上也能保持較好的水準（尤其是在後續版本如
+                        <strong style="color: purple;">YOLOv3</strong>, <strong style="color: purple;">YOLOv4</strong>,
+                        <strong style="color: purple;">YOLOR</strong>, <strong style="color: purple;">YOLOv7</strong>,
+                        <strong style="color: purple;">YOLOv8</strong> 等不斷改進）。
+                    </div>
+                </div>
+                <img src="../image/You Only Look Once.png" class="responsive-img">
+            </div>
+
+            <!-- Q25 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#25</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content">在深度學習中，<strong style="color: blue;">激活函數</strong> (<strong
+                        style="color: red;">Activation Function</strong>)，如 <strong style="color: purple;">ReLU</strong>
+                    (<strong style="color: red;">Rectified Linear Unit</strong>)，在 <strong
+                        style="color: purple;">CNN</strong> 中的主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">減少模型的參數數量</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">為模型<strong
+                                style="background-color: #ffff0030;">引入非線性</strong>，使其能夠學習和表示更複雜的函數關係</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">進行特徵降維</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">歸一化輸入數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">卷積運算</strong>和<strong
+                            style="color: blue;">全連接層</strong>的仿射變換本身都是線性操作。如果神經網路只由線性層堆疊而成，那麼整個網路無論多深，其表達能力也等價於一個單層的線性模型，無法學習複雜的模式。<strong
+                            style="color: blue;">激活函數</strong>（如 <strong style="color: red;">Sigmoid</strong>, <strong
+                            style="color: red;">Tanh</strong>, <strong style="color: purple;">ReLU</strong> 及其變體 <strong
+                            style="color: red;">Leaky ReLU</strong>, <strong style="color: purple;">PReLU</strong>
+                        等）被應用在線性層的輸出之後，<strong style="background-color: #ffff0030;">引入非線性 (<strong
+                                style="color: red;">Non-linearity</strong>)
+                            變換</strong>。這使得神經網路能夠擬合非線性的複雜函數，從而可以處理現實世界中複雜的模式識別任務，如<strong
+                            style="color: blue;">圖像分類</strong>、<strong style="color: blue;">物體偵測</strong>等。<strong
+                            style="color: purple;">ReLU</strong> (f(x) = max(0, x)) 因其計算簡單、能有效緩解<strong
+                            style="color: blue;">梯度消失</strong>問題（在正區間梯度為 1）而成為 <strong
+                            style="color: purple;">CNN</strong> 中最常用的<strong style="color: blue;">激活函數</strong>之一。</div>
+                </div>
+                <img src="../image/Activation Function.png" class="responsive-img">
+            </div>
+
+            <!-- Q26 -->
+            <div class="question-card" data-direction="4" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#26</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">光流</strong> (<strong
+                        style="color: red;">Optical Flow</strong>) 估計的主要目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">偵測靜態圖像中的物體</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">計算<strong
+                                style="background-color: #ffff0030;">連續影像幀之間每個像素的運動向量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">重建場景的三維結構</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">提高影像的解析度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">光流</strong>是<strong
+                            style="color: blue;">電腦視覺</strong>中用於描述<strong
+                            style="background-color: #ffff0030;">運動</strong>的概念。它指的是在連續的兩幀（或多幀）影像之間，圖像上物體或像素點的視在運動模式。<strong
+                            style="color: blue;">光流</strong>估計的目標是計算一個<strong
+                            style="background-color: #ffff0030;">運動向量場</strong>，其中每個向量表示對應像素在相鄰幀之間的位移。<strong
+                            style="color: blue;">光流</strong>資訊對於理解影片內容、<strong
+                            style="color: blue;">物體追蹤</strong>、<strong
+                            style="color: blue;">動作識別</strong>、視訊壓縮、機器人導航等應用非常重要。例如，通過分析<strong
+                            style="color: blue;">光流</strong>可以判斷物體的運動方向和速度。</div>
+                </div>
+                <img src="../image/optical-flow-field-vectors.jpg" class="responsive-img">
+            </div>
+
+            <!-- Q27 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#27</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">電腦視覺</strong>技術在<strong
+                        style="color: blue;">醫療影像分析</strong> (<strong style="color: red;">Medical Image
+                        Analysis</strong>) 中有哪些應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅用於管理病患預約系統</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">僅用於生成醫療費用帳單</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">輔助疾病診斷</strong>（如腫瘤偵測）、<strong
+                                style="background-color: #ffff0030;">器官或病灶分割</strong>、<strong
+                                style="background-color: #ffff0030;">手術導航</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅用於藥物研發</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">電腦視覺</strong>在醫療領域的應用潛力巨大，可以輔助醫生提高診斷效率和準確性。常見應用包括：
+                        <ul>
+                            <li><strong style="color: blue;">醫學影像分割</strong>: 在 <strong
+                                    style="color: purple;">CT</strong>、<strong style="color: purple;">MRI</strong>、X
+                                光等影像中自動分割出感興趣的器官、組織或病灶區域（如腫瘤、血管）。</li>
+                            <li><strong style="color: blue;">病灶偵測與分類</strong>: 自動偵測影像中可能的異常區域（如肺結節、乳腺癌腫塊），並輔助判斷其良惡性。
+                            </li>
+                            <li><strong style="color: blue;">影像配準</strong> (<strong style="color: red;">Image
+                                    Registration</strong>): 對齊來自不同時間、不同模態或不同病人的醫學影像，以便比較或融合資訊。</li>
+                            <li><strong style="color: blue;">電腦輔助診斷</strong> (<strong style="color: red;">Computer-Aided
+                                    Diagnosis</strong>, <strong style="color: purple;">CAD</strong>):
+                                提供量化分析結果或視覺提示，輔助醫生做出診斷決策。</li>
+                            <li><strong style="color: blue;">手術導航與規劃</strong>: 利用術中影像或術前影像進行 3D 重建和定位，輔助醫生精確操作。</li>
+                        </ul>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Q28 -->
+            <div class="question-card" data-direction="3" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#28</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">尺度空間理論</strong> (<strong
+                        style="color: red;">Scale-Space Theory</strong>) 在<strong
+                        style="color: blue;">電腦視覺</strong>中的主要目的是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">加快圖像處理速度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">在<strong
+                                style="background-color: #ffff0030;">不同尺度下分析圖像特徵</strong>，使得<strong
+                                style="background-color: #ffff0030;">特徵偵測對物體大小變化不敏感</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">增強圖像顏色</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">壓縮圖像數據</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">尺度空間理論</strong>提出，圖像分析不應只在單一尺度（解析度）下進行，而應在一個連續的尺度範圍內進行。通過使用不同大小的<strong
+                            style="color: blue;">高斯核</strong>對圖像進行卷積（平滑），可以生成一系列不同模糊程度（尺度）的圖像表示，構成<strong
+                            style="color: blue;">尺度空間</strong>。在不同尺度下提取和分析圖像特徵（如斑點 <strong
+                            style="color: red;">Blob</strong>、角點 <strong
+                            style="color: red;">Corner</strong>），可以使得特徵偵測結果對物體在圖像中的實際大小變化不敏感。例如，一個小的斑點可能在較小尺度下被偵測到，而一個大的斑點可能在較大尺度下才被偵測到。<strong
+                            style="color: purple;">SIFT</strong> 演算法中的關鍵點偵測就應用了<strong
+                            style="color: blue;">尺度空間理論</strong>（通過<strong style="color: blue;">高斯差分</strong> <strong
+                            style="color: purple;">DoG</strong> 近似拉普拉斯算子）。</div>
+                </div>
+            </div>
+
+            <!-- Q29 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#29</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">U-Net</strong> 是一種常用於什麼<strong
+                        style="color: blue;">電腦視覺</strong>任務的 <strong style="color: purple;">CNN</strong> 架構？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="color: blue;">圖像分類</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">生物醫學圖像分割</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">物體偵測</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">人臉辨識</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">U-Net</strong> 最初是為了解決<strong
+                            style="background-color: #ffff0030;">生物醫學圖像分割</strong>問題而設計的。其架構呈 U 形，包含兩條路徑：
+                        <ol>
+                            <li><strong style="color: blue;">收縮路徑</strong> (<strong style="color: red;">Contracting Path
+                                    / Encoder</strong>): 類似典型的 <strong
+                                    style="color: purple;">CNN</strong>，通過重複應用卷積和<strong
+                                    style="color: blue;">最大池化</strong>來捕捉上下文資訊，同時降低空間解析度。</li>
+                            <li><strong style="color: blue;">擴張路徑</strong> (<strong style="color: red;">Expanding Path /
+                                    Decoder</strong>): 通過<strong style="color: blue;">上採樣</strong>（如<strong
+                                    style="color: blue;">轉置卷積</strong> <strong style="color: red;">Transposed
+                                    Convolution</strong>）逐步恢復空間解析度，同時將來自<strong
+                                    style="color: blue;">收縮路徑</strong>的對應層的高解析度<strong
+                                    style="color: blue;">特徵圖</strong>通過<strong
+                                    style="background-color: #ffff0030;"><strong style="color: blue;">跳躍連接</strong>
+                                    (<strong style="color: red;">Skip Connection</strong>)</strong> 拼接過來。</li>
+                        </ol>
+                        這種 <strong style="color: blue;">Encoder-Decoder</strong> 結構加上<strong
+                            style="color: blue;">跳躍連接</strong>，使得 <strong style="color: blue;">U-Net</strong>
+                        能夠結合深層的語意資訊和淺層的細節資訊，實現精確的像素級定位，非常適合<strong
+                            style="color: blue;">圖像分割</strong>任務，尤其是在數據量相對較少的生物醫學影像領域取得了巨大成功，並被廣泛應用於其他分割場景。
+                    </div>
+                </div>
+                <img src="../image/u-net.png" class="responsive-img">
+            </div>
+
+            <!-- Q30 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#30</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">對抗性攻擊</strong> (<strong
+                        style="color: red;">Adversarial Attack</strong>) 在<strong
+                        style="color: blue;">電腦視覺</strong>領域指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">一種提高模型準確率的訓練技巧</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通過對輸入圖像添加<strong
+                                style="background-color: #ffff0030;">人眼難以察覺的微小擾動</strong>，使得<strong
+                                style="background-color: #ffff0030;">深度學習模型做出錯誤的預測</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">一種<strong style="color: blue;">資料增強</strong>的方法</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">用於生成新圖像的技術</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">對抗性攻擊</strong>利用了深度學習模型（尤其是視覺模型）的脆弱性。攻擊者可以精心設計一種<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">對抗樣本</strong> (<strong
+                                style="color: red;">Adversarial
+                                Example</strong>)</strong>，它是在原始、乾淨的圖像上添加了非常微小的、人眼幾乎無法分辨的<strong
+                            style="background-color: #ffff0030;">擾動</strong> (<strong
+                            style="color: red;">Perturbation</strong>)，但這種擾動卻能導致模型（例如<strong
+                            style="color: blue;">圖像分類器</strong>）以高置信度將其誤分類為其他類別。例如，一張貓的圖片經過微小擾動後，可能被模型高度確信地識別為狗。<strong
+                            style="color: blue;">對抗性攻擊</strong>揭示了深度學習模型在<strong
+                            style="color: blue;">穩健性</strong>和安全性方面的隱患，是當前<strong style="color: blue;">電腦視覺</strong>和
+                        <strong style="color: purple;">AI</strong> 安全領域的重要研究方向。了解和防禦<strong
+                            style="color: blue;">對抗性攻擊</strong>對於在安全攸關場景（如<strong
+                            style="color: blue;">自動駕駛</strong>、<strong style="color: blue;">醫療診斷</strong>）中部署 <strong
+                            style="color: purple;">AI</strong> 模型至關重要。
+                    </div>
+                </div>
+                <img src="../image/Adversarial Example.png" class="responsive-img">
+            </div>
+
+            <!-- Q31 -->
+            <div class="question-card" data-direction="4" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#31</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">圖像修復</strong> (<strong
+                        style="color: red;">Image Inpainting</strong>) 的目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">提高圖像的對比度</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">根據圖像周圍的已知區域，<strong
+                                style="background-color: #ffff0030;">自動填補圖像中缺失或損壞的部分</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">將低解析度圖像轉換為高解析度圖像</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">偵測圖像中的所有物體</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圖像修復</strong>，也稱為<strong
+                            style="color: blue;">圖像補全</strong> (<strong style="color: red;">Image
+                            Completion</strong>)，旨在修復圖像中存在缺失、損壞或被遮擋的區域。其目標是利用圖像中可用（未損壞）部分的資訊，<strong
+                            style="background-color: #ffff0030;">推斷並生成缺失區域的內容</strong>，使得修復後的圖像看起來自然、合理、與周圍環境協調一致。這項技術可用於去除照片中的多餘物體、修復老舊照片的劃痕或破損、填補視訊中被移除的標誌等。傳統方法包括基於擴散或紋理合成的方法，而現代方法則廣泛使用深度學習（特別是<strong
+                            style="color: blue;">生成對抗網路</strong> <strong
+                            style="color: purple;">GAN</strong>）來生成更逼真的修復結果。</div>
+                </div>
+                <img src="../image/image inpainting.webp" class="responsive-img">
+            </div>
+
+            <!-- Q32 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#32</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">姿態估計</strong> (<strong
+                        style="color: red;">Pose Estimation</strong>) 在<strong style="color: blue;">電腦視覺</strong>中的目標是？
+                </div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">估計相機的內部參數</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">偵測圖像或影像中物體（如人體、手部、車輛）的<strong
+                                style="background-color: #ffff0030;">關鍵點位置</strong>和/或其<strong
+                                style="background-color: #ffff0030;">空間方位</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">估計圖像的拍攝時間</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">判斷圖像的整體風格</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">姿態估計</strong>旨在從圖像或影像中推斷物體的姿態資訊。這可以分為幾種類型：
+                        <ul>
+                            <li><strong style="color: blue;">人體姿態估計</strong> (<strong style="color: red;">Human Pose
+                                    Estimation</strong>): 定位人體主要關節點（如頭、肩、肘、腕、髖、膝、踝）的 2D 或 3D 坐標。</li>
+                            <li><strong style="color: blue;">物體姿態估計</strong> (<strong style="color: red;">Object Pose
+                                    Estimation</strong>): 估計剛性物體（如汽車、工業零件）相對於相機的 <strong
+                                    style="background-color: #ffff0030;">6D 姿態</strong>（3D 位置和 3D 旋轉）。</li>
+                            <li><strong style="color: blue;">手部姿態估計</strong>、<strong
+                                    style="color: blue;">臉部姿態估計</strong>等。</li>
+                        </ul>
+                        <strong style="color: blue;">姿態估計</strong>是許多應用的基礎，如人機互動、<strong
+                            style="color: blue;">動作識別</strong>、<strong style="color: blue;">擴增實境</strong> (<strong
+                            style="color: purple;">AR</strong>)、機器人抓取等。
+                    </div>
+                </div>
+                <img src="../image/Pose Estimation.png" class="responsive-img">
+            </div>
+
+            <!-- Q33 -->
+            <div class="question-card" data-direction="5" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#33</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">生成對抗網路</strong> (<strong
+                        style="color: red;">Generative Adversarial Network</strong>, <strong
+                        style="color: purple;">GAN</strong>) 在<strong style="color: blue;">電腦視覺</strong>中有哪些應用？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅用於<strong style="color: blue;">圖像分類</strong></div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">圖像生成</strong>、<strong
+                                style="background-color: #ffff0030;">圖像風格轉換</strong>、<strong
+                                style="background-color: #ffff0030;">圖像超解析度</strong>、<strong
+                                style="background-color: #ffff0030;">圖像修復</strong>等</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅用於<strong style="color: blue;">物體偵測</strong></div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅用於<strong style="color: blue;">邊緣偵測</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">GAN</strong> 是一種強大的生成模型，它由一個<strong
+                            style="color: blue;">生成器</strong> (<strong style="color: red;">Generator</strong>)
+                        和一個<strong style="color: blue;">判別器</strong> (<strong
+                            style="color: red;">Discriminator</strong>) 組成，通過對抗訓練的方式學習生成逼真的數據。在<strong
+                            style="color: blue;">電腦視覺</strong>領域，<strong style="color: purple;">GAN</strong>
+                        被廣泛應用於各種生成和轉換任務：
+                        <ul>
+                            <li><strong style="color: blue;">圖像生成</strong>: 生成新的、看似真實的人臉、風景、動漫角色等。</li>
+                            <li><strong style="color: blue;">圖像風格轉換</strong>: 將一張圖像的內容與另一張圖像的風格相結合。</li>
+                            <li><strong style="color: blue;">圖像超解析度</strong>: 將低解析度圖像轉換為高解析度圖像。</li>
+                            <li><strong style="color: blue;">圖像修復</strong> (<strong
+                                    style="color: red;">Inpainting</strong>): 填補圖像的缺失部分。</li>
+                            <li><strong style="color: blue;">圖像到圖像翻譯</strong> (<strong
+                                    style="color: red;">Image-to-Image Translation</strong>):
+                                將一種域的圖像轉換為另一種域的圖像（如將衛星圖轉為地圖，將線稿轉為彩色圖）。</li>
+                            <li><strong style="color: blue;">數據增強</strong>: 生成合成數據來擴充訓練集。</li>
+                        </ul>
+                    </div> <img src="../image/GAN.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q34 -->
+            <div class="question-card" data-direction="1" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#34</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: purple;">RGB</strong> 色彩模型是<strong
+                        style="color: blue;">電腦視覺</strong>中最常用的色彩模型之一，它使用哪三種基色來表示顏色？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">紅色 (<strong
+                                    style="color: red;">Red</strong>)、綠色 (<strong style="color: red;">Green</strong>)、藍色
+                                (<strong style="color: red;">Blue</strong>)</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">青色 (<strong style="color: red;">Cyan</strong>)、洋紅色 (<strong
+                                style="color: red;">Magenta</strong>)、黃色 (<strong style="color: red;">Yellow</strong>)
+                        </div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">色相 (<strong style="color: red;">Hue</strong>)、飽和度 (<strong
+                                style="color: red;">Saturation</strong>)、亮度 (<strong
+                                style="color: red;">Value/Brightness</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">亮度 (<strong style="color: red;">Luminance</strong>)、藍色差 (<strong
+                                style="color: red;">Cb</strong>)、紅色差 (<strong style="color: red;">Cr</strong>)</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: purple;">RGB</strong> 是一種<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">加色模型</strong> (<strong
+                                style="color: red;">Additive Color
+                                Model</strong>)</strong>，廣泛應用於顯示器、相機等發光設備。它基於三原色光混合原理，通過混合不同比例的紅色 (R)、綠色 (G) 和藍色 (B)
+                        光線來產生各種顏色。每個顏色通道通常用一個 8 位元（0-255）的數值表示強度。選項 B 是 <strong style="color: purple;">CMY(K)</strong>
+                        模型，用於印刷，是減色模型。選項 C 是 <strong style="color: purple;">HSV</strong> 或 <strong
+                            style="color: purple;">HSB</strong> 模型，更符合人類對顏色的感知方式。選項 D 是 <strong
+                            style="color: purple;">YCbCr</strong> 模型，常用於視訊壓縮，將亮度與色度分離。</div>
+                </div>
+                <img src="../image/rgb-color-model.png" class="responsive-img">
+            </div>
+
+            <!-- Q35 -->
+            <div class="question-card" data-direction="6" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#35</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">全連接層</strong> (<strong
+                        style="color: red;">Fully Connected Layer</strong>) 在 <strong
+                        style="color: purple;">CNN</strong> 模型中通常位於哪個部分？其作用是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">位於模型最開始，用於接收原始圖像輸入</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">通常位於<strong style="color: blue;">卷積層</strong>和<strong
+                                style="color: blue;">池化層</strong>之後（<strong
+                                style="background-color: #ffff0030;">模型的末端</strong>），用於<strong
+                                style="background-color: #ffff0030;">整合前面提取的特徵</strong>並進行<strong
+                                style="background-color: #ffff0030;">最終的分類或回歸預測</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">用於替代<strong style="color: blue;">卷積層</strong>進行特徵提取</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">用於對圖像進行降維</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在典型的 <strong style="color: purple;">CNN</strong> 架構中，前面通常是多個<strong
+                            style="color: blue;">卷積層</strong>和<strong
+                            style="color: blue;">池化層</strong>堆疊，負責從輸入圖像中提取具有空間階層結構的<strong
+                            style="color: blue;">特徵圖</strong>。這些<strong style="color: blue;">特徵圖</strong>在輸入到<strong
+                            style="color: blue;">全連接層</strong>之前，通常會被<strong
+                            style="background-color: #ffff0030;">展平</strong> (<strong
+                            style="color: red;">Flatten</strong>) 成一個一維向量。<strong
+                            style="color: blue;">全連接層</strong>的作用類似於傳統的<strong style="color: blue;">多層感知器</strong>
+                        (<strong style="color: red;">Multilayer Perceptron</strong>, <strong
+                            style="color: purple;">MLP</strong>)，其每個神經元都與前一層的所有神經元相連。它的主要功能是：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">整合特徵</strong>: 將前面卷積/池化層提取到的局部、抽象特徵進行整合。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">映射到輸出</strong>:
+                                將整合後的特徵映射到最終的輸出空間，例如，在<strong style="color: blue;">圖像分類</strong>任務中，映射到各個類別的得分或機率。</li>
+                        </ol>
+                        因此，<strong style="color: blue;">全連接層</strong>通常位於 <strong style="color: purple;">CNN</strong>
+                        的末端，作為分類器或回歸器。近年來，有些網路架構（如 <strong style="color: blue;">GoogLeNet</strong>）也嘗試使用<strong
+                            style="color: blue;">全局平均池化</strong> (<strong style="color: red;">Global Average
+                            Pooling</strong>) 來替代部分<strong style="color: blue;">全連接層</strong>，以減少參數。
+                    </div>
+                </div>
+                <img src="../image/CNN.webp" class="responsive-img">
+            </div>
+
+            <!-- Q36 -->
+            <div class="question-card" data-direction="8" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#36</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">電腦視覺</strong>模型在訓練和部署時面臨的挑戰之一是光照變化，這會導致什麼問題？
+                </div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">同一物體在不同光照條件下圖像外觀（亮度、對比度、顏色）差異很大，<strong
+                                style="background-color: #ffff0030;">影響模型的識別穩定性</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型訓練時間變長</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型參數數量增加</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">圖像解析度降低</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">光照變化是<strong
+                            style="color: blue;">電腦視覺</strong>應用中常見且棘手的問題。不同的光照條件（如白天/夜晚、室內/室外、晴天/陰天、不同光源方向和強度）會顯著改變物體在圖像中的外觀，即使是同一個物體。這包括亮度、對比度、陰影和顏色的變化。如果模型在訓練時只接觸了有限的光照條件，那麼在實際應用中遇到未見過的光照時，其效能可能會急遽下降，導致識別錯誤或失敗。因此，提高模型對光照變化的<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">穩健性</strong> (<strong
+                                style="color: red;">Robustness</strong>)</strong> 是<strong
+                            style="color: blue;">電腦視覺</strong>研究中的一個重要挑戰。常用的應對方法包括<strong
+                            style="color: blue;">資料增強</strong>（模擬光照變化）、使用對光照不敏感的特徵、光照歸一化等。</div>
+                </div>
+            </div>
+
+            <!-- Q37 -->
+            <div class="question-card" data-direction="2" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#37</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">霍夫變換</strong> (<strong
+                        style="color: red;">Hough Transform</strong>) 是一種常用於偵測圖像中特定形狀的技術，它最常用於偵測什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">直線和圓形</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">人臉</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">紋理</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text"><strong style="color: blue;">角點</strong></div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">霍夫變換</strong>是一種特徵提取技術，通過一種<strong
+                            style="background-color: #ffff0030;">投票機制</strong>在參數空間中尋找特定形狀的實例。其基本思想是將圖像空間中的點變換到參數空間，參數空間中的每個點代表圖像空間中的一條曲線（或形狀）。圖像空間中共線或共圓的點，其對應到參數空間的曲線會交於一點。通過在參數空間中尋找累積投票數最多的點，就可以反推出圖像空間中存在的直線或圓。標準<strong
+                            style="color: blue;">霍夫變換</strong>主要用於偵測<strong
+                            style="background-color: #ffff0030;">直線</strong>，後來也發展出了偵測<strong
+                            style="background-color: #ffff0030;">圓形</strong>和其他參數化形狀的變體。它通常作用於<strong
+                            style="color: blue;">邊緣偵測</strong>後的二值圖像。</div>
+                </div>
+                <img src="../image/hough-transform-in-image-processing.webp" class="responsive-img">
+            </div>
+
+            <!-- Q38 -->
+            <div class="question-card" data-direction="4" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#38</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">圖像分類</strong> (<strong
+                        style="color: red;">Image Classification</strong>) 任務的輸入和輸出通常是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">輸入：一張圖像；輸出：該圖像對應的<strong
+                                style="background-color: #ffff0030;">單一類別標籤</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">輸入：一張圖像；輸出：圖像中所有物體的<strong style="color: blue;">邊界框</strong>和類別標籤</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">輸入：一張圖像；輸出：一個描述圖像內容的句子</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">輸入：多張圖像；輸出：它們之間的相似度</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">圖像分類</strong>是<strong
+                            style="color: blue;">電腦視覺</strong>中最基礎的任務之一。它的目標是接收一張輸入圖像，並從一組預先定義好的類別中，為該圖像分配一個最能描述其主要內容的<strong
+                            style="background-color: #ffff0030;">單一類別標籤</strong>。例如，給定一張圖片，模型需要判斷它是屬於「貓」、「狗」、「汽車」還是「飛機」等類別。輸出通常是每個類別的機率分佈，其中機率最高的類別被選為最終的預測結果。選項
+                        B 是<strong style="color: blue;">物體偵測</strong>。選項 C 是<strong style="color: blue;">圖像描述生成</strong>
+                        (<strong style="color: red;">Image Captioning</strong>)。選項 D 是圖像相似度匹配或檢索。</div>
+                </div>
+                <img src="../image/Image Classification.png" class="responsive-img">
+            </div>
+
+            <!-- Q39 -->
+            <div class="question-card" data-direction="5" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#39</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">深度學習方法與傳統<strong style="color: blue;">電腦視覺</strong>方法在特徵提取上的主要區別是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">傳統方法速度更快</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">深度學習方法能夠<strong
+                                style="background-color: #ffff0030;">自動從數據中學習有效的特徵表示</strong>，而傳統方法通常<strong
+                                style="background-color: #ffff0030;">依賴人工設計的特徵提取器</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">傳統方法不需要訓練數據</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">深度學習方法只能處理小圖像</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">傳統的<strong style="color: blue;">電腦視覺</strong>流程通常分為兩步：1. <strong
+                            style="background-color: #ffff0030;">人工設計特徵提取</strong>: 研究人員根據對問題的理解和專業知識，手動設計特徵提取演算法（如
+                        <strong style="color: purple;">SIFT</strong>, <strong style="color: purple;">SURF</strong>,
+                        <strong style="color: purple;">HOG</strong>）來獲取圖像的關鍵資訊。2. 分類器訓練: 使用提取出的特徵來訓練一個分類器（如 <strong
+                            style="color: purple;">SVM</strong>, <strong style="color: blue;">Random
+                            Forest</strong>）。這種方法的效能很大程度上取決於人工設計特徵的好壞。而<strong
+                            style="background-color: #ffff0030;">深度學習方法（特別是 CNN）則採用端到端 (<strong
+                                style="color: red;">End-to-End</strong>)
+                            的學習方式</strong>，將特徵提取和分類（或其他任務）整合在一個統一的網路中。網路能夠<strong
+                            style="background-color: #ffff0030;">自動地、層次化地從原始像素數據中學習</strong>到適合當前任務的特徵表示，無需人工干預。這種自動學習特徵的能力是深度學習在<strong
+                            style="color: blue;">電腦視覺</strong>領域取得突破的關鍵原因。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q40 -->
+            <div class="question-card" data-direction="7" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#40</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">圖像檢索</strong> (<strong
+                        style="color: red;">Image Retrieval</strong>) 的目標是？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">為圖像生成描述文字</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">給定一張查詢圖像，在大型圖像資料庫中<strong
+                                style="background-color: #ffff0030;">查找與之內容或語意相似的圖像</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">分割圖像中的不同物體</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">判斷圖像是否為偽造的</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">圖像檢索</strong>旨在根據圖像的內容或語意相似性來查找圖像。常見的<strong
+                            style="color: blue;">圖像檢索</strong>類型是<strong style="background-color: #ffff0030;"><strong
+                                style="color: blue;">基於內容的圖像檢索</strong> (<strong style="color: red;">Content-Based Image
+                                Retrieval</strong>, <strong style="color: purple;">CBIR</strong>)</strong>。其流程通常是：
+                        <ol>
+                            <li>為資料庫中的所有圖像和查詢圖像提取特徵向量（可以使用顏色直方圖、紋理特徵、<strong style="color: purple;">SIFT</strong>
+                                等傳統特徵，或使用深度學習模型提取的深度特徵）。</li>
+                            <li>計算查詢圖像特徵向量與資料庫中所有圖像特徵向量之間的相似度（如歐氏距離、餘弦相似度）。</li>
+                            <li>根據相似度對資料庫圖像進行排序，返回最相似的圖像作為檢索結果。</li>
+                        </ol>
+                        <strong style="color: blue;">圖像檢索</strong>廣泛應用於圖片搜尋引擎、版權保護、商品推薦等場景。
+                    </div>
+                </div>
+                <img src="../image/Image Retrieval.png" class="responsive-img">
+            </div>
+
+            <!-- Q41 -->
+            <div class="question-card" data-direction="1" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#41</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">像素</strong> (<strong
+                        style="color: red;">Pixel</strong>) 是組成數位圖像的最小單位，它通常包含什麼資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">圖像的拍攝地點</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">顏色或亮度值</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">圖像的檔案大小</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">圖像的標題</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">Pixel</strong> 是 <strong
+                            style="color: red;">Picture Element</strong>
+                        的縮寫，是數位圖像的基本組成單元。每個像素代表了圖像在某個離散位置點上的資訊。對於<strong
+                            style="color: blue;">灰階圖像</strong>，這個資訊是單一的<strong
+                            style="background-color: #ffff0030;">亮度值</strong>。對於<strong
+                            style="color: blue;">彩色圖像</strong>，這個資訊通常是多個<strong
+                            style="background-color: #ffff0030;">顏色通道的值</strong>（如 <strong
+                            style="color: purple;">RGB</strong> 值）。像素值決定了該點在螢幕上顯示的顏色和亮度。圖像的空間解析度就是由像素的數量（寬度 x 高度）決定的。
+                    </div>
+                </div>
+                <img src="../image/Pixel.png" class="responsive-img">
+            </div>
+
+            <!-- Q42 -->
+            <div class="question-card" data-direction="2" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#42</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">仿射變換</strong> (<strong
+                        style="color: red;">Affine Transformation</strong>) 在<strong
+                        style="color: blue;">圖像處理</strong>中可以實現哪些操作？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">僅亮度調整</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">平移、旋轉、縮放、錯切</strong>
+                            (<strong style="color: red;">Shear</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">僅濾波操作</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">僅顏色空間轉換</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">仿射變換</strong>是一種<strong
+                            style="background-color: #ffff0030;">線性變換</strong>（通過矩陣乘法實現）與<strong
+                            style="background-color: #ffff0030;">平移</strong>（向量加法）的組合。在二維<strong
+                            style="color: blue;">圖像處理</strong>中，它可以表示為 `x' = Ax + b`，其中 x 是原始坐標，x' 是變換後坐標，A 是一個 2x2
+                        的線性變換矩陣，b 是一個 2x1 的平移向量。<strong style="color: blue;">仿射變換</strong>可以實現多種幾何操作，包括：
+                        <ul>
+                            <li><strong style="color: blue;">平移</strong> (<strong
+                                    style="color: red;">Translation</strong>): 移動圖像位置。</li>
+                            <li><strong style="color: blue;">旋轉</strong> (<strong
+                                    style="color: red;">Rotation</strong>): 繞某點旋轉圖像。</li>
+                            <li><strong style="color: blue;">縮放</strong> (<strong style="color: red;">Scaling</strong>):
+                                放大或縮小圖像（可以沿不同軸進行不同比例縮放）。</li>
+                            <li><strong style="color: blue;">錯切</strong> (<strong style="color: red;">Shear</strong>):
+                                使圖像沿某個方向傾斜（像推倒長方形）。</li>
+                        </ul>
+                        <strong style="color: blue;">仿射變換</strong>保持了圖像中直線的<strong
+                            style="background-color: #ffff0030;">平行性</strong>，但不一定保持角度和長度。它是比剛性變換（僅平移和旋轉）更廣泛的一類變換。
+                    </div>
+                </div>
+                <img src="../image/Examples-of-all-the-affine-transformations-for-a-simple-geometric-shape.png"
+                    class="responsive-img">
+
+            </div>
+
+            <!-- Q43 -->
+            <div class="question-card" data-direction="6" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#43</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">批次歸一化</strong> (<strong
+                        style="color: red;">Batch Normalization</strong>, <strong style="color: purple;">BN</strong>)
+                    在深度神經網路訓練中的主要作用是？</div>
+                <div class="options-container">
+                    <div class="option-item correct" data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text"><strong
+                                style="background-color: #ffff0030;">加速模型收斂，穩定訓練過程</strong>，並具有一定的<strong
+                                style="background-color: #ffff0030;">正則化效果</strong></div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">增加模型的深度</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">減少模型推理時的計算量</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">提取圖像的邊緣特徵</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">批次歸一化</strong>是深度學習中常用的一種技巧，通常應用在線性層（<strong
+                            style="color: blue;">卷積層</strong>或<strong style="color: blue;">全連接層</strong>）和<strong
+                            style="color: blue;">激活函數</strong>之間。它對<strong style="background-color: #ffff0030;">一個
+                            mini-batch</strong> 內每個特徵通道的數據進行歸一化處理，使其均值接近 0，方差接近 1。然後，通過兩個可學習的參數（縮放因子 γ 和偏移因子
+                        β）對歸一化後的數據進行線性變換。<strong style="color: purple;">BN</strong> 的主要好處包括：
+                        <ol>
+                            <li><strong style="background-color: #ffff0030;">加速收斂</strong>:
+                                通過穩定各層輸入的分佈，允許使用更大的學習率，加快模型訓練速度。</li>
+                            <li><strong style="background-color: #ffff0030;">穩定訓練</strong>: 減少了內部協變量偏移 (<strong
+                                    style="color: red;">Internal Covariate Shift</strong>) 問題，使得模型對參數初始化不那麼敏感，訓練過程更穩定。
+                            </li>
+                            <li><strong style="background-color: #ffff0030;">正則化效果</strong>: <strong
+                                    style="color: purple;">BN</strong> 在 mini-batch 上計算統計量，引入了一定的隨機性，可以起到類似 <strong
+                                    style="color: blue;">Dropout</strong> 的正則化作用，有助於防止<strong
+                                    style="color: blue;">過擬合</strong>。</li>
+                        </ol>
+                    </div>
+                    <img src="../image/Batch Normalization.png" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q44 -->
+            <div class="question-card" data-direction="4" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#44</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">電腦視覺</strong>中的「<strong
+                        style="color: blue;">立體視覺</strong>」(<strong style="color: red;">Stereo Vision</strong>)
+                    主要利用什麼原理來推斷場景的深度資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">單張圖像的陰影</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">來自兩個或多個不同視點的圖像之間的<strong
+                                style="background-color: #ffff0030;">視差</strong> (<strong
+                                style="color: red;">Disparity</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">物體的顏色</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">圖像的紋理</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">立體視覺</strong>模仿人類雙眼視覺系統。它使用兩個（或多個）在不同位置拍攝的相機來捕捉同一場景的圖像。由於相機位置不同，同一個三維空間點在兩張圖像上的投影位置會存在差異，這個差異稱為<strong
+                            style="background-color: #ffff0030;">視差</strong> (<strong
+                            style="color: red;">Disparity</strong>)。<strong
+                            style="background-color: #ffff0030;">視差的大小與該點的深度（距離相機的遠近）成反比</strong>：距離越近的點，視差越大；距離越遠的點，視差越小。通過找出兩張圖像中對應點（稱為<strong
+                            style="background-color: #ffff0030;"><strong style="color: blue;">同名點匹配</strong> <strong
+                                style="color: red;">Stereo Matching</strong></strong>）並計算它們之間的<strong
+                            style="color: blue;">視差</strong>，就可以利用三角測量原理推斷出該點的三維深度資訊，進而重建場景的三維結構。</div>
+                </div>
+                <img src="../image/Stereo Vision.jpg" class="responsive-img">
+            </div>
+
+            <!-- Q45 -->
+            <div class="question-card" data-direction="7" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#45</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">擴增實境</strong> (<strong
+                        style="color: red;">Augmented Reality</strong>, <strong style="color: purple;">AR</strong>)
+                    技術的核心之一是將虛擬物體疊加到真實世界場景中，這需要<strong style="color: blue;">電腦視覺</strong>技術來實現什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">生成虛擬物體的模型</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text"><strong style="background-color: #ffff0030;">即時追蹤相機姿態</strong>和<strong
+                                style="background-color: #ffff0030;">理解真實場景的幾何結構</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">優化電池續航</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">設計使用者介面</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">為了讓虛擬物體能夠逼真地、穩定地疊加在真實世界的視圖中，<strong
+                            style="color: purple;">AR</strong> 系統需要解決幾個關鍵的<strong style="color: blue;">電腦視覺</strong>問題：
+                        <ol>
+                            <li><strong style="color: blue;">即時定位與地圖構建</strong> (<strong
+                                    style="color: red;">Simultaneous Localization and Mapping</strong>, <strong
+                                    style="color: purple;">SLAM</strong>) 或<strong style="color: blue;">視覺慣性里程計</strong>
+                                (<strong style="color: red;">Visual-Inertial Odometry</strong>, <strong
+                                    style="color: purple;">VIO</strong>): 系統需要實時地追蹤相機（例如手機攝像頭或 <strong
+                                    style="color: purple;">AR</strong> 眼鏡）在三維空間中的精確位置和姿態（<strong
+                                    style="background-color: #ffff0030;">6DoF</strong>: 3D 位置 + 3D 旋轉）。</li>
+                            <li><strong style="color: blue;">場景理解與重建</strong> (<strong style="color: red;">Scene
+                                    Understanding and Reconstruction</strong>):
+                                系統需要理解真實環境的幾何結構，例如偵測平面（如桌面、地面、牆壁）、識別物體、估計深度等，以便將虛擬物體正確地放置在真實場景中（例如，讓虛擬茶杯「放」在真實桌面上）。</li>
+                        </ol>
+                        只有準確地追蹤相機姿態並理解場景結構，才能保證虛擬物體與真實世界正確對齊，不會隨著使用者的移動而漂移或穿透。
+                    </div>
+                    <img src="../image/Augmented Reality.jpg" class="responsive-img">
+                </div>
+            </div>
+
+            <!-- Q46 -->
+            <div class="question-card" data-direction="8" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#46</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">以下哪個<strong style="font-weight: normal;">不是</strong><strong
+                        style="color: blue;">電腦視覺</strong>面臨的常見挑戰？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">遮擋 (<strong style="color: red;">Occlusion</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">視角變化 (<strong style="color: red;">Viewpoint Variation</strong>)</div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">光照變化 (<strong style="color: red;">Illumination Variation</strong>)
+                        </div>
+                    </div>
+                    <div class="option-item correct" data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據量過少導致模型無法訓練</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong
+                            style="color: blue;">電腦視覺</strong>在實際應用中面臨許多挑戰，使得從圖像中可靠地提取資訊變得困難。常見挑戰包括：
+                        <ul>
+                            <li><strong style="color: blue;">視角變化</strong>: 同一物體從不同角度看外觀差異很大。</li>
+                            <li><strong style="color: blue;">光照變化</strong>: 光照條件影響物體的亮度、顏色和陰影。</li>
+                            <li><strong style="color: blue;">尺度變化</strong>: 物體在圖像中的大小可能變化很大。</li>
+                            <li><strong style="color: blue;">遮擋</strong>: 物體可能被其他物體部分或完全遮擋。</li>
+                            <li><strong style="color: blue;">形變</strong> (<strong
+                                    style="color: red;">Deformation</strong>): 非剛性物體（如衣服、人體）的形狀會變化。</li>
+                            <li><strong style="color: blue;">背景混淆</strong> (<strong style="color: red;">Background
+                                    Clutter</strong>): 物體與背景難以區分。</li>
+                            <li><strong style="color: blue;">類內差異</strong> (<strong style="color: red;">Intra-class
+                                    Variation</strong>): 同一類別的物體外觀可能差異很大（如不同品種的狗）。</li>
+                            <li><strong style="color: blue;">運動模糊</strong> (<strong style="color: red;">Motion
+                                    Blur</strong>): 相機或物體快速運動導致圖像模糊。</li>
+                        </ul>
+                        選項 D 描述的是數據獲取的挑戰，<strong
+                            style="background-color: #ffff0030;">而非視覺本身的挑戰</strong>。雖然數據量不足會影響模型訓練，但這不是視覺問題本身的固有難點。
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q47 -->
+            <div class="question-card" data-direction="3" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#47</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">角點偵測</strong> (<strong
+                        style="color: red;">Corner Detection</strong>) 演算法（如 <strong style="color: blue;">Harris Corner
+                        Detector</strong>）主要尋找圖像中的什麼區域？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">平坦的、紋理單一的區域</div>
+                    </div>
+                    <div class="option-item " data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">只有單一方向邊緣的區域</div>
+                    </div>
+                    <div class="option-item correct" data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">在<strong
+                                style="background-color: #ffff0030;">各個方向上圖像強度變化都很大的區域</strong>（即兩條或多條邊緣的交點）</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">亮度最高的區域</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">角點</strong>是圖像中重要的局部特徵點。直觀地說，<strong
+                            style="color: blue;">角點</strong>是兩條或多條邊緣的交匯處。從數學上看，<strong
+                            style="color: blue;">角點</strong>通常被定義為：如果以該點為中心取一個小的圖像窗口，<strong
+                            style="background-color: #ffff0030;">當這個窗口向任何方向移動時，窗口內的圖像內容都會發生顯著變化</strong>。相比之下，平坦區域的窗口移動時內容基本不變，邊緣區域的窗口沿邊緣方向移動時內容變化不大，只有垂直於邊緣方向移動時才顯著變化。<strong
+                            style="color: blue;">Harris 角點偵測器</strong>就是基於這種思想，通過計算圖像梯度矩陣的特徵值來判斷某個點是否為<strong
+                            style="color: blue;">角點</strong>（<strong style="color: blue;">角點</strong>處兩個特徵值都較大）。<strong
+                            style="color: blue;">角點</strong>是穩定且資訊豐富的特徵，常用於<strong
+                            style="color: blue;">圖像匹配</strong>、追蹤、拼接等任務。</div>
+                </div>
+                <img src="../image/Harris Corner Detector.png" class="responsive-img">
+            </div>
+
+            <!-- Q48 -->
+            <div class="question-card" data-direction="5" data-stars="2">
+                <div class="question-header">
+                    <div class="question-id">#48</div>
+                    <div class="question-frequency">★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">卷積神經網路</strong> (<strong
+                        style="color: purple;">CNN</strong>) 中的「<strong style="color: blue;">感受野</strong>」(<strong
+                        style="color: red;">Receptive Field</strong>) 指的是什麼？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型能夠處理的圖像最大尺寸</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">輸出<strong style="color: blue;">特徵圖</strong>上的某個單元（像素）所能「看到」或<strong
+                                style="background-color: #ffff0030;">受其影響的輸入圖像區域的大小</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text"><strong style="color: blue;">卷積核</strong>的大小</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">模型中參數的總數量</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在 <strong style="color: purple;">CNN</strong> 中，每一層的輸出<strong
+                            style="color: blue;">特徵圖</strong>上的每個像素值，都是由前一層<strong
+                            style="color: blue;">特徵圖</strong>（或原始輸入圖像）的一個局部區域計算得到的。這個局部區域的大小就被稱為該輸出像素的<strong
+                            style="background-color: #ffff0030;">感受野</strong>。<strong
+                            style="background-color: #ffff0030;">隨著網路層數的加深，感受野會逐漸增大</strong>。例如，第一層<strong
+                            style="color: blue;">卷積核</strong>大小為 3x3，則第一層輸出<strong
+                            style="color: blue;">特徵圖</strong>上每個像素的<strong style="color: blue;">感受野</strong>是輸入圖像上的 3x3
+                        區域；如果第二層<strong style="color: blue;">卷積核</strong>也是 3x3，則第二層輸出<strong
+                            style="color: blue;">特徵圖</strong>上每個像素的<strong style="color: blue;">感受野</strong>對應到輸入圖像上就是
+                        5x5 的區域（假設步長為 1）。理解<strong style="color: blue;">感受野</strong>的大小對於分析 <strong
+                            style="color: purple;">CNN</strong> 模型如何捕捉不同尺度的資訊以及設計網路結構非常重要。深層的單元具有更大的<strong
+                            style="color: blue;">感受野</strong>，能夠捕捉更全局、更抽象的特徵。</div>
+                </div>
+                <img src="../image/Receptive Field in cnn.png" class="responsive-img">
+            </div>
+
+            <!-- Q49 -->
+            <div class="question-card" data-direction="7" data-stars="1">
+                <div class="question-header">
+                    <div class="question-id">#49</div>
+                    <div class="question-frequency">★</div>
+                </div>
+                <div class="question-content">工業自動化中的「<strong style="color: blue;">瑕疵檢測</strong>」(<strong
+                        style="color: red;">Defect Detection</strong>) 經常利用<strong
+                        style="color: blue;">電腦視覺</strong>技術來？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">控制機器手臂運動</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">自動檢查產品表面是否存在<strong
+                                style="background-color: #ffff0030;">劃痕、污點、裂紋、缺口等缺陷</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">預測生產線故障</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">管理人類工人的排班</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content">在工業生產線上，利用<strong style="color: blue;">電腦視覺</strong>進行自動化的<strong
+                            style="color: blue;">瑕疵檢測</strong>是提高產品質量和生產效率的重要手段。系統通過攝像頭拍攝產線上的產品圖像，然後利用<strong
+                            style="color: blue;">圖像處理</strong>和<strong
+                            style="color: blue;">機器學習</strong>（包括深度學習）演算法來分析圖像，<strong
+                            style="background-color: #ffff0030;">自動識別產品表面或內部是否存在各種預定義的缺陷</strong>，如劃痕、凹坑、氣泡、顏色異常、尺寸偏差等。相比人工目檢，自動化檢測速度更快、更穩定、不易疲勞，能夠實現
+                        100% 全檢。這屬於<strong style="color: blue;">電腦視覺</strong>在品質控制方面的典型應用。</div>
+                </div>
+                <img src="../image/Defect Detection.webp" class="responsive-img">
+            </div>
+
+            <!-- Q50 -->
+            <div class="question-card" data-direction="8" data-stars="3">
+                <div class="question-header">
+                    <div class="question-id">#50</div>
+                    <div class="question-frequency">★★★</div>
+                </div>
+                <div class="question-content"><strong style="color: blue;">混淆矩陣</strong> (<strong
+                        style="color: red;">Confusion Matrix</strong>) 在評估分類模型時提供了哪些資訊？</div>
+                <div class="options-container">
+                    <div class="option-item " data-option="A">
+                        <div class="option-label">A</div>
+                        <div class="option-text">模型訓練所需的時間和記憶體</div>
+                    </div>
+                    <div class="option-item correct" data-option="B">
+                        <div class="option-label">B</div>
+                        <div class="option-text">模型在各個類別上的預測表現，包括<strong style="background-color: #ffff0030;">真正例
+                                (<strong style="color: purple;">TP</strong>)、假正例 (<strong
+                                    style="color: purple;">FP</strong>)、真反例 (<strong
+                                    style="color: purple;">TN</strong>)、假反例 (<strong style="color: purple;">FN</strong>)
+                                的數量</strong></div>
+                    </div>
+                    <div class="option-item " data-option="C">
+                        <div class="option-label">C</div>
+                        <div class="option-text">模型每一層的參數值</div>
+                    </div>
+                    <div class="option-item " data-option="D">
+                        <div class="option-label">D</div>
+                        <div class="option-text">數據集中每個特徵的重要性</div>
+                    </div>
+                </div>
+                <div class="explanation-container">
+                    <div class="explanation-header">答案解析</div>
+                    <div class="explanation-content"><strong style="color: blue;">混淆矩陣</strong>是一個 N x N 的矩陣（N
+                        為類別數量），用於視覺化和量化分類模型的效能。矩陣的行通常代表<strong style="color: blue;">真實類別</strong> (<strong
+                            style="color: red;">Actual Class</strong>)，列代表<strong style="color: blue;">預測類別</strong>
+                        (<strong style="color: red;">Predicted Class</strong>)。矩陣中的每個元素 C(i, j) 表示實際屬於類別 i 的樣本被模型預測為類別 j
+                        的數量。
+                        <br>對於二元分類：
+                        <ul>
+                            <li><strong style="color: purple;">TP</strong> (<strong style="color: red;">True
+                                    Positive</strong>): 實際為正，預測為正。</li>
+                            <li><strong style="color: purple;">FP</strong> (<strong style="color: red;">False
+                                    Positive</strong>): 實際為負，預測為正（第一型錯誤 <strong style="color: red;">Type I
+                                    Error</strong>）。</li>
+                            <li><strong style="color: purple;">TN</strong> (<strong style="color: red;">True
+                                    Negative</strong>): 實際為負，預測為負。</li>
+                            <li><strong style="color: purple;">FN</strong> (<strong style="color: red;">False
+                                    Negative</strong>): 實際為正，預測為負（第二型錯誤 <strong style="color: red;">Type II
+                                    Error</strong>）。</li>
+                        </ul>
+                        <strong style="color: blue;">混淆矩陣</strong>提供了比單一<strong
+                            style="color: blue;">準確率</strong>更詳細的資訊，可以<strong
+                            style="background-color: #ffff0030;">看出模型在哪個類別上表現好，在哪個類別上容易混淆</strong>。基於<strong
+                            style="color: blue;">混淆矩陣</strong>可以計算出多種評估指標，如<strong
+                            style="color: blue;">準確率</strong>、<strong style="color: blue;">精確率</strong>、<strong
+                            style="color: blue;">召回率</strong>、<strong style="color: blue;">F1-score</strong> 等。
+                    </div>
+                </div>
+                <img src="../image/Confusion-matrix-Precision-Recall-Accuracy-and-F1-score.png" class="responsive-img">
+            </div>
+
+
+        </div>
+
+        <div class="back-to-top" id="backToTop">↑</div>
+    </div>
+
+    <script>
+        let explanationsVisible = true; // Explanations start visible
+        let answersVisible = true; // Answers start visible
+        let correctAnswers = []; // Store information about correct answers
+
+        // Progress bar
+        const progressBar = document.getElementById("progressBar");
+        window.onscroll = function () {
+            updateProgressBar();
+            toggleBackToTopButton();
+        };
+
+        function updateProgressBar() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (height > 0) {
+                let scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            } else {
+                progressBar.style.width = "0%"; // Handle case where content height is less than viewport
+            }
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById("backToTop");
+
+        function toggleBackToTopButton() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                backToTopButton.style.display = "flex";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        }
+
+        backToTopButton.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Filter by direction (called from direction items)
+        function filterByDirection(directionNumber) {
+            document.getElementById('directionFilter').value = directionNumber === 'all' ? 'all' : String(directionNumber);
+            filterQuestions(); // Call the main filter function
+        }
+
+        // Event listeners for filters and search
+        document.getElementById("directionFilter").addEventListener("change", filterQuestions);
+        document.getElementById("starFilter").addEventListener("change", filterQuestions); // Listener for star filter
+        document.getElementById("searchButton").addEventListener("click", filterQuestions); // Integrate search into filtering
+        document.getElementById("searchInput").addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                filterQuestions(); // Trigger filter on Enter key
+            }
+            // Optional: live search/filtering as user types
+            // filterQuestions();
+        });
+
+
+        // Combined filter and search function
+        function filterQuestions() {
+            let direction = document.getElementById("directionFilter").value;
+            let stars = document.getElementById("starFilter").value;
+            let searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+            let questions = document.querySelectorAll(".question-card");
+            let anyVisible = false; // Track if any questions match
+
+            questions.forEach(function (question) {
+                const matchesDirection = (direction === "all" || question.dataset.direction === direction);
+                const matchesStars = (stars === "all" || question.dataset.stars === stars);
+                const questionText = question.textContent.toLowerCase();
+                const matchesSearch = (searchText === "" || questionText.includes(searchText));
+
+                if (matchesDirection && matchesStars && matchesSearch) { // Must match all active filters/search
+                    question.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    question.style.display = "none";
+                }
+            });
+
+            // Optional: Display a message if no questions match
+            const noResultsContainer = document.getElementById('noResultsContainer'); // Add a container for the message
+            if (!noResultsContainer) {
+                const container = document.getElementById('questionsContainer');
+                const messageDiv = document.createElement('div');
+                messageDiv.id = 'noResultsContainer';
+                messageDiv.style.textAlign = 'center';
+                messageDiv.style.padding = '20px';
+                messageDiv.style.fontSize = '1.1rem';
+                messageDiv.style.display = 'none'; // Hidden by default
+                container.parentNode.insertBefore(messageDiv, container.nextSibling); // Insert after questions container
+            }
+
+            const messageElement = document.getElementById('noResultsContainer');
+            if (!anyVisible) {
+                messageElement.style.display = 'block';
+                messageElement.textContent = '沒有找到符合條件的題目。';
+            } else {
+                messageElement.style.display = 'none';
+            }
+        }        // Toggle explanations visibility
+        document.getElementById("toggleExplanations").addEventListener("click", function () {
+            let explanations = document.querySelectorAll(".explanation-container");
+            explanationsVisible = !explanationsVisible;
+            let button = document.getElementById("toggleExplanations");
+
+            explanations.forEach(function (explanation) {
+                explanation.style.display = explanationsVisible ? "block" : "none";
+            });
+
+            button.textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+        });
+
+        // Initialize correct answers data
+        function initializeCorrectAnswers() {
+            let correctOptions = document.querySelectorAll(".option-item.correct");
+            correctAnswers = [];
+
+            correctOptions.forEach(function (option) {
+                let strongElements = option.querySelectorAll("strong[style*='background-color']");
+                let strongData = [];
+
+                strongElements.forEach(function (strong) {
+                    strongData.push({
+                        element: strong,
+                        originalStyle: strong.getAttribute('style'),
+                        text: strong.textContent
+                    });
+                });
+
+                correctAnswers.push({
+                    element: option,
+                    strongElements: strongData
+                });
+            });
+        }
+
+        // Toggle answers visibility
+        document.getElementById("toggleAnswers").addEventListener("click", function () {
+            answersVisible = !answersVisible;
+            let button = document.getElementById("toggleAnswers");
+
+            correctAnswers.forEach(function (correctAnswer) {
+                if (answersVisible) {
+                    // Show answers: restore correct class and strong styling
+                    correctAnswer.element.classList.add("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "#ffff0030";
+                        strongData.element.style.fontWeight = "bold";
+                    });
+                } else {
+                    // Hide answers: remove correct class and strong styling
+                    correctAnswer.element.classList.remove("correct");
+                    correctAnswer.strongElements.forEach(function (strongData) {
+                        strongData.element.style.backgroundColor = "";
+                        strongData.element.style.fontWeight = "normal";
+                    });
+                }
+            });
+
+            button.textContent = answersVisible ? "隱藏全部解答" : "顯示全部解答";
+        });
+
+        // Click options (for visual feedback, if desired)
+        let options = document.querySelectorAll(".option-item");
+        options.forEach(function (option) {
+            option.addEventListener("click", function () {
+                // Example: Temporarily highlight clicked option
+                // Remove highlight from siblings first
+                const parentOptions = option.closest('.options-container');
+                if (parentOptions) {
+                    parentOptions.querySelectorAll('.option-item').forEach(sib => sib.style.border = 'none');
+                }
+                // Add a temporary border to clicked option
+                // option.style.border = '2px solid #9ec5fe'; // Example highlight
+                // Note: This is just visual, doesn't affect correctness logic shown by .correct class
+            });
+        });         // Initial setup
+        initializeCorrectAnswers(); // Initialize correct answers data
+        toggleBackToTopButton(); // Check initial scroll position
+        updateProgressBar(); // Set initial progress bar state
+        filterQuestions(); // Apply initial filter/search state on load
+        // Set initial state for toggle button text
+        document.getElementById("toggleExplanations").textContent = explanationsVisible ? "隱藏全部解析" : "顯示全部解析";
+
+    </script>
+</body>
+
+</html>
