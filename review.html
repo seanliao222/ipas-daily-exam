@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPAS AI 中級 考前速覽</title>
+<style>
+:root{--bg:#0f1117;--card:#1a1d27;--card2:#21253a;--accent:#6c63ff;--accent2:#ff6b6b;--accent3:#ffd93d;--accent4:#6bcb77;--text:#e8e8f0;--text2:#9999bb;--border:#2a2d3e;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;display:flex;min-height:100vh;}
+#sidebar{width:260px;min-width:260px;background:var(--card);border-right:1px solid var(--border);height:100vh;overflow-y:auto;position:sticky;top:0;padding:12px 0;}
+#sidebar::-webkit-scrollbar{width:4px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+.sidebar-title{padding:12px 16px;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:1px;border-bottom:1px solid var(--border);margin-bottom:8px;}
+.search-wrap{padding:0 12px 8px;}
+#search{width:100%;padding:7px 10px;background:var(--card2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;outline:none;}
+#search:focus{border-color:var(--accent);}
+.nav-group{margin-bottom:4px;}
+.nav-group-label{padding:4px 16px;font-size:11px;font-weight:700;color:var(--accent3);letter-spacing:1px;text-transform:uppercase;}
+.nav-item{display:block;padding:6px 16px 6px 24px;font-size:12.5px;color:var(--text2);cursor:pointer;border-left:3px solid transparent;transition:all .15s;}
+.nav-item:hover,.nav-item.active{color:var(--text);background:var(--card2);border-left-color:var(--accent);}
+#main{flex:1;overflow-y:auto;padding:24px;}
+#main::-webkit-scrollbar{width:6px;}
+#main::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.chapter{display:none;max-width:900px;margin:0 auto;}
+.chapter.active{display:block;}
+.chapter-header{margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--accent);}
+.chapter-num{font-size:12px;color:var(--accent);font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.chapter-title{font-size:26px;font-weight:800;margin-top:4px;}
+.chapter-sub{font-size:13px;color:var(--text2);margin-top:6px;}
+h2{font-size:17px;font-weight:700;color:var(--accent3);margin:24px 0 10px;padding-left:10px;border-left:3px solid var(--accent3);}
+h3{font-size:14px;font-weight:700;color:var(--accent);margin:16px 0 8px;}
+p,li{font-size:14px;line-height:1.7;color:var(--text2);}
+strong{color:var(--text);}
+ul,ol{padding-left:20px;margin:6px 0;}
+li{margin:3px 0;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0;}
+.card-danger{border-color:#ff6b6b44;background:#ff6b6b11;}
+.card-success{border-color:#6bcb7744;background:#6bcb7711;}
+.card-warn{border-color:#ffd93d44;background:#ffd93d11;}
+.card-info{border-color:#6c63ff44;background:#6c63ff11;}
+.trap{background:#ff6b6b15;border:1px solid #ff6b6b55;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13px;}
+.trap::before{content:"⚠️ 陷阱：";font-weight:700;color:var(--accent2);}
+.tip{background:#6c63ff15;border:1px solid #6c63ff55;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13px;}
+.tip::before{content:"💡 口訣：";font-weight:700;color:var(--accent);}
+.key{background:#ffd93d15;border:1px solid #ffd93d55;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13px;}
+.key::before{content:"🔑 必背：";font-weight:700;color:var(--accent3);}
+.good{background:#6bcb7715;border:1px solid #6bcb7755;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:13px;}
+.good::before{content:"✅ 秒選：";font-weight:700;color:var(--accent4);}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px;}
+th{background:var(--card2);color:var(--accent3);padding:8px 12px;text-align:left;border:1px solid var(--border);}
+td{padding:7px 12px;border:1px solid var(--border);color:var(--text2);}
+td:first-child{color:var(--text);font-weight:600;}
+tr:hover td{background:var(--card2);}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;margin:2px;}
+.badge-purple{background:#6c63ff33;color:#a89fff;}
+.badge-red{background:#ff6b6b33;color:#ff9999;}
+.badge-yellow{background:#ffd93d33;color:#ffe066;}
+.badge-green{background:#6bcb7733;color:#8ee89a;}
+.tag-row{margin:8px 0;}
+.formula{background:#1a1d27;border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:monospace;font-size:13px;color:#a89fff;margin:6px 0;}
+.toc-btn{display:inline-block;padding:3px 10px;margin:2px;border-radius:20px;background:var(--card2);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer;transition:all .15s;}
+.toc-btn:hover{border-color:var(--accent);color:var(--accent);}
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px;}
+.home-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;cursor:pointer;transition:all .2s;}
+.home-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.home-card .num{font-size:11px;color:var(--accent);font-weight:700;}
+.home-card .name{font-size:13px;font-weight:700;margin-top:4px;}
+.home-card .desc{font-size:11px;color:var(--text2);margin-top:4px;}
+@media(max-width:700px){#sidebar{width:0;min-width:0;overflow:hidden;position:fixed;z-index:100;transition:width .2s;}#sidebar.open{width:260px;}body{flex-direction:column;}#main{padding:16px 12px;}}
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sidebar-title">iPAS AI 中級 速覽</div>
+  <div class="search-wrap"><input id="search" placeholder="🔍 搜尋關鍵字..." oninput="doSearch(this.value)"></div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">首頁</div>
+    <div class="nav-item active" onclick="show('home')">📋 全科目總覽</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">AI 技術</div>
+    <div class="nav-item" onclick="show('c01')">L21101 自然語言處理 NLP</div>
+    <div class="nav-item" onclick="show('c02')">L21102 電腦視覺 CV</div>
+    <div class="nav-item" onclick="show('c03')">L21103 生成式 AI</div>
+    <div class="nav-item" onclick="show('c04')">L21104 多模態 AI</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">AI 導入</div>
+    <div class="nav-item" onclick="show('c05')">L21201 AI 導入評估</div>
+    <div class="nav-item" onclick="show('c06')">L21202 AI 導入規劃</div>
+    <div class="nav-item" onclick="show('c07')">L21203 AI 風險管理</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">AI 系統</div>
+    <div class="nav-item" onclick="show('c08')">L21301 數據準備與模型選擇</div>
+    <div class="nav-item" onclick="show('c09')">L21302 系統集成與部署</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">統計學</div>
+    <div class="nav-item" onclick="show('c10')">L22101 敘述性統計</div>
+    <div class="nav-item" onclick="show('c11')">L22102 機率分佈</div>
+    <div class="nav-item" onclick="show('c12')">L22103 假設檢定</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">數據工程</div>
+    <div class="nav-item" onclick="show('c13')">L22201 數據收集與清理</div>
+    <div class="nav-item" onclick="show('c14')">L22202 數據儲存與管理</div>
+    <div class="nav-item" onclick="show('c15')">L22203 數據處理技術</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">大數據分析</div>
+    <div class="nav-item" onclick="show('c16')">L22301 統計在大數據的應用</div>
+    <div class="nav-item" onclick="show('c17')">L22302 大數據分析方法</div>
+    <div class="nav-item" onclick="show('c18')">L22303 數據可視化工具</div>
+    <div class="nav-item" onclick="show('c19')">L22401 大數據與機器學習</div>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-label">大數據 AI 應用</div>
+    <div class="nav-item" onclick="show('c20')">L22402 鑑別式 AI 應用</div>
+    <div class="nav-item" onclick="show('c21')">L22403 生成式 AI 應用</div>
+    <div class="nav-item" onclick="show('c22')">L22404 隱私保護與合規</div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- HOME -->
+<section class="chapter active" id="home">
+  <div class="chapter-header">
+    <div class="chapter-num">iPAS AI 應用規劃師（中級）</div>
+    <div class="chapter-title">考前速覽 — 22 份教材精華</div>
+    <div class="chapter-sub">點選下方章節或左側選單快速跳轉</div>
+  </div>
+  <div class="home-grid">
+    <div class="home-card" onclick="show('c01')"><div class="num">L21101</div><div class="name">自然語言處理</div><div class="desc">BERT · GPT · RAG · TF-IDF</div></div>
+    <div class="home-card" onclick="show('c02')"><div class="num">L21102</div><div class="name">電腦視覺</div><div class="desc">CNN · YOLO · ViT · IoU/mAP</div></div>
+    <div class="home-card" onclick="show('c03')"><div class="num">L21103</div><div class="name">生成式 AI</div><div class="desc">GAN · VAE · Diffusion · LLM</div></div>
+    <div class="home-card" onclick="show('c04')"><div class="num">L21104</div><div class="name">多模態 AI</div><div class="desc">CLIP · ASR · 感測器融合</div></div>
+    <div class="home-card" onclick="show('c05')"><div class="num">L21201</div><div class="name">AI 導入評估</div><div class="desc">ROI · NPV · As-Is/To-Be</div></div>
+    <div class="home-card" onclick="show('c06')"><div class="num">L21202</div><div class="name">AI 導入規劃</div><div class="desc">Scrum · WBS · MLOps</div></div>
+    <div class="home-card" onclick="show('c07')"><div class="num">L21203</div><div class="name">AI 風險管理</div><div class="desc">NIST RMF · EU AI Act</div></div>
+    <div class="home-card" onclick="show('c08')"><div class="num">L21301</div><div class="name">數據準備</div><div class="desc">缺值 · 異常值 · PCA · 編碼</div></div>
+    <div class="home-card" onclick="show('c09')"><div class="num">L21302</div><div class="name">系統集成部署</div><div class="desc">K8s · Docker · 藍綠/金絲雀</div></div>
+    <div class="home-card" onclick="show('c10')"><div class="num">L22101</div><div class="name">敘述性統計</div><div class="desc">均值 · 偏態 · 峰態 · 變異數</div></div>
+    <div class="home-card" onclick="show('c11')"><div class="num">L22102</div><div class="name">機率分佈</div><div class="desc">常態 · 二項 · 卜瓦松 · 指數</div></div>
+    <div class="home-card" onclick="show('c12')"><div class="num">L22103</div><div class="name">假設檢定</div><div class="desc">t-test · ANOVA · 卡方 · p值</div></div>
+    <div class="home-card" onclick="show('c13')"><div class="num">L22201</div><div class="name">數據收集清理</div><div class="desc">MCAR/MAR/MNAR · 異常偵測</div></div>
+    <div class="home-card" onclick="show('c14')"><div class="num">L22202</div><div class="name">數據儲存管理</div><div class="desc">ACID · NoSQL · HDFS · 星型</div></div>
+    <div class="home-card" onclick="show('c15')"><div class="num">L22203</div><div class="name">數據處理技術</div><div class="desc">Hadoop · Spark · Flink</div></div>
+    <div class="home-card" onclick="show('c16')"><div class="num">L22301</div><div class="name">大數據統計</div><div class="desc">p值膨脹 · Bonferroni · FDR</div></div>
+    <div class="home-card" onclick="show('c17')"><div class="num">L22302</div><div class="name">大數據分析法</div><div class="desc">t-digest · 時間序列 · 圖分析</div></div>
+    <div class="home-card" onclick="show('c18')"><div class="num">L22303</div><div class="name">數據可視化</div><div class="desc">Tableau · Grafana · D3.js</div></div>
+    <div class="home-card" onclick="show('c19')"><div class="num">L22401</div><div class="name">大數據與 ML</div><div class="desc">5V · MLOps · 漂移 · gRPC</div></div>
+    <div class="home-card" onclick="show('c20')"><div class="num">L22402</div><div class="name">鑑別式 AI</div><div class="desc">SHAP · LIME · SMOTE · AUC</div></div>
+    <div class="home-card" onclick="show('c21')"><div class="num">L22403</div><div class="name">生成式 AI 應用</div><div class="desc">偏誤 · 幻覺 · 合成資料 · RAG</div></div>
+    <div class="home-card" onclick="show('c22')"><div class="num">L22404</div><div class="name">隱私保護合規</div><div class="desc">K-匿名 · 差分隱私 · GDPR</div></div>
+  </div>
+</section>
+
+<!-- C01: NLP -->
+<section class="chapter" id="c01">
+  <div class="chapter-header">
+    <div class="chapter-num">L21101</div>
+    <div class="chapter-title">自然語言處理 NLP</div>
+    <div class="chapter-sub">BERT · GPT · Transformer · RAG · TF-IDF · 評估指標</div>
+  </div>
+
+  <h2>核心架構對比</h2>
+  <table>
+    <tr><th>模型</th><th>架構</th><th>特點</th><th>用途</th></tr>
+    <tr><td>BERT</td><td>Encoder-only</td><td>雙向，MLM預訓練</td><td>分類、NER、問答</td></tr>
+    <tr><td>GPT</td><td>Decoder-only</td><td>單向，自回歸生成</td><td>文字生成、摘要</td></tr>
+    <tr><td>T5/BART</td><td>Encoder-Decoder</td><td>Seq2Seq</td><td>翻譯、摘要</td></tr>
+    <tr><td>Transformer</td><td>Attention機制</td><td>Self-Attention，位置編碼</td><td>所有NLP基礎</td></tr>
+  </table>
+  <div class="tip">BERT 雙向看全文做分類；GPT 單向往右生成文字</div>
+
+  <h2>詞向量技術</h2>
+  <table>
+    <tr><th>技術</th><th>方法</th><th>關鍵特點</th></tr>
+    <tr><td>TF-IDF</td><td>統計頻率</td><td>TF×IDF，無法捕捉語意，稀疏</td></tr>
+    <tr><td>Word2Vec</td><td>CBOW / Skip-gram</td><td>稠密向量，捕捉語意關係</td></tr>
+    <tr><td>GloVe</td><td>共現矩陣分解</td><td>結合全局統計</td></tr>
+    <tr><td>BERT Embedding</td><td>上下文感知</td><td>同字不同意境→不同向量</td></tr>
+  </table>
+  <div class="trap">TF-IDF 不能理解「語意相似」，只看字頻；Word2Vec 無法區分「蘋果（水果）」vs「蘋果（公司）」</div>
+
+  <h2>RAG（檢索增強生成）</h2>
+  <div class="card">
+    <strong>流程</strong>：使用者問題 → Embedding → 向量資料庫相似度搜尋 → 取回相關文件 → LLM 根據文件生成回答
+  </div>
+  <div class="key">RAG 解決 LLM「知識截止日期」與「幻覺」問題，不需重新訓練模型</div>
+  <div class="trap">RAG 不是微調（Fine-tuning），Fine-tuning 是更新模型權重，RAG 是查外部資料庫</div>
+
+  <h2>評估指標</h2>
+  <table>
+    <tr><th>指標</th><th>用途</th><th>公式/說明</th></tr>
+    <tr><td>BLEU</td><td>機器翻譯</td><td>衡量生成句子與參考句子的 n-gram 重疊率（精確率方向）</td></tr>
+    <tr><td>ROUGE</td><td>摘要評估</td><td>召回率方向，ROUGE-N / ROUGE-L</td></tr>
+    <tr><td>Perplexity</td><td>語言模型好壞</td><td>越低越好，代表模型越「不困惑」</td></tr>
+    <tr><td>F1-score</td><td>NER / 分類</td><td>Precision 與 Recall 調和平均</td></tr>
+  </table>
+  <div class="tip">BLEU 看翻譯精確度；ROUGE 看摘要完整度（召回率）</div>
+
+  <h2>Attention 機制</h2>
+  <div class="card">
+    <strong>Self-Attention</strong>：每個詞與序列中所有詞計算相關性權重（Q×K/√d → Softmax → ×V）<br>
+    <strong>Multi-Head Attention</strong>：多個注意力頭並行，捕捉不同角度的語意關係
+  </div>
+
+  <h2>提示工程（Prompting）</h2>
+  <table>
+    <tr><th>策略</th><th>說明</th></tr>
+    <tr><td>Zero-shot</td><td>不給例子，直接問</td></tr>
+    <tr><td>Few-shot</td><td>給幾個範例再問</td></tr>
+    <tr><td>Chain-of-Thought (CoT)</td><td>引導模型「一步一步想」，提升推理準確度</td></tr>
+    <tr><td>System Prompt</td><td>設定角色與行為約束</td></tr>
+  </table>
+</section>
+
+<!-- C02: CV -->
+<section class="chapter" id="c02">
+  <div class="chapter-header">
+    <div class="chapter-num">L21102</div>
+    <div class="chapter-title">電腦視覺 CV</div>
+    <div class="chapter-sub">CNN · YOLO · ViT · 偵測指標 · 分割類型</div>
+  </div>
+
+  <h2>核心模型對比</h2>
+  <table>
+    <tr><th>模型</th><th>類型</th><th>特點</th></tr>
+    <tr><td>CNN</td><td>基礎架構</td><td>卷積提取局部特徵，池化降維</td></tr>
+    <tr><td>ResNet</td><td>分類</td><td>殘差連接（Skip Connection），解決梯度消失</td></tr>
+    <tr><td>R-CNN系列</td><td>偵測（兩階段）</td><td>先提候選區域，再分類；較慢但準</td></tr>
+    <tr><td>YOLO</td><td>偵測（單階段）</td><td>一次完成，速度快，適合即時</td></tr>
+    <tr><td>ViT</td><td>分類（Transformer）</td><td>把圖切成 Patch，用 Self-Attention</td></tr>
+    <tr><td>CLIP</td><td>多模態</td><td>圖文對齊，雙編碼器</td></tr>
+    <tr><td>SAM</td><td>分割</td><td>Segment Anything，零樣本分割</td></tr>
+  </table>
+
+  <h2>偵測評估指標</h2>
+  <table>
+    <tr><th>指標</th><th>說明</th></tr>
+    <tr><td>IoU（交並比）</td><td>預測框 ∩ 真實框 / 預測框 ∪ 真實框，通常 &gt;0.5 算偵測成功</td></tr>
+    <tr><td>Precision</td><td>預測為正中，真正正確的比例</td></tr>
+    <tr><td>Recall</td><td>所有真實正例中，被成功抓到的比例</td></tr>
+    <tr><td>AP（Average Precision）</td><td>Precision-Recall 曲線下面積（針對單類別）</td></tr>
+    <tr><td>mAP</td><td>所有類別 AP 的平均值，偵測任務的主要指標</td></tr>
+  </table>
+  <div class="key">mAP 是物件偵測最重要的指標；IoU 門檻通常設 0.5（mAP@0.5）</div>
+
+  <h2>分割類型</h2>
+  <table>
+    <tr><th>類型</th><th>細節</th></tr>
+    <tr><td>語意分割</td><td>每個像素分類，不區分同類別不同個體</td></tr>
+    <tr><td>實例分割</td><td>每個像素分類 + 區分同類別不同個體（Mask R-CNN）</td></tr>
+    <tr><td>全景分割</td><td>語意 + 實例的結合</td></tr>
+  </table>
+  <div class="tip">語意=像素分類；實例=像素分類+個體區分；全景=兩者都要</div>
+
+  <h2>NMS（非極大值抑制）</h2>
+  <div class="card">
+    物件偵測後會有多個重疊的候選框 → NMS 保留得分最高的框，抑制 IoU 超過門檻的重疊框
+  </div>
+  <div class="trap">NMS 不是去掉信心分數低的，而是去掉「跟最高分框重疊過多的」其他框</div>
+
+  <h2>卷積操作關鍵參數</h2>
+  <table>
+    <tr><th>參數</th><th>說明</th></tr>
+    <tr><td>Kernel Size</td><td>卷積核大小（如 3×3）</td></tr>
+    <tr><td>Stride</td><td>步長，越大輸出越小</td></tr>
+    <tr><td>Padding</td><td>邊緣補零，保持輸出尺寸</td></tr>
+    <tr><td>Channel</td><td>特徵圖數量（深度方向）</td></tr>
+  </table>
+</section>
+
+<!-- C03: GenAI -->
+<section class="chapter" id="c03">
+  <div class="chapter-header">
+    <div class="chapter-num">L21103</div>
+    <div class="chapter-title">生成式 AI</div>
+    <div class="chapter-sub">GAN · VAE · Diffusion · LLM · HHH 原則</div>
+  </div>
+
+  <h2>三大生成模型對比</h2>
+  <table>
+    <tr><th>模型</th><th>機制</th><th>優點</th><th>缺點</th></tr>
+    <tr><td>GAN</td><td>生成器 vs 判別器對抗</td><td>生成圖像逼真</td><td>訓練不穩定，模式崩潰</td></tr>
+    <tr><td>VAE</td><td>編碼→潛在空間→解碼</td><td>潛在空間連續、可插值</td><td>圖像較模糊</td></tr>
+    <tr><td>Diffusion</td><td>加雜訊→去雜訊</td><td>圖像品質最高</td><td>推論速度慢（多步）</td></tr>
+  </table>
+  <div class="tip">圖像品質：Diffusion &gt; GAN &gt; VAE；訓練難度：GAN最難（容易崩潰）</div>
+
+  <h2>GAN 深入</h2>
+  <div class="card">
+    <strong>生成器（Generator）</strong>：從隨機雜訊生成假樣本，目標是騙過判別器<br>
+    <strong>判別器（Discriminator）</strong>：判斷樣本是真是假<br>
+    <strong>模式崩潰（Mode Collapse）</strong>：生成器只生成幾種固定樣本，失去多樣性
+  </div>
+  <div class="trap">GAN 訓練需要生成器與判別器保持平衡；若判別器太強，生成器梯度消失無法學習</div>
+
+  <h2>LLM 訓練流程</h2>
+  <div class="card">
+    1. <strong>預訓練</strong>（Pre-training）：大量無標注文本，學語言規律<br>
+    2. <strong>指令微調</strong>（Instruction Fine-tuning / SFT）：人工標注的問答對<br>
+    3. <strong>RLHF</strong>（人類回饋強化學習）：獎勵模型 + PPO，讓輸出更符合人類偏好
+  </div>
+
+  <h2>HHH 原則（AI 對齊）</h2>
+  <table>
+    <tr><th>原則</th><th>說明</th></tr>
+    <tr><td>Helpful（有用）</td><td>能有效幫助使用者完成任務</td></tr>
+    <tr><td>Harmless（無害）</td><td>不輸出有害、危險的內容</td></tr>
+    <tr><td>Honest（誠實）</td><td>不捏造事實，不確定時承認不知道</td></tr>
+  </table>
+
+  <h2>微調策略對比</h2>
+  <table>
+    <tr><th>方法</th><th>說明</th><th>適用場景</th></tr>
+    <tr><td>Full Fine-tuning</td><td>更新所有參數</td><td>資料充足、算力足</td></tr>
+    <tr><td>LoRA</td><td>低秩矩陣適配，只更新少量參數</td><td>低成本微調大模型</td></tr>
+    <tr><td>Prompt Tuning</td><td>只訓練提示詞向量</td><td>最省資源</td></tr>
+    <tr><td>RAG</td><td>不改模型，補充外部知識</td><td>知識更新頻繁</td></tr>
+  </table>
+  <div class="key">LoRA = Low-Rank Adaptation，凍結原模型，只訓練低秩分解矩陣</div>
+</section>
+
+<!-- C04: Multimodal -->
+<section class="chapter" id="c04">
+  <div class="chapter-header">
+    <div class="chapter-num">L21104</div>
+    <div class="chapter-title">多模態 AI</div>
+    <div class="chapter-sub">CLIP · ASR→NLU→TTS · 感測器融合 · Early/Late Fusion</div>
+  </div>
+
+  <h2>語音 AI 流程</h2>
+  <div class="card">
+    <strong>ASR</strong>（自動語音識別）→ <strong>NLU</strong>（自然語言理解）→ <strong>TTS</strong>（文字轉語音）<br>
+    語音輸入 → 文字 → 意圖理解 → 文字回應 → 語音輸出
+  </div>
+  <div class="tip">語音助理三步：聽（ASR）→ 懂（NLU）→ 說（TTS）</div>
+
+  <h2>CLIP 架構</h2>
+  <div class="card">
+    <strong>雙編碼器</strong>：圖像編碼器（ViT）+ 文字編碼器（Transformer）<br>
+    <strong>對比學習</strong>：讓配對的圖文在向量空間中距離近，不配對的距離遠<br>
+    <strong>應用</strong>：零樣本圖像分類、圖文搜尋、圖像生成引導
+  </div>
+
+  <h2>融合策略</h2>
+  <table>
+    <tr><th>融合類型</th><th>時機</th><th>優缺點</th></tr>
+    <tr><td>早期融合（Early Fusion）</td><td>特徵提取前合併原始資料</td><td>保留原始互動，計算量大</td></tr>
+    <tr><td>晚期融合（Late Fusion）</td><td>各模態分別處理後合併結果</td><td>靈活，但損失跨模態互動</td></tr>
+    <tr><td>中期融合（Mid Fusion）</td><td>在中間特徵層融合</td><td>折衷方案</td></tr>
+  </table>
+
+  <h2>感測器融合應用</h2>
+  <div class="card">
+    <strong>自駕車</strong>：Camera（顏色/紋理）+ LiDAR（距離/深度）+ Radar（速度）<br>
+    <strong>醫療</strong>：文字病歷 + CT 影像 + 血液數值<br>
+    <strong>智慧製造</strong>：影像 + 振動感測 + 溫度感測
+  </div>
+</section>
+
+<!-- C05: AI Adoption Assessment -->
+<section class="chapter" id="c05">
+  <div class="chapter-header">
+    <div class="chapter-num">L21201</div>
+    <div class="chapter-title">AI 導入評估</div>
+    <div class="chapter-sub">ROI · NPV · 回收期 · As-Is/To-Be/Gap · POC</div>
+  </div>
+
+  <h2>財務評估指標</h2>
+  <table>
+    <tr><th>指標</th><th>公式</th><th>判斷標準</th></tr>
+    <tr><td>ROI（投資報酬率）</td><td>（效益 - 成本）/ 成本 × 100%</td><td>&gt;0 代表有利潤</td></tr>
+    <tr><td>NPV（淨現值）</td><td>未來現金流折現總和 - 初始投資</td><td>&gt;0 代表值得投資</td></tr>
+    <tr><td>回收期（Payback Period）</td><td>累積現金流 = 初始投資的時間點</td><td>越短越好</td></tr>
+    <tr><td>IRR（內部報酬率）</td><td>NPV = 0 時的折現率</td><td>&gt;資金成本則投資</td></tr>
+  </table>
+  <div class="trap">NPV 考慮資金時間價值；ROI 不考慮時間價值。若題目問「考慮時間價值」，選 NPV</div>
+
+  <h2>As-Is / To-Be / Gap 分析</h2>
+  <div class="card">
+    <strong>As-Is</strong>：現況評估（現在怎麼做？有什麼問題？）<br>
+    <strong>To-Be</strong>：目標藍圖（AI 導入後應該變成什麼？）<br>
+    <strong>Gap</strong>：差距分析（需要做哪些改變？）<br>
+    <strong>POC</strong>（概念驗證）：在正式上線前，用小規模實驗驗證可行性
+  </div>
+
+  <h2>KPI 設計原則</h2>
+  <div class="card card-info">
+    <strong>SMART 原則</strong>：Specific（具體）、Measurable（可量測）、Achievable（可達成）、Relevant（相關）、Time-bound（有時限）
+  </div>
+
+  <h2>導入成熟度評估</h2>
+  <table>
+    <tr><th>層面</th><th>評估重點</th></tr>
+    <tr><td>技術成熟度</td><td>技術是否夠成熟、有無替代方案</td></tr>
+    <tr><td>資料準備度</td><td>資料量、品質、標注完整性</td></tr>
+    <tr><td>組織能力</td><td>人才、文化、流程配合度</td></tr>
+    <tr><td>合規風險</td><td>法規、隱私、倫理考量</td></tr>
+  </table>
+</section>
+
+<!-- C06: AI Planning -->
+<section class="chapter" id="c06">
+  <div class="chapter-header">
+    <div class="chapter-num">L21202</div>
+    <div class="chapter-title">AI 導入規劃</div>
+    <div class="chapter-sub">Scrum · WBS · Gantt · Agile · MLOps</div>
+  </div>
+
+  <h2>Scrum 三角色</h2>
+  <table>
+    <tr><th>角色</th><th>英文</th><th>職責</th></tr>
+    <tr><td>產品負責人</td><td>Product Owner (PO)</td><td>管理 Product Backlog，決定優先順序</td></tr>
+    <tr><td>Scrum Master</td><td>SM</td><td>確保 Scrum 流程運作，排除障礙</td></tr>
+    <tr><td>開發團隊</td><td>Dev Team</td><td>跨功能、自組織，執行 Sprint 任務</td></tr>
+  </table>
+
+  <h2>Scrum 四事件</h2>
+  <table>
+    <tr><th>事件</th><th>頻率</th><th>目的</th></tr>
+    <tr><td>Sprint Planning</td><td>每個 Sprint 開始</td><td>決定本 Sprint 要做什麼</td></tr>
+    <tr><td>Daily Scrum</td><td>每天 15 分鐘</td><td>同步進度、找出障礙</td></tr>
+    <tr><td>Sprint Review</td><td>Sprint 結束</td><td>展示成果給利害關係人</td></tr>
+    <tr><td>Sprint Retrospective</td><td>Sprint 結束後</td><td>團隊反思改進</td></tr>
+  </table>
+  <div class="tip">Review 給外部看成果；Retro 是團隊內部自省</div>
+
+  <h2>專案規劃工具</h2>
+  <table>
+    <tr><th>工具</th><th>用途</th></tr>
+    <tr><td>WBS（工作分解結構）</td><td>把專案分解成可執行的最小工作包（Work Package）</td></tr>
+    <tr><td>甘特圖（Gantt Chart）</td><td>視覺化時程，展示任務的開始/結束時間與相依關係</td></tr>
+    <tr><td>燃盡圖（Burndown Chart）</td><td>Scrum 中追蹤剩餘工作量的趨勢圖</td></tr>
+  </table>
+
+  <h2>MLOps 生命週期</h2>
+  <div class="card">
+    資料收集 → 清理標注 → 特徵工程 → 模型訓練 → 驗證評估 → 模型登錄（Registry）→ 部署 → 監控 → <strong>（觸發重新訓練，循環）</strong>
+  </div>
+  <div class="key">CI（程式整合）/ CD（持續部署）/ CT（持續訓練，MLOps 獨有）</div>
+</section>
+
+<!-- C07: AI Risk -->
+<section class="chapter" id="c07">
+  <div class="chapter-header">
+    <div class="chapter-num">L21203</div>
+    <div class="chapter-title">AI 風險管理</div>
+    <div class="chapter-sub">NIST RMF · EU AI Act 四級風險 · OECD 原則</div>
+  </div>
+
+  <h2>NIST AI RMF 四大功能</h2>
+  <table>
+    <tr><th>功能</th><th>英文</th><th>說明</th></tr>
+    <tr><td>治理</td><td>GOVERN</td><td>建立組織的 AI 風險管理文化與政策</td></tr>
+    <tr><td>映射</td><td>MAP</td><td>識別 AI 系統的情境與潛在風險</td></tr>
+    <tr><td>量測</td><td>MEASURE</td><td>評估和分析已識別的風險</td></tr>
+    <tr><td>管理</td><td>MANAGE</td><td>優先處理和應對風險</td></tr>
+  </table>
+  <div class="tip">記憶口訣：治 → 映 → 量 → 管（G-M-M-M）</div>
+
+  <h2>EU AI Act 四層風險</h2>
+  <table>
+    <tr><th>層級</th><th>例子</th><th>規範</th></tr>
+    <tr><td>🔴 不可接受（禁止）</td><td>社會信用評分、即時公共場所人臉辨識</td><td>完全禁止</td></tr>
+    <tr><td>🟠 高風險</td><td>醫療器材、自駕車、信用評分、執法</td><td>嚴格合規要求（文件、透明度）</td></tr>
+    <tr><td>🟡 有限風險</td><td>聊天機器人</td><td>須告知使用者是 AI</td></tr>
+    <tr><td>🟢 最低風險</td><td>垃圾郵件過濾、遊戲 AI</td><td>無特殊要求</td></tr>
+  </table>
+
+  <h2>OECD AI 原則（五大）</h2>
+  <div class="card">
+    1. <strong>包容性成長</strong>：AI 應促進人類福祉<br>
+    2. <strong>以人為本</strong>：尊重法治、人權<br>
+    3. <strong>透明性</strong>：AI 決策應可解釋<br>
+    4. <strong>穩健性</strong>：AI 系統應安全可靠<br>
+    5. <strong>問責制</strong>：開發者與使用者須負責
+  </div>
+
+  <h2>模型漂移類型</h2>
+  <table>
+    <tr><th>類型</th><th>定義</th><th>嚴重度</th><th>處置</th></tr>
+    <tr><td>資料漂移（Data Drift）</td><td>輸入特徵 X 分佈改變（P(X)變）</td><td>中</td><td>重採樣、微調</td></tr>
+    <tr><td>概念漂移（Concept Drift）</td><td>X→Y 的關係改變（P(Y|X)變）</td><td>高，需重訓</td><td>收集新資料，重新訓練</td></tr>
+  </table>
+  <div class="trap">概念漂移比資料漂移嚴重，世界「規則」變了，舊模型直接報廢</div>
+</section>
+
+<!-- C08: Data Prep -->
+<section class="chapter" id="c08">
+  <div class="chapter-header">
+    <div class="chapter-num">L21301</div>
+    <div class="chapter-title">數據準備與模型選擇</div>
+    <div class="chapter-sub">缺值處理 · 異常值 · 特徵編碼 · 縮放 · PCA</div>
+  </div>
+
+  <h2>缺失值三類型</h2>
+  <table>
+    <tr><th>類型</th><th>全名</th><th>說明</th><th>處理</th></tr>
+    <tr><td>MCAR</td><td>完全隨機缺失</td><td>缺失與任何資料無關</td><td>直接刪除、均值填補</td></tr>
+    <tr><td>MAR</td><td>隨機缺失</td><td>缺失與其他已觀測欄位有關</td><td>多重插補（MI）</td></tr>
+    <tr><td>MNAR</td><td>非隨機缺失</td><td>缺失與自身值有關（如高收入不申報）</td><td>最難處理，需專業判斷</td></tr>
+  </table>
+
+  <h2>異常值偵測方法</h2>
+  <table>
+    <tr><th>方法</th><th>規則</th><th>適用</th></tr>
+    <tr><td>Z-score</td><td>|Z| &gt; 3 視為異常</td><td>常態分佈資料</td></tr>
+    <tr><td>IQR</td><td>&lt;Q1-1.5×IQR 或 &gt;Q3+1.5×IQR</td><td>不需常態假設，穩健</td></tr>
+    <tr><td>Isolation Forest</td><td>基於隔離樹，異常點更容易被孤立</td><td>高維度、大數據</td></tr>
+    <tr><td>LOF</td><td>局部離群因子，基於密度</td><td>非規則形狀分佈</td></tr>
+  </table>
+
+  <h2>特徵編碼</h2>
+  <table>
+    <tr><th>方法</th><th>適用</th><th>注意</th></tr>
+    <tr><td>Label Encoding</td><td>有序類別（如：小/中/大）</td><td>數字大小有意義</td></tr>
+    <tr><td>One-Hot Encoding</td><td>無序類別（如：城市名）</td><td>維度爆炸問題</td></tr>
+    <tr><td>Target Encoding</td><td>高基數類別</td><td>需防止資料洩漏（target leakage）</td></tr>
+  </table>
+
+  <h2>特徵縮放</h2>
+  <table>
+    <tr><th>方法</th><th>公式</th><th>特點</th></tr>
+    <tr><td>Min-Max 正規化</td><td>(x - min) / (max - min)</td><td>縮放到 [0,1]，對異常值敏感</td></tr>
+    <tr><td>Z-score 標準化</td><td>(x - μ) / σ</td><td>均值0標準差1，假設常態分佈</td></tr>
+    <tr><td>Robust Scaler</td><td>(x - Q2) / IQR</td><td>對異常值穩健，用中位數和IQR</td></tr>
+  </table>
+  <div class="tip">有異常值 → Robust Scaler；需要 [0,1] → Min-Max；一般情況 → Z-score</div>
+
+  <h2>PCA（主成分分析）</h2>
+  <div class="card">
+    <strong>目的</strong>：降維，保留最大變異方向<br>
+    <strong>步驟</strong>：標準化 → 計算共變異矩陣 → 求特徵值/向量 → 選前 k 個主成分<br>
+    <strong>缺點</strong>：主成分無法直接解釋為原始特徵（可解釋性差）
+  </div>
+  <div class="trap">PCA 是「降維」不是「特徵選擇」！降維後的主成分是線性組合，非原始特徵</div>
+</section>
+
+<!-- C09: Deployment -->
+<section class="chapter" id="c09">
+  <div class="chapter-header">
+    <div class="chapter-num">L21302</div>
+    <div class="chapter-title">AI 系統集成與部署</div>
+    <div class="chapter-sub">藍綠/金絲雀/A-B · K8s · Docker · SLA/SLO/SLI</div>
+  </div>
+
+  <h2>部署策略比較</h2>
+  <table>
+    <tr><th>策略</th><th>方式</th><th>特點</th></tr>
+    <tr><td>藍綠部署</td><td>兩套環境，一次切換全部流量</td><td>回滾快，成本高（兩套環境）</td></tr>
+    <tr><td>金絲雀釋出</td><td>先導少量流量（如5%），逐步擴大</td><td>風險低，可觀察新版表現</td></tr>
+    <tr><td>A/B Testing</td><td>同時兩版本，比較指標</td><td>實驗導向，有統計假設</td></tr>
+    <tr><td>滾動更新</td><td>逐台替換，不停機</td><td>K8s 預設，平滑過渡</td></tr>
+  </table>
+
+  <h2>Kubernetes (K8s) 重要概念</h2>
+  <table>
+    <tr><th>概念</th><th>說明</th></tr>
+    <tr><td>Pod</td><td>最小部署單位，包含一個或多個容器</td></tr>
+    <tr><td>HPA（水平自動擴展）</td><td>根據 CPU/記憶體自動增減 Pod 數量</td></tr>
+    <tr><td>VPA（垂直自動擴展）</td><td>自動調整單一 Pod 的資源配額</td></tr>
+    <tr><td>Liveness Probe</td><td>偵測容器是否還活著，死了就重啟</td></tr>
+    <tr><td>Readiness Probe</td><td>偵測容器是否準備好接受流量</td></tr>
+  </table>
+  <div class="tip">Liveness = 還活嗎？（不活就重啟）；Readiness = 準備好了嗎？（沒準備好就不導流量）</div>
+
+  <h2>SLA / SLO / SLI</h2>
+  <table>
+    <tr><th>縮寫</th><th>全名</th><th>說明</th></tr>
+    <tr><td>SLA</td><td>服務等級協議</td><td>對外的契約（如：99.9% 可用性）</td></tr>
+    <tr><td>SLO</td><td>服務等級目標</td><td>內部目標（通常比 SLA 嚴格）</td></tr>
+    <tr><td>SLI</td><td>服務等級指標</td><td>實際量測的指標（如：延遲、錯誤率）</td></tr>
+  </table>
+
+  <h2>MLflow 用途</h2>
+  <div class="card">
+    <strong>實驗追蹤</strong>：記錄超參數、指標、模型版本<br>
+    <strong>模型倉庫</strong>：版本管理、模型上線/退休狀態管理<br>
+    <strong>套件打包</strong>：MLproject 格式，確保可重現
+  </div>
+</section>
+
+<!-- C10: Descriptive Stats -->
+<section class="chapter" id="c10">
+  <div class="chapter-header">
+    <div class="chapter-num">L22101</div>
+    <div class="chapter-title">敘述性統計</div>
+    <div class="chapter-sub">集中趨勢 · 離散程度 · 偏態 · 峰態</div>
+  </div>
+
+  <h2>集中趨勢三均值</h2>
+  <table>
+    <tr><th>均值</th><th>公式</th><th>適用</th></tr>
+    <tr><td>算術平均數</td><td>Σx / n</td><td>一般情況（對異常值敏感）</td></tr>
+    <tr><td>幾何平均數</td><td>(x₁×x₂×…×xₙ)^(1/n)</td><td>成長率、比率型資料</td></tr>
+    <tr><td>調和平均數</td><td>n / Σ(1/xᵢ)</td><td>速率（如：平均速度、F1-score）</td></tr>
+  </table>
+  <div class="key">F1-score 是 Precision 與 Recall 的調和平均（Harmonic Mean）</div>
+  <div class="trap">有極端值時，中位數比算術平均數更能代表「典型值」</div>
+
+  <h2>離散程度指標</h2>
+  <table>
+    <tr><th>指標</th><th>說明</th></tr>
+    <tr><td>變異數（Variance）</td><td>偏差平方的平均，單位是原單位的平方</td></tr>
+    <tr><td>標準差（SD）</td><td>變異數的平方根，與原資料同單位</td></tr>
+    <tr><td>IQR（四分位距）</td><td>Q3 - Q1，不受極端值影響</td></tr>
+    <tr><td>變異係數（CV）</td><td>SD / 平均數，跨單位比較離散程度</td></tr>
+  </table>
+
+  <h2>偏態與峰態</h2>
+  <table>
+    <tr><th>指標</th><th>值</th><th>含義</th></tr>
+    <tr><td rowspan="3">偏態（Skewness）</td><td>= 0</td><td>對稱分佈</td></tr>
+    <tr><td>&gt; 0（右偏/正偏）</td><td>尾巴在右邊，平均數 &gt; 中位數 &gt; 眾數</td></tr>
+    <tr><td>&lt; 0（左偏/負偏）</td><td>尾巴在左邊，平均數 &lt; 中位數 &lt; 眾數</td></tr>
+    <tr><td rowspan="3">峰態（Kurtosis）</td><td>= 3（excess=0）</td><td>常態分佈（Mesokurtic）</td></tr>
+    <tr><td>&gt; 3（excess&gt;0）</td><td>尖峰（Leptokurtic），尾巴厚</td></tr>
+    <tr><td>&lt; 3（excess&lt;0）</td><td>平峰（Platykurtic），尾巴薄</td></tr>
+  </table>
+  <div class="tip">右偏：長尾巴在右；平均數被右邊大值拉高 → 平均 &gt; 中位 &gt; 眾</div>
+</section>
+
+<!-- C11: Probability -->
+<section class="chapter" id="c11">
+  <div class="chapter-header">
+    <div class="chapter-num">L22102</div>
+    <div class="chapter-title">機率分佈</div>
+    <div class="chapter-sub">離散 vs 連續 · 常態 · 二項 · 卜瓦松 · 指數</div>
+  </div>
+
+  <h2>分佈速查表</h2>
+  <table>
+    <tr><th>分佈</th><th>類型</th><th>參數</th><th>適用情境</th></tr>
+    <tr><td>伯努利（Bernoulli）</td><td>離散</td><td>p</td><td>單次二元實驗（成功/失敗）</td></tr>
+    <tr><td>二項（Binomial）</td><td>離散</td><td>n, p</td><td>n 次獨立伯努利試驗的成功次數</td></tr>
+    <tr><td>卜瓦松（Poisson）</td><td>離散</td><td>λ</td><td>單位時間/空間內的事件次數</td></tr>
+    <tr><td>常態（Normal）</td><td>連續</td><td>μ, σ</td><td>自然現象，中央極限定理</td></tr>
+    <tr><td>指數（Exponential）</td><td>連續</td><td>λ</td><td>等待時間（卜瓦松事件間隔）</td></tr>
+    <tr><td>卡方（Chi-square）</td><td>連續</td><td>k（自由度）</td><td>假設檢定（獨立性、適合度）</td></tr>
+    <tr><td>t 分佈</td><td>連續</td><td>ν（自由度）</td><td>小樣本均值推論</td></tr>
+    <tr><td>F 分佈</td><td>連續</td><td>d1, d2</td><td>ANOVA、變異數比較</td></tr>
+  </table>
+
+  <h2>常態分佈關鍵數字</h2>
+  <div class="card">
+    <strong>68-95-99.7 法則</strong><br>
+    μ ± 1σ：68% 資料<br>
+    μ ± 2σ：95% 資料<br>
+    μ ± 3σ：99.7% 資料
+  </div>
+  <div class="key">中央極限定理：不管原分佈如何，樣本量夠大（n≥30）時，樣本均值趨向常態分佈</div>
+
+  <h2>卜瓦松 vs 指數</h2>
+  <div class="card">
+    <strong>卜瓦松</strong>：「1 小時內到幾個客人？」（次數）λ = 平均到達率<br>
+    <strong>指數</strong>：「下一個客人要等多久？」（時間）1/λ = 平均等待時間<br>
+    兩者互為相關，同一個 λ
+  </div>
+</section>
+
+<!-- C12: Hypothesis Testing -->
+<section class="chapter" id="c12">
+  <div class="chapter-header">
+    <div class="chapter-num">L22103</div>
+    <div class="chapter-title">假設檢定與統計推論</div>
+    <div class="chapter-sub">p 值 · α · 型一/二錯誤 · t-test · ANOVA · 卡方</div>
+  </div>
+
+  <h2>假設檢定基本框架</h2>
+  <div class="card">
+    <strong>H₀（虛無假設）</strong>：假設沒有差異/效果（保守立場）<br>
+    <strong>H₁（對立假設）</strong>：假設有差異/效果（研究者想證明的）<br>
+    <strong>p 值</strong>：假設 H₀ 為真，觀察到目前資料（或更極端）的機率<br>
+    <strong>決策</strong>：p &lt; α（通常 0.05）→ 拒絕 H₀
+  </div>
+
+  <h2>兩類錯誤</h2>
+  <table>
+    <tr><th>錯誤</th><th>說明</th><th>代價</th><th>對應</th></tr>
+    <tr><td>型一錯誤（α）</td><td>H₀ 是真的，卻拒絕（False Positive）</td><td>誤報警</td><td>顯著水準 α</td></tr>
+    <tr><td>型二錯誤（β）</td><td>H₀ 是假的，卻接受（False Negative）</td><td>漏掉效果</td><td>1-β = 統計檢定力</td></tr>
+  </table>
+  <div class="tip">型一 = 冤枉好人；型二 = 放走壞人</div>
+
+  <h2>統計檢定選用指引</h2>
+  <table>
+    <tr><th>情境</th><th>檢定方法</th></tr>
+    <tr><td>一個樣本均值與已知值比較</td><td>單樣本 t 檢定</td></tr>
+    <tr><td>兩個獨立組均值比較</td><td>獨立樣本 t 檢定</td></tr>
+    <tr><td>同一組前後測比較</td><td>配對樣本 t 檢定</td></tr>
+    <tr><td>三組以上均值比較</td><td>單因子 ANOVA</td></tr>
+    <tr><td>兩個類別變數的獨立性</td><td>卡方獨立性檢定</td></tr>
+    <tr><td>觀察值與期望分佈的吻合度</td><td>卡方適合度檢定</td></tr>
+    <tr><td>不滿足常態假設的兩組比較</td><td>Mann-Whitney U 檢定（非參數）</td></tr>
+  </table>
+
+  <h2>ANOVA 後的多重比較</h2>
+  <div class="card">
+    ANOVA 只告訴你「至少有一對組別有差異」，不告訴你是哪對<br>
+    → 需要事後檢定（Post-hoc Test）：Tukey HSD、Bonferroni 校正
+  </div>
+  <div class="trap">多重比較問題：做越多檢定，型一錯誤累積越高（α 膨脹）→ 需要校正</div>
+</section>
+
+<!-- C13: Data Collection -->
+<section class="chapter" id="c13">
+  <div class="chapter-header">
+    <div class="chapter-num">L22201</div>
+    <div class="chapter-title">數據收集與清理</div>
+    <div class="chapter-sub">缺值機制 · 異常值 · 資料品質 · 資料擴增</div>
+  </div>
+
+  <h2>缺值機制與處理</h2>
+  <table>
+    <tr><th>機制</th><th>特徵</th><th>處理策略</th></tr>
+    <tr><td>MCAR（完全隨機）</td><td>缺失與任何變數無關</td><td>可直接刪除，不引入偏誤</td></tr>
+    <tr><td>MAR（隨機）</td><td>缺失可由其他觀測變數解釋</td><td>多重插補、KNN插補</td></tr>
+    <tr><td>MNAR（非隨機）</td><td>缺失與自身的值有關</td><td>需要領域知識，最難處理</td></tr>
+  </table>
+
+  <h2>資料品質五維度</h2>
+  <div class="card">
+    <strong>準確性</strong>（Accuracy）：資料是否正確<br>
+    <strong>完整性</strong>（Completeness）：缺失比例<br>
+    <strong>一致性</strong>（Consistency）：跨系統格式是否統一<br>
+    <strong>時效性</strong>（Timeliness）：資料是否夠新<br>
+    <strong>唯一性</strong>（Uniqueness）：有無重複記錄
+  </div>
+
+  <h2>資料擴增（Data Augmentation）</h2>
+  <table>
+    <tr><th>模態</th><th>常見技術</th></tr>
+    <tr><td>影像</td><td>旋轉、翻轉、裁切、色彩抖動、Mixup、CutOut</td></tr>
+    <tr><td>文字</td><td>同義詞替換、回譯（Back Translation）、隨機插入/刪除</td></tr>
+    <tr><td>聲音</td><td>加雜訊、時間拉伸、音調偏移</td></tr>
+    <tr><td>結構化</td><td>SMOTE（合成少數類別樣本）</td></tr>
+  </table>
+</section>
+
+<!-- C14: Data Storage -->
+<section class="chapter" id="c14">
+  <div class="chapter-header">
+    <div class="chapter-num">L22202</div>
+    <div class="chapter-title">數據儲存與管理</div>
+    <div class="chapter-sub">ACID · NoSQL · HDFS · Data Lake vs Warehouse · 星型/雪花</div>
+  </div>
+
+  <h2>ACID 特性</h2>
+  <table>
+    <tr><th>特性</th><th>全名</th><th>說明</th></tr>
+    <tr><td>A</td><td>Atomicity 原子性</td><td>交易全成功或全失敗，不可部分完成</td></tr>
+    <tr><td>C</td><td>Consistency 一致性</td><td>交易前後資料庫保持合法狀態</td></tr>
+    <tr><td>I</td><td>Isolation 隔離性</td><td>並發交易互不影響</td></tr>
+    <tr><td>D</td><td>Durability 持久性</td><td>交易完成後資料永久保存</td></tr>
+  </table>
+
+  <h2>NoSQL 四大類型</h2>
+  <table>
+    <tr><th>類型</th><th>代表</th><th>適用</th></tr>
+    <tr><td>文件型（Document）</td><td>MongoDB</td><td>半結構化資料，JSON文件</td></tr>
+    <tr><td>鍵值型（Key-Value）</td><td>Redis</td><td>快取、Session、排行榜</td></tr>
+    <tr><td>列族型（Column-family）</td><td>Cassandra, HBase</td><td>IoT 時間序列、大量寫入</td></tr>
+    <tr><td>圖型（Graph）</td><td>Neo4j</td><td>社交關係、知識圖譜</td></tr>
+  </table>
+  <div class="tip">記憶：文 → Mongo；鍵 → Redis；列 → Cassandra；圖 → Neo4j</div>
+
+  <h2>Data Lake vs Data Warehouse</h2>
+  <table>
+    <tr><th>比較</th><th>Data Lake（資料湖）</th><th>Data Warehouse（資料倉儲）</th></tr>
+    <tr><td>資料格式</td><td>原始格式，任何類型</td><td>結構化，已清理</td></tr>
+    <tr><td>Schema</td><td>Schema-on-Read</td><td>Schema-on-Write</td></tr>
+    <tr><td>使用者</td><td>資料科學家</td><td>業務分析師</td></tr>
+    <tr><td>彈性</td><td>高（先存後想）</td><td>低（先想後存）</td></tr>
+    <tr><td>代表技術</td><td>HDFS, S3</td><td>Redshift, BigQuery</td></tr>
+  </table>
+
+  <h2>OLTP vs OLAP</h2>
+  <table>
+    <tr><th>比較</th><th>OLTP</th><th>OLAP</th></tr>
+    <tr><td>用途</td><td>線上交易處理（日常操作）</td><td>線上分析處理（商業智慧）</td></tr>
+    <tr><td>操作</td><td>單筆INSERT/UPDATE/DELETE</td><td>大範圍聚合查詢</td></tr>
+    <tr><td>時態</td><td>即時（毫秒）</td><td>歷史資料（小時/天）</td></tr>
+  </table>
+
+  <h2>星型 vs 雪花 Schema</h2>
+  <div class="card">
+    <strong>星型（Star Schema）</strong>：事實表 + 多個維度表，維度表不再細分，查詢快<br>
+    <strong>雪花（Snowflake Schema）</strong>：維度表還可繼續細分，較正規化，節省空間但 JOIN 複雜
+  </div>
+</section>
+
+<!-- C15: Data Processing -->
+<section class="chapter" id="c15">
+  <div class="chapter-header">
+    <div class="chapter-num">L22203</div>
+    <div class="chapter-title">數據處理技術與工具</div>
+    <div class="chapter-sub">Hadoop · MapReduce · Spark · Flink · 批次 vs 串流</div>
+  </div>
+
+  <h2>大數據框架比較</h2>
+  <table>
+    <tr><th>框架</th><th>特點</th><th>適用</th></tr>
+    <tr><td>Hadoop MapReduce</td><td>磁碟讀寫，穩健但慢</td><td>超大規模批次處理</td></tr>
+    <tr><td>Apache Spark</td><td>記憶體計算（RDD），比 Hadoop 快 100x</td><td>批次 + 串流 + ML</td></tr>
+    <tr><td>Apache Flink</td><td>原生串流，低延遲，事件時間語意</td><td>即時串流處理</td></tr>
+    <tr><td>Apache Beam</td><td>統一 API，批次與串流同一套程式碼</td><td>跨平台可攜性</td></tr>
+  </table>
+  <div class="tip">Spark 適合批次+機器學習；Flink 適合真正的即時串流</div>
+
+  <h2>批次 vs 串流處理</h2>
+  <table>
+    <tr><th>比較</th><th>批次（Batch）</th><th>串流（Streaming）</th></tr>
+    <tr><td>觸發</td><td>定時（如每天凌晨）</td><td>資料進來就算</td></tr>
+    <tr><td>延遲</td><td>高（分鐘到小時）</td><td>低（毫秒到秒）</td></tr>
+    <tr><td>適用</td><td>報表、歷史分析</td><td>即時風控、即時推薦</td></tr>
+  </table>
+
+  <h2>ETL vs ELT</h2>
+  <div class="card">
+    <strong>ETL</strong>：Extract → Transform → Load（先轉換再載入，傳統方式）<br>
+    <strong>ELT</strong>：Extract → Load → Transform（先載入再在資料倉儲內轉換，雲端時代）
+  </div>
+
+  <h2>SMOTE</h2>
+  <div class="card card-success">
+    <strong>Synthetic Minority Over-sampling Technique</strong><br>
+    不是無腦複製少數類別，而是在現有少數樣本之間「合成」新的假樣本（插值）
+  </div>
+  <div class="key">SMOTE ≠ 複製貼上；是在少數樣本之間插值合成</div>
+</section>
+
+<!-- C16: Big Data Stats -->
+<section class="chapter" id="c16">
+  <div class="chapter-header">
+    <div class="chapter-num">L22301</div>
+    <div class="chapter-title">統計學在大數據中的應用</div>
+    <div class="chapter-sub">p 值膨脹 · 效應量 · 多重比較校正 · SPC</div>
+  </div>
+
+  <h2>大數據的統計陷阱</h2>
+  <div class="card card-danger">
+    <strong>p 值膨脹問題</strong>：樣本量越大，p 值越容易小於 0.05（統計顯著）<br>
+    → 即使效果微小，大數據中也容易達到統計顯著<br>
+    → 統計顯著 ≠ 實務顯著！
+  </div>
+  <div class="key">大數據中要同時報告：p 值 + 效應量（Effect Size）</div>
+
+  <h2>效應量指標</h2>
+  <table>
+    <tr><th>指標</th><th>適用</th><th>判斷</th></tr>
+    <tr><td>Cohen's d</td><td>兩組均值差異</td><td>小:0.2, 中:0.5, 大:0.8</td></tr>
+    <tr><td>r（相關係數）</td><td>相關性強度</td><td>小:0.1, 中:0.3, 大:0.5</td></tr>
+    <tr><td>η²（Eta squared）</td><td>ANOVA 中的解釋變異</td><td>小:0.01, 中:0.06, 大:0.14</td></tr>
+  </table>
+
+  <h2>多重比較校正</h2>
+  <table>
+    <tr><th>方法</th><th>做法</th><th>特點</th></tr>
+    <tr><td>Bonferroni</td><td>α' = α / 檢定次數 m</td><td>最保守，型二錯誤高</td></tr>
+    <tr><td>FDR（BH法）</td><td>控制假發現率</td><td>較平衡，大數據推薦</td></tr>
+  </table>
+  <div class="tip">同時做 100 個 t-test，Bonferroni 把 α 除以 100；FDR 控制「假的顯著」比例</div>
+
+  <h2>統計過程控制（SPC）</h2>
+  <div class="card">
+    <strong>管制圖（Control Chart）</strong>：監控製造過程品質<br>
+    <strong>UCL / LCL</strong>：上/下管制界限（通常 ±3σ）<br>
+    <strong>判讀</strong>：點超出界限 → 過程失控，需調查
+  </div>
+
+  <h2>其他大數據統計技術</h2>
+  <table>
+    <tr><th>技術</th><th>用途</th></tr>
+    <tr><td>蒙地卡羅模擬</td><td>用隨機抽樣估計複雜問題的機率</td></tr>
+    <tr><td>存活分析（Kaplan-Meier）</td><td>分析時間到事件（如客戶流失時間）</td></tr>
+    <tr><td>水庫抽樣</td><td>從資料流中均勻抽取固定大小樣本（不需知道總量）</td></tr>
+    <tr><td>HyperLogLog</td><td>近似計算超大規模資料的唯一值數量</td></tr>
+  </table>
+</section>
+
+<!-- C17: Big Data Analysis Methods -->
+<section class="chapter" id="c17">
+  <div class="chapter-header">
+    <div class="chapter-num">L22302</div>
+    <div class="chapter-title">常見的大數據分析方法</div>
+    <div class="chapter-sub">近似統計 · 時間序列 · 圖分析 · 異常偵測</div>
+  </div>
+
+  <h2>近似統計算法</h2>
+  <table>
+    <tr><th>算法</th><th>解決問題</th><th>特點</th></tr>
+    <tr><td>t-digest</td><td>近似計算百分位數（如中位數）</td><td>記憶體效率高，可合併</td></tr>
+    <tr><td>Count-Min Sketch</td><td>近似計算元素出現頻率</td><td>空間極小，有誤差但可接受</td></tr>
+    <tr><td>Welford's Method</td><td>線上計算均值和變異數（單遍）</td><td>數值穩定，不需存所有資料</td></tr>
+    <tr><td>HyperLogLog</td><td>近似計算唯一元素數</td><td>誤差約 1-2%，空間極省</td></tr>
+  </table>
+
+  <h2>時間序列分解</h2>
+  <div class="card">
+    <strong>趨勢（Trend）</strong>：長期方向（上升/下降）<br>
+    <strong>季節性（Seasonality）</strong>：固定週期的規律波動<br>
+    <strong>殘差（Residual）</strong>：去除趨勢和季節後剩餘的隨機成分
+  </div>
+
+  <h2>時間序列模型</h2>
+  <table>
+    <tr><th>模型</th><th>特點</th><th>適用</th></tr>
+    <tr><td>MA（移動平均）</td><td>平滑短期波動</td><td>簡單預測</td></tr>
+    <tr><td>指數平滑（ES）</td><td>近期加較大權重</td><td>短期預測</td></tr>
+    <tr><td>ARIMA</td><td>整合 AR + I + MA</td><td>平穩時間序列</td></tr>
+    <tr><td>SARIMA</td><td>ARIMA + 季節性</td><td>有季節性的時間序列</td></tr>
+    <tr><td>Prophet</td><td>Facebook 開發，自動處理假日</td><td>業務時間序列，易用</td></tr>
+    <tr><td>LSTM</td><td>深度學習，捕捉長期依存</td><td>複雜非線性時間序列</td></tr>
+  </table>
+
+  <h2>圖分析（Network Analysis）</h2>
+  <table>
+    <tr><th>中心性指標</th><th>說明</th></tr>
+    <tr><td>Degree Centrality</td><td>連接節點數，最直接衡量「活躍度」</td></tr>
+    <tr><td>Betweenness Centrality</td><td>通過該節點的最短路徑數，衡量「橋梁作用」</td></tr>
+    <tr><td>Closeness Centrality</td><td>到所有其他節點的平均距離，衡量「資訊傳播速度」</td></tr>
+    <tr><td>PageRank</td><td>被重要節點指向的節點更重要，Google 搜尋基礎</td></tr>
+  </table>
+  <div class="key">Louvain 演算法：社群偵測（Community Detection），優化模組度（Modularity）</div>
+
+  <h2>異常偵測方法比較</h2>
+  <table>
+    <tr><th>方法</th><th>原理</th><th>適用</th></tr>
+    <tr><td>Z-score</td><td>超過 3σ 為異常</td><td>單變量，常態分佈</td></tr>
+    <tr><td>IQR</td><td>1.5×IQR 規則</td><td>穩健，不需常態假設</td></tr>
+    <tr><td>Isolation Forest</td><td>異常點易被孤立（分割次數少）</td><td>高維度，大數據</td></tr>
+    <tr><td>LOF</td><td>局部密度比較</td><td>密度不均勻的資料</td></tr>
+  </table>
+</section>
+
+<!-- C18: Data Visualization -->
+<section class="chapter" id="c18">
+  <div class="chapter-header">
+    <div class="chapter-num">L22303</div>
+    <div class="chapter-title">數據可視化工具</div>
+    <div class="chapter-sub">圖表選擇 · 箱型圖 · Matplotlib · Tableau · Grafana</div>
+  </div>
+
+  <h2>圖表選擇決策樹</h2>
+  <table>
+    <tr><th>目的</th><th>首選圖表</th></tr>
+    <tr><td>看趨勢（隨時間變化）</td><td>折線圖</td></tr>
+    <tr><td>比大小（類別間比較）</td><td>長條圖（由大到小排序）</td></tr>
+    <tr><td>看組成比例（1個時間點）</td><td>圓餅圖（≤5類）</td></tr>
+    <tr><td>看多期組成比例</td><td>100% 堆疊長條圖</td></tr>
+    <tr><td>看兩變數關係</td><td>散佈圖</td></tr>
+    <tr><td>看分佈形狀</td><td>直方圖 / KDE 曲線</td></tr>
+    <tr><td>找異常值</td><td>箱型圖（Box Plot）</td></tr>
+    <tr><td>看共線性</td><td>熱力圖（Heatmap）</td></tr>
+  </table>
+  <div class="trap">圓餅圖類別超過 6 個、3D 效果、比較多時間點，都是設計大忌</div>
+
+  <h2>箱型圖關鍵名詞</h2>
+  <table>
+    <tr><th>元素</th><th>說明</th></tr>
+    <tr><td>Q1（下四分位）</td><td>第 25% 位置</td></tr>
+    <tr><td>Q2（中位數）</td><td>第 50% 位置</td></tr>
+    <tr><td>Q3（上四分位）</td><td>第 75% 位置</td></tr>
+    <tr><td>IQR</td><td>Q3 - Q1（箱體高度）</td></tr>
+    <tr><td>上鬚線</td><td>Q3 + 1.5×IQR（以內最大值）</td></tr>
+    <tr><td>下鬚線</td><td>Q1 - 1.5×IQR（以內最小值）</td></tr>
+    <tr><td>離群點</td><td>超出鬚線範圍的點</td></tr>
+  </table>
+  <div class="trap">箱型圖中間線是「中位數」不是平均數！</div>
+
+  <h2>工具選擇配對表</h2>
+  <table>
+    <tr><th>工具</th><th>特點</th><th>秒選關鍵字</th></tr>
+    <tr><td>Matplotlib</td><td>Python 基礎繪圖，靜態圖</td><td>靜態、基礎、Python</td></tr>
+    <tr><td>Seaborn</td><td>統計圖專家，建在 Matplotlib 上</td><td>KDE、箱型圖、熱力圖、統計</td></tr>
+    <tr><td>Plotly</td><td>互動式，可縮放，HTML</td><td>互動式、Tooltip、瀏覽器</td></tr>
+    <tr><td>Tableau</td><td>拖拉式 BI，探索分析</td><td>拖拉、業務端、儀表板</td></tr>
+    <tr><td>Power BI</td><td>微軟生態整合</td><td>微軟、Excel、企業報表</td></tr>
+    <tr><td>Grafana</td><td>時間序列即時監控</td><td>即時監控、伺服器、IoT、運維</td></tr>
+    <tr><td>D3.js</td><td>最高客製化，從零手刻</td><td>高度客製化、前端、學習曲線陡</td></tr>
+  </table>
+
+  <h2>視覺化設計原則</h2>
+  <div class="card">
+    <strong>長條圖 Y 軸必須從 0 開始</strong>（截斷會嚴重誇大差異）<br>
+    <strong>Data-to-Ink Ratio</strong>：最大化資料墨水比，去掉裝飾元素<br>
+    <strong>Overplotting 解法</strong>：調低透明度、抽樣、2D 密度圖
+  </div>
+</section>
+
+<!-- C19: Big Data ML -->
+<section class="chapter" id="c19">
+  <div class="chapter-header">
+    <div class="chapter-num">L22401</div>
+    <div class="chapter-title">大數據與機器學習</div>
+    <div class="chapter-sub">5V · 分散式訓練 · 持續學習 · MLOps · gRPC · 漂移</div>
+  </div>
+
+  <h2>大數據 5V 與 AI 解法</h2>
+  <table>
+    <tr><th>V</th><th>問題</th><th>AI 解法</th></tr>
+    <tr><td>Volume（規模）</td><td>記憶體不足、訓練太慢</td><td>分散式訓練、分批載入</td></tr>
+    <tr><td>Variety（多樣）</td><td>格式混雜、非結構化</td><td>Data Lake、多模態學習</td></tr>
+    <tr><td>Veracity（品質）</td><td>缺標/不平衡/噪音</td><td>弱標注、主動學習、SMOTE</td></tr>
+    <tr><td>Velocity（速度）</td><td>資料來不及反應</td><td>串流處理、增量學習</td></tr>
+    <tr><td>Value（價值）</td><td>雜訊特徵、過擬合</td><td>特徵選擇（Lasso）、降維（PCA）</td></tr>
+  </table>
+
+  <h2>分散式訓練兩種模式</h2>
+  <table>
+    <tr><th>類型</th><th>做法</th><th>目的</th><th>口訣</th></tr>
+    <tr><td>資料並行</td><td>模型一樣，資料切分</td><td>加速訓練</td><td>模型一樣、資料分開</td></tr>
+    <tr><td>模型並行</td><td>模型切開放不同機器</td><td>塞下大模型</td><td>資料放得下、模型放不下</td></tr>
+  </table>
+
+  <h2>加速技巧配對</h2>
+  <table>
+    <tr><th>情境</th><th>解法</th></tr>
+    <tr><td>資料多要加速</td><td>資料並行（Data Parallelism）</td></tr>
+    <tr><td>模型大塞不進單機</td><td>模型並行（Model Parallelism）</td></tr>
+    <tr><td>省顯存又要大Batch效果</td><td>梯度累積（Gradient Accumulation）</td></tr>
+    <tr><td>不改模型要省顯存加速</td><td>混合精度（Mixed Precision，FP16+FP32）</td></tr>
+    <tr><td>驗證集指標不再進步</td><td>早停（Early Stopping）</td></tr>
+  </table>
+
+  <h2>災難性遺忘與解法</h2>
+  <div class="card card-danger">
+    <strong>Catastrophic Forgetting</strong>：神經網路學新任務時，覆蓋舊任務權重，舊任務效能崩潰
+  </div>
+  <table>
+    <tr><th>解法</th><th>做法</th><th>口訣</th></tr>
+    <tr><td>Experience Replay</td><td>混入舊任務資料一起學</td><td>夾帶舊題目</td></tr>
+    <tr><td>EWC（彈性權重鞏固）</td><td>對重要舊權重加懲罰，鎖住</td><td>鎖住重要的</td></tr>
+    <tr><td>Progressive Networks</td><td>保留舊網路，長出新分支</td><td>舊的不動，加新分支</td></tr>
+    <tr><td>Knowledge Distillation</td><td>老師模型教學生模型</td><td>老師盯著學生學</td></tr>
+  </table>
+
+  <h2>RESTful API vs gRPC</h2>
+  <table>
+    <tr><th>比較</th><th>RESTful API</th><th>gRPC</th></tr>
+    <tr><td>協定</td><td>HTTP/1.1</td><td>HTTP/2</td></tr>
+    <tr><td>格式</td><td>JSON（純文字）</td><td>Protobuf（二進位）</td></tr>
+    <tr><td>速度</td><td>中</td><td>極快（快 5-10x）</td></tr>
+    <tr><td>串流</td><td>不支援</td><td>原生支援</td></tr>
+    <tr><td>適用</td><td>對外公開 API</td><td>內部微服務高頻通訊</td></tr>
+  </table>
+  <div class="good">看到「內部微服務、極低延遲、串流」→ 選 gRPC；「對外開放」→ 選 REST</div>
+</section>
+
+<!-- C20: Discriminative AI -->
+<section class="chapter" id="c20">
+  <div class="chapter-header">
+    <div class="chapter-num">L22402</div>
+    <div class="chapter-title">大數據在鑑別式 AI 應用</div>
+    <div class="chapter-sub">SHAP · LIME · 類別不平衡 · 五大應用場景</div>
+  </div>
+
+  <h2>鑑別式 vs 生成式</h2>
+  <table>
+    <tr><th>比較</th><th>鑑別式 AI</th><th>生成式 AI</th></tr>
+    <tr><td>學習目標</td><td>決策邊界 P(Y|X)</td><td>資料分佈 P(X)</td></tr>
+    <tr><td>輸出</td><td>標籤/機率/數值</td><td>新內容（文字/圖像）</td></tr>
+    <tr><td>代表模型</td><td>LR、RF、XGBoost、CNN</td><td>GAN、VAE、GPT</td></tr>
+  </table>
+  <div class="tip">鑑別做選擇（判斷）；生成做創造（生成）</div>
+
+  <h2>SHAP vs LIME</h2>
+  <table>
+    <tr><th>比較</th><th>SHAP</th><th>LIME</th></tr>
+    <tr><td>全名</td><td>SHapley Additive exPlanations</td><td>Local Interpretable Model-agnostic Explanations</td></tr>
+    <tr><td>理論基礎</td><td>賽局理論（夏普利值）</td><td>局部線性代理模型</td></tr>
+    <tr><td>解釋範圍</td><td>全域 + 區域</td><td>主要區域</td></tr>
+    <tr><td>穩定性</td><td>高（理論保證）</td><td>較低（依賴採樣）</td></tr>
+    <tr><td>速度</td><td>慢（指數級複雜度）</td><td>快</td></tr>
+    <tr><td>適用</td><td>合規、金融、醫療審查</td><td>快速除錯、開發階段</td></tr>
+  </table>
+  <div class="good">看到「賽局理論、夏普利值、一致性、穩定」→ SHAP；「快速探索、採樣、不穩定」→ LIME</div>
+
+  <h2>類別不平衡三大解法</h2>
+  <table>
+    <tr><th>層面</th><th>方法</th><th>缺點</th></tr>
+    <tr><td>資料層</td><td>過採樣（Oversampling）/ SMOTE</td><td>易過擬合</td></tr>
+    <tr><td>資料層</td><td>欠採樣（Undersampling）</td><td>損失資訊</td></tr>
+    <tr><td>演算法層</td><td>類別加權（Class Weighting）</td><td>需調整權重</td></tr>
+    <tr><td>演算法層</td><td>調整決策閾值（Threshold Tuning）</td><td>影響 Precision/Recall 平衡</td></tr>
+  </table>
+  <div class="trap">不平衡資料中，Accuracy 是最沒參考價值的指標！改用 F1-score 或 AUC</div>
+
+  <h2>評估指標速查</h2>
+  <table>
+    <tr><th>指標</th><th>公式</th><th>重視時機</th></tr>
+    <tr><td>Precision（精確率）</td><td>TP / (TP+FP)</td><td>怕誤報（寧缺勿濫）</td></tr>
+    <tr><td>Recall（召回率）</td><td>TP / (TP+FN)</td><td>怕漏報（醫療、詐欺）</td></tr>
+    <tr><td>F1-score</td><td>2×P×R / (P+R)</td><td>兩者都重要</td></tr>
+    <tr><td>AUC</td><td>ROC 曲線下面積</td><td>不平衡、比較模型整體</td></tr>
+  </table>
+
+  <h2>五大應用場景秒配</h2>
+  <table>
+    <tr><th>場景關鍵字</th><th>常用模型</th><th>重要指標</th></tr>
+    <tr><td>信用評分、詐欺偵測</td><td>XGBoost、Logistic Regression + SHAP</td><td>AUC、F1、SHAP解釋</td></tr>
+    <tr><td>推薦、流失預測</td><td>Random Forest、XGBoost</td><td>AUC、Precision@K</td></tr>
+    <tr><td>情緒分析、意圖分類</td><td>BERT、SVM</td><td>F1-score</td></tr>
+    <tr><td>醫療影像診斷</td><td>CNN、ResNet</td><td>Recall（敏感度優先）</td></tr>
+    <tr><td>資安異常偵測</td><td>Isolation Forest、One-Class SVM</td><td>Recall、F1</td></tr>
+  </table>
+  <div class="good">看到「孤立森林（Isolation Forest）」→ 異常偵測；看到「SHAP + 合規」→ 金融/醫療</div>
+</section>
+
+<!-- C21: Generative AI Applications -->
+<section class="chapter" id="c21">
+  <div class="chapter-header">
+    <div class="chapter-num">L22403</div>
+    <div class="chapter-title">大數據在生成式 AI 應用</div>
+    <div class="chapter-sub">資料選擇四原則 · 偏誤四類 · 幻覺 · 合成資料 · RAG</div>
+  </div>
+
+  <h2>生成式 AI 資料選擇四原則</h2>
+  <table>
+    <tr><th>原則</th><th>說明</th><th>缺失症狀</th></tr>
+    <tr><td>多樣性（Diversity）</td><td>涵蓋多語言、風格、主題</td><td>輸出死板、無法適應新場景</td></tr>
+    <tr><td>代表性（Representativeness）</td><td>反映真實世界比例</td><td>系統性偏見（刻板印象）</td></tr>
+    <tr><td>品質（Quality）</td><td>無錯字、無假訊息、格式一致</td><td>語意混亂、GIGO</td></tr>
+    <tr><td>時效性（Timeliness）</td><td>資料夠新，反映當前環境</td><td>不懂新詞彙、知識脫節</td></tr>
+  </table>
+
+  <h2>偏誤（Bias）四大類</h2>
+  <table>
+    <tr><th>類型</th><th>題幹關鍵字</th></tr>
+    <tr><td>性別與族群偏誤</td><td>護士畫成女生、CEO畫成男生、刻板印象</td></tr>
+    <tr><td>地區與文化偏誤</td><td>不懂台灣用語、「機車」「傻眼」聽不懂</td></tr>
+    <tr><td>社經地位偏誤</td><td>只考慮都市/高收入族群，忽略偏鄉</td></tr>
+    <tr><td>平台來源偏誤</td><td>語料全來自 PTT/Reddit，講話很酸民</td></tr>
+  </table>
+  <div class="key">偏誤要在「資料收集/前處理階段」處理，不能只靠提示詞修飾</div>
+
+  <h2>幻覺（Hallucination）</h2>
+  <div class="card card-danger">
+    <strong>定義</strong>：模型編造不存在的事實、假論文、假法條<br>
+    <strong>危險</strong>：文法正確、語氣篤定，但內容是假的<br>
+    <strong>原因</strong>：模型是在「猜下一個高機率詞」，不是在查資料庫
+  </div>
+  <table>
+    <tr><th>解法</th><th>說明</th></tr>
+    <tr><td>RAG</td><td>先從外部知識庫檢索，再根據檢索結果回答</td></tr>
+    <tr><td>提示工程</td><td>要求引用來源，告知「不知道就說不知道」</td></tr>
+    <tr><td>RLHF</td><td>人類標注者對回答打分，優化模型輸出</td></tr>
+  </table>
+
+  <h2>合成資料（Synthetic Data）</h2>
+  <div class="card card-success">
+    <strong>三大使用情境</strong>：<br>
+    1. 樣本不足/不平衡（如：詐欺案例太少）<br>
+    2. 罕見情境模擬（如：自駕車邊緣案例）<br>
+    3. 隱私保護（如：醫療病歷不能直接用）
+  </div>
+  <div class="trap">合成資料仍需評估「成員推論攻擊」風險，無法百分百保護隱私</div>
+
+  <h2>偏誤 vs 幻覺辨別</h2>
+  <div class="card">
+    <strong>偏誤</strong>：有偏見的真實，學到不公平傾向 → 關鍵詞：刻板印象、歧視<br>
+    <strong>幻覺</strong>：一本正經的胡說八道，捏造事實 → 關鍵詞：捏造、假論文、假法條
+  </div>
+</section>
+
+<!-- C22: Privacy -->
+<section class="chapter" id="c22">
+  <div class="chapter-header">
+    <div class="chapter-num">L22404</div>
+    <div class="chapter-title">大數據隱私保護、安全與合規</div>
+    <div class="chapter-sub">PII · K-匿名 · 差分隱私 · 聯邦學習 · 同態加密 · GDPR</div>
+  </div>
+
+  <h2>資料識別等級</h2>
+  <table>
+    <tr><th>類型</th><th>特徵</th><th>例子</th></tr>
+    <tr><td>PII（直接識別）</td><td>單一欄位即可找到你</td><td>姓名、身分證、Email、IP</td></tr>
+    <tr><td>準識別資訊</td><td>多欄位組合才能鎖定</td><td>生日+性別+郵遞區號</td></tr>
+    <tr><td>敏感個人資料</td><td>外洩會造成實質傷害</td><td>病歷、基因、財務、宗教</td></tr>
+  </table>
+
+  <h2>基礎去識別技術</h2>
+  <table>
+    <tr><th>技術</th><th>做法</th><th>考試關鍵字</th></tr>
+    <tr><td>遮蔽（Masking）</td><td>部分字元打碼（王ＯＯ）</td><td>UI 防窺，最基礎</td></tr>
+    <tr><td>泛化（Generalization）</td><td>精度降低（1995→1990年代）</td><td>「將精度降低」必選此</td></tr>
+    <tr><td>分桶（Bucketing）</td><td>數值裝入區間（34歲→30-39歲）</td><td>「數值裝進區間」</td></tr>
+    <tr><td>雜湊（Hashing）</td><td>單向轉換，不可逆</td><td>注意彩虹表攻擊，需加鹽</td></tr>
+    <tr><td>隨機擾動</td><td>加入隨機噪音</td><td>差分隱私的實現手段</td></tr>
+  </table>
+
+  <h2>四大進階 PETs 技術</h2>
+  <table>
+    <tr><th>技術</th><th>核心機制</th><th>適用情境</th><th>口訣</th></tr>
+    <tr><td>K-匿名</td><td>每筆資料至少與 K-1 人相同（泛化+抑制）</td><td>發布公開資料集</td><td>藏木於林</td></tr>
+    <tr><td>差分隱私</td><td>加噪音 + ε 隱私預算</td><td>發布統計報表、遙測</td><td>加了沙子的統計</td></tr>
+    <tr><td>聯邦學習</td><td>資料不出本地，只傳模型參數</td><td>跨院訓練、手機鍵盤</td><td>資料不動模型動</td></tr>
+    <tr><td>同態加密</td><td>直接在密文上運算</td><td>雲端算但不看明文</td><td>蒙眼算數學</td></tr>
+  </table>
+
+  <h2>PETs 情境快配</h2>
+  <div class="card card-success">
+    「發布一萬筆明細供外界分析」→ <strong>K-匿名</strong><br>
+    「發布平均薪資報表，防個體被反推」→ <strong>差分隱私</strong><br>
+    「跨醫院訓練 AI，病歷不得出院」→ <strong>聯邦學習</strong><br>
+    「借雲端算力，但雲端不能看明文」→ <strong>同態加密</strong>
+  </div>
+
+  <h2>K-匿名的弱點與補強</h2>
+  <table>
+    <tr><th>弱點</th><th>說明</th><th>補強方案</th></tr>
+    <tr><td>同質性攻擊</td><td>K 個人敏感屬性完全相同，仍可推論</td><td>L-多樣性：敏感屬性至少 L 種</td></tr>
+    <tr><td>背景知識攻擊</td><td>用外部知識排除可能選項</td><td>T-接近性：分布接近整體</td></tr>
+  </table>
+
+  <h2>差分隱私關鍵</h2>
+  <div class="card">
+    <strong>ε（隱私預算）</strong>：越小 → 噪音越大 → 隱私保護越強 → 準確度越低<br>
+    <strong>拉普拉斯機制</strong>：經典噪音方式<br>
+    <strong>高斯機制</strong>：深度學習訓練（DP-SGD）常用
+  </div>
+  <div class="trap">聯邦學習並非絕對安全！梯度也可能洩漏隱私（梯度洩漏攻擊）</div>
+
+  <h2>GDPR 六大原則</h2>
+  <table>
+    <tr><th>#</th><th>原則</th><th>違反的典型考題</th></tr>
+    <tr><td>1</td><td>合法、公平與透明</td><td>未告知就收集</td></tr>
+    <tr><td>2</td><td>目的限制</td><td>說好做A，偷偷拿去做B</td></tr>
+    <tr><td>3</td><td>資料最小化</td><td>「先全收，以後可能用到」</td></tr>
+    <tr><td>4</td><td>正確性</td><td>資料錯了不更正</td></tr>
+    <tr><td>5</td><td>保存期限限制</td><td>用完不刪，無限囤積</td></tr>
+    <tr><td>6</td><td>完整性與機密性</td><td>沒有加密保護</td></tr>
+  </table>
+  <div class="key">GDPR 最高罰則：2000 萬歐元 或 全球年營業額 4%，取其高</div>
+
+  <h2>被遺忘權與 Model Card</h2>
+  <div class="card">
+    <strong>被遺忘權（Right to be Forgotten）</strong>：使用者可要求刪除其個資，引發「機器遺忘」問題<br>
+    <strong>Model Card</strong>：AI 模型的透明度說明書，記載訓練資料、偏誤、適用範圍<br>
+    <strong>最小權限原則（RBAC）</strong>：只給完成當前工作所需最低權限
+  </div>
+</section>
+
+</main>
+
+<script>
+function show(id){
+  document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el)el.classList.add('active');
+  event&&event.target.classList.add('active');
+  document.getElementById('main').scrollTo(0,0);
+}
+
+function doSearch(q){
+  if(!q.trim()){document.querySelectorAll('.nav-item').forEach(n=>n.style.display='');return;}
+  q=q.toLowerCase();
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.style.display=n.textContent.toLowerCase().includes(q)?'':'none';
+  });
+}
+
+// keyboard shortcut to focus search
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key==='f'){
+    e.preventDefault();
+    document.getElementById('search').focus();
+  }
+});
+</script>
+</body>
+</html>
